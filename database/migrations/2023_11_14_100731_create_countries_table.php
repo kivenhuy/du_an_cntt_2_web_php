@@ -11,15 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('uploads', function (Blueprint $table) {
+        Schema::create('countries', function (Blueprint $table) {
             $table->id();
-            $table->string('file_original_name');
-            $table->string('file_name');
-            $table->integer('user_id');
-            $table->integer('file_size');
-            $table->string('extension');
-            $table->string('type');
-            $table->string('external_link')->nullable();
+            $table->string('country_name');
+            $table->string('country_code')->nullable();
+            $table->string('status');
             $table->timestamps();
         });
     }
@@ -29,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('uploads');
+        Schema::dropIfExists('countries');
     }
 };
