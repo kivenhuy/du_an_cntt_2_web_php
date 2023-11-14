@@ -1,0 +1,200 @@
+:root {
+    --blue: #007bff;
+    --indigo: #6610f2;
+    --purple: #6f42c1;
+    --pink: #e83e8c;
+    --red: #dc3545;
+    --orange: #fd7e14;
+    --yellow: #ffc107;
+    --green: #28a745;
+    --teal: #20c997;
+    --cyan: #17a2b8;
+    --white: #fff;
+    --soft-white: #b5b5bf;
+    --gray: #6c757d;
+    --gray-dark: #343a40;
+    --primary: #f77b0b;
+    --hov-primary: #e56f0e;
+    --soft-primary: rgba(247, 123, 11, 0.15);
+    --secondary: #8f97ab;
+    --soft-secondary: rgba(143, 151, 171, 0.15);
+    --success: #0abb75;
+    --soft-success: rgba(10, 187, 117, 0.15);
+    --info: #25bcf1;
+    --soft-info: rgba(37, 188, 241, 0.15);
+    --warning: #ffc519;
+    --soft-warning: rgba(255, 197, 25, 0.15);
+    --danger: #ef486a;
+    --soft-danger: rgba(239, 72, 106, 0.15);
+    --light: #f2f3f8;
+    --soft-light: #dfdfe6;
+    --dark: #111723;
+    --soft-dark: rgba(42, 50, 66, 0.15);
+    --breakpoint-xs: 0;
+    --breakpoint-sm: 576px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 992px;
+    --breakpoint-xl: 1200px;
+    --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.tagify {
+    --tags-border-color: #dfdfe6;
+    --tag-bg: #e2e5ec;
+    --tag-hover: #d9e6ff;
+    --tag-text-color: #212529;
+    --tag-text-color--edit: #212529;
+    --tag-pad: 0.3rem 0.5rem;
+    --tag-inset-shadow-size: 1.1em;
+    --tag-invalid-color: #d39494;
+    --tag-invalid-bg: rgba(253, 57, 75, 0.5);
+    --tag-remove-bg: rgba(253, 57, 75, 0.3);
+    --tag-remove-btn-bg: none;
+    --tag-remove-btn-bg--hover: #fd394b;
+    --tag--min-width: 1ch;
+    --tag--max-width: auto;
+    --tag-hide-transition: 0.3s;
+    --loader-size: 0.8em;
+}
+
+pre {
+    white-space: initial;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.aiz-main-wrapper {
+    min-height: 100vh;
+    max-width: 100vw;
+    background-color: var(--light);
+}
+
+.hov-bg-white:hover {
+    background-color: #fff !important;
+}
+
+.z-1020 {
+    z-index: 1020 !important;
+}
+
+.z-1025 {
+    z-index: 1025 !important;
+}
+
+.container,
+.container-xxl {
+    max-width: 1400px;
+}
+
+.aiz-top-menu-sidebar {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.aiz-top-menu-sidebar.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.aiz-top-menu-sidebar .collapse-sidebar {
+    overflow-y: auto;
+    transform: translateX(-100%);
+    left: 0;
+    right: auto;
+    transition: all 0.5s;
+}
+
+.aiz-top-menu-sidebar.active .collapse-sidebar {
+    transform: translate(0%, 0%);
+}
+
+.aiz-top-menu-sidebar ul li {
+    list-style-type: none;
+}
+
+.hov-animate-outline {
+    position: relative;
+    ;
+}
+
+.hov-animate-outline::before,
+.hov-animate-outline::after {
+    box-sizing: inherit;
+    content: '';
+    position: absolute;
+    z-index: -1 !important;
+    width: 0;
+    height: 0;
+    transition: color 0.3s;
+    border: 2px solid transparent;
+}
+
+.hov-animate-outline::before {
+    top: 0;
+    left: 0;
+}
+
+[dir="rtl"] .hov-animate-outline::before {
+    left: auto;
+    right: 0;
+}
+
+.hov-animate-outline::after {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.hov-animate-outline:hover::before,
+.hov-animate-outline:hover::after {
+    width: 100%;
+    height: 100%;
+}
+
+.hov-animate-outline:hover::before {
+    border-top-color: var(--primary);
+    border-right-color: var(--primary);
+    transition: width 0.3s ease-out, height 0.3s ease-out 0.3s;
+}
+
+[dir="rtl"] .hov-animate-outline:hover::before {
+    border-left-color: var(--primary);
+    border-right-color: transparent;
+}
+
+.hov-animate-outline:hover::after {
+    border-bottom-color: var(--primary);
+    border-left-color: var(--primary);
+    transition: height 0.3s ease-out, width 0.3s ease-out 0.3s;
+}
+
+[dir="rtl"] .hov-animate-outline:hover::after {
+    border-right-color: var(--primary);
+    border-left-color: transparent;
+}
+
+@media (max-width: 991px) {
+    .front-header-search {
+        position: absolute;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        right: 0;
+        left: 0;
+        opacity: 0;
+        transform: translateY(-100%);
+        -webkit-transform: translateY(-100%);
+        transition: all 0.3s;
+        -webkit-transition: all 0.3s;
+    }
+    .front-header-search.active {
+        transform: translateY(0%);
+        -webkit-transform: translateY(0%);
+        opacity: 1;
+    }
+}

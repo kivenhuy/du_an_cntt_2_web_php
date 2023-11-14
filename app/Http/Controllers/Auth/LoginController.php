@@ -17,29 +17,29 @@ class LoginController extends Controller
     {
         $pageConfigs = ['myLayout' => 'blank'];
 
-        return view('auth.auth-login-basic', ['pageConfigs' => $pageConfigs]);
+        return view('user_layout.user_login');
     }
 
     public function login(Request $request)
     {
+        
         $validator = Validator::make($request->all(), [
-            'username' => 'required|string|max:255',
+            'email' => 'required|string|max:255',
             'password' => 'required|string|min:5',
         ]);
-    
+        
         if ($validator->fails()) {
             //flash($validator->messages()->first())->error();
             return back()->withErrors($validator)->withInput();
         }
-
-        $credential = [
-            'username' => $request->input('username'),
-            'password' => $request->input('password'),
-            'user_type' => 'super_admin',
-        ];
         
+        $credential = [
+            'email' => $request->input('email'),
+            'password' => $request->input('password'),
+            'user_type' => 'admin',
+        ];
         if (auth()->attempt($credential)) {
-            return redirect()->route('dashboard');
+            return redirect()->route('homepage');
         }
 
         //flash('The credentials did not match')->error();
@@ -52,6 +52,6 @@ class LoginController extends Controller
     public function logout(Request $request)
     {
         auth()->logout();
-        return redirect()->route('login');
+        return redirect()->route('user.login');
     }
 }

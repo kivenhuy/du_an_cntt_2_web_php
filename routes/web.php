@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
 
@@ -14,7 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get("/", [Controller::class, 'get_details'])->name('get_details');
+Route::get("/login", [LoginController::class, 'showLoginForm'])->name('login.form');
+Route::post("/login", [LoginController::class, 'login'])->name('user.login');
+Route::get("/logout", [LoginController::class, 'logout'])->name('user.logout');
+
+Route::post("/user_registration", [LoginController::class, 'login'])->name('user.registration');
 
 Route::get('/', function () {
 

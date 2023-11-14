@@ -20,10 +20,7 @@
                     </button>
                     <!-- Header Logo -->
                     <div class="col-auto pl-0 pr-3 d-flex align-items-center">
-                        <a class="d-block py-20px mr-3 ml-0" href="{{ route('homepage') }}">
-                            <img src="https://hero.farm-angel.com/public/uploads/all/IyjdH9g7QflEXFKra3dLe8S82CStSvX9TW6dcA54.png" alt="{{ env('APP_NAME') }}"
-                                class="mw-100 h-30px h-md-65px" style="height: 60px;width: 60px;">
-                        </a>
+                       
                     </div>
                     <!-- Search Icon for small device -->
                     <div class="d-lg-none ml-auto mr-0">
