@@ -1,3 +1,9 @@
+    <!-- Top Bar -->
+    <div class="top-navbar bg-white z-1035 h-35px h-sm-auto">
+       
+    </div>
+    
+    
     <header class="sticky-top z-1020 bg-white">
         <!-- Search Bar -->
         <input type="hidden" id="shop_id" value="">
@@ -87,6 +93,24 @@
                             </a>
                         </div>
                     </div>
+                    <!-- Cart -->
+                    <div class="d-none d-xl-block align-self-stretch ml-5 mr-0 has-transition bg-black-10"
+                        data-hover="dropdown" style="
+                        background-color: white !important;">
+                       
+                    </div>
+                    <!-- Compare -->
+                    <div class="d-none d-lg-block ml-3 mr-0">
+                        <div class="icon_header" id="compare">
+                           
+                        </div>
+                    </div>
+                    <!-- Wishlist -->
+                    <div class="d-none d-lg-block mr-3" style="margin-left: 36px;">
+                        <div class="icon_header" id="wishlist">
+                            
+                        </div>
+                    </div>
                     {{-- Account --}}
                     <div class="ml-auto mr-0 d-none d-xl-block">
                         
@@ -102,10 +126,16 @@
                                             transform="translate(-2.064 -1.995)" fill="#91919b" />
                                     </svg>
                                 </span>
-                                <a href="{{ route('user.login') }}"
-                                    class="text-reset opacity-60 hov-opacity-100 hov-text-primary fs-12 d-inline-block border-right border-soft-light border-width-2 pr-2 ml-3">Login</a>
-                                <a href="{{ route('user.registration') }}"
-                                    class="text-reset opacity-60 hov-opacity-100 hov-text-primary fs-12 d-inline-block py-2 pl-2">Register</a>
+                                @if (Auth::check())
+                                    <a href="{{ route('user.logout') }}"
+                                        class="text-reset opacity-60 hov-opacity-100 hov-text-primary fs-12 d-inline-block border-right border-soft-light border-width-2 pr-2 ml-3">Logout</a>
+                                @else
+                                    <a href="{{ route('user.login') }}"
+                                        class="text-reset opacity-60 hov-opacity-100 hov-text-primary fs-12 d-inline-block border-right border-soft-light border-width-2 pr-2 ml-3">Login</a>
+                                    <a href="{{ route('user.registration') }}"
+                                        class="text-reset opacity-60 hov-opacity-100 hov-text-primary fs-12 d-inline-block py-2 pl-2">Register</a>
+                                @endif
+                               
                             </span>
                         
                     </div>

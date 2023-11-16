@@ -17,13 +17,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get("/login", [LoginController::class, 'showLoginForm'])->name('login.form');
 Route::post("/login", [LoginController::class, 'login'])->name('user.login');
-Route::get("/logout", [LoginController::class, 'logout'])->name('user.logout');
-
 Route::post("/user_registration", [LoginController::class, 'login'])->name('user.registration');
 
-Route::get('/', function () {
 
-    return view('welcome');
-})->name('homepage');
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get("/logout", [LoginController::class, 'logout'])->name('user.logout');
+    Route::get('/', function () {return view('user_layout.index');})->name('homepage');
+});
 
 

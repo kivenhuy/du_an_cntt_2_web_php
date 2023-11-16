@@ -23,7 +23,6 @@
 
     <!-- CSS Files -->
     <link rel="stylesheet" href="{{ static_asset('assets/css/vendors.css') }}">
-    <link rel="stylesheet" href="{{ static_asset('assets/css/aiz-core.css?v=') }}{{ rand(1000,9999) }}">
     <link rel="stylesheet" href="{{ static_asset('assets/css/custom-style.css') }}">
 
 
@@ -51,52 +50,6 @@
             --dark: #292933;
             --soft-dark: #1b1b28;
         }
-        body{
-            font-family: 'Public Sans', sans-serif;
-            font-weight: 400;
-        }
-        
-        .pagination .page-link,
-        .page-item.disabled .page-link {
-            min-width: 32px;
-            min-height: 32px;
-            line-height: 32px;
-            text-align: center;
-            padding: 0;
-            border: 1px solid var(--soft-light);
-            font-size: 0.875rem;
-            border-radius: 0 !important;
-            color: var(--dark);
-        }
-        .pagination .page-item {
-            margin: 0 5px;
-        }
-
-        .aiz-carousel.coupon-slider .slick-track{
-            margin-left: 0;
-        }
-
-        .form-control:focus {
-            border-width: 2px !important;
-        }
-        .iti__flag-container {
-            padding: 2px;
-        }
-        .modal-content {
-            border: 0 !important;
-            border-radius: 0 !important;
-        }
-
-        #map{
-            width: 100%;
-            height: 250px;
-        }
-        #edit_map{
-            width: 100%;
-            height: 250px;
-        }
-
-        .pac-container { z-index: 100000; }
     </style>
 
 
@@ -149,7 +102,7 @@
     {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> --}}
     <script src="{{ static_asset('assets/js/vendors.js') }}"></script>
     {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> --}}
-    <script src="{{ static_asset('assets/js/aiz-core.js?v=') }}{{ rand(1000,9999) }}"></script>
+    <script src="{{ static_asset('assets/js/custom-core.js?v=') }}{{ rand(1000,9999) }}"></script>
 
 </body>
 </html>

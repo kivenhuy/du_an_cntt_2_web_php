@@ -1,6 +1,7 @@
 <?php
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 if (!function_exists('uploaded_asset')) {
     function uploaded_asset($id)
@@ -42,4 +43,18 @@ if (!function_exists('static_asset')) {
     {
         return app('url')->asset($path, $secure);
     }
+}
+
+if (!function_exists('areActiveRoutes')) {
+    function areActiveRoutes(array $routes, $output = "active")
+    {
+        foreach ($routes as $route) {
+            if (Route::currentRouteName() == $route) return $output;
+        }
+    }
+}
+
+function translate($key, $lang = null, $addslashes = false)
+{
+    return $key; 
 }

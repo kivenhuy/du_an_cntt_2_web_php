@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
@@ -35,10 +36,14 @@ class LoginController extends Controller
         
         $credential = [
             'email' => $request->input('email'),
-            'password' => $request->input('password'),
-            'user_type' => 'admin',
+            'password' => $request->input('password')
         ];
         if (auth()->attempt($credential)) {
+            $user = Auth::user();
+            if($user->user_type == "seller")
+            {
+                return redirect()->route('seller.dashboard');
+            }
             return redirect()->route('homepage');
         }
 
