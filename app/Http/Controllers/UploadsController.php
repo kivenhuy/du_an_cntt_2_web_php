@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Uploads;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UploadsController extends Controller
 {
@@ -195,5 +196,55 @@ class UploadsController extends Controller
                 return $upload->id;
             }
         }
+    }
+
+    public function show_uploader(Request $request)
+    {
+        return view('uploader.upload_file');
+    }
+
+    public function get_preview_files(Request $request)
+    {
+        $ids = explode(',', $request->ids);
+        $files = Uploads::whereIn('id', $ids)->get();
+        $new_file_array = [];
+        foreach ($files as $file) {
+            $file['file_name'] = my_asset($file->file_name);
+            if ($file->external_link) {
+                $file['file_name'] = $file->external_link;
+            }
+            $new_file_array[] = $file;
+        }
+        // dd($new_file_array);
+        return $new_file_array;
+        // return $files;
+    }
+
+    public function get_uploaded_files(Request $request)
+    {
+        $uploads = Uploads::where('user_id', Auth::user()->id);
+        if ($request->search != null) {
+            $uploads->where('file_original_name', 'like', '%' . $request->search . '%');
+        }
+        if ($request->sort != null) {
+            switch ($request->sort) {
+                case 'newest':
+                    $uploads->orderBy('created_at', 'desc');
+                    break;
+                case 'oldest':
+                    $uploads->orderBy('created_at', 'asc');
+                    break;
+                case 'smallest':
+                    $uploads->orderBy('file_size', 'asc');
+                    break;
+                case 'largest':
+                    $uploads->orderBy('file_size', 'desc');
+                    break;
+                default:
+                    $uploads->orderBy('created_at', 'desc');
+                    break;
+            }
+        }
+        return $uploads->paginate(60)->appends(request()->query());
     }
 }

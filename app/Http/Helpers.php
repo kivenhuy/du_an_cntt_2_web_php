@@ -58,3 +58,33 @@ function translate($key, $lang = null, $addslashes = false)
 {
     return $key; 
 }
+
+
+if (!function_exists('renderStarRating')) {
+    function renderStarRating($rating, $maxRating = 5)
+    {
+        $fullStar = "<i class = 'fa fa-star active'></i>";
+        $halfStar = "<i class = 'fa fa-star half'></i>";
+        $emptyStar = "<i class = 'fa fa-star'></i>";
+        $rating = $rating <= $maxRating ? $rating : $maxRating;
+
+        $fullStarCount = (int)$rating;
+        $halfStarCount = ceil($rating) - $fullStarCount;
+        $emptyStarCount = $maxRating - $fullStarCount - $halfStarCount;
+
+        $html = str_repeat($fullStar, $fullStarCount);
+        $html .= str_repeat($halfStar, $halfStarCount);
+        $html .= str_repeat($emptyStar, $emptyStarCount);
+        echo $html;
+    }
+}
+
+if (!function_exists('getBaseURL')) {
+    function getBaseURL()
+    {
+        $root = '//' . $_SERVER['HTTP_HOST'];
+        $root .= str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
+
+        return $root;
+    }
+}

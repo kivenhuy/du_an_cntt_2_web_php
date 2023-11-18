@@ -86,7 +86,7 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
                                 ];
                             $.ajax({
                                 url: AIZ.data.appUrl +
-                                    "/aiz-uploader/destroy/" +
+                                    "file-uploader/destroy/" +
                                     AIZ.uploader.data.clickedForDelete,
                                 type: "DELETE",
                                 dataType: "JSON",
@@ -115,7 +115,7 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
                                     AIZ.uploader.updateUploaderSelected();
                                     AIZ.uploader.getAllUploads(
                                         AIZ.data.appUrl +
-                                        "/aiz-uploader/get_uploaded_files"
+                                        "file-uploader/get_uploaded_files"
                                     );
                                     AIZ.uploader.data.clickedForDelete = null;
                                     $("#aizUploaderDelete").modal("hide");
@@ -255,7 +255,7 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
                 } else {
                     
                     AIZ.uploader.getAllUploads(
-                        AIZ.data.appUrl + "/aiz-uploader/get_uploaded_files"
+                        AIZ.data.appUrl + "file-uploader/get_uploaded_files"
                     );
                 }
                 
@@ -266,7 +266,7 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
             $('[name="aiz-uploader-search"]').on("keyup", function() {
                 var value = $(this).val();
                 AIZ.uploader.getAllUploads(
-                    AIZ.data.appUrl + "/aiz-uploader/get_uploaded_files",
+                    AIZ.data.appUrl + "file-uploader/get_uploaded_files",
                     value,
                     $('[name="aiz-uploader-sort"]').val()
                 );
@@ -277,7 +277,7 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
             $('[name="aiz-uploader-sort"]').on("change", function() {
                 var value = $(this).val();
                 AIZ.uploader.getAllUploads(
-                    AIZ.data.appUrl + "/aiz-uploader/get_uploaded_files",
+                    AIZ.data.appUrl + "file-uploader/get_uploaded_files",
                     $('[name="aiz-uploader-search"]').val(),
                     value
                 );
@@ -388,7 +388,7 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
             if (AIZ.uploader.data.selectedFiles.length > 0) {
 
                 $.post(
-                    AIZ.data.appUrl + "/aiz-uploader/get_file_by_ids", { _token: AIZ.data.csrf, ids: AIZ.uploader.data.selectedFiles.toString() },
+                    AIZ.data.appUrl + "file-uploader/get_file_by_ids", { _token: AIZ.data.csrf, ids: AIZ.uploader.data.selectedFiles.toString() },
                     function(data) {
 
                         elem.next(".file-preview").html(null);
@@ -512,13 +512,13 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
 
             // setTimeout(function() {
             $.post(
-                AIZ.data.appUrl + "/aiz-uploader", { _token: AIZ.data.csrf },
+                AIZ.data.appUrl + "file-uploader", { _token: AIZ.data.csrf },
                 function(data) {
                     $("body").append(data);
                     $("#aizUploaderModal").modal("show");
                     AIZ.plugins.aizUppy();
                     AIZ.uploader.getAllUploads(
-                        AIZ.data.appUrl + "/aiz-uploader/get_uploaded_files",
+                        AIZ.data.appUrl + "file-uploader/get_uploaded_files",
                         null,
                         $('[name="aiz-uploader-sort"]').val()
                     );
@@ -609,7 +609,7 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
                 var files = $this.find(".selected-files").val();
                 if (files != "") {
                     $.post(
-                        AIZ.data.appUrl + "/aiz-uploader/get_file_by_ids", { _token: AIZ.data.csrf, ids: files },
+                        AIZ.data.appUrl + "file-uploader/get_file_by_ids", { _token: AIZ.data.csrf, ids: files },
                         function(data) {
                             $this.next(".file-preview").html(null);
 
@@ -982,7 +982,7 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
                     }
                 });
                 uppy.use(Uppy.XHRUpload, {
-                    endpoint: AIZ.data.appUrl + "/aiz-uploader/upload",
+                    endpoint: AIZ.data.appUrl + "file-uploader/upload",
                     fieldName: "aiz_file",
                     formData: true,
                     headers: {
@@ -991,7 +991,7 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
                 });
                 uppy.on("upload-success", function() {
                     AIZ.uploader.getAllUploads(
-                        AIZ.data.appUrl + "/aiz-uploader/get_uploaded_files"
+                        AIZ.data.appUrl + "file-uploader/get_uploaded_files"
                     );
                 });
             }

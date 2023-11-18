@@ -12,26 +12,52 @@
 
     @yield('meta')
 
-    <!-- Favicon -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    
+   <!-- Favicon -->
 
-    {{-- Input Phone Field --}}
+   <!-- Google Fonts -->
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   
 
-    <!-- CSS Files -->
-    <link rel="stylesheet" href="{{ static_asset('assets/css/vendors.css') }}">
-    <link rel="stylesheet" href="{{ static_asset('assets/css/custom-style.css') }}">
+   <!-- CSS Files -->
+   <link rel="stylesheet" href="{{ static_asset('assets/css/vendors.css') }}">
+   <link rel="stylesheet" href="{{ static_asset('assets/css/custom-style.css?v=') }}{{ now()->timestamp }}">
+   <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
-    <script>
-        var AIZ = AIZ || {};
-        AIZ.local = {
-           
-        }
-    </script>
+   @yield('style')
+   <script>
+       var AIZ = AIZ || {};
+       AIZ.local = {
+           nothing_selected: '{!! translate('Nothing selected', null, true) !!}',
+           nothing_found: '{!! translate('Nothing found', null, true) !!}',
+           choose_file: '{{ translate('Choose file') }}',
+           file_selected: '{{ translate('File selected') }}',
+           files_selected: '{{ translate('Files selected') }}',
+           add_more_files: '{{ translate('Add more files') }}',
+           adding_more_files: '{{ translate('Adding more files') }}',
+           drop_files_here_paste_or: '{{ translate('Drop files here, paste or') }}',
+           browse: '{{ translate('Browse') }}',
+           upload_complete: '{{ translate('Upload complete') }}',
+           upload_paused: '{{ translate('Upload paused') }}',
+           resume_upload: '{{ translate('Resume upload') }}',
+           pause_upload: '{{ translate('Pause upload') }}',
+           retry_upload: '{{ translate('Retry upload') }}',
+           cancel_upload: '{{ translate('Cancel upload') }}',
+           uploading: '{{ translate('Uploading') }}',
+           processing: '{{ translate('Processing') }}',
+           complete: '{{ translate('Complete') }}',
+           file: '{{ translate('File') }}',
+           files: '{{ translate('Files') }}',
+           upload_maximum_five_files: '{{ translate('You can only upload a maximum of 10 files.') }}',
+       }
+   </script>
+   <style>
+       @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;600;700&display=swap');
+   </style>
+
 
     <style>
         :root{
