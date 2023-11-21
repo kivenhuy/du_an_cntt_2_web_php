@@ -222,9 +222,9 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
                 if (typeof data == 'string') {
                     data = JSON.parse(data);
                 }
-                
+
                 AIZ.uploader.data.allFiles = data.data;
-                AIZ.uploader.data.allFiles_v2 =  data.data;
+                AIZ.uploader.data.allFiles_v2 = data.data;
                 AIZ.uploader.allowedFileType();
                 AIZ.uploader.addSelectedValue();
                 AIZ.uploader.addHiddenValue();
@@ -249,16 +249,16 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
         showSelectedFiles: function() {
             $('[name="aiz-show-selected"]').on("change", function() {
                 if ($(this).is(":checked")) {
-                   
+
                     AIZ.uploader.data.allFiles =
                         AIZ.uploader.data.selectedFilesObject;
                 } else {
-                    
+
                     AIZ.uploader.getAllUploads(
                         AIZ.data.appUrl + "file-uploader/get_uploaded_files"
                     );
                 }
-                
+
                 AIZ.uploader.updateUploaderFiles();
             });
         },
@@ -270,7 +270,7 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
                     value,
                     $('[name="aiz-uploader-sort"]').val()
                 );
-               
+
             });
         },
         sortUploaderFiles: function() {
@@ -282,7 +282,7 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
                     value
                 );
 
-               
+
             });
         },
         addSelectedValue: function() {
@@ -320,7 +320,7 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
 
             setTimeout(function() {
                 $(".aiz-uploader-all").html(null);
-                
+
                 if (data.length > 0) {
                     for (var i = 0; i < data.length; i++) {
                         var thumb = "";
@@ -328,14 +328,13 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
                         if (data[i].type === "image") {
                             thumb =
                                 '<img src="' +
-                                AIZ.data.fileBaseUrl +
+                                AIZ.data.appUrl +
                                 data[i].file_name +
                                 '" class="img-fit">';
-                        } 
-                        else {
+                        } else {
                             thumb = '<i class="la la-file-text"></i>';
                         }
-                        
+
                         var html =
                             '<div class="aiz-file-box-wrap" aria-hidden="' +
                             data[i].aria_hidden +
@@ -343,7 +342,7 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
                             data[i].selected +
                             '">' +
                             '<div class="aiz-file-box">' +
-                            
+
                             '<div class="card card-file aiz-uploader-select" title="' +
                             data[i].file_original_name +
                             "." +
@@ -565,13 +564,13 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
                                 AIZ.plugins.notify('danger', AIZ.local.upload_maximum_five_files);
                                 return false;
                             }
-                            
+
                             if (from === "input") {
                                 AIZ.uploader.inputSelectPreviewGenerate(elem);
                             } else if (from === "direct") {
                                 callback(AIZ.uploader.data.selectedFiles);
                             }
-                            
+
                             $("#aizUploaderModal").modal("hide");
                         }
                     );
@@ -1241,7 +1240,7 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
                         c.noUiSlider.on("change", function(a, b) {
                             rangefilter(a);
                             // alert((a[0]));
-                            var str = "đ " + parseInt(a[0]).toFixed(2).toLocaleString() +" - đ " + parseInt(a[1]).toLocaleString();
+                            var str = "đ " + parseInt(a[0]).toFixed(2).toLocaleString() + " - đ " + parseInt(a[1]).toLocaleString();
                             $("#min_price").text(str);
                             $("#min_price_filter").val(parseInt(a[0]));
                             $("#max_price_filter").val(parseInt(a[1]));
@@ -1806,7 +1805,7 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
                     $(".hover-user-top-menu").removeClass('active');
                 });
 
-                $("#resource_nav_id")
+            $("#resource_nav_id")
                 .on("mouseover", function(event) {
                     $(".hover-resource-top-menu").addClass('active');
                 })
@@ -1814,7 +1813,7 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
                     $(".hover-resource-top-menu").removeClass('active');
                 });
 
-            
+
         },
         // trimAppUrl: function() {
         //     if (AIZ.data.appUrl.slice(-1) == '/') {

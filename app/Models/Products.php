@@ -37,6 +37,7 @@ class Products extends Model
         'num_of_sale',
         'meta_img',
         'slug',
+        'short_shelf_life',
         'published',
         'rating',
     ];

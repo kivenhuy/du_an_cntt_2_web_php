@@ -79,14 +79,10 @@
                         @endphp --}}
                         <div class="top_selling_img">
                             {{-- <a href="{{ $product_url }}" class="d-block h-100"> --}}
-                                <img class="lazyload mx-auto img-fit has-transition img_product_top_selling" width="180px" height="180px" src=""
-                                    data-src="https://www.heromarket.vn/public/uploads/all/r9SEif1a6hKlDo2aRCDhNsEQbB08NYl46A1n5ojR.png" alt="{{ $data_selling_product->name }}">
-                            {{-- </a> --}}
-                            {{-- @if($data_selling_product->img_url != "")
-                                <img class="img_product_top_selling" src={{ static_asset($data_selling_product->img_url) }} alt="">
-                            @else
-                                <img class="img_product_top_selling" src={{ static_asset('assets/img/placeholder-rect.jpg') }} alt="">
-                            @endif --}}
+                                <img class="lazyload mx-auto img-fit has-transition img_product_top_selling" width="180px" height="180px" src="{{ static_asset('assets/img/placeholder.jpg') }}"
+                                        data-src="{{ uploaded_asset($data_selling_product->thumbnail_img) }}" alt="{{ $data_selling_product->name}}"
+                                        title="{{ $data_selling_product->name }}"
+                                        onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
                         </div>
                         
                         <div class="content_top_selling ">
@@ -213,14 +209,10 @@
                         @endphp --}}
                         <div class="top_selling_img">
                             {{-- <a href="{{ $product_url }}" class="d-block h-100"> --}}
-                                <img class="lazyload mx-auto img-fit has-transition img_product_top_selling" width="180px" height="180px" src=""
-                                    data-src="https://www.heromarket.vn/public/uploads/all/r9SEif1a6hKlDo2aRCDhNsEQbB08NYl46A1n5ojR.png" alt="{{ $data_selling_product->name }}">
-                            {{-- </a> --}}
-                            {{-- @if($data_selling_product->img_url != "")
-                                <img class="img_product_top_selling" src={{ static_asset($data_selling_product->img_url) }} alt="">
-                            @else
-                                <img class="img_product_top_selling" src={{ static_asset('assets/img/placeholder-rect.jpg') }} alt="">
-                            @endif --}}
+                                <img class="lazyload mx-auto img-fit has-transition img_product_top_selling" width="180px" height="180px" src="{{ static_asset('assets/img/placeholder.jpg') }}"
+                                    data-src="{{ uploaded_asset($data_selling_product->thumbnail_img) }}" alt="{{ $data_selling_product->name}}"
+                                    title="{{ $data_selling_product->name }}"
+                                    onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
                         </div>
                         
                         <div class="content_top_selling ">
