@@ -88,3 +88,21 @@ if (!function_exists('getBaseURL')) {
         return $root;
     }
 }
+
+if (!function_exists('filter_products')) {
+    function filter_products($products)
+    {
+
+        $products = $products->where('published', '1')->where('auction_product', 0)->where('approved', '1');
+        // $verified_sellers = verified_sellers_id();
+        // if (get_setting('vendor_system_activation') == 1) {
+        //     return $products->where(function ($p) use ($verified_sellers) {
+        //         $p->where('added_by', 'admin')->orWhere(function ($q) use ($verified_sellers) {
+        //             $q->whereIn('user_id', $verified_sellers);
+        //         });
+        //     });
+        // } else {
+        //     return $products->where('added_by', 'admin');
+        // }
+    }
+}

@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Uploads;
 use Illuminate\Http\Request;
+use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class UploadsController extends Controller
 {
@@ -64,7 +66,7 @@ class UploadsController extends Controller
         //
     }
 
-    public function upload_photo($file,$user_id)
+    public function upload(Request $request)
     {
         $type = array(
             "jpg" => "image",
@@ -103,21 +105,21 @@ class UploadsController extends Controller
             "xlsx" => "document"
         );
 
-        if (!empty($file)) {
+        if ($request->hasFile('aiz_file')) {
             $upload = new Uploads;
-            $extension = strtolower($file->getClientOriginalExtension());
+            $extension = strtolower($request->file('aiz_file')->getClientOriginalExtension());
 
-            // if (
-            //     env('DEMO_MODE') == 'On' &&
-            //     isset($type[$extension]) &&
-            //     $type[$extension] == 'archive'
-            // ) {
-            //     return '{}';
-            // }
+            if (
+                env('DEMO_MODE') == 'On' &&
+                isset($type[$extension]) &&
+                $type[$extension] == 'archive'
+            ) {
+                return '{}';
+            }
 
             if (isset($type[$extension])) {
                 $upload->file_original_name = null;
-                $arr = explode('.', $file->getClientOriginalName());
+                $arr = explode('.', $request->file('aiz_file')->getClientOriginalName());
                 for ($i = 0; $i < count($arr) - 1; $i++) {
                     if ($i == 0) {
                         $upload->file_original_name .= $arr[$i];
@@ -126,75 +128,41 @@ class UploadsController extends Controller
                     }
                 }
 
-                // if($extension == 'svg') {
-                //     $sanitizer = new Sanitizer();
-                //     // Load the dirty svg
-                //     $dirtySVG = file_get_contents($file);
 
-                //     // Pass it to the sanitizer and get it back clean
-                //     $cleanSVG = $sanitizer->sanitize($dirtySVG);
 
-                //     // Load the clean svg
-                //     file_put_contents($file, $cleanSVG);
-                // }
+                $path = $request->file('aiz_file')->store('uploads/all', 'local');
+                $size = $request->file('aiz_file')->getSize();
 
-                $path = $file->store('uploads/all', 'public');
-                $storagePath = 'storage/' . $path;
-
-                // dd($path);
-                $size = $file->getSize();
-
-                // Return MIME type ala mimetype extension
-                $finfo = finfo_open(FILEINFO_MIME_TYPE);
-
-                // Get the MIME type of the file
-                // $file_mime = finfo_file($finfo, base_path('public/storage/') . $path);
-
-                // if ($type[$extension] == 'image' && get_setting('disable_image_optimization') != 1) {
-                //     try {
-                //         $img = Image::make($file->getRealPath())->encode();
-                //         $height = $img->height();
-                //         $width = $img->width();
-                //         if ($width > $height && $width > 1500) {
-                //             $img->resize(1500, null, function ($constraint) {
-                //                 $constraint->aspectRatio();
-                //             });
-                //         } elseif ($height > 1500) {
-                //             $img->resize(null, 800, function ($constraint) {
-                //                 $constraint->aspectRatio();
-                //             });
-                //         }
-                //         $img->save(base_path('public/') . $path);
-                //         clearstatcache();
-                //         $size = $img->filesize();
-                //     } catch (\Exception $e) {
-                //         //dd($e);
-                //     }
-                // }
-
-                // if (env('FILESYSTEM_DRIVER') == 's3') {
-                //     Storage::disk('s3')->put(
-                //         $path,
-                //         file_get_contents(base_path('public/') . $path),
-                //         [
-                //             'visibility' => 'public',
-                //             'ContentType' =>  $extension == 'svg' ? 'image/svg+xml' : $file_mime
-                //         ]
-                //     );
-                //     if ($arr[0] != 'updates') {
-                //         unlink(base_path('public/') . $path);
-                //     }
-                // }
+                if ($type[$extension] == 'image' ) {
+                    try {
+                        $img = Image::make($request->file('aiz_file')->getRealPath())->encode();
+                        $height = $img->height();
+                        $width = $img->width();
+                        if ($width > $height && $width > 1500) {
+                            $img->resize(1500, null, function ($constraint) {
+                                $constraint->aspectRatio();
+                            });
+                        } elseif ($height > 1500) {
+                            $img->resize(null, 800, function ($constraint) {
+                                $constraint->aspectRatio();
+                            });
+                        }
+                        $img->save(base_path('public/') . $path);
+                        clearstatcache();
+                        $size = $img->filesize();
+                    } catch (\Exception $e) {
+                        //dd($e);
+                    }
+                }
 
                 $upload->extension = $extension;
-                $upload->file_name = $storagePath;
-                $upload->user_id = $user_id;
+                $upload->file_name = $path;
+                $upload->user_id = Auth::user()->id;
                 $upload->type = $type[$upload->extension];
                 $upload->file_size = $size;
-                // dd($upload);
                 $upload->save();
-                return $upload->id;
             }
+            return '{}';
         }
     }
 

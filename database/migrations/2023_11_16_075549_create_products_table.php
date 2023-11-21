@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('unit');
             $table->double('weight',8,2);
             $table->integer('min_qty');
+            $table->integer('published');
             $table->integer('low_stock_quantity')->nullable();
             $table->double('discount',20,2)->nullable();
             $table->string('discount_type')->nullable();

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Customer\HomeController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UploadsController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,7 +26,14 @@ Route::post("/user_registration", [LoginController::class, 'login'])->name('user
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get("/logout", [LoginController::class, 'logout'])->name('user.logout');
-    Route::get('/', [HomeController::class, 'index'])->name('homepage');
+
+
+    Route::controller(HomeController::class)->group(function () {
+        Route::get('/', 'index')->name('homepage');
+        Route::get('/product/{slug}', 'product')->name('product');
+    });
+
+    
 
 
     Route::controller(UploadsController::class)->group(function () {
@@ -35,6 +43,19 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/file-uploader/get_file_by_ids', 'get_preview_files');
         Route::get('/file-uploader/download/{id}', 'attachment_download')->name('download_attachment');
     });
+
+
+    // Search
+    Route::controller(SearchController::class)->group(function () {
+        Route::get('/search', 'index')->name('search');
+        Route::get('/search?keyword={search}', 'index')->name('suggestion.search');
+        Route::post('/ajax-search', 'ajax_search')->name('search.ajax');
+        // Route::get('/category/{category_slug}', 'listingByCategory')->name('products.category');
+        // Route::get('/brand/{brand_slug}', 'listingByBrand')->name('products.brand');
+    });
+
+
+    
 });
 
 
