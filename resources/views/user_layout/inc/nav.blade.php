@@ -26,7 +26,7 @@
                     </button>
                     <!-- Header Logo -->
                     <div class="col-auto pl-0 pr-3 d-flex align-items-center">
-                       
+                        <img src="{{ uploaded_asset(13) }}" alt="" class="mw-100 h-30px h-md-65px" style="height: 90px;width: 90px;">
                     </div>
                     <!-- Search Icon for small device -->
                     <div class="d-lg-none ml-auto mr-0">

@@ -14,7 +14,7 @@ class ProductsTableSeeder extends Seeder
     public function run(): void
     {
         Products::create([
-            'name'=>'Product 02',
+            'name'=>'Jasmine Rice',
             'user_id'=>3,
             'category_id'=>1,
             'photos'=>"",
@@ -40,13 +40,45 @@ class ProductsTableSeeder extends Seeder
             'est_shipping_days'=>1,
             'num_of_sale'=>0,
             'meta_img'=>"",
-            'slug'=>"product_02",
+            'slug'=>"jasmine_rice",
             'rating'=>0.00,
             'published'=>1,
         ]);
 
         Products::create([
-            'name'=>'Product 03',
+            'name'=>'Red Dragon Rice',
+            'user_id'=>3,
+            'category_id'=>1,
+            'photos'=>"",
+            'thumbnail_img'=>"",
+            'tags'=>0,
+            'description'=>"",
+            'unit_price'=>58000,
+            'purchase_price'=>0.00,
+            'variant_product'=>0,
+            'attributes'=>"[]",
+            'choice_options'=>"[]",
+            'approved'=>0,
+            'current_stock'=>30000,
+            'unit'=>"KG",
+            'weight'=>1,
+            'min_qty'=>1,
+            'low_stock_quantity'=>1,
+            'discount'=>0.00,
+            'discount_type'=>"amount",
+            'discount_start_date'=>"",
+            'discount_end_date'=>"",
+            'shipping_type'=>"free",
+            'est_shipping_days'=>1,
+            'num_of_sale'=>0,
+            'meta_img'=>"",
+            'slug'=>"red_dragon_rice",
+            'rating'=>0.00,
+            'published'=>1,
+        ]);
+
+        Products::create([
+            'name'=>'Broken Rice',
             'user_id'=>3,
             'category_id'=>1,
             'photos'=>"",
@@ -72,13 +104,13 @@ class ProductsTableSeeder extends Seeder
             'est_shipping_days'=>1,
             'num_of_sale'=>0,
             'meta_img'=>"",
-            'slug'=>"product_03",
+            'slug'=>"broken_rice",
             'rating'=>0.00,
             'published'=>1,
         ]);
 
         Products::create([
-            'name'=>'Product 04',
+            'name'=>'Pepper',
             'user_id'=>3,
             'category_id'=>1,
             'photos'=>"",
@@ -104,13 +136,13 @@ class ProductsTableSeeder extends Seeder
             'est_shipping_days'=>1,
             'num_of_sale'=>0,
             'meta_img'=>"",
-            'slug'=>"product_04",
+            'slug'=>"pepper_vn",
             'rating'=>0.00,
             'published'=>1,
         ]);
 
         Products::create([
-            'name'=>'Product 05',
+            'name'=>'Mango',
             'user_id'=>3,
             'category_id'=>1,
             'photos'=>"",
@@ -136,13 +168,13 @@ class ProductsTableSeeder extends Seeder
             'est_shipping_days'=>1,
             'num_of_sale'=>0,
             'meta_img'=>"",
-            'slug'=>"product_05",
+            'slug'=>"mango_vn",
             'rating'=>0.00,
             'published'=>1,
         ]);
 
         Products::create([
-            'name'=>'Product 06',
+            'name'=>'Apple',
             'user_id'=>3,
             'category_id'=>1,
             'photos'=>"",
@@ -168,13 +200,13 @@ class ProductsTableSeeder extends Seeder
             'est_shipping_days'=>1,
             'num_of_sale'=>0,
             'meta_img'=>"",
-            'slug'=>"product_06",
+            'slug'=>"apple_vn",
             'rating'=>0.00,
             'published'=>1,
         ]);
 
         Products::create([
-            'name'=>'Product 07',
+            'name'=>'Banana',
             'user_id'=>3,
             'category_id'=>1,
             'photos'=>"",
@@ -200,13 +232,13 @@ class ProductsTableSeeder extends Seeder
             'est_shipping_days'=>1,
             'num_of_sale'=>0,
             'meta_img'=>"Product 01",
-            'slug'=>"product_07",
+            'slug'=>"banana_vn",
             'rating'=>0.00,
             'published'=>1,
         ]);
 
         Products::create([
-            'name'=>'Product 08',
+            'name'=>'Dry Durian',
             'user_id'=>3,
             'category_id'=>1,
             'photos'=>"",
@@ -232,7 +264,7 @@ class ProductsTableSeeder extends Seeder
             'est_shipping_days'=>1,
             'num_of_sale'=>0,
             'meta_img'=>"",
-            'slug'=>"product_08",
+            'slug'=>"dry_durian",
             'rating'=>0.00,
             'published'=>1,
         ]);

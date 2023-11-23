@@ -12569,7 +12569,8 @@ a.disabled {
 }
 .search_bar
 {
-    height: 80px !important;
+    height: auto !important;
+    padding: 10px 0px;
 }
 
 body
