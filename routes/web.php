@@ -20,7 +20,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get("/login", [LoginController::class, 'showLoginForm'])->name('login.form');
 Route::post("/login", [LoginController::class, 'login'])->name('user.login');
-Route::post("/user_registration", [LoginController::class, 'login'])->name('user.registration');
+Route::get("/user_registration", [LoginController::class, 'showRegisterForm'])->name('user.registration_form');
+Route::post("/user_registration", [LoginController::class, 'showRegisterForm'])->name('user.registration');
 
 
 
@@ -31,6 +32,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::controller(HomeController::class)->group(function () {
         Route::get('/', 'index')->name('homepage');
         Route::get('/product/{slug}', 'product')->name('product');
+        Route::get('/terms', 'terms')->name('terms');
     });
 
     

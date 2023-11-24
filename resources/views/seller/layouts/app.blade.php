@@ -10,6 +10,9 @@
 	<!-- google font -->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700">
 
+    {{-- Font Awsomer --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 	<!-- aiz core css -->
 	<link rel="stylesheet" href="{{ static_asset('assets/css/vendors.css') }}">
     <link rel="stylesheet" href="{{ static_asset('assets/css/custom-seller.css') }}">

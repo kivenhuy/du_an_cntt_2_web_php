@@ -21,6 +21,11 @@ class LoginController extends Controller
         return view('user_layout.user_login');
     }
 
+    public function showRegisterForm()
+    {
+        return view('user_layout.user_register');
+    }
+
     public function login(Request $request)
     {
         

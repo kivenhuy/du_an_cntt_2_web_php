@@ -6935,14 +6935,14 @@ font-size: 80%;
 color: #9191a0;
 }
 .aiz-side-nav-list .aiz-side-nav-arrow::after {
-content: "\f105";
-font-family: "Line Awesome Free";
+content: "\f0da";
+font-family: "FontAwesome";
 font-weight: 900;
 -webkit-transition: all 0.3s ease;
 transition: all 0.3s ease;
 }
 [dir="rtl"] .aiz-side-nav-list .aiz-side-nav-arrow::after {
-content: "\f104";
+content: "\f0d7";
 }
 .aiz-side-nav-list [aria-expanded="true"] .aiz-side-nav-arrow::after {
 -webkit-transform: rotate(90deg);

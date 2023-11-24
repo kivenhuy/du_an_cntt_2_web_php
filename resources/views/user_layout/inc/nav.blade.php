@@ -26,7 +26,7 @@
                     </button>
                     <!-- Header Logo -->
                     <div class="col-auto pl-0 pr-3 d-flex align-items-center">
-                        <img src="{{ uploaded_asset(13) }}" alt="" class="mw-100 h-30px h-md-65px" style="height: 90px;width: 90px;">
+                        <img src="{{ static_asset('assets/img/DTQSbmTVlRIyc56RV4e98YWpf1fa9dfsKYb2IojK.jpg') }}" alt="" class="mw-100 h-30px h-md-65px" style="height: 90px;width: 90px;">
                     </div>
                     <!-- Search Icon for small device -->
                     <div class="d-lg-none ml-auto mr-0">
@@ -113,7 +113,24 @@
                     </div>
                     {{-- Account --}}
                     <div class="ml-auto mr-0 d-none d-xl-block">
-                        
+                        @auth
+                            <span class="d-none d-xl-flex align-items-center nav-user-info py-20px" id="nav-user-info">
+                                <!-- Image -->
+                                <span
+                                    class="size-40px overflow-hidden border border-transparent nav-user-img">
+                                    @if (Auth::user()->avatar_original != null)
+                                        <img src="{{ uploaded_asset(Auth::user()->avatar_original) }}"
+                                            class="img-fit h-100"
+                                            onerror="this.onerror=null;this.src='{{ static_asset('assets/img/avatar-place.png') }}';">
+                                    @else
+                                        <img src="{{ static_asset('assets/img/avatar-place.png') }}" class="image"
+                                            onerror="this.onerror=null;this.src='{{ static_asset('assets/img/avatar-place.png') }}';">
+                                    @endif
+                                </span>
+                                <!-- Name -->
+                                <h4 class="h5 fs-14 fw-700 text-dark ml-2 mb-0">{{ Auth::user()->name }}</h4>
+                            </span>
+                        @else
                             <!--Login & Registration -->
                             <span class="d-none d-xl-flex align-items-center nav-user-info ml-3">
                                 <!-- Image -->
@@ -126,18 +143,46 @@
                                             transform="translate(-2.064 -1.995)" fill="#91919b" />
                                     </svg>
                                 </span>
-                                @if (Auth::check())
-                                    <a href="{{ route('user.logout') }}"
-                                        class="text-reset opacity-60 hov-opacity-100 hov-text-primary fs-12 d-inline-block border-right border-soft-light border-width-2 pr-2 ml-3">Logout</a>
-                                @else
-                                    <a href="{{ route('user.login') }}"
-                                        class="text-reset opacity-60 hov-opacity-100 hov-text-primary fs-12 d-inline-block border-right border-soft-light border-width-2 pr-2 ml-3">Login</a>
-                                    <a href="{{ route('user.registration') }}"
-                                        class="text-reset opacity-60 hov-opacity-100 hov-text-primary fs-12 d-inline-block py-2 pl-2">Register</a>
-                                @endif
-                               
+                                <a href="{{ route('user.login') }}"
+                                    class="text-reset opacity-60 hov-opacity-100 hov-text-primary fs-12 d-inline-block border-right border-soft-light border-width-2 pr-2 ml-3">{{ translate('Login') }}</a>
+                                <a href="{{ route('user.registration_form') }}"
+                                    class="text-reset opacity-60 hov-opacity-100 hov-text-primary fs-12 d-inline-block py-2 pl-2">{{ translate('Register') }}</a>
                             </span>
-                        
+                        @endauth
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loged in user Menus -->
+            <div class="hover-user-top-menu position-absolute top-100 left-0 right-0 z-3">
+                <div class="container">
+                    <div class="position-static float-right">
+                        <div class="aiz-user-top-menu bg-white rounded-0 border-top shadow-sm" style="width:220px;">
+                            <ul class="list-unstyled no-scrollbar mb-0 text-left">
+                                <li class="user-top-nav-element border border-top-0" data-id="1">
+                                    <a href="{{ route('user.logout') }}"
+                                        class="text-truncate text-dark px-4 fs-14 d-flex align-items-center hov-column-gap-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="15.999"
+                                            viewBox="0 0 16 15.999">
+                                            <g id="Group_25503" data-name="Group 25503"
+                                                transform="translate(-24.002 -377)">
+                                                <g id="Group_25265" data-name="Group 25265"
+                                                    transform="translate(-216.534 -160)">
+                                                    <path id="Subtraction_192" data-name="Subtraction 192"
+                                                        d="M12052.535,2920a8,8,0,0,1-4.569-14.567l.721.72a7,7,0,1,0,7.7,0l.721-.72a8,8,0,0,1-4.567,14.567Z"
+                                                        transform="translate(-11803.999 -2367)" fill="#d43533" />
+                                                </g>
+                                                <rect id="Rectangle_19022" data-name="Rectangle 19022" width="1"
+                                                    height="8" rx="0.5" transform="translate(31.5 377)"
+                                                    fill="#d43533" />
+                                            </g>
+                                        </svg>
+                                        <span
+                                            class="user-top-menu-name text-primary has-transition ml-3">{{ translate('Logout') }}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>

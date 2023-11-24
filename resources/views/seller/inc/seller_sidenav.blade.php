@@ -13,13 +13,13 @@
             <ul class="aiz-side-nav-list" id="main-menu" data-toggle="aiz-side-menu">
                 <li class="aiz-side-nav-item">
                     <a href="{{ route('seller.dashboard') }}" class="aiz-side-nav-link">
-                        <i class="las la-home aiz-side-nav-icon"></i>
+                        <i class="fa fa-home aiz-side-nav-icon"></i>
                         <span class="aiz-side-nav-text">Dashboard'</span>
                     </a>
                 </li>
                 <li class="aiz-side-nav-item">
                     <a href="#" class="aiz-side-nav-link">
-                        <i class="las la-shopping-cart aiz-side-nav-icon"></i>
+                        <i class="fa-solid fa-box aiz-side-nav-icon"></i>
                         <span class="aiz-side-nav-text">Products</span>
                         <span class="aiz-side-nav-arrow"></span>
                     </a>
