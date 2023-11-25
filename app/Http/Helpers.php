@@ -54,6 +54,8 @@ if (!function_exists('areActiveRoutes')) {
     }
 }
 
+
+
 function translate($key, $lang = null, $addslashes = false)
 {
     return $key; 

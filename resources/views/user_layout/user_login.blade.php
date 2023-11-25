@@ -97,7 +97,7 @@
                                 
                                 <!-- Right Side Image -->
                                 <div class="col-lg-6 col-md-5 py-3 py-md-0">
-                                    <img src="" alt="" class="img-fit h-100">
+                                    <img src="{{ static_asset('assets/img/IdeH4CqNTAOtbcE34m9VksdxPB5Zgoko1mIPBtwq.jpg') }}" alt="" class="img-fit h-100">
                                 </div>
                             </div>
                         </div>

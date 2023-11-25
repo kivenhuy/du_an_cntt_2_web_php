@@ -11,11 +11,7 @@
                                 <!-- Left Side -->
                                 <div class="col-lg-8 col-md-7 p-4 p-lg-5">
                                     <!-- Titles -->
-                                    <div class="col-md-4" style="margin-bottom:32px;">
-                                        <a href="{{route('homepage')}}" >
-                                            <img src={{ static_asset('assets/img/DTQSbmTVlRIyc56RV4e98YWpf1fa9dfsKYb2IojK.jpg') }} style="width: 125px;margin-bottom: 6%;height: 125px;" alt="">
-                                        </a>
-                                    </div>
+                                    
                                     <div class="row align-items-center  ">
                                         <div class="text-center col-md-1 d-none d-lg-block" style="margin-bottom: 0.5rem;">
                                             <a href="{{url()->previous()}}" ><i style="color:black;font-size: 1.73em;" class="fa fa-arrow-left"></i></a>
@@ -34,7 +30,7 @@
                                                     </li>
                 
                                                     <li class="nav-item" style="">
-                                                        <a class="nav-link {{ (old('user_type') == 'seller') ? 'active' : '' }}" id="custom-content-below-messages-tab" data-toggle="pill" href="#refundhistorytab" role="tab" aria-controls="custom-content-below-messages" aria-selected="false" ><span class="text_head_register">{{ translate('Seller/Farmer') }}</span></a>
+                                                        <a class="nav-link {{ (old('user_type') == 'seller') ? 'active' : '' }}" id="custom-content-below-messages-tab" data-toggle="pill" href="#refundhistorytab" role="tab" aria-controls="custom-content-below-messages" aria-selected="false" ><span class="text_head_register">{{ translate('Seller') }}</span></a>
                                                     </li>
 
                                                     
@@ -294,7 +290,9 @@
                                 </div>
                                 
                                 <!-- Right Side Image -->
-                                
+                                <div class="col-lg-4 col-md-5 py-3 py-md-0">
+                                    <img style="position: fixed;width: 32% !important;object-fit: contain;" src="{{ static_asset('assets/img/M1CsfH3WFfdTO8iaXkgwQq5Q3Zl6A045yaQeMr9s.jpg') }}" alt="" class="img-fit h-100">
+                                </div>
                                 
                             </div>
                         </div>
@@ -368,6 +366,13 @@
 
 @section('script')
     <script type="text/javascript">
-       
+     var img_1 = "{{ static_asset('assets/img/M1CsfH3WFfdTO8iaXkgwQq5Q3Zl6A045yaQeMr9s.jpg') }}";
+       var img_2 = "{{ static_asset('assets/img/IINCVVMFxX5SUOocfZB43fopY1cY1aaBCXBcKCUf.jpg') }}";
+       $('#custom-content-below-home-tab').on('click',function(event){
+            $('.img-fit').attr('src',img_1);
+        });
+       $('#custom-content-below-messages-tab').on('click',function(event){
+            $('.img-fit').attr('src',img_2);
+        });
     </script>
 @endsection

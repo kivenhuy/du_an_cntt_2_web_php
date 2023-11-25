@@ -49,6 +49,10 @@ class LoginController extends Controller
             {
                 return redirect()->route('seller.dashboard');
             }
+            else if($user->user_type == "admin")
+            {
+                return redirect()->route('admin.dashboard');
+            }
             return redirect()->route('homepage');
         }
 
