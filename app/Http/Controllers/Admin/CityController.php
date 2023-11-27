@@ -27,6 +27,13 @@ class CityController extends Controller
         return view('admin.city.create',['country'=>$country]);
     }
 
+
+    public function filter_by_country(Request $request)
+    {
+        $city = Country::find($request->id)->city;
+        return $city;
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -42,12 +49,12 @@ class CityController extends Controller
         if($final_data)
         {
             flash(translate('City has been inserted successfully'))->success();
-            return redirect('city.index');
+            return redirect()->route('city.index');
         }
         else
         {
             flash(translate('City has been inserted Fail'))->error();
-            return redirect('city.index');
+            return redirect()->route('city.index');
         }
     }
 

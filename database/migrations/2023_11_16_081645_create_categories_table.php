@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('banner')->nullable();
             $table->string('icon')->nullable();
+            $table->string('cover_image')->nullable();
             $table->string('slug')->nullable();
             $table->string('meta_title')->nullable();
             $table->string('meta_description')->nullable();

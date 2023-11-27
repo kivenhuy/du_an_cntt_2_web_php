@@ -26,6 +26,12 @@ class DistrictController extends Controller
         return view('admin.district.create',['city'=>$city]);
     }
 
+    public function filter_by_city(Request $request)
+    {
+        $district = City::find($request->id)->district;
+        return $district;
+    }
+
     /**
      * Store a newly created resource in storage.
      */

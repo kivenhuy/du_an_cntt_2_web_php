@@ -157,51 +157,48 @@
                                                                         <label for="password" class="fs-12 fw-700 text-soft-dark">{{  translate('Country') }}</label>
                                                                         <select required class="form-control aiz-selectpicker" id="country_2" name="country_2" data-live-search="true">
                                                                             <option value="" hidden>Select Country</option>
-                                                                                
+                                                                            @foreach($country as $data_country)
+                                                                                <option value="{{$data_country->id}}">{{$data_country->country_name}}</option>
+                                                                            @endforeach
                                                                         </select>
                                                                         {{-- <input type="text" class="form-control rounded-0{{ $errors->has('country') ? ' is-invalid' : '' }}" placeholder="{{  translate('Country') }}" name="country"> --}}
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-md-6">
-                                                                    <!-- State -->
-                                                                    <div class="form-group">
-                                                                        <label for="state" class="fs-12 fw-700 text-soft-dark">{{  translate('State') }}</label>
-                                                                        <select required class="form-control aiz-selectpicker" id="state_2" name="state_2" data-live-search="true">
-                                                                            <option value="" selected hidden>Select State</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="form-group row">
                                                                 <div class="col-md-6">
                                                                     {{-- City --}}
                                                                     <div class="form-group">
                                                                         <label for="password_confirmation" class="fs-12 fw-700 text-soft-dark">{{  translate('City') }}</label>
                                                                         <select required class="form-control aiz-selectpicker" id="city_2" name="city_2" data-live-search="true">
                                                                             <option value="" selected hidden>Select City</option>
-                                                                            {{-- @foreach ($country as $data_country)
-                                                                                <option value={{$data_country->id}}>{{$data_country->name}}</option>
-                                                                            @endforeach --}}
+                                                                           
                                                                         </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                     <!-- District -->
-                                                                     <div class="form-group">
-                                                                        <label for="ward_code" class="fs-12 fw-700 text-soft-dark">{{  translate('District') }}</label>
-                                                                        <input type="text" class="form-control rounded-0" placeholder="{{  translate('District') }}" name="district">
                                                                     </div>
                                                                 </div>
                                                             </div>
 
                                                             <div class="form-group row">
+                                                                
+                                                                <div class="col-md-6">
+                                                                     <!-- District -->
+                                                                     <div class="form-group">
+                                                                        <label for="ward_code" class="fs-12 fw-700 text-soft-dark">{{  translate('District') }}</label>
+                                                                        <select required class="form-control aiz-selectpicker" id="district" name="district" data-live-search="true">
+                                                                            <option value="" selected hidden>Select District</option>
+                                                                           
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
                                                                         <label for="ward_code" class="fs-12 fw-700 text-soft-dark">{{  translate('Ward') }}</label>
                                                                         <input type="text" class="form-control rounded-0" placeholder="{{  translate('Ward') }}" name="ward" value="{{ old('ward')}}">
                                                                     </div>
                                                                 </div>
+                                                            </div>
+
+                                                            <div class="form-group row">
+                                                               
                                                                 <div class="col-md-6">
                                                                     <!-- Address -->
                                                                     <div class="form-group">
@@ -374,5 +371,67 @@
        $('#custom-content-below-messages-tab').on('click',function(event){
             $('.img-fit').attr('src',img_2);
         });
+
+
+        $('#country_2').on('change',function()
+        {
+            var country = $('#country_2').val();
+            // alert(country);
+            if(country != "")
+            {
+                $.ajax
+                ({
+                    url: "{{ route('city.filter_by_country') }}", 
+                    method:'post',
+                    data:{
+                        id:country
+                    },
+                    headers: {
+                        'X-CSRF-Token': '{{ csrf_token() }}',
+                    },
+                    async:false,
+                    success: function(result){
+                        $('#city_2').html('');
+                        $('#city_2').append('<option value="" selected hidden>Select City</option>');
+                        result.forEach(element => {
+                            console.log(element.id);
+                            $('#city_2').append('<option value="' + element.id+ '">' + element.city_name+ '</option>');
+                        });
+                        $('#city_2').selectpicker('refresh');
+                    }
+                });
+            }
+        });
+
+        $('#city_2').on('change',function()
+        {
+            var city = $('#city_2').val();
+            // alert(country);
+            if(city != "")
+            {
+                $.ajax
+                ({
+                    url: "{{ route('district.filter_by_city') }}", 
+                    method:'post',
+                    data:{
+                        id:city
+                    },
+                    headers: {
+                        'X-CSRF-Token': '{{ csrf_token() }}',
+                    },
+                    async:false,
+                    success: function(result){
+                        $('#district').html('');
+                        $('#district').append('<option value="" selected hidden>Select District</option>');
+                        result.forEach(element => {
+                            console.log(element.id);
+                            $('#district').append('<option value="' + element.id+ '">' + element.district_name+ '</option>');
+                        });
+                        $('#district').selectpicker('refresh');
+                    }
+                });
+            }
+        });
+            
     </script>
 @endsection

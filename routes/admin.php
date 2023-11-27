@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DistrictController;
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['auth'],'prefix' => 'admin'], function () {
@@ -23,6 +24,7 @@ Route::group(['middleware' => ['auth'],'prefix' => 'admin'], function () {
     Route::controller(CityController::class)->group(function () {
         Route::get('/city', 'index')->name('city.index');
         Route::get('/city/create', 'create')->name('city.create');
+       
         Route::get('/city/data_ajax', 'data_ajax')->name('city.data_ajax');
         Route::post("/city/store",'store')->name('city.store'); 
     });
@@ -42,4 +44,11 @@ Route::group(['middleware' => ['auth'],'prefix' => 'admin'], function () {
         Route::post("/category/store",'store')->name('categories.store'); 
     });
 
+});
+
+Route::controller(CityController::class)->group(function () {
+    Route::post('/city/filter_by_country', 'filter_by_country')->name('city.filter_by_country');
+});
+Route::controller(DistrictController::class)->group(function () {
+    Route::post('/district/filter_by_city', 'filter_by_city')->name('district.filter_by_city');
 });

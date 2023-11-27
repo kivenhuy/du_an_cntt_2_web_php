@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class CategoryController extends Controller
 {
@@ -13,7 +15,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.category.index');
     }
 
     /**
@@ -21,7 +23,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.category.create');
     }
 
     /**
@@ -29,7 +31,22 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $category = new Category;
+        $category->name = $request->name;
+        $category->banner = $request->banner;
+        $category->icon = $request->icon;
+        $category->cover_image = $request->cover_image;
+        $category->meta_title = $request->meta_title;
+        $category->meta_description = $request->meta_description;
+        if ($request->slug != null) {
+            $category->slug = preg_replace('/[^A-Za-z0-9\-]/', '', str_replace(' ', '-', $request->slug));
+        }
+        else {
+            $category->slug = preg_replace('/[^A-Za-z0-9\-]/', '', str_replace(' ', '-', $request->name)).'-'.Str::random(5);
+        }
+        $category->save();
+        flash(translate('Category has been inserted successfully'))->success();
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -62,5 +79,18 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         //
+    }
+
+    public function data_ajax(Request $request)
+    {
+        $category_data = Category::all()->sortDesc();
+        $out =  DataTables::of($category_data)->make(true);
+        $data = $out->getData();
+        for($i=0; $i < count($data->data); $i++) {
+            $output = '';
+            $data->data[$i]->action = (string)$output;
+        }
+        $out->setData($data);
+        return $out;
     }
 }
