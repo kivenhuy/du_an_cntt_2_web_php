@@ -19,7 +19,9 @@
                     <a class="text-reset" href="{{ route('product', $product->slug) }}">
                         <div class="d-flex search-product align-items-center">
                             <div class="mr-3">
-                                <img class="size-40px img-fit rounded" src="">
+                                <img class="size-40px img-fit rounded" src="{{ static_asset('assets/img/placeholder.jpg') }}"
+                                data-src="{{ uploaded_asset($product->thumbnail_img) }}" alt="{{ $product->name}}"
+                                title="{{ $product->name }}">
                             </div>
                             <div class="flex-grow-1 overflow--hidden minw-0">
                                 <div class="product-name text-truncate fs-14 mb-5px">
