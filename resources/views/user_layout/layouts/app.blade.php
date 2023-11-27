@@ -91,7 +91,7 @@
 
         @yield('content')
 
-        {{-- @include('frontend.inc.footer') --}}
+        @include('user_layout.inc.footer')
 
     </div>
 
@@ -129,6 +129,15 @@
     <script src="{{ static_asset('assets/js/vendors.js') }}"></script>
     {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> --}}
     <script src="{{ static_asset('assets/js/custom-core.js?v=') }}{{ rand(1000,9999) }}"></script>
+    <script>
+        $(".hover-user-top-menu .aiz-user-top-menu").on("mouseover", function (event) {
+            $(".hover-user-top-menu").addClass('active');
+        })
+        .on("mouseout", function (event) {
+            $(".hover-user-top-menu").removeClass('active');
+        });
+        
+    </script>
     <script>
         $('#search').on('keyup', function(){
             search();
