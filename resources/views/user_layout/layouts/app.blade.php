@@ -129,6 +129,11 @@
     <script src="{{ static_asset('assets/js/vendors.js') }}"></script>
     {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> --}}
     <script src="{{ static_asset('assets/js/custom-core.js?v=') }}{{ rand(1000,9999) }}"></script>
+    <script type="text/javascript">
+        @foreach (session('flash_notification', collect())->toArray() as $message)
+	        AIZ.plugins.notify('{{ $message['level'] }}', '{{ $message['message'] }}');
+	    @endforeach
+    </script>
     <script>
         $(".hover-user-top-menu .aiz-user-top-menu").on("mouseover", function (event) {
             $(".hover-user-top-menu").addClass('active');

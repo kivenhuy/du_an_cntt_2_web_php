@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Customer\HomeController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\ShopController;
 use App\Http\Controllers\UploadsController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,7 +23,7 @@ Route::get("/login", [LoginController::class, 'showLoginForm'])->name('login.for
 Route::post("/login", [LoginController::class, 'login'])->name('user.login');
 Route::get("/user_registration", [LoginController::class, 'showRegisterForm'])->name('user.registration_form');
 Route::post("/user_registration", [LoginController::class, 'storeRegisterForm'])->name('user.registration');
-
+Route::resource('shops', ShopController::class);
 
 
 Route::group(['middleware' => ['auth']], function () {

@@ -119,7 +119,7 @@
                                                         </form>
                                                     </div>
                                                     <div class="tab-pane fade  {{ (old('user_type') == 'seller') ? 'active show' : '' }}" id="refundhistorytab" role="tabpanel" aria-labelledby="custom-content-below-info-tab">
-                                                        <form id="reg-form-seller" class="form-default" role="form" action="" method="POST" enctype="multipart/form-data">
+                                                        <form id="reg-form-seller" class="form-default" role="form" action="{{ route('shops.store') }}" method="POST" enctype="multipart/form-data">
                                                         @csrf
                                                             <input type="hidden" name="user_type" value="seller">
 
@@ -249,32 +249,14 @@
                                                                     
                                                                 </div>
                                                             </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-md-12">
-                                                                    <div class="form-group">
-                                                                        <label for="category_pro" class="fs-12 fw-700 text-soft-dark">{{  translate('Category of products') }}</label>
-                                                                        <select required class="form-control aiz-selectpicker" multiple id="category_pro" name="category_pro[]" data-live-search="true">
-                                                                            
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                             <!-- Recaptcha -->
                                                             
-                                                            <div class="mb-3">
-                                                                <label class="aiz-checkbox d-block">
-                                                                    <input type="checkbox" name="checkbox_example_1" required>
-                                                                    <span class="">{{ translate('By signing up you agree to our ')}} <a href="{{ route('terms') }}" class="fw-500">{{ translate('terms and conditions.') }}</a></span>
-                                                                    <span class="aiz-square-check"></span>
-                                                                </label>
-                                                            </div>
 
                                                             <!-- Submit Button -->
                                                             <div class="mb-4 mt-4">
                                                                 <button type="btn" id="btnSeller" class="btn btn-primary btn-block fw-600 rounded-4">{{  translate('Create Account') }}</button>
                                                             </div>
                                                         </form>
-                                                    </div>
+                                                    </div>  
                                                 </div>
                                         </div>
 

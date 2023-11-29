@@ -130,7 +130,7 @@ class LoginController extends Controller
             'email' => $user->email,
             'password' => $request->password
         ];
-        if (auth()->attempt($credential)) {
+        if (auth()->attempt($credential )) {
             $user_login = Auth::user();
             if($user_login->user_type == "seller")
             {
