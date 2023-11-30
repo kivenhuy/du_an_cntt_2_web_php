@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => ['auth']], function () {
     Route::controller(DashboardController::class)->group(function () {
         Route::get('/seller/dashboard', 'index')->name('seller.dashboard');
+        Route::get('/seller/profile', 'profile')->name('seller.profile.index');
+        Route::get('/seller/shop/verify', 'verify')->name('seller.shop.verify');
         Route::get("/seller/logout", [LoginController::class, 'logout'])->name('seller.logout'); 
     });
 
