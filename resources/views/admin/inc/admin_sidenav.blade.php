@@ -17,7 +17,7 @@
                 {{-- @can('admin_dashboard') --}}
                 <li class="aiz-side-nav-item">
                     <a href="{{route('admin.dashboard')}}" class="aiz-side-nav-link">
-                        <i class="las la-home aiz-side-nav-icon"></i>
+                        <i class="fa fa-home aiz-side-nav-icon"></i>
                         <span class="aiz-side-nav-text">{{translate('Dashboard')}}</span>
                     </a>
                 </li>
@@ -56,9 +56,25 @@
                 </li>
                 <li class="aiz-side-nav-item">
                     <a href="{{route('categories.index')}}" class="aiz-side-nav-link">
-                        <i class="las la-home aiz-side-nav-icon"></i>
+                        <i class="fa fa-mortar-pestle aiz-side-nav-icon"></i>
                         <span class="aiz-side-nav-text">{{translate('Category')}}</span>
                     </a>
+                </li>
+                <li class="aiz-side-nav-item">
+                    <a href="#" class="aiz-side-nav-link">
+                        <i class="fa-solid fa-box aiz-side-nav-icon"></i>
+                        <span class="aiz-side-nav-text">Products</span>
+                        <span class="aiz-side-nav-arrow"></span>
+                    </a>
+                    <!--Submenu-->
+                    <ul class="aiz-side-nav-list level-2">
+                        <li class="aiz-side-nav-item">
+                            <a href="{{ route('admin.products.index') }}"
+                                class="aiz-side-nav-link ">
+                                <span class="aiz-side-nav-text">All Products</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
                 

@@ -7028,16 +7028,17 @@ display: flex;
 align-items: center;
 }
 .dropdown-toggle::after {
+content: "\f0d7";
+font-family: "FontAwesome";
 border: 0;
-content: "\f107";
-font-family: "Line Awesome Free";
+
 font-weight: 900;
 font-size: 80%;
 margin-left: 0.3rem;
 }
 .dropup .dropdown-toggle::after {
-border: 0;
-content: "\f106";
+    content: "\f0d7";
+    border: 0;
 }
 .dropdown-toggle.no-arrow::after {
 content: none;
@@ -7297,8 +7298,8 @@ position: relative;
 }
 .aiz-steps.arrow-divider > *:not(:first-of-type):before {
 position: absolute;
-content: "\f105";
-font-family: "Line Awesome Free";
+content: "\f0da";
+font-family: "FontAwesome";
 font-weight: 900;
 top: 5px;
 left: -13px;
@@ -8828,8 +8829,8 @@ padding-top: 100px;
 }
 
 .aiz-table.footable > tbody > tr.footable-empty > td:before {
-content: "\f119";
-font-family: "Line Awesome Free";
+content: "\f0da";
+font-family: "FontAwesome";
 font-weight: 900;
 position: absolute;
 left: 50%;
@@ -9061,9 +9062,9 @@ background-color: transparent;
 font-size: 0;
 }
 .modal-header .close:before {
-font-family: "Line Awesome Free";
+content: "\f0da";
+font-family: "FontAwesome";
 font-weight: 900;
-content: "\f00d";
 font-size: 20px;
 }
 .modal-content .modal-body {
@@ -10461,8 +10462,8 @@ font-weight: 500;
 margin-left: 20px;
 }
 .category-filter .go-back a:before {
-content: "\f104";
-font-family: "Line Awesome Free";
+content: "\f0da";
+font-family: "FontAwesome";
 font-weight: 900;
 text-rendering: optimizeLegibility;
 text-transform: none;
@@ -10798,15 +10799,15 @@ transform: translate(-50%, 0px);
 }
 
 .dropdown-toggle.filter-section[data-toggle].collapsed:after {
-content: "\f107";
-font-family: "Line Awesome Free";
+content: "\f0da";
+font-family: "FontAwesome";
 color: #b5b5bf;
 font-size: 16px;
 }
 
 .dropdown-toggle.filter-section[data-toggle]:not(.collapsed):after {
-font-family: "Line Awesome Free";
-content: "\f106";
+content: "\f0da";
+font-family: "FontAwesome";
 color: #b5b5bf;
 font-size: 16px;
 }

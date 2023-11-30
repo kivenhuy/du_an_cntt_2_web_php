@@ -15,9 +15,9 @@
 
 
 
-    <form class="" action="{{ route('seller.products.store') }}" method="POST" enctype="multipart/form-data" id="choice_form">
+        <form class="" action="{{ route('seller.products.store') }}" method="POST" enctype="multipart/form-data"id="choice_form">
         <div class="row gutters-5">
-            <div class="col-lg-12">
+            <div class="col-lg-8">
                 @csrf
                 <input type="hidden" name="added_by" value="seller">
                 <div class="card">
@@ -35,9 +35,11 @@
                         <div class="form-group row" id="category">
                             <label class="col-md-3 col-from-label">{{ translate('Category') }}</label>
                             <div class="col-md-8">
-                                <select class="form-control aiz-selectpicker" name="category_id" id="category_id"
-                                    data-live-search="true" required>
-                                    
+                                <select class="form-control aiz-selectpicker" name="category_id" id="category_id"data-live-search="true" required>
+                                    <option value="" selected hidden>Select Category</option>
+                                    @foreach ($category as $data_category)
+                                        <option value="{{ $data_category->id }}">{{ $data_category->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -46,7 +48,7 @@
                             <div class="col-md-8">
                                 <select class="form-control aiz-selectpicker" name="brand_id" id="brand_id"
                                     data-live-search="true">
-                                    
+                                    <option value="" selected hidden>{{ translate('Select Brand') }}</option>
                                 </select>
                             </div>
                         </div>
@@ -80,7 +82,8 @@
                                     <small class="text-muted">{{translate('This is used for search. Input those words by which cutomer can find this product.')}}</small>
                             </div>
                         </div>
-                        
+                       
+                       
                     </div>
                 </div>
                 <div class="card">
@@ -136,7 +139,7 @@
                             </label>
                         </div>
                     </div>
-                    {{-- <div class="card-body" id="variation_show" hidden=true>
+                    <div class="card-body" id="variation_show" hidden=true>
                         <div class="form-group row">
                             <div class="col-md-3">
                                 <input type="text" class="form-control" value="{{ translate('Colors') }}" disabled>
@@ -144,11 +147,7 @@
                             <div class="col-md-8">
                                 <select class="form-control aiz-selectpicker" data-live-search="true" name="colors[]"
                                     data-selected-text-format="count" id="colors" multiple disabled>
-                                    @foreach (\App\Models\Color::orderBy('name', 'asc')->get() as $key => $color)
-                                        <option value="{{ $color->code }}"
-                                            data-content="<span><span class='size-15px d-inline-block mr-2 rounded border' style='background:{{ $color->code }}'></span><span>{{ $color->name }}</span></span>">
-                                        </option>
-                                    @endforeach
+                                    
                                 </select>
                             </div>
                             <div class="col-md-1">
@@ -169,10 +168,7 @@
                                     class="form-control aiz-selectpicker" data-live-search="true"
                                     data-selected-text-format="count" multiple
                                     data-placeholder="{{ translate('Choose Attributes') }}">
-                                    @foreach (\App\Models\Attribute::all() as $key => $attribute)
-                                        <option value="{{ $attribute->id }}">{{ $attribute->getTranslation('name') }}
-                                        </option>
-                                    @endforeach
+                                   
                                 </select>
                             </div>
                         </div>
@@ -185,7 +181,7 @@
                         <div class="customer_choice_options" id="customer_choice_options">
 
                         </div>
-                    </div> --}}
+                    </div>
                 </div>
                 <div class="card">
                     <div class="card-header">
@@ -286,7 +282,7 @@
                     </div>
                 </div>
 
-                {{-- <div class="card">
+                <div class="card">
                     <div class="card-header">
                         <h5 class="mb-0 h6">{{ translate('PDF Specification') }}</h5>
                     </div>
@@ -308,8 +304,8 @@
                             </div>
                         </div>
                     </div>
-                </div> --}}
-                {{-- <div class="card">
+                </div>
+                <div class="card">
                     <div class="card-header">
                         <h5 class="mb-0 h6">{{ translate('SEO Meta Tags') }}</h5>
                     </div>
@@ -344,10 +340,118 @@
                             </div>
                         </div>
                     </div>
-                </div> --}}
+                </div>
             </div>
 
-            
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0 h6">
+                            {{ translate('Shipping Configuration') }}
+                        </h5>
+                    </div>
+
+                    <div class="card-body">
+                       
+                            <p>
+                                {{ translate('Shipping configuration is maintained by Admin.') }}
+                            </p>
+                    </div>
+                </div>
+
+
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0 h6">{{ translate('Low Stock Quantity Warning') }}</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group mb-3">
+                            <label for="name">
+                                {{ translate('Quantity') }}
+                            </label>
+                            <input type="number" name="low_stock_quantity" value="1" min="0"
+                                step="1" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0 h6">
+                            {{ translate('Stock Visibility State') }}
+                        </h5>
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="form-group row">
+                            <label class="col-md-6 col-from-label">{{ translate('Show Stock Quantity') }}</label>
+                            <div class="col-md-6">
+                                <label class="aiz-switch aiz-switch-success mb-0">
+                                    <input type="radio" name="stock_visibility_state" value="quantity" checked>
+                                    <span></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-6 col-from-label">{{ translate('Show Stock With Text Only') }}</label>
+                            <div class="col-md-6">
+                                <label class="aiz-switch aiz-switch-success mb-0">
+                                    <input type="radio" name="stock_visibility_state" value="text">
+                                    <span></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-6 col-from-label">{{ translate('Hide Stock') }}</label>
+                            <div class="col-md-6">
+                                <label class="aiz-switch aiz-switch-success mb-0">
+                                    <input type="radio" name="stock_visibility_state" value="hide">
+                                    <span></span>
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0 h6">{{ translate('Cash On Delivery') }}</h5>
+                    </div>
+                    <div class="card-body">
+                            <p>
+                                {{ translate('Cash On Delivery activation is maintained by Admin.') }}
+                            </p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0 h6">{{ translate('Estimate Shipping Time') }}</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group mb-3">
+                            <label for="name">
+                                {{ translate('Shipping Days') }}
+                            </label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" name="est_shipping_days" min="1"
+                                    step="1" placeholder="{{ translate('Shipping Days') }}">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroupPrepend">{{ translate('Days') }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+
+            </div>
             <div class="col-12">
                 <div class="mar-all text-right mb-2">
                     <button type="submit" name="button" value="publish"
@@ -364,4 +468,212 @@
         </div>
     </div> --}}
 </div>
+@endsection
+
+@section('script')
+    <script src="../../public/plugins/jquery-validation/jquery.validate.min.js"></script>
+    <script type="text/javascript">
+        $("[name=shipping_type]").on("change", function() {
+            $(".product_wise_shipping_div").hide();
+            $(".flat_rate_shipping_div").hide();
+            if ($(this).val() == 'product_wise') {
+                $(".product_wise_shipping_div").show();
+            }
+            if ($(this).val() == 'flat_rate') {
+                $(".flat_rate_shipping_div").show();
+            }
+
+        });
+
+
+        function isNumber(evt) {
+            evt = (evt) ? evt : window.event;
+            // var a = $('#phone-code').val();
+            // var a_1 = $('#phone-code_1').val();
+            // var a_2 = $('#phone-code_2').val();
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;  
+	    }
+        
+       
+
+        $('input[name="colors_active"]').on('change', function() {
+            if (!$('input[name="colors_active"]').is(':checked')) {
+                $('#colors').prop('disabled', true);
+                $('#variation_show').attr('hidden', true);
+                AIZ.plugins.bootstrapSelect('refresh');
+            } else {
+                $('#colors').prop('disabled', false);
+                $('#variation_show').removeAttr('hidden');
+                AIZ.plugins.bootstrapSelect('refresh');
+            }
+            update_sku();
+        });
+
+        $('input[name="colors_active_show"]').on('change', function() {
+            if (!$('input[name="colors_active_show"]').is(':checked')) {
+                $('#variation_show').attr('hidden', true);
+            } else {
+                $('#variation_show').removeAttr('hidden');
+            }
+        });
+
+        $('#js-is-use-additional-cost').change(function() {
+            let addionalCostStatus = $('#js-is-use-additional-cost').is(':checked');
+            if (addionalCostStatus) {
+                $('#js-additional-cost-body').removeAttr('hidden');
+            } else {
+                $('#js-additional-cost-body').attr('hidden', true);
+            }
+        });
+
+        $('#js-is_use_order_sample').change(function() {
+            let addionalCostStatus = $('#js-is_use_order_sample').is(':checked');
+            if (addionalCostStatus) {
+                $('#js-is_use_order_sample-body').removeAttr('hidden');
+            } else {
+                $('#js-is_use_order_sample-body').attr('hidden', true);
+            }
+        });
+
+        $('#js-is_use_order_sample_price').change(function() {
+            let addionalCostStatus = $('#js-is_use_order_sample_price').is(':checked');
+            if (addionalCostStatus) {
+                $('#js-is_use_order_sample_price-body').removeAttr('hidden');
+            } else {
+                $('#js-is_use_order_sample_price-body').attr('hidden', true);
+            }
+        });
+
+        $(".btn-primary").on('click',function(){
+            var image = $('input[name="photos"]').val();
+            var color_data = $('#colors').val();
+            var validator = $( "#choice_form" ).validate(
+            {
+                rules: 
+                {
+                    min_qty: 
+                    {
+                        required: true,
+                        min:1
+                    },
+                    weight: 
+                    {
+                        required: true,
+                        min:0
+                    },
+                    current_stock: 
+                    {
+                        required: true,
+                        min:1
+                    }
+                },
+                highlight: function(element) {
+                    $(element).addClass('has-error');
+                },
+                unhighlight: function(element) {
+                    $(element).removeClass('has-error');
+                },    
+                errorPlacement: function(error, element) {
+                    // return false;
+                    error.insertAfter(element);
+                }
+            });
+            if ($('input[name="colors_active_show"]').is(':checked')){
+                $('.color_check').each(function (item) {
+                    $(this).rules("add", {
+                        required: true,
+                        min:1
+                    });
+                });
+                $('.quantity_check').each(function (item) {
+                    $(this).rules("add", {
+                        required: true,
+                        min:1
+                    });
+                });
+                $('.unit_price').each(function (item) {
+                    $(this).rules("add", {
+                        required: true,
+                        min:0
+                    });
+                });
+                
+            }
+            else
+            {
+                $('.unit_price').each(function (item) {
+                    $(this).rules("add", {
+                        required: true,
+                        min:1
+                    });
+                });
+            }
+            if($( "#choice_form" ).valid())
+            {
+                $('#choice_form').submit(function(e){ e.preventDefault(); });
+                if(image.length>0)
+                {
+                    
+                    document.getElementById("choice_form").submit(function(e){});     
+                }
+                else
+                {
+                    AIZ.plugins.notify('danger','Please Select Image');
+                }
+                // 
+            }
+           
+        });
+
+        $(document).on("change", ".attribute_choice", function() {
+            update_sku();
+        });
+
+        $('#colors').on('change', function() {
+            update_sku();
+        });
+
+        $('input[name="unit_price"]').on('keyup', function() {
+            update_sku();
+        });
+        
+
+        function delete_row(em) {
+            $(em).closest('.form-group row').remove();
+            update_sku();
+        }
+
+        function delete_variant(em) {
+            $(em).closest('.variant').remove();
+        }
+
+        // function update_sku() {
+        //     $.ajax({
+        //         type: "POST",
+        //         url: '',
+        //         data: $('#choice_form').serialize(),
+        //         success: function(data) {
+        //             $('#sku_combination').html(data);
+        //             AIZ.plugins.fooTable();
+        //             if (data.length > 1) {
+        //                 $('#show-hide-div').hide();
+        //             } else {
+        //                 $('#show-hide-div').show();
+        //             }
+        //         }
+        //     });
+        // }
+
+        $('#choice_attributes').on('change', function() {
+            $('#customer_choice_options').html(null);
+            $.each($("#choice_attributes option:selected"), function() {
+                add_more_customer_choice_option($(this).val(), $(this).text());
+            });
+            update_sku();
+        });
+    </script>
 @endsection

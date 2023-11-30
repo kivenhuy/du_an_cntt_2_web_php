@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\Currency;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 if (!function_exists('uploaded_asset')) {
@@ -106,5 +108,154 @@ if (!function_exists('filter_products')) {
         // } else {
         //     return $products->where('added_by', 'admin');
         // }
+    }
+}
+
+
+if (!function_exists('isSeller')) {
+    function isSeller()
+    {
+        if (Auth::check() && Auth::user()->user_type == 'seller') {
+            return true;
+        }
+        return false;
+    }
+}
+
+if (!function_exists('isCustomer')) {
+    function isCustomer()
+    {
+        if (Auth::check() && Auth::user()->user_type == 'customer') {
+            return true;
+        }
+        return false;
+    }
+}
+
+//Shows Price on page based on low to high
+if (!function_exists('home_price')) {
+    function home_price($product, $formatted = true)
+    {
+        $lowest_price = $product->unit_price;
+        $highest_price = $product->unit_price;
+
+        if ($product->variant_product) {
+            foreach ($product->stocks as $key => $stock) {
+                if ($lowest_price > $stock->price) {
+                    $lowest_price = $stock->price;
+                }
+                if ($highest_price < $stock->price) {
+                    $highest_price = $stock->price;
+                }
+            }
+        }
+
+        if ($formatted) {
+            if ($lowest_price == $highest_price) {
+                return format_price(convert_price($lowest_price));
+            } else {
+                return format_price(convert_price($lowest_price)) . ' - ' . format_price(convert_price($highest_price));
+            }
+        } else {
+            return $lowest_price . ' - ' . $highest_price;
+        }
+    }
+}
+
+//Shows Price on page based on low to high with discount
+if (!function_exists('home_discounted_price')) {
+    function home_discounted_price($product, $formatted = true)
+    {
+        $lowest_price = $product->unit_price;
+        $highest_price = $product->unit_price;
+
+        if ($product->variant_product) {
+            foreach ($product->stocks as $key => $stock) {
+                if ($lowest_price > $stock->price) {
+                    $lowest_price = $stock->price;
+                }
+                if ($highest_price < $stock->price) {
+                    $highest_price = $stock->price;
+                }
+            }
+        }
+
+        $discount_applicable = false;
+
+        if ($product->discount_start_date == null) {
+            $discount_applicable = true;
+        } elseif (
+            strtotime(date('d-m-Y H:i:s')) >= $product->discount_start_date &&
+            strtotime(date('d-m-Y H:i:s')) <= $product->discount_end_date
+        ) {
+            $discount_applicable = true;
+        }
+
+        if ($discount_applicable) {
+            if ($product->discount_type == 'percent') {
+                $lowest_price -= ($lowest_price * $product->discount) / 100;
+                $highest_price -= ($highest_price * $product->discount) / 100;
+            } elseif ($product->discount_type == 'amount') {
+                $lowest_price -= $product->discount;
+                $highest_price -= $product->discount;
+            }
+        }
+
+
+        if ($formatted) {
+            if ($lowest_price == $highest_price) {
+                return format_price(convert_price($lowest_price));
+            } else {
+                return format_price(convert_price($lowest_price)) . ' - ' . format_price(convert_price($highest_price));
+            }
+        } else {
+            return $lowest_price . ' - ' . $highest_price;
+        }
+    }
+}
+
+if (!function_exists('format_price')) {
+    function format_price($price, $isMinimize = false)
+    {
+       
+        $fomated_price = number_format($price, 2, ',', '.');
+
+
+        // Minimize the price 
+        if ($isMinimize) {
+            $temp = number_format($price / 1000000000, 2, ".", "");
+
+            if ($temp >= 1) {
+                $fomated_price = $temp . "B";
+            } else {
+                $temp = number_format($price / 1000000, 2, ".", "");
+                if ($temp >= 1) {
+                    $fomated_price = $temp . "M";
+                }
+            }
+        }
+
+        
+            return 'đ ' . $fomated_price;
+        
+        // return $fomated_price . currency_symbol();
+    }
+}
+
+if (!function_exists('convert_price')) {
+    function convert_price($price)
+    {
+       
+            $price = floatval($price) / floatval(get_system_default_currency()->exchange_rate);
+            $price = floatval($price) * floatval(1);
+        
+        return $price;
+    }
+}
+
+if (!function_exists('get_system_default_currency')) {
+    function get_system_default_currency()
+    {
+        return Currency::findOrFail(1);
     }
 }

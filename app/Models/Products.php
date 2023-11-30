@@ -52,4 +52,9 @@ class Products extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function product_stock()
+    {
+        return $this->hasOne(ProductStock::class,'product_id','id');
+    }
+
 }

@@ -78,15 +78,16 @@
                             }
                         @endphp --}}
                         <div class="top_selling_img">
-                            {{-- <a href="{{ $product_url }}" class="d-block h-100"> --}}
+                            <a href="{{ route('product', $data_selling_product->slug) }}" class="d-block h-100">
                                 <img class="lazyload mx-auto img-fit has-transition img_product_top_selling" width="180px" height="180px" src="{{ static_asset('assets/img/placeholder.jpg') }}"
                                         data-src="{{ uploaded_asset($data_selling_product->thumbnail_img) }}" alt="{{ $data_selling_product->name}}"
                                         title="{{ $data_selling_product->name }}"
                                         onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
+                            </a>
                         </div>
                         
                         <div class="content_top_selling ">
-                            {{-- <a href="{{ $data_selling_product->category->category_url }}" class="mb-1">{{ $data_selling_product->category->getTranslation('name') }}</a> --}}
+                            {{-- <a href="{{ $data_selling_product->category->category_url }}" class="mb-1">{{ $data_selling_product->category->name }}</a> --}}
                             {{-- <a href="{{ $product_url }}"> --}}
                                 <div class="name_product_top_selling">
                                     {{$data_selling_product->name}}
@@ -216,7 +217,7 @@
                         </div>
                         
                         <div class="content_top_selling ">
-                            {{-- <a href="{{ $data_selling_product->category->category_url }}" class="mb-1">{{ $data_selling_product->category->getTranslation('name') }}</a> --}}
+                            <a href="{{ $data_selling_product->category->category_url }}" class="mb-1">{{ $data_selling_product->category->name }}</a>
                             {{-- <a href="{{ $product_url }}"> --}}
                                 <div class="name_product_top_selling">
                                     {{$data_selling_product->name}}
@@ -327,7 +328,7 @@
                                 </div>
                                 
                                 <div class="content_top_selling ">
-                                    {{-- <a href="{{ $new_product->category->category_url }}" class="mb-1">{{ $new_product->category->getTranslation('name') }}</a> --}}
+                                    <a href="{{ $new_product->category->category_url }}" class="mb-1">{{ $new_product->category->name }}</a>
                                     {{-- <a href="{{$product_url}}"> --}}
                                         <div class="name_product_top_selling">
                                             {{$new_product->name}}
@@ -365,7 +366,7 @@
                                         </div>
                                     @endif --}}
                                     <div class="price_product_top_selling">
-                                        {{"đ " . number_format($data_selling_product->unit_price, 0, ".", ",")  }}
+                                        {{"đ " . number_format($new_product->unit_price, 0, ".", ",")  }}
                                     </div>
                                 </div>
                             </div>

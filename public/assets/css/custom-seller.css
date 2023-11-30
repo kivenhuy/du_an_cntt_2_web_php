@@ -3976,15 +3976,15 @@ input[type="number"] {
 }
 .dropdown-toggle::after {
     border: 0;
-    content: "\f107";
-    font-family: "Line Awesome Free";
+    content: "\f0d7";
+    font-family: "FontAwesome";
     font-weight: 900;
     font-size: 80%;
     margin-left: 0.3rem;
 }
 .dropup .dropdown-toggle::after {
     border: 0;
-    content: "\f106";
+    content: "\f0d7";
 }
 .dropdown-toggle.no-arrow::after {
     content: none;

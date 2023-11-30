@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DistrictController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -42,6 +43,12 @@ Route::group(['middleware' => ['auth'],'prefix' => 'admin'], function () {
         Route::get('/category/create', 'create')->name('categories.create');
         Route::get('/category/data_ajax', 'data_ajax')->name('categories.data_ajax');
         Route::post("/category/store",'store')->name('categories.store'); 
+    });
+
+    Route::controller(ProductController::class)->group(function () {
+        Route::get('/products/all', 'index')->name('admin.products.index');
+        Route::get('/products/data_ajax', 'data_ajax')->name('admin.products.data_ajax');
+        Route::post('/products/approved', 'approve')->name('admin.products.approved');
     });
 
 });
