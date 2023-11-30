@@ -1,13 +1,21 @@
 <div class="text-left">
     <!-- Product Name -->
-    <h1 class="mb-4 fs-16 fw-700 text-dark">
-        {{ $detailedProduct->name }}
+
+    {{-- @if (discount_in_percentage($detailedProduct) > 0)
+        <span class="span_discount" 
+            style="padding-top:2px;padding-bottom:2px;">-{{ discount_in_percentage($detailedProduct) }}%
+        </span>
+    @endif --}}
+
+
+    <h1 class="mb-4 fs-16 fw-700 text-dark product_name">
+        {{ $detailedProduct->name}}
     </h1>
 
-    <div class="row align-items-center mb-3">
+    <div class="row align-items-center mb-3" style="height: 50px">
         <!-- Review -->
         @if ($detailedProduct->auction_product != 1)
-            <div class="col-12">
+            <div class="col-4">
                 @php
                     $total = 0;
                     // $total += $detailedProduct->reviews->count();
@@ -17,6 +25,27 @@
                 </span>
                 <span class="ml-1 opacity-50 fs-14">({{ $total }}
                     {{ translate('reviews') }})</span>
+            </div>
+            <div class="col">
+                @if ($detailedProduct->auction_product != 1)
+                    <div class="d-flex" style="height: 50px">
+                        <!-- Add to wishlist button -->
+                        <div class="hover_icon_product_detail" style="margin-right:8px">
+                            <a href="javascript:void(0)" onclick="addToWishList({{ $detailedProduct->id }})"
+                                class="mr-3 fs-14 text-dark opacity-60 has-transitiuon hov-opacity-100">
+                                <i class="la la-heart-o mr-1 size-16"></i>
+                            </a>
+                        </div>
+                        
+                        <!-- Add to compare button -->
+                        <div class="hover_icon_product_detail">
+                            <a href="javascript:void(0)" onclick="addToCompare({{ $detailedProduct->id }})"
+                                class="fs-14 text-dark opacity-60 has-transitiuon hov-opacity-100">
+                                <i class="las la-sync mr-1 size-16"></i>
+                            </a>
+                        </div>
+                    </div>
+                @endif
             </div>
         @endif
         <!-- Estimate Shipping Time -->
@@ -35,7 +64,7 @@
     </div>
     <div class="row align-items-center">
         <!-- Ask about this product -->
-        <div class="col-xl-3 col-lg-4 col-md-3 col-sm-4 mb-3">
+        {{-- <div class="col-xl-3 col-lg-4 col-md-3 col-sm-4 mb-3">
             <a href="javascript:void();" onclick="goToView('product_query')" class="text-primary fs-14 fw-600 d-flex">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32">
                     <g id="Group_25571" data-name="Group 25571" transform="translate(-975 -411)">
@@ -54,36 +83,25 @@
                 </svg>
                 <span class="ml-2 text-primary animate-underline-blue">{{ translate('Product Inquiry') }}</span>
             </a>
-        </div>
-        <div class="col mb-3">
-            
-        </div>
-    </div>
-
-
-    <!-- Brand Logo & Name -->
-    @if ($detailedProduct->brand != null)
-        <div class="d-flex flex-wrap align-items-center mb-3">
-            <span class="text-secondary fs-14 fw-400 mr-4 w-70px">{{ translate('Brand') }}</span><br>
-            <a href="{{ route('products.brand', $detailedProduct->brand->slug) }}"
-                class="text-reset hov-text-primary fs-14 fw-700">{{ $detailedProduct->brand->name }}</a>
-        </div>
-    @endif
-
-    <!-- Seller Info -->
-    <div class="d-flex flex-wrap align-items-center">
-        <div class="d-flex align-items-center mr-4">
-            <!-- Shop Name -->
-            {{-- @if ($detailedProduct->added_by == 'seller') --}}
-                <span class="text-secondary fs-14 fw-400 mr-4 w-70px">{{ translate('Sold by') }}</span>
-                {{-- <a href="{{ route('shop.visit', $detailedProduct->user->shop->slug) }}"
-                    class="text-reset hov-text-primary fs-14 fw-700">{{ $detailedProduct->user->shop->name }}</a> --}}
-            {{-- @else
-                <p class="mb-0 fs-14 fw-700">{{ translate('Inhouse product') }}</p>
-            @endif --}}
-        </div>
-        <!-- Messase to seller -->
-       
+        </div> --}}
+        {{-- <div class="col mb-3">
+            @if ($detailedProduct->auction_product != 1)
+                <div class="d-flex">
+                    <!-- Add to wishlist button -->
+                    <a href="javascript:void(0)" onclick="addToWishList({{ $detailedProduct->id }})"
+                        class="mr-3 fs-14 text-dark opacity-60 has-transitiuon hov-opacity-100">
+                        <i class="la la-heart-o mr-1"></i>
+                        {{ translate('Add to Wishlist') }}
+                    </a>
+                    <!-- Add to compare button -->
+                    <a href="javascript:void(0)" onclick="addToCompare({{ $detailedProduct->id }})"
+                        class="fs-14 text-dark opacity-60 has-transitiuon hov-opacity-100">
+                        <i class="las la-sync mr-1"></i>
+                        {{ translate('Add to Compare') }}
+                    </a>
+                </div>
+            @endif
+        </div> --}}
     </div>
 
     <hr>
@@ -114,7 +132,7 @@
                     {{ single_price($detailedProduct->starting_bid) }}
                 </span>
                 @if ($detailedProduct->unit != null)
-                    <span class="opacity-70">/{{ $detailedProduct->unit}}</span>
+                    <span class="opacity-70">/{{ $detailedProduct->getTranslation('unit') }}</span>
                 @endif
             </div>
         </div>
@@ -173,47 +191,72 @@
             <!-- Without Wholesale -->
             @if (home_price($detailedProduct) != home_discounted_price($detailedProduct))
                 <div class="row no-gutters mb-3">
-                    <div class="col-sm-2">
+                    {{-- <div class="col-sm-2">
                         <div class="text-secondary fs-14 fw-400">{{ translate('Price') }}</div>
-                    </div>
-                    <div class="col-sm-10">
+                    </div> --}}
+                    <div class="col-sm-12">
                         <div class="d-flex align-items-center">
                             <!-- Discount Price -->
-                            <strong class="fs-16 fw-700 text-primary">
+                            <strong class="fs-16 fw-700 text-primary price_product">
                                 {{ home_discounted_price($detailedProduct) }}
                             </strong>
                             <!-- Home Price -->
-                            <del class="fs-14 opacity-60 ml-2">
+                            <del class="fs-14 opacity-60 ml-2 price_product_before_discount color-7">
                                 {{ home_price($detailedProduct) }}
                             </del>
                             <!-- Unit -->
                             @if ($detailedProduct->unit != null)
-                                <span class="opacity-70 ml-1">/{{ $detailedProduct->unit }}</span>
+                                <span class=" ml-1 price_product">/{{ $detailedProduct->getTranslation('unit') }}</span>
                             @endif
                             <!-- Discount percentage -->
-                            @if (discount_in_percentage($detailedProduct) > 0)
-                                <span class="bg-primary ml-2 fs-11 fw-700 text-white w-35px text-center p-1"
-                                    style="padding-top:2px;padding-bottom:2px;">-{{ discount_in_percentage($detailedProduct) }}%</span>
-                            @endif
                             
+                            <!-- Club Point -->
+                            @if (addon_is_activated('club_point') && $detailedProduct->earn_point > 0)
+                                <div class="ml-2 bg-warning d-flex justify-content-center align-items-center px-3 py-1"
+                                    style="width: fit-content;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"
+                                        viewBox="0 0 12 12">
+                                        <g id="Group_23922" data-name="Group 23922" transform="translate(-973 -633)">
+                                            <circle id="Ellipse_39" data-name="Ellipse 39" cx="6"
+                                                cy="6" r="6" transform="translate(973 633)"
+                                                fill="#fff" />
+                                            <g id="Group_23920" data-name="Group 23920"
+                                                transform="translate(973 633)">
+                                                <path id="Path_28698" data-name="Path 28698"
+                                                    d="M7.667,3H4.333L3,5,6,9,9,5Z" transform="translate(0 0)"
+                                                    fill="#f3af3d" />
+                                                <path id="Path_28699" data-name="Path 28699"
+                                                    d="M5.33,3h-1L3,5,6,9,4.331,5Z" transform="translate(0 0)"
+                                                    fill="#f3af3d" opacity="0.5" />
+                                                <path id="Path_28700" data-name="Path 28700"
+                                                    d="M12.666,3h1L15,5,12,9l1.664-4Z" transform="translate(-5.995 0)"
+                                                    fill="#f3af3d" />
+                                            </g>
+                                        </g>
+                                    </svg>
+                                    <small class="fs-11 fw-500 text-white ml-2">{{ translate('Club Point') }}:
+                                        {{ $detailedProduct->earn_point }}</small>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
             @else
-                <div class="row no-gutters mb-3">
-                    <div class="col-sm-2">
+                <div class="row no-gutters mb-3" style="margin-bottom: 36px !important">
+                    {{-- <div class="col-sm-2">
                         <div class="text-secondary fs-14 fw-400">{{ translate('Price') }}</div>
-                    </div>
-                    <div class="col-sm-10">
+                    </div> --}}
+                    <div class="col-sm-12">
                         <div class="d-flex align-items-center">
                             <!-- Discount Price -->
-                            <strong class="fs-16 fw-700 text-primary">
+                            <strong class="fs-16 fw-700 text-primary price_product">
                                 {{ home_discounted_price($detailedProduct) }}
                             </strong>
                             <!-- Unit -->
                             @if ($detailedProduct->unit != null)
-                                <span class="opacity-70">/{{ $detailedProduct->unit }}</span>
+                                <span class="opacity-70 price_product" style="color: unset !important">/{{ $detailedProduct->unit}}</span>
                             @endif
+                            <!-- Club Point -->
                             
                         </div>
                     </div>
@@ -222,30 +265,62 @@
         @endif
     @endif
 
+     <!-- Brand Logo & Name -->
+     @if ($detailedProduct->brand != null)
+     <div class="d-flex flex-wrap align-items-center mb-3">
+         <span class="text-secondary fs-14 fw-400 mr-4 w-70px text_brand">{{ translate('Brand') }}</span><br>
+         <a href="{{ route('products.brand', $detailedProduct->brand->slug) }}"
+             class="text-reset hov-text-primary fs-14 fw-700 text_brand" style="color: #2E7F25 !important">{{ $detailedProduct->brand->name }}</a>
+     </div>
+ @endif
+
+    <!-- Seller Info -->
+    <div class="d-flex flex-wrap align-items-center" style="margin-bottom: 30px !important">
+        <div class="d-flex align-items-center mr-4">
+            <!-- Shop Name -->
+            @if ($detailedProduct->added_by == 'seller' && get_setting('vendor_system_activation') == 1)
+                <span class="text-secondary fs-14 fw-400 mr-4 w-70px text_who_sell">{{ translate('Sold by') }}</span>
+                <input type="hidden" id="id_shop" value="{{$detailedProduct->user->shop->id}}">
+                <a href="{{ route('shop.visit', $detailedProduct->user->shop->slug) }}"
+                    class="text-reset hov-text-primary fs-14 fw-700 text_who_sell" style="color: #2E7F25 !important">{{ $detailedProduct->user->shop->name }}</a>
+            @else
+                <p class="mb-0 fs-14 fw-700">{{ translate('Inhouse product') }}</p>
+            @endif
+        </div>
+        
+    </div>
+
+    {{-- <div class="small_content">
+        <span class="sub_content">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquam rem officia, corrupti reiciendis minima nisi modi, quasi, odio minus dolore impedit fuga eum eligendi? Officia doloremque facere quia. Voluptatum, accusantium!
+        </span>
+        <span class="sub_content">    
+            Uninhibited carnally hired played in whimpered dear gorilla koala depending and much yikes off far quetzal goodness and from for grimaced goodness.
+        </span>
+    </div> --}}
     @if ($detailedProduct->auction_product != 1)
         <form id="option-choice-form">
             @csrf
             <input type="hidden" name="id" value="{{ $detailedProduct->id }}">
-
             @if ($detailedProduct->digital == 0)
                 <!-- Choice Options -->
                 @if ($detailedProduct->choice_options != null)
                     @foreach (json_decode($detailedProduct->choice_options) as $key => $choice)
                         <div class="row no-gutters mb-3">
                             <div class="col-sm-2">
-                                <div class="text-secondary fs-14 fw-400 mt-2 ">
-                                    {{ \App\Models\Attribute::find($choice->attribute_id)->name }}
+                                <div class="text-secondary fs-14 fw-400 mt-2 text_brand">
+                                    {{ \App\Models\Attribute::find($choice->attribute_id)->getTranslation('name') }}
                                 </div>
                             </div>
                             <div class="col-sm-10">
                                 <div class="aiz-radio-inline">
                                     @foreach ($choice->values as $key => $value)
-                                        <label class="aiz-megabox pl-0 mr-2 mb-0">
+                                        <label class="aiz-megabox pl-0 mr-2 mb-2">
                                             <input type="radio" name="attribute_id_{{ $choice->attribute_id }}"
                                                 value="{{ $value }}"
                                                 @if ($key == 0) checked @endif>
                                             <span
-                                                class="aiz-megabox-elem rounded-0 d-flex align-items-center justify-content-center py-1 px-3">
+                                                class="aiz-megabox-elem rounded-0 d-flex align-items-center justify-content-center py-1 px-3  text_brand">
                                                 {{ $value }}
                                             </span>
                                         </label>
@@ -283,9 +358,9 @@
                 @endif
 
                 <!-- Quantity + Add to cart -->
-                <div class="row no-gutters mb-3">
+                <div class="row no-gutters mb-3" style="margin-bottom: 32px !important;">
                     <div class="col-sm-2">
-                        <div class="text-secondary fs-14 fw-400 mt-2">{{ translate('Quantity') }}</div>
+                        <div class="text-secondary fs-14 fw-400 mt-2 text_brand">{{ translate('Quantity') }}</div>
                     </div>
                     <div class="col-sm-10">
                         <div class="product-quantity d-flex align-items-center">
@@ -305,10 +380,9 @@
                             </div>
                             @php
                                 $qty = 0;
-                                // dd($detailedProduct->product_stock);
-                                // foreach ($detailedProduct->product_stock as $key => $stock) {
+                                // foreach ($detailedProduct->stocks as $key => $stock) {
                                     $qty += $detailedProduct->product_stock->qty;
-                                // }
+                                // }product_stock
                             @endphp
                             <div class="avialable-amount opacity-60">
                                 @if ($detailedProduct->stock_visibility_state == 'quantity')
@@ -324,23 +398,25 @@
 
                 <!-- Additional Cost -->
                 @if ($detailedProduct->is_use_additional_cost)
-                    <div class="row no-gutters mb-3">
-                        <div class="col-sm-2">
-                            <div class="text-secondary fs-14 fw-400">{{ translate('Additional Cost') }}</div>
+                    <div class="row no-gutters mb-3 mb-4">
+                        <div class="col col-sm-2">
+                            <div class="text-secondary fs-14 fw-400 text_brand">{{ translate('Additional Cost') }}</div>
                         </div>
-                        <div class="col-sm-10">
+                        <div class="col col-sm-10">
                             <strong class="fs-16 fw-700 text-primary">
                                 {{ format_price(convert_price($detailedProduct->additional_cost)) }}
                             </strong>
+                            <i class="fa-solid fa-circle-info ml-2 fs-14 fw-700" data-toggle="tooltip" data-placement="top" title="{{ translate('Additional Cost')}}"></i>
                         </div>
+                        
                     </div>
                 @endif
             @endif
 
             <!-- Total Price -->
-            <div class="row no-gutters pb-3 d-none" id="chosen_price_div">
+            {{-- <div class="row no-gutters pb-3 d-none" id="chosen_price_div">
                 <div class="col-sm-2">
-                    <div class="text-secondary fs-14 fw-400 mt-1">{{ translate('Total Price') }}</div>
+                    <div class="text-secondary fs-14 fw-400 mt-1 ">{{ translate('Total Price') }}</div>
                 </div>
                 <div class="col-sm-10">
                     <div class="product-price">
@@ -349,7 +425,7 @@
                         </strong>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
         </form>
     @endif
@@ -391,29 +467,61 @@
                     <div class="form-group-row">
                         <div class="row">
                             <input type="hidden" value="{{$detailedProduct->id}}" name="id_product" id="id_product">
-                            <div style="width:700px;display: flex;">
-                                <div class="col-md-4" style="max-width:170px !important">
+                            <div class="setting_for_button" style="">
+                                <div class="pl-3 pr-0" style="max-width:250px !important">
                                     <button type="button" 
                                         class="btn btn-warning buy-now fw-600 add_to_cart min-w-150px rounded-4"
                                         @if (Auth::check()) onclick="addToCart()" @else onclick="showLoginModal()" @endif>
-                                            <i class="las la-shopping-bag"></i>
-                                        <span class="d-none d-md-inline-block"> {{ translate('Add to cart') }}</span>
+                                            {{-- <i class="las la-shopping-bag"></i> --}}
+                                            <i class="las la-shopping-bag" style="font-size: 16px"></i>
+                                            {{-- <img src="{{static_asset('uploads/all/km22nnFUj9qnUYI8vD3Sa0gB6sLIUeqw921muBAb.png')}}" alt=""> --}}
+                                        <span class="d-md-inline-block text_button_detail_page font-size-mobile"> {{ translate('Add to cart') }}</span>
                                     </button>
                                 </div>
-                                <div class="col-md-4" style="max-width:170px !important">
-                                    <button type="button" class="btn btn-primary buy-now fw-600 add-to-cart min-w-150px rounded-4"
+                                @if(isset($order_sample) && $order_sample->is_active == 1)
+                                    <div class="pl-3 pr-0" style="max-width:200px !important">
+                                        <button type="button" class="btn btn-primary buy-now fw-600 add-to-cart min-w-140px rounded-4"
+                                            @if (Auth::check()) onclick="OrderSample()" @else onclick="showLoginModal()" @endif>
+                                            <i class="la la-shopping-cart" style="font-size: 16px"></i> 
+                                            {{-- <img src="{{static_asset('uploads/all/eP7lX2HLlbLjmFYZtMUZe0R4QVC6qnEEcurewNOq.png')}}" alt=""> --}}
+                                            <span class="d-md-inline-block text_button_detail_page font-size-mobile"> {{ translate('Oder Sample') }}</span>
+                                        </button>
+                                    </div>
+                                    {{-- <button type="button" class="btn btn-primary mb-2 order-sample fw-600 add-to-cart min-w-150px rounded-0 font-size-mobile"
+                                        @if (Auth::check()) onclick="OrderSample()" @else onclick="showLoginModal()" @endif>
+                                        <i class="la la-shopping-cart"></i> {{ translate('Oder Sample') }}
+                                    </button> --}}
+                                @else
+                                    <div class="pl-3 pr-0" style="max-width:180px !important">
+                                        <button type="button" class="btn btn-primary buy-now fw-600 add-to-cart min-w-140px rounded-4"
+                                            @if (Auth::check()) onclick="buyNow()" @else onclick="showLoginModal()" @endif>
+                                            <i class="la la-shopping-cart" style="font-size: 16px"></i> 
+                                            {{-- <img src="{{static_asset('uploads/all/eP7lX2HLlbLjmFYZtMUZe0R4QVC6qnEEcurewNOq.png')}}" alt=""> --}}
+                                            <span class="d-md-inline-block text_button_detail_page font-size-mobile"> {{ translate('Buy Now') }}</span>
+                                        </button>
+                                    </div>
+                                @endif
+                                
+                                {{-- <div class="pl-3 pr-0" style="max-width:180px !important">
+                                    <button type="button" class="btn btn-primary buy-now fw-600 add-to-cart min-w-140px rounded-4"
                                         @if (Auth::check()) onclick="buyNow()" @else onclick="showLoginModal()" @endif>
-                                        <i class="la la-shopping-cart"></i> {{ translate('Buy Now') }}
+                                        <i class="la la-shopping-cart" style="font-size: 16px"></i> 
+                                        <span class="d-md-inline-block text_button_detail_page font-size-mobile"> {{ translate('Buy Now') }}</span>
                                     </button>
-                                </div>
-                                <div class="col-md-4" style="max-width:220px !important">
-                                    <button type="button" class="btn btn-dark buy-now fw-600 send_rfq_request min-w-150px rounded-4"
-                                        @if (Auth::check()) onclick="SendRFQRequest()" @else onclick="showLoginModal()" @endif>
-                                        <i class="las la-shopping-bag"></i>
-                                        <span class="d-none d-md-inline-block"> {{ translate('Inquire Now') }}</span>
-                                    </button>
-                                </div>
+                                </div> --}}
+								<div>
+                                    <div class="col-md-4" style="max-width:260px !important">
+                                        <button style="width:102% !important" type="button" class="btn btn-dark buy-now fw-600 send_rfq_request min-w-150px rounded-4 button_for_checkout"
+                                            @if (Auth::check()) onclick="SendRFQRequest()" @else onclick="showLoginModal()" @endif>
+                                            <i class="las la-edit" style="font-size: 16px"></i>
+                                            {{-- <img src="{{static_asset('uploads/all/71ex8NGElTo5VKEUtVVYQUM2PXfJdrA4cH84gPFJ.png')}}" alt=""> --}}
+                                            <span class="d-md-inline-block text_button_detail_page font-size-mobile"> {{ translate('Inquire Now') }}</span>
+                                        </button>
+                                    </div>
+                                </div>  
+                                
                             </div>
+                         
                             {{-- <div class="col-md-3 ">
                                 <button type="button" class="btn btn-warning text-white" name="order_sample"
                                     @if (Auth::check()) onclick="OrderSample()" @else onclick="showLoginModal()" @endif disabled>
@@ -444,60 +552,36 @@
                 </button>
             @elseif ($detailedProduct->digital == 1)
                 <button type="button"
-                    class="btn btn-warning mr-2 add-to-cart fw-600 min-w-150px rounded-0 text-white"
+                    class="btn btn-warning mr-2 mb-2 add-to-cart fw-600 min-w-150px rounded-0 text-white font-size-mobile"
                     @if (Auth::check()) onclick="addToCart()" @else onclick="showLoginModal()" @endif>
                     <i class="las la-shopping-bag"></i>
-                    <span class="d-none d-md-inline-block"> {{ translate('Add to cart') }}</span>
+                    <span class="d-md-inline-block"> {{ translate('Add to cart') }}</span>
                 </button>
-                <button type="button" class="btn btn-primary buy-now fw-600 add-to-cart min-w-150px rounded-0"
-                    @if (Auth::check()) onclick="buyNow()" @else onclick="showLoginModal()" @endif>
-                    <i class="la la-shopping-cart"></i> {{ translate('Buy Now') }}
-                </button>
+                @if(isset($order_sample) && $order_sample->is_active == 1)
+                    <button type="button" class="btn btn-primary mb-2 order-sample fw-600 add-to-cart min-w-150px rounded-0 font-size-mobile"
+                        @if (Auth::check()) onclick="OrderSample()" @else onclick="showLoginModal()" @endif>
+                        <i class="la la-shopping-cart"></i> {{ translate('Oder Sample') }}
+                    </button>
+                @else
+                    <button type="button" class="btn btn-primary mb-2 buy-now fw-600 add-to-cart min-w-150px rounded-0 font-size-mobile"
+                        @if (Auth::check()) onclick="buyNow()" @else onclick="showLoginModal()" @endif>
+                        <i class="la la-shopping-cart"></i> {{ translate('Buy Now') }}
+                    </button>
+                @endif
                 <button type="button"
-                    class="btn btn-warning mr-2 send-request fw-600 min-w-150px rounded-0 text-white"
+                    class="btn btn-warning mr-2 mb-2 send-request fw-600 min-w-150px rounded-0 text-white font-size-mobile"
                     @if (Auth::check()) onclick="SendRFQRequest()" @else onclick="showLoginModal()" @endif>
                     <i class="las la-shopping-bag"></i>
-                    <span class="d-none d-md-inline-block"> {{ translate('Send RFQ Request') }}</span>
+                    <span class="d-md-inline-block"> {{ translate('Send RFQ Request') }}</span>
                 </button>
-                <button type="button" class="btn btn-primary order-sample fw-600 add-to-cart min-w-150px rounded-0"
-                    @if (Auth::check()) onclick="OrderSample()" @else onclick="showLoginModal()" @endif disabled>
-                    <i class="la la-shopping-cart"></i> {{ translate('Oder Sample') }}
-                </button>
+                
             @endif
         </div>
 
-       
-
-       
-
-        <!-- Seller Guarantees -->
-        @if ($detailedProduct->digital == 1)
-            @if ($detailedProduct->added_by == 'seller')
-                <div class="row no-gutters mt-3">
-                    <div class="col-2">
-                        <div class="text-secondary fs-14 fw-400">{{ translate('Seller Guarantees') }}</div>
-                    </div>
-                    <div class="col-10">
-                        @if ($detailedProduct->user->shop->verification_status == 1)
-                            <span class="text-success fs-14 fw-700">{{ translate('Verified seller') }}</span>
-                        @else
-                            <span class="text-danger fs-14 fw-700">{{ translate('Non verified seller') }}</span>
-                        @endif
-                    </div>
-                </div>
-            @endif
-        @endif
+        
     @endif
 
-    <!-- Share -->
-    <div class="row no-gutters mt-4">
-        <div class="col-sm-2">
-            <div class="text-secondary fs-14 fw-400 mt-2">{{ translate('Share') }}</div>
-        </div>
-        <div class="col-sm-10">
-            <div class="aiz-share"></div>
-        </div>
-    </div>
-
    
+
+    
 </div>

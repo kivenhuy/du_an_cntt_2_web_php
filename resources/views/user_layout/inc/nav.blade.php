@@ -154,7 +154,7 @@
             </div>
 
             <!-- Loged in user Menus -->
-            <div class="hover-user-top-menu position-absolute top-100 right-0 z-3">
+            <div class="hover-user-top-menu position-absolute top-100 right-0 left-0 z-3">
                 <div class="container">
                     <div class="position-static float-right">
                         <div class="aiz-user-top-menu bg-white rounded-0 border-top shadow-sm" style="width:220px;">

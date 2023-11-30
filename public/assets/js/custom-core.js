@@ -1265,23 +1265,23 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
                     showCount: false,
                     shares: [{
                             share: "email",
-                            logo: "lar la-envelope"
+                            logo: "fa fa-envelope"
                         },
                         {
                             share: "twitter",
-                            logo: "lab la-twitter"
+                            logo: "fa fa-twitter"
                         },
                         {
                             share: "facebook",
-                            logo: "lab la-facebook-f"
+                            logo: "fa fa-facebook-f"
                         },
                         {
                             share: "linkedin",
-                            logo: "lab la-linkedin-in"
+                            logo: "fa fa-linkedin-in"
                         },
                         {
                             share: "whatsapp",
-                            logo: "lab la-whatsapp"
+                            logo: "fa fa-whatsapp"
                         }
                     ]
                 });

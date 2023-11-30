@@ -16,12 +16,13 @@
                         <table id="example1" class="table table-bordered table-striped">
                           <thead>
                               <tr>
-                                <th>{{translate('Products Name')}}</th>
-                                <th>{{translate('Added By')}}</th>
-                                <th>{{translate('Info')}}</th>
-                                <th>{{translate('Total Stock')}}</th>
-                                <th>{{translate('Published')}}</th>
+                                <th>{{translate('Seller Name')}}</th>
+                                <th>{{translate('Phone')}}</th>
+                                <th>{{translate('Email Address')}}</th>
+                                <th>{{translate('Verification Info')}}</th>
                                 <th>{{translate('Approved')}}</th>
+                                <th>{{translate('Num.of Products')}}</th>
+                                <th>{{translate('Due to seller')}}</th>
                                 <th>{{translate('Action')}}</th>
                               </tr>
                           </thead>
@@ -46,8 +47,23 @@
     
 
 @section('script')
-<script>
-$(document).ready(function()
+    <script type="text/javascript">
+        $(document).on("change", ".check-all", function() {
+            if(this.checked) {
+                // Iterate each checkbox
+                $('.check-one:checkbox').each(function() {
+                    this.checked = true;                        
+                });
+            } else {
+                $('.check-one:checkbox').each(function() {
+                    this.checked = false;                       
+                });
+            }
+          
+        });
+
+
+        $(document).ready(function()
 {   
   
           var rfq_table = $("#example1").DataTable
@@ -58,32 +74,28 @@ $(document).ready(function()
               searching: false,
               bSort:false,
               serverSide: true,
-                  ajax: "{{ route('admin.products.data_ajax') }}",
+                  ajax: "{{ route('admin.sellers.data_ajax') }}",
                   columns: [
                             {data: 'name', name: 'name', render: function(data){
                               return (data=="")?"":data;
                           }},
-                            {data: 'added_by', name: 'added_by', render: function(data){
+                            {data: 'phone', name: 'phone', render: function(data){
                               return (data=="")?"":data;
                           }},
-                            {data: 'added_by', name: 'added_by', render: function(data, type, row){
-                              return '<strong>Num of Sale:</strong>'+row.num_of_sale+' times </br><strong>Base Price:</strong>'+row.unit_price+' </br>'
+                            {data: 'email', name: 'email', render: function(data, type, row){
+                                return (data=="")?"":data;
                           }},
-                            {data: 'total_stock', name: 'total_stock', render: function(data){
+                            {data: 'verification_info', name: 'verification_info', render: function(data){
                               return (data=="")?"":data;
                           }},                          
-                          {data: 'published', name: 'published', render: function(data, type, row){
-                              return (data==1)?
-                              '<label class="aiz-switch aiz-switch-success mb-0"> <input onchange="update_published(this)" value="'+row.id+'" type="checkbox" checked> <span class="slider round"></span> </label>'
-                              :
-                              '<label class="aiz-switch aiz-switch-success mb-0"> <input onchange="update_published(this)" value="'+row.id+'" type="checkbox"> <span class="slider round"></span> </label>';
-                          }},
-                          {data: 'approved', name: 'approved', render: function(data, type, row){
+                          {data: 'verification_status', name: 'verification_status', render: function(data, type, row){
                               return (data==1)?
                               '<label class="aiz-switch aiz-switch-success mb-0"> <input onchange="update_approved(this)" value="'+row.id+'" type="checkbox" checked> <span class="slider round"></span> </label>'
                               :
                               '<label class="aiz-switch aiz-switch-success mb-0"> <input onchange="update_approved(this)" value="'+row.id+'" type="checkbox"> <span class="slider round"></span> </label>';
                           }},
+                          {data: 'num_product', name: 'num_product'},   
+                          {data: 'due_to_seller', name: 'due_to_seller'},   
                             {
                                     data: 'action', 
                                     name: 'action', 
@@ -93,50 +105,27 @@ $(document).ready(function()
                   ],
           }).buttons().container().appendTo('#example1_wrapper .col-md-6');
 });
+        
+        
 
-function update_published(el)
-{
-    if(el.checked){
-        var status = 1;
-    }
-    else{
-        var status = 0;
-    }
-    $.post('{{ route('seller.products.published') }}', {_token:'{{ csrf_token() }}', id:el.value, status:status}, function(data){
-        if(data == 1){
-            AIZ.plugins.notify('success', '{{ translate('Published products updated successfully') }}');
+        function update_approved(el){
+            if(el.checked){
+                var status = 1;
+            }
+            else{
+                var status = 0;
+            }
+            $.post('{{ route('admin.sellers.approved') }}', {_token:'{{ csrf_token() }}', id:el.value, status:status}, function(data){
+                if(data == 1){
+                    AIZ.plugins.notify('success', '{{ translate('Approved sellers updated successfully') }}');
+                }
+                else{
+                    AIZ.plugins.notify('danger', '{{ translate('Something went wrong') }}');
+                }
+            });
         }
-        else if(data == 2){
-            AIZ.plugins.notify('danger', '{{ translate('Please upgrade your package.') }}');
-            location.reload();
-        }
-        else{
-            AIZ.plugins.notify('danger', '{{ translate('Something went wrong') }}');
-            location.reload();
-        }
-    });
-}
 
-function update_approved(el){
-    if(el.checked){
-        var approved = 1;
-    }
-    else{
-        var approved = 0;
-    }
-    $.post('{{ route('admin.products.approved') }}', {
-        _token      :   '{{ csrf_token() }}', 
-        id          :   el.value, 
-        approved    :   approved
-    }, function(data){
-        if(data == 1){
-            AIZ.plugins.notify('success', '{{ translate('Product approval update successfully') }}');
-        }
-        else{
-            AIZ.plugins.notify('danger', '{{ translate('Something went wrong') }}');
-        }
-    });
+        
 
-}
-</script>
+    </script>
 @endsection

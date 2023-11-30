@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DistrictController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\SellerController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -49,6 +50,12 @@ Route::group(['middleware' => ['auth'],'prefix' => 'admin'], function () {
         Route::get('/products/all', 'index')->name('admin.products.index');
         Route::get('/products/data_ajax', 'data_ajax')->name('admin.products.data_ajax');
         Route::post('/products/approved', 'approve')->name('admin.products.approved');
+    });
+
+    Route::controller(SellerController::class)->group(function () {
+        Route::get('/sellers', 'index')->name('admin.sellers.index');
+        Route::get('/sellers/data_ajax', 'data_ajax')->name('admin.sellers.data_ajax');
+        Route::post('/sellers/approved', 'approve_seller')->name('admin.sellers.approved');
     });
 
 });
