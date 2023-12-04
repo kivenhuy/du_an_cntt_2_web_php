@@ -70,7 +70,10 @@ class ProductController extends Controller
             $discount_end_date   = strtotime($date_var[1]);
         }
         unset($collection['date_range']);
-        
+        if(!isset($collection['short_shelf_life']))
+        {
+            $collection['short_shelf_life'] = 0;
+        }
         if ($collection['meta_title'] == null) {
             $collection['meta_title'] = $collection['name'];
         }

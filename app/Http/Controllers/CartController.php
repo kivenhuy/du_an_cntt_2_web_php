@@ -177,4 +177,22 @@ class CartController extends Controller
         
         
     }
+
+    public function removeFromCart(Request $request)
+    {
+        Cart::destroy($request->id);
+        if(auth()->user() != null) {
+            $user_id = Auth::user()->id;
+            $carts = Cart::where('user_id', $user_id)->get();
+        } else {
+            $temp_user_id = $request->session()->get('temp_user_id');
+            $carts = Cart::where('temp_user_id', $temp_user_id)->get();
+        }
+
+        return array(
+            'cart_count' => count($carts),
+            // 'cart_view' => view('frontend.partials.cart_details_v2', compact('carts'))->render(),
+            'nav_cart_view' => view('user_layout.partials.cart')->render(),
+        );
+    }
 }

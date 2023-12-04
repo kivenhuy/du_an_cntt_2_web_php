@@ -99,9 +99,11 @@
                     <div class="d-none d-xl-block align-self-stretch ml-5 mr-0 has-transition bg-black-10"
                         data-hover="dropdown" style="
                         background-color: white !important;">
-                        <div class="nav-cart-box dropdown h-100" id="cart_items" style="width: max-content;">
-                            @include('user_layout.partials.cart')
-                        </div>
+                        @auth
+                            <div class="nav-cart-box dropdown h-100" id="cart_items" style="width: max-content;">
+                                @include('user_layout.partials.cart')
+                            </div>
+                        @endauth
                     </div>
                     <!-- Compare -->
                     <div class="d-none d-lg-block ml-3 mr-0">

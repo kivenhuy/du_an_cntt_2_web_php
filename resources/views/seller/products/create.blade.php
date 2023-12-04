@@ -344,6 +344,27 @@
             </div>
 
             <div class="col-lg-4">
+
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0 h6">
+                            {{ translate('Food with short shelf life') }}
+                        </h5>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label class="col-md-6 col-from-label">{{ translate('Short Shelf Life') }}</label>
+                            <div class="col-md-6">
+                                <label class="aiz-switch aiz-switch-success mb-0">
+                                    <input value="null" type="checkbox" name="short_shelf_life" id="short_shelf_life">
+                                    <span></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="card">
                     <div class="card-header">
                         <h5 class="mb-0 h6">
@@ -547,6 +568,17 @@
                 $('#js-is_use_order_sample_price-body').attr('hidden', true);
             }
         });
+
+        $('#short_shelf_life').change(function() {
+            let short_shelf_life = $('#short_shelf_life').is(':checked');
+            if (short_shelf_life) {
+                $('#short_shelf_life').val(1);
+            } else {
+                $('#short_shelf_life').val(0);
+            }
+        });
+
+        
 
         $(".btn-primary").on('click',function(){
             var image = $('input[name="photos"]').val();

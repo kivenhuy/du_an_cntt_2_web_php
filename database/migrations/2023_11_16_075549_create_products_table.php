@@ -40,6 +40,7 @@ return new class extends Migration
             $table->string('shipping_type')->nullable();
             $table->integer('est_shipping_days')->nullable();
             $table->integer('num_of_sale')->default(0);
+            $table->integer('short_shelf_life')->default(0);
             $table->string('meta_img')->nullable();
             $table->mediumText('slug');
             $table->double('rating', 8, 2)->default(0.0);
