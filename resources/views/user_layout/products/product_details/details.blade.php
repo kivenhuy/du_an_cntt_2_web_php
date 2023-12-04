@@ -15,7 +15,7 @@
     <div class="row align-items-center mb-3" style="height: 50px">
         <!-- Review -->
         @if ($detailedProduct->auction_product != 1)
-            <div class="col-4">
+            <div class="col-6">
                 @php
                     $total = 0;
                     // $total += $detailedProduct->reviews->count();
@@ -25,27 +25,6 @@
                 </span>
                 <span class="ml-1 opacity-50 fs-14">({{ $total }}
                     {{ translate('reviews') }})</span>
-            </div>
-            <div class="col">
-                @if ($detailedProduct->auction_product != 1)
-                    <div class="d-flex" style="height: 50px">
-                        <!-- Add to wishlist button -->
-                        <div class="hover_icon_product_detail" style="margin-right:8px">
-                            <a href="javascript:void(0)" onclick="addToWishList({{ $detailedProduct->id }})"
-                                class="mr-3 fs-14 text-dark opacity-60 has-transitiuon hov-opacity-100">
-                                <i class="la la-heart-o mr-1 size-16"></i>
-                            </a>
-                        </div>
-                        
-                        <!-- Add to compare button -->
-                        <div class="hover_icon_product_detail">
-                            <a href="javascript:void(0)" onclick="addToCompare({{ $detailedProduct->id }})"
-                                class="fs-14 text-dark opacity-60 has-transitiuon hov-opacity-100">
-                                <i class="las la-sync mr-1 size-16"></i>
-                            </a>
-                        </div>
-                    </div>
-                @endif
             </div>
         @endif
         <!-- Estimate Shipping Time -->
@@ -96,7 +75,7 @@
                     <!-- Add to compare button -->
                     <a href="javascript:void(0)" onclick="addToCompare({{ $detailedProduct->id }})"
                         class="fs-14 text-dark opacity-60 has-transitiuon hov-opacity-100">
-                        <i class="las la-sync mr-1"></i>
+                        <i class="fa fa-sync mr-1"></i>
                         {{ translate('Add to Compare') }}
                     </a>
                 </div>
@@ -106,66 +85,7 @@
 
     <hr>
 
-    <!-- For auction product -->
-    @if ($detailedProduct->auction_product)
-        <div class="row no-gutters mb-3">
-            <div class="col-sm-2">
-                <div class="text-secondary fs-14 fw-400 mt-1">{{ translate('Auction Will End') }}</div>
-            </div>
-            <div class="col-sm-10">
-                @if ($detailedProduct->auction_end_date > strtotime('now'))
-                    <div class="aiz-count-down align-items-center"
-                        data-date="{{ date('Y/m/d H:i:s', $detailedProduct->auction_end_date) }}"></div>
-                @else
-                    <p>{{ translate('Ended') }}</p>
-                @endif
-
-            </div>
-        </div>
-
-        <div class="row no-gutters mb-3">
-            <div class="col-sm-2">
-                <div class="text-secondary fs-14 fw-400 mt-1">{{ translate('Starting Bid') }}</div>
-            </div>
-            <div class="col-sm-10">
-                <span class="opacity-50 fs-20">
-                    {{ single_price($detailedProduct->starting_bid) }}
-                </span>
-                @if ($detailedProduct->unit != null)
-                    <span class="opacity-70">/{{ $detailedProduct->getTranslation('unit') }}</span>
-                @endif
-            </div>
-        </div>
-
-        @if (Auth::check() &&
-                Auth::user()->product_bids->where('product_id', $detailedProduct->id)->first() != null)
-            <div class="row no-gutters mb-3">
-                <div class="col-sm-2">
-                    <div class="text-secondary fs-14 fw-400 mt-1">{{ translate('My Bidded Amount') }}</div>
-                </div>
-                <div class="col-sm-10">
-                    <span class="opacity-50 fs-20">
-                        {{ single_price(Auth::user()->product_bids->where('product_id', $detailedProduct->id)->first()->amount) }}
-                    </span>
-                </div>
-            </div>
-            <hr>
-        @endif
-
-        @php $highest_bid = $detailedProduct->bids->max('amount'); @endphp
-        <div class="row no-gutters my-2 mb-3">
-            <div class="col-sm-2">
-                <div class="text-secondary fs-14 fw-400 mt-1">{{ translate('Highest Bid') }}</div>
-            </div>
-            <div class="col-sm-10">
-                <strong class="h3 fw-600 text-primary">
-                    @if ($highest_bid != null)
-                        {{ single_price($highest_bid) }}
-                    @endif
-                </strong>
-            </div>
-        </div>
-    @else
+   
         <!-- Without auction product -->
         @if ($detailedProduct->wholesale_product == 1)
             <!-- Wholesale -->
@@ -263,7 +183,6 @@
                 </div>
             @endif
         @endif
-    @endif
 
      <!-- Brand Logo & Name -->
      @if ($detailedProduct->brand != null)
@@ -278,14 +197,10 @@
     <div class="d-flex flex-wrap align-items-center" style="margin-bottom: 30px !important">
         <div class="d-flex align-items-center mr-4">
             <!-- Shop Name -->
-            @if ($detailedProduct->added_by == 'seller' && get_setting('vendor_system_activation') == 1)
-                <span class="text-secondary fs-14 fw-400 mr-4 w-70px text_who_sell">{{ translate('Sold by') }}</span>
-                <input type="hidden" id="id_shop" value="{{$detailedProduct->user->shop->id}}">
-                <a href="{{ route('shop.visit', $detailedProduct->user->shop->slug) }}"
-                    class="text-reset hov-text-primary fs-14 fw-700 text_who_sell" style="color: #2E7F25 !important">{{ $detailedProduct->user->shop->name }}</a>
-            @else
-                <p class="mb-0 fs-14 fw-700">{{ translate('Inhouse product') }}</p>
-            @endif
+            <span class="text-secondary fs-14 fw-400 mr-4 w-70px text_who_sell">{{ translate('Sold by') }}</span>
+            <input type="hidden" id="id_shop" value="{{$detailedProduct->user->shop->id}}">
+            <a href=""
+                class="text-reset hov-text-primary fs-14 fw-700 text_who_sell" style="color: #2E7F25 !important">{{ $detailedProduct->user->shop->name }}</a>
         </div>
         
     </div>
@@ -367,7 +282,7 @@
                             <div class="row no-gutters align-items-center aiz-plus-minus mr-3" style="width: 130px;">
                                 <button class="btn col-auto btn-icon btn-sm btn-light rounded-0" type="button"
                                     data-type="minus" data-field="quantity" disabled="">
-                                    <i class="las la-minus"></i>
+                                    <i class="fa fa-minus"></i>
                                 </button>
                                 <input type="number" name="quantity"
                                     class="col border-0 text-center flex-grow-1 fs-16 input-number" placeholder="1"
@@ -375,7 +290,7 @@
                                     max="10" lang="en">
                                 <button class="btn col-auto btn-icon btn-sm btn-light rounded-0" type="button"
                                     data-type="plus" data-field="quantity">
-                                    <i class="las la-plus"></i>
+                                    <i class="fa fa-plus"></i>
                                 </button>
                             </div>
                             @php
@@ -385,12 +300,10 @@
                                 // }product_stock
                             @endphp
                             <div class="avialable-amount opacity-60">
-                                @if ($detailedProduct->stock_visibility_state == 'quantity')
-                                    (<span id="available-quantity">{{ $qty }}</span>
-                                    {{ translate('available') }})
-                                @elseif($detailedProduct->stock_visibility_state == 'text' && $qty >= 1)
-                                    (<span id="available-quantity">{{ translate('In Stock') }}</span>)
-                                @endif
+                                
+                                    <span id="available-quantity">{{ $qty }}</span>
+                                    {{ translate('available') }}
+                                
                             </div>
                         </div>
                     </div>
@@ -443,7 +356,7 @@
                 @else
                     <button type="button" class="btn btn-primary buy-now  fw-600 min-w-150px rounded-0"
                         onclick="bid_modal()">
-                        <i class="las la-gavel"></i>
+                        <i class="fa fa-gavel"></i>
                         @if (Auth::check() &&
                                 Auth::user()->product_bids->where('product_id', $detailedProduct->id)->first() != null)
                             {{ translate('Change Bid') }}
@@ -472,8 +385,8 @@
                                     <button type="button" 
                                         class="btn btn-warning buy-now fw-600 add_to_cart min-w-150px rounded-4"
                                         @if (Auth::check()) onclick="addToCart()" @else onclick="showLoginModal()" @endif>
-                                            {{-- <i class="las la-shopping-bag"></i> --}}
-                                            <i class="las la-shopping-bag" style="font-size: 16px"></i>
+                                            {{-- <i class="fa fa-shopping-bag"></i> --}}
+                                            <i class="fa fa-shopping-bag" style="font-size: 16px"></i>
                                             {{-- <img src="{{static_asset('uploads/all/km22nnFUj9qnUYI8vD3Sa0gB6sLIUeqw921muBAb.png')}}" alt=""> --}}
                                         <span class="d-md-inline-block text_button_detail_page font-size-mobile"> {{ translate('Add to cart') }}</span>
                                     </button>
@@ -482,7 +395,7 @@
                                     <div class="pl-3 pr-0" style="max-width:200px !important">
                                         <button type="button" class="btn btn-primary buy-now fw-600 add-to-cart min-w-140px rounded-4"
                                             @if (Auth::check()) onclick="OrderSample()" @else onclick="showLoginModal()" @endif>
-                                            <i class="la la-shopping-cart" style="font-size: 16px"></i> 
+                                            <i class="fa fa-shopping-cart" style="font-size: 16px"></i> 
                                             {{-- <img src="{{static_asset('uploads/all/eP7lX2HLlbLjmFYZtMUZe0R4QVC6qnEEcurewNOq.png')}}" alt=""> --}}
                                             <span class="d-md-inline-block text_button_detail_page font-size-mobile"> {{ translate('Oder Sample') }}</span>
                                         </button>
@@ -495,57 +408,21 @@
                                     <div class="pl-3 pr-0" style="max-width:180px !important">
                                         <button type="button" class="btn btn-primary buy-now fw-600 add-to-cart min-w-140px rounded-4"
                                             @if (Auth::check()) onclick="buyNow()" @else onclick="showLoginModal()" @endif>
-                                            <i class="la la-shopping-cart" style="font-size: 16px"></i> 
+                                            <i class="fa fa-shopping-cart" style="font-size: 16px"></i> 
                                             {{-- <img src="{{static_asset('uploads/all/eP7lX2HLlbLjmFYZtMUZe0R4QVC6qnEEcurewNOq.png')}}" alt=""> --}}
                                             <span class="d-md-inline-block text_button_detail_page font-size-mobile"> {{ translate('Buy Now') }}</span>
                                         </button>
                                     </div>
                                 @endif
                                 
-                                {{-- <div class="pl-3 pr-0" style="max-width:180px !important">
-                                    <button type="button" class="btn btn-primary buy-now fw-600 add-to-cart min-w-140px rounded-4"
-                                        @if (Auth::check()) onclick="buyNow()" @else onclick="showLoginModal()" @endif>
-                                        <i class="la la-shopping-cart" style="font-size: 16px"></i> 
-                                        <span class="d-md-inline-block text_button_detail_page font-size-mobile"> {{ translate('Buy Now') }}</span>
-                                    </button>
-                                </div> --}}
-								<div>
-                                    <div class="col-md-4" style="max-width:260px !important">
-                                        <button style="width:102% !important" type="button" class="btn btn-dark buy-now fw-600 send_rfq_request min-w-150px rounded-4 button_for_checkout"
-                                            @if (Auth::check()) onclick="SendRFQRequest()" @else onclick="showLoginModal()" @endif>
-                                            <i class="las la-edit" style="font-size: 16px"></i>
-                                            {{-- <img src="{{static_asset('uploads/all/71ex8NGElTo5VKEUtVVYQUM2PXfJdrA4cH84gPFJ.png')}}" alt=""> --}}
-                                            <span class="d-md-inline-block text_button_detail_page font-size-mobile"> {{ translate('Inquire Now') }}</span>
-                                        </button>
-                                    </div>
-                                </div>  
+                               
+								
                                 
                             </div>
                          
-                            {{-- <div class="col-md-3 ">
-                                <button type="button" class="btn btn-warning text-white" name="order_sample"
-                                    @if (Auth::check()) onclick="OrderSample()" @else onclick="showLoginModal()" @endif disabled>
-                                    <i class="la la-shopping-cart"></i> {{ translate('Oder Sample') }}
-                                </button>
-                            </div> --}}
+                            
                         </div>
                     </div>
-                    
-                    {{-- <button type="button" class="btn btn-primary buy-now fw-600 add-to-cart min-w-150px rounded-0"
-                        @if (Auth::check()) onclick="buyNow()" @else onclick="showLoginModal()" @endif>
-                        <i class="la la-shopping-cart"></i> {{ translate('Buy Now') }}
-                    </button>
-                    <button type="button"
-                        class="btn btn-warning mr-2 send-request fw-600 min-w-150px rounded-0 text-white"
-                        @if (Auth::check()) onclick="SendRFQRequest()" @else onclick="showLoginModal()" @endif>
-                        <i class="las la-shopping-bag"></i>
-                        <span class="d-none d-md-inline-block"> {{ translate('Send RFQ Request') }}</span>
-                    </button>
-                    <button type="button" class="btn btn-primary order-sample fw-600 add-to-cart min-w-150px rounded-0"
-                        @if (Auth::check()) onclick="OrderSample()" @else onclick="showLoginModal()" @endif disabled>
-                        <i class="la la-shopping-cart"></i> {{ translate('Oder Sample') }}
-                    </button> --}}
-                    
                 @endif
                 <button type="button" class="btn btn-secondary out-of-stock fw-600 d-none" disabled>
                     <i class="la la-cart-arrow-down"></i> {{ translate('Out of Stock') }}
@@ -554,7 +431,7 @@
                 <button type="button"
                     class="btn btn-warning mr-2 mb-2 add-to-cart fw-600 min-w-150px rounded-0 text-white font-size-mobile"
                     @if (Auth::check()) onclick="addToCart()" @else onclick="showLoginModal()" @endif>
-                    <i class="las la-shopping-bag"></i>
+                    <i class="fa fa-shopping-bag"></i>
                     <span class="d-md-inline-block"> {{ translate('Add to cart') }}</span>
                 </button>
                 @if(isset($order_sample) && $order_sample->is_active == 1)
@@ -571,7 +448,7 @@
                 <button type="button"
                     class="btn btn-warning mr-2 mb-2 send-request fw-600 min-w-150px rounded-0 text-white font-size-mobile"
                     @if (Auth::check()) onclick="SendRFQRequest()" @else onclick="showLoginModal()" @endif>
-                    <i class="las la-shopping-bag"></i>
+                    <i class="fa fa-shopping-bag"></i>
                     <span class="d-md-inline-block"> {{ translate('Send RFQ Request') }}</span>
                 </button>
                 
@@ -580,8 +457,4 @@
 
         
     @endif
-
-   
-
-    
 </div>

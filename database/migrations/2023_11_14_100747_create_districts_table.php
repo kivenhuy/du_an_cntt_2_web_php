@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('city_id');
             $table->string('district_name');
             $table->string('district_code')->nullable();
-            $table->string('status');
+            $table->string('status')->default(1);
             $table->timestamps();
         });
     }

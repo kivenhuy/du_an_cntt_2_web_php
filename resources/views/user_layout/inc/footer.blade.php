@@ -1,4 +1,4 @@
-<section class="py-lg-3 text-light footer-widget" style="border: 0.8px solid; background-color:  white !important">
+<section class="py-lg-3 text-light footer-widget" style="z-index:1;border: 0.8px solid; background-color:  white !important">
     <!-- footer widgets ========== [Accordion Fotter widgets are bellow from this]-->
     <div class="container d-none d-lg-block">
         <div class="row">

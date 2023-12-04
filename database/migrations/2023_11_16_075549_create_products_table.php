@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('category_id');
             $table->string('photos')->nullable();
             $table->string('thumbnail_img')->nullable();
-            $table->integer('tags')->nullable();
+            $table->string('tags')->nullable();
             $table->longText('description')->nullable();
             $table->double('unit_price',20,2);
             $table->double('purchase_price',20,2)->nullable();
@@ -27,6 +27,7 @@ return new class extends Migration
             $table->longText('choice_options');
             $table->integer('approved')->default(0);
             $table->integer('current_stock');
+            $table->integer('short_shelf_life')->default(0);
             $table->string('unit');
             $table->double('weight',8,2);
             $table->integer('min_qty');

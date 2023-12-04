@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Customer\HomeController;
 use App\Http\Controllers\SearchController;
@@ -38,7 +39,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     
 
-
+    // Upload Image
     Route::controller(UploadsController::class)->group(function () {
         Route::post('/file-uploader', 'show_uploader');
         Route::post('/file-uploader/upload', 'upload');
@@ -47,6 +48,13 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/file-uploader/download/{id}', 'attachment_download')->name('download_attachment');
     });
 
+    // Cart
+    Route::controller(CartController::class)->group(function () {
+        Route::get('/cart', 'index')->name('cart');
+        Route::post('/cart/addToCart', 'addToCart')->name('cart.addToCart');
+        Route::post('/cart/show-cart-modal', 'showCartModal')->name('cart.showCartModal');
+        Route::post('/cart/removeFromCart', 'removeFromCart')->name('cart.removeFromCart');
+    });
 
     // Search
     Route::controller(SearchController::class)->group(function () {

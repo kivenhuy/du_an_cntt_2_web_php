@@ -25,32 +25,5 @@ class UsersTableSeeder extends Seeder
             'phone'=>"0931657765", 
             'address'=>"639 Nguyễn Trãi"
         ]);
-
-        User::create([
-            'name'=>"buyer 01",
-            'user_type'=>"customer",
-            'email'=>"customer01@gmail.com", 
-            'password'=>"12345678", 
-            'country'=>2, 
-            'city'=>2, 
-            'district'=>2, 
-            'ward'=>2, 
-            'phone'=>"0123468741", 
-            'address'=>"45 Nguyễn Trãi"
-        ]);
-
-        User::create([
-            'name'=>"Seller 01",
-            'user_type'=>"seller",
-            'email'=>"seller01@gmail.com", 
-            'password'=>"12345678", 
-            'country'=>3, 
-            'city'=>3, 
-            'district'=>3, 
-            'ward'=>3, 
-            'phone'=>"0987666555", 
-            'address'=>"123 bông sao"
-        ]);
-
     }
 }

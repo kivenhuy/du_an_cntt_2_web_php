@@ -26,7 +26,9 @@
                     </button>
                     <!-- Header Logo -->
                     <div class="col-auto pl-0 pr-3 d-flex align-items-center">
-                        <img src="{{ static_asset('assets/img/DTQSbmTVlRIyc56RV4e98YWpf1fa9dfsKYb2IojK.jpg') }}" alt="" class="mw-100 h-30px h-md-65px" style="height: 90px;width: 90px;">
+                        <a href="{{route('homepage')}}">
+                            <img src="{{ static_asset('assets/img/DTQSbmTVlRIyc56RV4e98YWpf1fa9dfsKYb2IojK.jpg') }}" alt="" class="mw-100 h-30px h-md-65px" style="height: 90px;width: 90px;">
+                        </a>
                     </div>
                     <!-- Search Icon for small device -->
                     <div class="d-lg-none ml-auto mr-0">
@@ -97,18 +99,18 @@
                     <div class="d-none d-xl-block align-self-stretch ml-5 mr-0 has-transition bg-black-10"
                         data-hover="dropdown" style="
                         background-color: white !important;">
-                       
+                        <div class="nav-cart-box dropdown h-100" id="cart_items" style="width: max-content;">
+                            @include('user_layout.partials.cart')
+                        </div>
                     </div>
                     <!-- Compare -->
                     <div class="d-none d-lg-block ml-3 mr-0">
                         <div class="icon_header" id="compare">
-                           
                         </div>
                     </div>
                     <!-- Wishlist -->
                     <div class="d-none d-lg-block mr-3" style="margin-left: 36px;">
                         <div class="icon_header" id="wishlist">
-                            
                         </div>
                     </div>
                     {{-- Account --}}

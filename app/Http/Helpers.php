@@ -214,6 +214,14 @@ if (!function_exists('home_discounted_price')) {
     }
 }
 
+if (!function_exists('single_price')) {
+    function single_price($price)
+    {
+        return format_price(convert_price($price));
+    }
+}
+
+
 if (!function_exists('format_price')) {
     function format_price($price, $isMinimize = false)
     {
@@ -257,5 +265,47 @@ if (!function_exists('get_system_default_currency')) {
     function get_system_default_currency()
     {
         return Currency::findOrFail(1);
+    }
+}
+
+if (!function_exists('cart_product_price')) {
+    function cart_product_price($cart_product, $product, $formatted = true, $tax = true)
+    {
+        
+        $str = '';
+        if ($cart_product['variation'] != null) {
+            $str = $cart_product['variation'];
+        }
+        $price = 0;
+        
+        $product_stock = $product->product_stock;
+        if ($product_stock) {
+            $price = $product_stock->price;
+        }
+        //discount calculation
+        $discount_applicable = false;
+
+        if ($product->discount_start_date == null) {
+            $discount_applicable = true;
+        } elseif (
+            strtotime(date('d-m-Y H:i:s')) >= $product->discount_start_date &&
+            strtotime(date('d-m-Y H:i:s')) <= $product->discount_end_date
+        ) {
+            $discount_applicable = true;
+        }
+
+        if ($discount_applicable) {
+            if ($product->discount_type == 'percent') {
+                $price -= ($price * $product->discount) / 100;
+            } elseif ($product->discount_type == 'amount') {
+                $price -= $product->discount;
+            }
+        }
+
+        if ($formatted) {
+            return format_price(convert_price($price));
+        } else {
+            return $price;
+        }
     }
 }
