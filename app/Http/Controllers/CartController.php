@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Address;
 use App\Models\Cart;
+use App\Models\City;
+use App\Models\Country;
+use App\Models\District;
 use App\Models\Products;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,9 +17,30 @@ class CartController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if(auth()->user() != null) {
+            $user_id = Auth::user()->id;
+            $carts = Cart::where('user_id', $user_id)->get();
+        } 
+        $carts = Cart::where('user_id', Auth::user()->id)->get();
+        if(count($carts)>0)
+        {
+            $address = Address::where('user_id', Auth::user()->id)->get();
+            foreach($address as $data_address)
+            {
+                $city_name = City::find($data_address->city_id)->name;
+                $country_name = Country::find($data_address->country_id)->name;
+                $district_name = District::find($data_address->district_id)->name;
+                $user_name = User::find($data_address->user_id)->name;
+                $str = $user_name.', '.$data_address->phone.', '.$data_address->address.', '.$district_name.', '.$city_name.', '.$country_name;
+                $data_address->full_adress = $str;
+            }
+        }
+        else{
+            $address = [];
+        }
+        return view('user_layout.partials.cart_view', compact('carts','address'));
     }
 
     /**
@@ -192,6 +218,120 @@ class CartController extends Controller
         return array(
             'cart_count' => count($carts),
             // 'cart_view' => view('frontend.partials.cart_details_v2', compact('carts'))->render(),
+            'nav_cart_view' => view('user_layout.partials.cart')->render(),
+        );
+    }
+
+    public function update_select_item(Request $request)
+    {
+        if((int)$request->data_address == 0)
+        {
+            $data_address = 0;
+        }
+        else
+        {
+            $data_address = (int)$request->data_address;
+        }
+        $total = 0;
+        $disabled = 0;
+        if($request->type == 1)
+        {
+            $carts = Cart::where('user_id', Auth::user()->id)->get();
+            if(count($carts)>0)
+            {
+                foreach($carts as $data_cart)
+                {
+                    $product = Products::find($data_cart->product_id);
+                    if($request->active == 1)
+                    {
+                        $total = $total + cart_product_price($data_cart, $product, false) * $data_cart->quantity;
+                    }
+                    $data_cart->update(['is_checked'=>$request->active,'address_id'=>$data_address]);
+                } 
+            }
+        }
+        else
+        {
+            $cart_data = Cart::find($request->cart_id);
+            $cart_data->update(['is_checked'=>$request->active,'address_id'=>$data_address]);
+            $all_cart = Cart::where('is_checked',1)->get();
+            if(count($all_cart)>0)
+            {
+                foreach($all_cart as $data_cart)
+                {
+                        $product = Products::find($data_cart->product_id);
+                        $total = $total + cart_product_price($data_cart, $product, false) * $data_cart->quantity;
+                } 
+            }
+        }
+        if($total != 0)
+        {
+            $disabled = 1;
+        }
+        return ['total'=>single_price($total),'disabled'=>$disabled];
+    }
+
+    public function updateQuantity(Request $request)
+    {
+        $cartItem = Cart::findOrFail($request->id);
+        if($cartItem['id'] == $request->id){
+            $product = Products::find($cartItem['product_id']);
+            $product_stock = $product->product_stock->where('variant', $cartItem['variation'])->first();
+            $quantity = $product_stock->qty;
+            $price = $product_stock->price;
+			
+			//discount calculation
+            $discount_applicable = false;
+
+            if ($product->discount_start_date == null) {
+                $discount_applicable = true;
+            }
+            elseif (strtotime(date('d-m-Y H:i:s')) >= $product->discount_start_date &&
+                strtotime(date('d-m-Y H:i:s')) <= $product->discount_end_date) {
+                $discount_applicable = true;
+            }
+
+            if ($discount_applicable) {
+                if($product->discount_type == 'percent'){
+                    $price -= ($price*$product->discount)/100;
+                }
+                elseif($product->discount_type == 'amount'){
+                    $price -= $product->discount;
+                }
+            }
+
+            if($quantity >= $request->quantity) {
+                if($request->quantity >= $product->min_qty){
+                    $cartItem['quantity'] = $request->quantity;
+                }
+            }
+            $cartItem['price'] = $price;
+            $cartItem->save();
+        }
+
+        if(auth()->user() != null) {
+            $user_id = Auth::user()->id;
+            $carts = Cart::where('user_id', $user_id)->get();
+        }
+        if(count($carts)>0)
+        {
+            $address = Address::where('user_id', Auth::user()->id)->get();
+            foreach($address as $data_address)
+            {
+                $city_name = City::find($data_address->city_id)->name;
+                $country_name = Country::find($data_address->country_id)->name;
+                $district_name = District::find($data_address->district_id)->name;
+                $user_name = User::find($data_address->user_id)->name;
+                $str = $user_name.', '.$data_address->phone.', '.$data_address->address.', '.$city_name.', '.$district_name.', '.$country_name;
+                $data_address->full_adress = $str;
+            }
+        }
+        else{
+            $address = [];
+        }
+        return array(
+            'cart_count' => count($carts),
+            'cart_view' => view('user_layout.partials.cart_details', compact('carts','address'))->render(),
             'nav_cart_view' => view('user_layout.partials.cart')->render(),
         );
     }

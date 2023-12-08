@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\Controller;
@@ -54,6 +55,15 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/cart/addToCart', 'addToCart')->name('cart.addToCart');
         Route::post('/cart/show-cart-modal', 'showCartModal')->name('cart.showCartModal');
         Route::post('/cart/removeFromCart', 'removeFromCart')->name('cart.removeFromCart');
+        Route::post('/cart/update_select_item', 'update_select_item')->name('cart.update_select_item');
+        Route::post('/cart/updateQuantity', 'updateQuantity')->name('cart.updateQuantity');
+    });
+    
+
+    // Address
+    Route::resource('addresses', AddressController::class);
+    Route::controller(AddressController::class)->group(function () {
+        
     });
 
     // Search
