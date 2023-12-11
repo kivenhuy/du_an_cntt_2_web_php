@@ -135,7 +135,7 @@
     }
     .return_to_shop
     {
-        width: 200px;
+        width: 250px;
         height: 50px;
         border-radius: 4px;
         color: #2E7F25;

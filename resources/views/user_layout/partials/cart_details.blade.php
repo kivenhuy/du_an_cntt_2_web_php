@@ -153,7 +153,7 @@
                 </div>
             </div>
             <div class="col-xxl-3 col-xl-10 mx-auto">
-                <div class="border bg-white p-3 p-lg-4 text-left" style="margin-bottom: 20px !important">
+                {{-- <div class="border bg-white p-3 p-lg-4 text-left" style="margin-bottom: 20px !important">
                     <div class="mb-4">
                         <div class="coupon">
                             <div class="apply_coupons" style="margin-bottom: 14px;">
@@ -183,7 +183,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 <div class="border bg-white p-3 p-lg-4 text-left">
                     <div class="mb-4">
@@ -212,7 +212,7 @@
         <div class="col-md-6 text-center text-md-left order-1 order-md-0">
             <a href="{{ route('homepage') }}" class="btn btn-link fs-14 fw-700 px-0">
                 <button class="btn return_to_shop">
-                    <i class="las la-arrow-left fs-16"></i>
+                    <i class="fa fa-arrow-left fs-16"></i>
                     {{ translate('Return to Homepage')}}
                 </button>
             </a>
@@ -233,19 +233,97 @@
 </div>
 
 @section('modal')
-    <!-- Address Modal -->
-    {{-- @include('frontend.partials.address_modal') --}}
+<div class="modal fade" id="new-address-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">{{ translate('New Address') }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="form-default" role="form" action="{{ route('addresses.store') }}" method="POST">
+                @csrf
+                <div class="modal-body">
+                    <div class="p-3">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label>{{ translate('Address')}}</label>
+                            </div>
+                            <div class="col-md-10">
+                                <textarea class="form-control mb-3" placeholder="{{ translate('Your Address')}}" rows="2" name="address" required></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label>{{ translate('Country')}}</label>
+                            </div>
+                            <div class="col-md-10">
+                                <div class="mb-3">
+                                    <select class="form-control aiz-selectpicker" data-live-search="true" data-placeholder="{{ translate('Select your country') }}" name="country_id" required>
+                                        <option value="">{{ translate('Select your country') }}</option>
+                                        @foreach (App\Models\Country::where('status', 1)->get() as $key => $country)
+                                            <option value="{{ $country->id }}">{{ $country->country_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label>{{ translate('City')}}</label>
+                            </div>
+                            <div class="col-md-10">
+                                <select class="form-control mb-3 aiz-selectpicker" data-live-search="true" name="city_id" required>
+
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label>{{ translate('District')}}</label>
+                            </div>
+                            <div class="col-md-10">
+                                <select class="form-control mb-3 aiz-selectpicker" data-live-search="true" name="district_id" required>
+
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label>{{ translate('Phone')}}</label>
+                            </div>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control mb-3" placeholder="{{ translate('+880')}}" name="phone" value="" required>
+                            </div>
+                        </div>
+                        <div class="form-group text-right">
+                            <button type="submit" class="btn btn-sm btn-primary">{{translate('Save')}}</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 
 <script type="text/javascript">
-    AIZ.extra.plusMinus();
 
     function handleClick(myRadio) {
-            var address_id = myRadio.value;
-            // var id_radio = myRadio.id;
-            // var final_price = $('#final_price').val();
-           
-        }
+        var address_id = myRadio.value;
+        // var id_radio = myRadio.id;
+        // var final_price = $('#final_price').val();
+        
+    }
+
+    function add_new_address(){
+        $('#new-address-modal').modal('show');
+    }
+
     function showHidePan(myRadio) 
     {
         var cart_checked = myRadio.checked;
@@ -341,8 +419,4 @@
                 });
     }
   
-
-    function add_new_address(){
-        $('#new-address-modal').modal('show');
-    }
 </script>
