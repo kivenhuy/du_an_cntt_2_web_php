@@ -217,7 +217,7 @@ class CartController extends Controller
 
         return array(
             'cart_count' => count($carts),
-            // 'cart_view' => view('frontend.partials.cart_details_v2', compact('carts'))->render(),
+            'cart_view' => view('user_layout.partials.cart_details', compact('carts'))->render(),
             'nav_cart_view' => view('user_layout.partials.cart')->render(),
         );
     }
