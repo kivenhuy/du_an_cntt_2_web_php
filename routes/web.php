@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Customer\HomeController;
+use App\Http\Controllers\EnterpriseController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\UploadsController;
@@ -49,6 +50,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/file-uploader/get_file_by_ids', 'get_preview_files');
         Route::get('/file-uploader/download/{id}', 'attachment_download')->name('download_attachment');
     });
+
+    
 
     // Cart
     Route::controller(CartController::class)->group(function () {
