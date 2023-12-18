@@ -1811,6 +1811,18 @@
 
             return false;
         }
+
+        function SendRFQRequest(){
+            var shop_id = $('#id_shop').val();
+            var id_product = $("#id_product").val();
+            @if(Auth::check() && Auth::user()->user_type != 'customer' && Auth::user()->user_type != 'enterprise')
+                AIZ.plugins.notify('warning', "{{ translate('Please Login as a customer to send RFQ request.') }}");
+                return false;
+            @endif
+            if(checkAddToCartValidity()) {
+                $('#Rfq_request').modal('show');
+            }
+        }
     </script>
     
     @yield('script')

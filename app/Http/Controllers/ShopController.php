@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SellerRegistrationRequest;
 use App\Models\Seller;
 use App\Models\Shop;
+use Illuminate\Support\Facades\Http;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -50,6 +51,23 @@ class ShopController extends Controller
                 {        
                     auth()->login($user, false);
                     flash(translate('Your Shop has been created successfully!'))->success();
+                    try
+                    {
+                        $upsteamUrl = env('FARM_URL');
+                        $signupApiUrl = $upsteamUrl . '/auth/register';
+                        $data_cooperative = [
+                            'name' => $user->name,
+                            'username' => $user->name,
+                            'email' => $user->email,
+                            'password' => $request->password,
+                            'phone_number' => $user->phone,
+                        ];
+                        
+                        $response = Http::post($signupApiUrl,$data_cooperative);
+                    }
+                    catch(\Exception $exception) {
+                        
+                    }
                     return redirect()->route('seller.dashboard');
                 }
                 else

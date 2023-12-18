@@ -90,6 +90,20 @@
                         </li>
                     </ul>
                 </li>
+                <li class="aiz-side-nav-item">
+                    <a href="#" class="aiz-side-nav-link">
+                        <i class="fa fa-industry aiz-side-nav-icon"></i>
+                        <span class="aiz-side-nav-text">{{ translate('Enterprise') }}</span>
+                        <span class="aiz-side-nav-arrow"></span>
+                    </a>
+                    <ul class="aiz-side-nav-list level-2">
+                        <li class="aiz-side-nav-item">
+                            <a href="{{ route('admin.enterprise.index') }}" class="aiz-side-nav-link">
+                                <span class="aiz-side-nav-text">{{ translate('All Enterprise') }}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
 
                 
             </ul><!-- .aiz-side-nav -->
