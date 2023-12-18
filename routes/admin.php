@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CityController;
+use App\Http\Controllers\Admin\CommuneController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DistrictController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ProvinceController;
 use App\Http\Controllers\Admin\SellerController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\EnterpriseController;
@@ -32,11 +34,26 @@ Route::group(['middleware' => ['auth'],'prefix' => 'admin'], function () {
         Route::post("/city/store",'store')->name('city.store'); 
     });
 
+    Route::controller(ProvinceController::class)->group(function () {
+        Route::get('/province', 'index')->name('province.index');
+        Route::get('/province/create', 'create')->name('province.create');
+       
+        Route::get('/province/data_ajax', 'data_ajax')->name('province.data_ajax');
+        Route::post("/province/store",'store')->name('province.store'); 
+    });
+
     Route::controller(DistrictController::class)->group(function () {
         Route::get('/district', 'index')->name('district.index');
         Route::get('/district/create', 'create')->name('district.create');
         Route::get('/district/data_ajax', 'data_ajax')->name('district.data_ajax');
         Route::post("/district/store",'store')->name('district.store'); 
+    });
+
+    Route::controller(CommuneController::class)->group(function () {
+        Route::get('/commune', 'index')->name('commune.index');
+        Route::get('/commune/create', 'create')->name('commune.create');
+        Route::get('/commune/data_ajax', 'data_ajax')->name('commune.data_ajax');
+        Route::post("/commune/store",'store')->name('commune.store'); 
     });
 
 
