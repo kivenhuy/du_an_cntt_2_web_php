@@ -47,9 +47,25 @@
                     </ul>
                     <ul class="aiz-side-nav-list level-2">
                         <li class="aiz-side-nav-item">
+                            <a href="{{ route('province.index') }}"
+                                class="aiz-side-nav-link ">
+                                <span class="aiz-side-nav-text">Province</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="aiz-side-nav-list level-2">
+                        <li class="aiz-side-nav-item">
                             <a href="{{ route('district.index') }}"
                                 class="aiz-side-nav-link ">
                                 <span class="aiz-side-nav-text">District</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="aiz-side-nav-list level-2">
+                        <li class="aiz-side-nav-item">
+                            <a href="{{ route('commune.index') }}"
+                                class="aiz-side-nav-link ">
+                                <span class="aiz-side-nav-text">Commune</span>
                             </a>
                         </li>
                     </ul>

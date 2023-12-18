@@ -40,7 +40,7 @@
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated dropdown-menu-md">
                         <a href="{{ route('seller.dashboard') }}" class="dropdown-item">
                             <i class="las la-user-circle"></i>
-                            <span>{{translate('Ecom Dashboard')}}</span>
+                            <span>{{translate('Ecomerce Dashboard')}}</span>
                         </a>
 
                         <a href="{{ route('farm_management.dashboard') }}" class="dropdown-item">

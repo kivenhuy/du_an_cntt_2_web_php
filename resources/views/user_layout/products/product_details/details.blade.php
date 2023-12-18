@@ -459,12 +459,12 @@
                     <div class="modal-body">
                         <div class="form-group row">
                             <input type="hidden" name="product_id" value={{ $detailedProduct->id }}>
-                            <div class="col-sm-3">
+                            <div class="col-sm-4">
                                 <label>{{translate('Enter custom quantity')}}</label>
                                 <div class="product-quantity d-flex align-items-center">
-                                    <div class="row no-gutters align-items-center aiz-plus-minus mr-3" style="width: 130px;">
+                                    <div class="row no-gutters align-items-center aiz-plus-minus mr-3" >
                                         <button class="btn col-auto btn-icon btn-sm btn-light rounded-0" type="button" data-type="minus" data-field="quantity" disabled="disabled">
-                                            <i class="fa fa-plus"></i>
+                                            <i class="fa fa-minus"></i>
                                         </button>
                                         <input type="number" name="quantity" class="col border-0 text-center flex-grow-1 fs-16 input-number" placeholder="1" value="{{ $detailedProduct->min_qty }}" min="{{ $detailedProduct->min_qty }}"  lang="en">
                                         <button class="btn col-auto btn-icon btn-sm btn-light rounded-0" type="button" data-type="plus" data-field="quantity">
@@ -473,28 +473,34 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <label>{{translate('Unit')}}</label>
                                 <select class="form-control aiz-selectpicker" name="unit" id="unit" >
                                     <option value="KG" >KG</option>
                                     <option value="TONS" >TONS</option>
                                 </select>
                             </div>
+                            <div class="col-sm-4">
+                                <label>{{translate('Order Date')}}</label>      
+                                <select class="form-control aiz-selectpicker" name="order_date" id="order_date" >
+                                    <option value="every_day" >Every Day</option>
+                                    <option value="each_7_day" >Each 7 Days</option>
+                                    <option value="each_14_day" >Each 14 Days</option>
+                                    <option value="each_30_day" >Each 30 Days</option>
+                                </select>
+                            </div>
                             
                         </div>
-                        <div class="form-group row">
-                            @foreach($arr_attr as $key => $data_arr_attr)
-                                <div class="col-sm-3">
-                                    <label id="lblName">{{$key}}</label>
-                                        <select class="form-control aiz-selectpicker" name="{{preg_replace('/\s+/', '',$key)}}" id="{{$key}}">
-                                            @foreach($data_arr_attr as $sub_data_arr_attr)
-                                                <option value="{{$sub_data_arr_attr}}">{{$sub_data_arr_attr}}</option>
-                                            @endforeach
-                                        </select>
-                                </div>
-                            @endforeach
-                        </div>
-                            
+                        <div class="form-group row">    
+                            <div class="col-sm-4">
+                                <label>{{translate('From Date')}}</label>
+                                <input required="" type="datetime-local" class="form-control" name="dor" id="dor">
+                            </div>
+                            <div class="col-sm-4">
+                                <label>{{translate('To Date')}}</label>
+                                <input required="" type="datetime-local" class="form-control" name="dor" id="dor">
+                            </div>      
+                        </div>  
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">{{translate('Send Request')}}</button>

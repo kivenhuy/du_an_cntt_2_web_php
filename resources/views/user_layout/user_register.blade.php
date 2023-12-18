@@ -35,9 +35,7 @@
 
                                                     <li class="nav-item" style="">
                                                         <a class="nav-link " id="custom-content-below-enterprise-tab" data-toggle="pill" href="#enterprisetab" role="tab" aria-controls="custom-content-below-enterprise" aria-selected="false"><span class="text_head_register">{{ translate('Enterprise') }}</a>
-                                                    </li>
-
-                                                    
+                                                    </li>                                                    
                                                 </ul>
 
                                                 <div class="tab-content mt-4" id="custom-content-below-tabContent">
