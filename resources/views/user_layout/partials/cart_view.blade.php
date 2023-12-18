@@ -74,8 +74,5 @@
                 $('#cart-summary').html(data.cart_view);
             });
         }
-
-        
-
     </script>
 @endsection

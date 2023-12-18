@@ -344,29 +344,6 @@
     @endif
 
     @if ($detailedProduct->auction_product)
-        @php
-            $highest_bid = $detailedProduct->bids->max('amount');
-            $min_bid_amount = $highest_bid != null ? $highest_bid + 1 : $detailedProduct->starting_bid;
-        @endphp
-        @if ($detailedProduct->auction_end_date >= strtotime('now'))
-            <div class="mt-4">
-                @if (Auth::check() && $detailedProduct->user_id == Auth::user()->id)
-                    <span
-                        class="badge badge-inline badge-danger">{{ translate('Seller cannot Place Bid to His Own Product') }}</span>
-                @else
-                    <button type="button" class="btn btn-primary buy-now  fw-600 min-w-150px rounded-0"
-                        onclick="bid_modal()">
-                        <i class="fa fa-gavel"></i>
-                        @if (Auth::check() &&
-                                Auth::user()->product_bids->where('product_id', $detailedProduct->id)->first() != null)
-                            {{ translate('Change Bid') }}
-                        @else
-                            {{ translate('Place Bid') }}
-                        @endif
-                    </button>
-                @endif
-            </div>
-        @endif
     @else
         <!-- Add to cart & Buy now Buttons -->
         <div class="mt-3">
@@ -414,8 +391,15 @@
                                         </button>
                                     </div>
                                 @endif
-                                
-                               
+                                @if(Auth::user()->user_type == 'enterprise')
+                                    <div class="pl-3 pr-0" style="max-width:200px !important">
+                                        <button type="button" class="btn btn-info buy-now fw-600 add-to-cart min-w-140px rounded-4"
+                                            @if (Auth::check()) onclick="SendRFQRequest()" @else onclick="showLoginModal()" @endif>
+                                            <i class="fa fa-file-contract"></i>
+                                            <span class="d-md-inline-block text_button_detail_page font-size-mobile"> {{ translate('Send Request') }}</span>
+                                        </button>
+                                    </div>
+                                @endif
 								
                                 
                             </div>
@@ -457,4 +441,67 @@
 
         
     @endif
+
+    <div class="modal fade" id="Rfq_request">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-zoom product-modal" id="modal-size" role="document" style="max-width: 800px;width: 100%">
+            <div class="modal-content position-relative">
+                {{-- <div class="c-preloader text-center p-3">
+                    <i class="las la-spinner la-spin la-3x"></i>
+                </div> --}}
+                <button type="button" class="close absolute-top-right btn-icon close z-1 btn-circle bg-gray mr-2 mt-2 d-flex justify-content-center align-items-center" data-dismiss="modal" aria-label="Close" style="background: #ededf2; width: calc(2rem + 2px); height: calc(2rem + 2px);">
+                    <span aria-hidden="true" class="fs-24 fw-700" style="margin-left: 2px;">&times;</span>
+                </button>
+                <form class="form-default" role="form" action="" method="POST">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title"> {{translate('Request For RFQ')}} </h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <input type="hidden" name="product_id" value={{ $detailedProduct->id }}>
+                            <div class="col-sm-3">
+                                <label>{{translate('Enter custom quantity')}}</label>
+                                <div class="product-quantity d-flex align-items-center">
+                                    <div class="row no-gutters align-items-center aiz-plus-minus mr-3" style="width: 130px;">
+                                        <button class="btn col-auto btn-icon btn-sm btn-light rounded-0" type="button" data-type="minus" data-field="quantity" disabled="disabled">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                        <input type="number" name="quantity" class="col border-0 text-center flex-grow-1 fs-16 input-number" placeholder="1" value="{{ $detailedProduct->min_qty }}" min="{{ $detailedProduct->min_qty }}"  lang="en">
+                                        <button class="btn col-auto btn-icon btn-sm btn-light rounded-0" type="button" data-type="plus" data-field="quantity">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label>{{translate('Unit')}}</label>
+                                <select class="form-control aiz-selectpicker" name="unit" id="unit" >
+                                    <option value="KG" >KG</option>
+                                    <option value="TONS" >TONS</option>
+                                </select>
+                            </div>
+                            
+                        </div>
+                        <div class="form-group row">
+                            @foreach($arr_attr as $key => $data_arr_attr)
+                                <div class="col-sm-3">
+                                    <label id="lblName">{{$key}}</label>
+                                        <select class="form-control aiz-selectpicker" name="{{preg_replace('/\s+/', '',$key)}}" id="{{$key}}">
+                                            @foreach($data_arr_attr as $sub_data_arr_attr)
+                                                <option value="{{$sub_data_arr_attr}}">{{$sub_data_arr_attr}}</option>
+                                            @endforeach
+                                        </select>
+                                </div>
+                            @endforeach
+                        </div>
+                            
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">{{translate('Send Request')}}</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{translate('Close')}}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>

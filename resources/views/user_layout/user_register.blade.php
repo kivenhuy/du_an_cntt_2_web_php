@@ -34,9 +34,8 @@
                                                     </li>
 
                                                     <li class="nav-item" style="">
-                                                        <a class="nav-link " id="custom-content-below-enterprise-tab" data-toggle="pill" href="#enterprisetab" role="tab" aria-controls="custom-content-below-enterprise" aria-selected="false"><span class="text_head_register">{{ translate('Enterprise') }}</span></a>
-                                                    </li>
-                                                    
+                                                        <a class="nav-link " id="custom-content-below-enterprise-tab" data-toggle="pill" href="#enterprisetab" role="tab" aria-controls="custom-content-below-enterprise" aria-selected="false"><span class="text_head_register">{{ translate('Enterprise') }}</a>
+                                                    </li>                                                    
                                                 </ul>
 
                                                 <div class="tab-content mt-4" id="custom-content-below-tabContent">
@@ -262,7 +261,7 @@
                                                     </div>  
 
                                                     <div class="tab-pane fade  " id="enterprisetab" role="tabpanel" aria-labelledby="custom-content-below-enterprise">
-                                                        <form id="reg-form-enterprise" class="form-default" role="form" action="" method="POST" enctype="multipart/form-data">
+                                                        <form id="reg-form-enterprise" class="form-default" role="form" action="{{ route('enterprise.registration') }}" method="POST" enctype="multipart/form-data">
                                                         @csrf
                                                             <input type="hidden" name="user_type" value="enterprise">
                                                             <label style="font-size: 24px;font-weight: 600;">Company Information</label>
@@ -271,10 +270,10 @@
                                                                     <!-- Name -->
                                                                     <div class="form-group">
                                                                         <label for="legal_name" class="fs-12 fw-700 text-soft-dark">{{  translate('Legal Name') }}</label>
-                                                                        <input required type="text" class="form-control rounded-0{{ $errors->has('name') ? ' is-invalid' : '' }}" value="{{ old('legal_name') }}" placeholder="{{  translate('Legal Name') }}" name="legal_name">
-                                                                        @if ($errors->has('legal_name'))
+                                                                        <input required type="text" class="form-control rounded-0{{ $errors->has('name') ? ' is-invalid' : '' }}" value="{{ old('name') }}" placeholder="{{  translate('Legal Name') }}" name="name">
+                                                                        @if ($errors->has('name'))
                                                                             <span class="invalid-feedback" role="alert">
-                                                                                <strong>{{ $errors->first('legal_name') }}</strong>
+                                                                                <strong>{{ $errors->first('name') }}</strong>
                                                                             </span>
                                                                         @endif
                                                                     </div>
@@ -403,34 +402,36 @@
                                                                         {{-- <input type="text" class="form-control rounded-0{{ $errors->has('country') ? ' is-invalid' : '' }}" placeholder="{{  translate('Country') }}" name="country"> --}}
                                                                     </div>
 
-                                                                     <!-- Address -->
-                                                                     <div class="form-group">
-                                                                        <label for="ward_code" class="fs-12 fw-700 text-soft-dark">{{  translate('Ward') }}</label>
-                                                                        <input type="text" class="form-control rounded-0" placeholder="{{  translate('Ward') }}" name="ward_3   ">
+                                                                    
+
+                                                                    <!-- Address -->
+                                                                    <div class="form-group">
+                                                                        <label for="ward_code" class="fs-12 fw-700 text-soft-dark">{{  translate('Address') }}</label>
+                                                                        <input type="text" class="form-control rounded-0" placeholder="{{  translate('Address') }}" name="address_3">
                                                                     </div>
                                                                     
-                                                                   
-                                                                    
                                                                 </div>
-
                                                                 <div class="col-md-4">
-                                                                    {{-- City --}}
+                                                                    {{-- City --}}  
                                                                     <div class="form-group">
                                                                         <label for="password_confirmation" class="fs-12 fw-700 text-soft-dark">{{  translate('City') }}</label>
-                                                                        <select required class="form-control aiz-selectpicker" id="city_3" name="city_3" data-live-search="true">
+                                                                        <select required class="form-control aiz-selectpicker" id="city_3" name="city_3">
                                                                             <option value="" selected hidden>Select City</option>
+                                                                            {{-- @foreach ($country as $data_country)
+                                                                                <option value={{$data_country->id}}>{{$data_country->name}}</option>
+                                                                            @endforeach --}}
                                                                         </select>
                                                                     </div>
 
-                                                                     <!-- Address -->
-                                                                     <div class="form-group">
-                                                                        <label for="ward_code" class="fs-12 fw-700 text-soft-dark">{{  translate('Address') }}</label>
-                                                                        <input type="text" class="form-control rounded-0" placeholder="{{  translate('Address') }}" name="address">
+                                                                    {{-- Ward --}}
+                                                                    <div class="form-group">
+                                                                        <label for="ward_code" class="fs-12 fw-700 text-soft-dark">{{  translate('Ward') }}</label>
+                                                                        <input type="text" class="form-control rounded-0" placeholder="{{  translate('Ward') }}" name="ward_3">
                                                                     </div>
                                                                 </div>
-
                                                                 <div class="col-md-4">
-                                                                    {{-- District --}}
+                                                                    
+                                                                    <!-- District -->
                                                                     <div class="form-group">
                                                                         <label for="ward_code" class="fs-12 fw-700 text-soft-dark">{{  translate('District') }}</label>
                                                                         <select required class="form-control aiz-selectpicker" id="district_3" name="district_3" data-live-search="true">
@@ -439,8 +440,12 @@
                                                                         </select>
                                                                     </div>
 
+                                                                    {{-- ZipCode --}}
+                                                                    <div class="form-group">
+                                                                        <label for="zipcode" class="fs-12 fw-700 text-soft-dark">{{  translate('Zipcode') }}</label>
+                                                                        <input required type="text" class="form-control rounded-0" placeholder="{{  translate('Zipcode') }}" name="zipcode">
+                                                                    </div>
                                                                 </div>
-                                                                
                                                             </div>
 
                                                             <label style="font-size: 24px;font-weight: 600;">Account Information</label>
@@ -467,19 +472,8 @@
                                                             </div>
 
 
-                                                            <label style="font-size: 24px;font-weight: 600;">Bussiness Category</label>
-                                                            <div class="form-group row">
-                                                                <div class="col-md-12">
-                                                                    <div class="form-group">
-                                                                        <label for="category_pro" class="fs-12 fw-700 text-soft-dark">{{  translate('Category of products') }}</label>
-                                                                        <select required class="form-control aiz-selectpicker" multiple id="category_pro" name="category_pro[]">
-                                                                            
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            
-                                                            
+                                                           
+                                                    
 
                                                             <!-- Submit Button -->
                                                             <div class="mb-4 mt-4">

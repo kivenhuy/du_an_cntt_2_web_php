@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Country;
+use App\Models\EnterpriseDetails;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -121,6 +122,7 @@ class LoginController extends Controller
             "district" =>0,
             "ward" =>0,
             "address" => "",
+            "user_type" => 'customer',
             "password" => $request->password,
             "password_confirmation" => $request->password_confirmation,
             // "full_address" =>  $full_address
@@ -148,6 +150,70 @@ class LoginController extends Controller
         flash(translate('Registration successful.'))->success();
     }
 
+    // Store Enterprise Role
+    public function storeEnterpriseForm(Request $request)
+    {
+        if (filter_var($request->email, FILTER_VALIDATE_EMAIL)) {
+            if(User::where('email', $request->email)->first() != null){
+                flash(translate('Email or Phone already exists.'));
+                return back();
+            }
+        }
+        elseif (User::where('phone',$request->phone)->first() != null) {
+            flash(translate('Phone already exists.'));
+            return back();
+        }
+        $this->validator($request->all())->validate();
+        $data_created = 
+        [
+            "_token" => $request->_token,
+            "name" => $request->name,
+            "country" =>$request->country_3,
+            "city" => $request->city_3,
+            "email" => $request->email,
+            "phone" => $request->phone,
+            "district" =>$request->district_3,
+            "ward" =>$request->ward_3,
+            "address" => $request->address_3,
+            "user_type" => 'enterprise',
+            "password" => $request->password,
+            "password_confirmation" => $request->password_confirmation,
+        ];
+        $user = $this->create($data_created);
+        if($user)
+        {
+            $enterprise = new EnterpriseDetails();
+            $enterprise->user_id = $user->id;
+            $enterprise->bussiness_name = $request->bussiness_name;
+            $enterprise->organization_type = $request->organization_type;
+            $enterprise->business_type = json_encode($request->bussiness_type);
+            $enterprise->fax_number = $request->fax_number;
+            $enterprise->tax_number = $request->tax_number;
+            $enterprise->regis_number = $request->registration_number;
+            $enterprise->date_of_regis = $request->dor;
+            $enterprise->save();
+        }
+        $credential = [
+            'email' => $user->email,
+            'password' => $request->password
+        ];
+        if (auth()->attempt($credential )) {
+            $user_login = Auth::user();
+            if($user_login->user_type == "seller")
+            {
+                return redirect()->route('seller.dashboard');
+            }
+            else if($user_login->user_type == "admin")
+            {
+                return redirect()->route('admin.dashboard');
+            }
+            return redirect()->route('homepage');
+        }
+        $user->email_verified_at = date('Y-m-d H:m:s');
+        $user->save();
+        flash(translate('Registration successful.'))->success();
+    }
+
     protected function create(array $data)
     {
         // dd($data['name']);
@@ -168,7 +234,7 @@ class LoginController extends Controller
             'city' => $data['city'],
             'country' => $data['country'],
             'address' => $data['address'],
-            'user_type' => 'customer',
+            'user_type' =>  $data['user_type'],
             'ward' => 0
         ];
         $user = User::create($data_created);

@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\DistrictController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SellerController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\EnterpriseController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['auth'],'prefix' => 'admin'], function () {
@@ -56,6 +57,12 @@ Route::group(['middleware' => ['auth'],'prefix' => 'admin'], function () {
         Route::get('/sellers', 'index')->name('admin.sellers.index');
         Route::get('/sellers/data_ajax', 'data_ajax')->name('admin.sellers.data_ajax');
         Route::post('/sellers/approved', 'approve_seller')->name('admin.sellers.approved');
+    });
+
+    // Enterprise
+    Route::controller(EnterpriseController::class)->group(function () {
+        Route::get('/enterprise', 'index')->name('admin.enterprise.index');
+        Route::get('/enterprise/data_ajax', 'data_ajax')->name('admin.enterprise.data_ajax');
     });
 
 });

@@ -137,10 +137,6 @@
                 <div style="height: 111px !important">
                     @empty($address)
                    
-                    {{-- <div>
-                        <input type="radio" id="huey" name="drone" value="huey" />
-                        <label for="huey" class="delivery_type">Huynh Van Tai, 8291029709124, Ap D4, Ben Luc, Long An</label>
-                    </div> --}}
                     @else
                         @foreach($address as $data_address)
                             <div style="margin-bottom: 1rem;display: flex;align-items: center">
@@ -312,7 +308,7 @@
 @endsection
 
 <script type="text/javascript">
-
+    AIZ.extra.plusMinus();
     function handleClick(myRadio) {
         var address_id = myRadio.value;
         // var id_radio = myRadio.id;
@@ -419,4 +415,6 @@
                 });
     }
   
+
+    
 </script>
