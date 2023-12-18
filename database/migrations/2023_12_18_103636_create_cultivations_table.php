@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::connection('mysql_second')->create('cultivations', function (Blueprint $table) {
             $table->id();
             $table->integer('farmer_id');
+            $table->string('cultivation_name');
             $table->timestamps();
         });
     }
