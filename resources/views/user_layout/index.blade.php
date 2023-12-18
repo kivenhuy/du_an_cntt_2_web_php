@@ -209,11 +209,12 @@
                             }
                         @endphp --}}
                         <div class="top_selling_img">
-                            {{-- <a href="{{ $product_url }}" class="d-block h-100"> --}}
+                            <a href="{{ route('product', $data_selling_product->slug) }}" class="d-block h-100">
                                 <img class="lazyload mx-auto img-fit has-transition img_product_top_selling" width="180px" height="180px" src="{{ static_asset('assets/img/placeholder.jpg') }}"
                                     data-src="{{ uploaded_asset($data_selling_product->thumbnail_img) }}" alt="{{ $data_selling_product->name}}"
                                     title="{{ $data_selling_product->name }}"
                                     onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
+                            </a>
                         </div>
                         
                         <div class="content_top_selling ">
@@ -313,7 +314,7 @@
                                 @endif --}}
                                
                                 <div class="top_selling_img">
-                                    {{-- <a href="{{$product_url}}" class="d-block h-100"> --}}
+                                    <a href="{{ route('product', $new_product->slug) }}" class="d-block h-100">
                                         <img class="lazyload mx-auto img-fit has-transition img_product_top_selling" width="180px" height="180px" src="{{ static_asset('assets/img/placeholder.jpg') }}"
                                             data-src="{{ uploaded_asset($new_product->thumbnail_img) }}" alt=""
                                             title=""
