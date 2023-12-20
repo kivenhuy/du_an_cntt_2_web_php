@@ -1678,6 +1678,11 @@
     <script src="{{ static_asset('assets/js/vendors.js') }}"></script>
     {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> --}}
     <script src="{{ static_asset('assets/js/custom-core.js?v=') }}{{ rand(1000,9999) }}"></script>
+    <script src="{{ static_asset('plugins/jquery-validation/jquery.validate.min.js') }}" ></script>
+	<script src="{{ static_asset('plugins/datatables/jquery.dataTables.min.js') }}" ></script>
+	<script src="{{ static_asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}" ></script>
+	<script src="{{ static_asset('plugins/datatables-responsive/js/dataTables.responsive.min.js') }}" ></script>
+	<script src="{{ static_asset('plugins/datatables-buttons/js/dataTables.buttons.min.js') }}" ></script>
     <script type="text/javascript">
         @foreach (session('flash_notification', collect())->toArray() as $message)
 	        AIZ.plugins.notify('{{ $message['level'] }}', '{{ $message['message'] }}');

@@ -7,6 +7,7 @@ use App\Models\Categories;
 use App\Models\Category;
 use App\Models\Products;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -60,6 +61,16 @@ class HomeController extends Controller
                 // 'order_sample'=>$order_sample,
                 'product_traceability'=>0,
             ]);
+        }
+    }
+
+    public function dashboard()
+    {
+        if (Auth::user()->user_type == 'customer' || Auth::user()->user_type == 'enterprise' ) 
+        {
+            return view('user_layout.dashboard');
+        } else {
+            abort(404);
         }
     }
 }

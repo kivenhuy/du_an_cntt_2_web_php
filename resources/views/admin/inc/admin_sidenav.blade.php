@@ -120,6 +120,12 @@
                         </li>
                     </ul>
                 </li>
+                <li class="aiz-side-nav-item">
+                    <a href="{{route('request_for_product.admin_index')}}" class="aiz-side-nav-link">
+                        <i class="fa fa-list aiz-side-nav-icon"></i>
+                        <span class="aiz-side-nav-text">{{translate('Request For Product')}}</span>
+                    </a>
+                </li>
 
                 
             </ul><!-- .aiz-side-nav -->

@@ -6,6 +6,8 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Customer\HomeController;
 use App\Http\Controllers\EnterpriseController;
+use App\Http\Controllers\PurchaseHistoryController;
+use App\Http\Controllers\RequestForProductController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\UploadsController;
@@ -36,6 +38,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::controller(HomeController::class)->group(function () {
         Route::get('/', 'index')->name('homepage');
+        Route::get('/dashboard', 'dashboard')->name('user.dashboard');
+        Route::get('/profile', 'profile')->name('profile');
         Route::get('/product/{slug}', 'product')->name('product');
         Route::get('/terms', 'terms')->name('terms');
     });
@@ -51,7 +55,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/file-uploader/download/{id}', 'attachment_download')->name('download_attachment');
     });
 
-    
+    // Purchase History
+    Route::resource('purchase_history', PurchaseHistoryController::class);
 
     // Cart
     Route::controller(CartController::class)->group(function () {
@@ -79,7 +84,14 @@ Route::group(['middleware' => ['auth']], function () {
         // Route::get('/brand/{brand_slug}', 'listingByBrand')->name('products.brand');
     });
 
-
+    // Request for Product
+    Route::controller(RequestForProductController::class)->group(function () {
+        Route::get('/request_for_product', 'index')->name('request_for_product.index');
+        Route::post('/request_for_product/data_ajax', 'customer_dataajax')->name('request_for_product.customer_dataajax');
+        Route::get('/request_for_product/data_ajax', 'customer_dataajax')->name('request_for_product.customer_dataajax');
+        Route::get('/request_for_product/get_detail/{id}', 'get_details_data')->name('request_for_product.get_details_data');
+        Route::post('/request_for_product/reject_price', 'reject_price')->name('request_for_product.reject_price');
+    });
     
 });
 
