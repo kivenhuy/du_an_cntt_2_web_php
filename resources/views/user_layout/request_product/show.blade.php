@@ -11,7 +11,7 @@
                 <div class="col-12 data_user">
                     <div class="row" style="margin-bottom:1rem">
                         <a style="display: flex;align-items: center;margin-right: 10px" href="{{url()->previous()}}" ><i style="color:black;font-size: 1.73em;" class="fa fa-arrow-left"></i></a>
-                        <span class="rfq_code">
+                        <span class="rfp_code">
                             {{translate('Request Code')}}: {{$data_request->code}}
                         </span>
                     </div>
@@ -39,16 +39,16 @@
                                         <tr class="" style="height: auto">
                                             <td style="padding-top:24px">
                                                 <div style="display: flex;align-items: center">
-                                                    <img src="{{static_asset($product->url_img)}}" width="115px" height="115px" alt="">
+                                                    <img src="{{ uploaded_asset($product->thumbnail_img) }}" width="115px" height="115px" alt="">
                                                     <div style="display: flex;flex-direction: column;padding-left: 16px;">
-                                                        <span class="rfq_product_name" style="margin-bottom:6px;" >{{ $product->name }}</span>
+                                                        <span class="rfp_product_name" style="margin-bottom:6px;" >{{ $product->name }}</span>
                                                     </div>
 
                                                 </div>  
                                             </td>
-                                            <td><span class="rfq_product_name">{{ $seller->name }} </span></td>
-                                            <td><span class="rfq_product_name">{{$data_request->quantity}} x {{$data_request->unit}}</span></td>
-                                            <td><span class="rfq_product_name">{{ single_price($data_request->price) }}</span></td>
+                                            <td><span class="rfp_product_name">{{ $seller->name }} </span></td>
+                                            <td><span class="rfp_product_name">{{$data_request->quantity}} x {{$data_request->unit}}</span></td>
+                                            <td><span class="rfp_product_name">{{ single_price($data_request->price) }}</span></td>
                                             <td>
                                                 @if($data_request->status == 0)
                                                 
@@ -74,7 +74,7 @@
                     </div>
 
                     @if($data_request->status == 2)
-                    <div class="parent_appprove_rfq">
+                    <div class="parent_appprove_rfp">
                         <div class="text_approval">
                             {{translate('This request has new price update from seller and waiting for your approval')}}
                         </div>
@@ -129,7 +129,7 @@
             color: #797979;
             margin-right: 1rem;
         }
-        .parent_appprove_rfq
+        .parent_appprove_rfp
         {
             margin-top: 1rem;
             display: flex;
@@ -150,7 +150,7 @@
         {
             justify-content: flex-end !important
         }
-        .data_rfq
+        .data_rfp
         {
             background-color: #F5F5F5;
         }
@@ -192,44 +192,86 @@
 
 @section('script')
 <script type="text/javascript">
-    $(document).ready(function()
-    {   
-        
-  
-  
-        $(document).on("click", ".EdReject ", function()
-        {
-            var price = $('#price').val();
-            var serviceID = $('#id_rfq').val();
-              if(serviceID != null )
-              {
-                  $.ajax
-                  ({
-                      url: "{{route('request_for_product.reject_price')}}",
-                      method:'post',
-                      data:{
-                          id_rfq:serviceID,
-                          price:price,
-                      },
-                      headers: {
-                          'X-CSRF-Token': '{{ csrf_token() }}',
-                      },
-                      success: function(data){
-                            $('#myModal').modal('toggle');
-                            location.reload();
-                          AIZ.plugins.notify('success','You Was Reject The Price');
-                      },
-                      error: function(){
-                          AIZ.plugins.notify('danger','Some Thing Went Wrong!!!!');
-                      }
-                  });
-              }
-        });
-
-
-        
-    });
-  
+$(document).ready(function()
+{   
     
-    </script>
+    $(document).on("click", ".EdApprove ", function()
+    {
+        var serviceID = $(this).attr('id');
+        if(serviceID != null )
+        {
+            $.ajax
+            ({
+                url: "{{route('request_for_product.approve_price')}}",
+                method:'post',
+                data:{
+                    id_rfp:serviceID,
+                },
+                headers: {
+                    'X-CSRF-Token': '{{ csrf_token() }}',
+                },
+                success: function(data){
+                    $.ajax({
+                        type:"POST",
+                        url: '{{ route('cart.addToCart_RFP_request') }}',
+                        data: 
+                        {
+                            id_rfp:serviceID,
+                        },
+                        headers: {
+                            'X-CSRF-Token': '{{ csrf_token() }}',
+                        },
+                        success: function(data){
+                        // $('#addToCart-modal-body').html(null);
+                        // $('.c-preloader').hide();
+                        $('.EdApprove').hide();
+                        $('.EdOpenReject').hide();
+                        // $('#addToCart-modal-body').html(data.modal_view);
+                        // AIZ.extra.plusMinus();
+                        // AIZ.plugins.slickCarousel();
+                        updateNavCart(data.nav_cart_view,data.cart_count);
+                        }
+                    });
+                    AIZ.plugins.notify('success','You Was Accept The Price');
+                }, 
+                error: function(){
+                    AIZ.plugins.notify('danger','Some Thing Went Wrong!!!!');
+                }
+            });
+        }
+    });
+
+    $(document).on("click", ".EdReject ", function()
+    {
+        var price = $('#price').val();
+        var serviceID = $('#id_rfp').val();
+            if(serviceID != null )
+            {
+                $.ajax
+                ({
+                    url: "{{route('request_for_product.reject_price')}}",
+                    method:'post',
+                    data:{
+                        id_rfp:serviceID,
+                        price:price,
+                    },
+                    headers: {
+                        'X-CSRF-Token': '{{ csrf_token() }}',
+                    },
+                    success: function(data){
+                        $('#myModal').modal('toggle');
+                        location.reload();
+                        AIZ.plugins.notify('success','You Was Reject The Price');
+                    },
+                    error: function(){
+                        AIZ.plugins.notify('danger','Some Thing Went Wrong!!!!');
+                    }
+                });
+            }
+    });
+
+
+    
+});
+</script>
 @endsection

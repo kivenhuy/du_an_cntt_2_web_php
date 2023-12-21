@@ -41,16 +41,18 @@
                 <h6 class="fw-700 mb-3 text-dark">{{ translate('Default Shipping Address') }}</h6>
                 @if(Auth::user()->addresses != null)
                     @php
-                        $address = Auth::user()->addresses->where('set_default', 1)->first();
+                        $address = Auth::user()->addresses;
                     @endphp
                     @if($address != null)
+                        @foreach ($address as $data_address)
                         <ul class="list-unstyled mb-5">
-                            <li class="fs-14 fw-400 text-derk pb-1"><span>{{ $address->address }},</span></li>
-                            <li class="fs-14 fw-400 text-derk pb-1"><span>{{ $address->postal_code }} - {{ $address->city->name }},</span></li>
-                            <li class="fs-14 fw-400 text-derk pb-1"><span>{{ $address->state->name }},</span></li>
-                            <li class="fs-14 fw-400 text-derk pb-1"><span>{{ $address->country->name }}.</span></li>
-                            <li class="fs-14 fw-400 text-derk pb-1"><span>{{ $address->phone }}</span></li>
+                            <li class="fs-14 fw-400 text-derk pb-1"><span> <i class="fa fa-home" aria-hidden="true" style="margin-right: 8px"></i> {{ $data_address->address }},</span></li>
+                            <li class="fs-14 fw-400 text-derk pb-1"><span>{{ $data_address->district->district_name }},</span></li>
+                            <li class="fs-14 fw-400 text-derk pb-1"><span>{{ $data_address->postal_code }} - {{ $data_address->city->city_name }},</span></li>
+                            <li class="fs-14 fw-400 text-derk pb-1"><span>{{ $data_address->country->country_name }}.</span></li>
+                            <li class="fs-14 fw-400 text-derk pb-1"><span>{{ $data_address->phone }}</span></li>
                         </ul>
+                        @endforeach
                     @endif
                 @endif
                 <button class="btn btn-dark btn-block fs-14 fw-500" onclick="add_new_address()" style="border-radius: 25px;">
@@ -64,10 +66,73 @@
 @endsection
 
 @section('modal')
-    <!-- Wallet Recharge Modal -->
-    
-    
-    <!-- Address modal Modal -->
-    {{-- @include('frontend.partials.address_modal') --}}
+    @include('user_layout.partials.address_modal')
 @endsection
 
+@section('script')
+<script type="text/javascript">
+    function add_new_address(){
+        $('#new-address-modal').modal('show');
+    }
+
+    $('#country_2').on('change',function()
+    {
+        var country = $('#country_2').val();
+        // alert(country);
+        if(country != "")
+        {
+            $.ajax
+            ({
+                url: "{{ route('city.filter_by_country') }}", 
+                method:'post',
+                data:{
+                    id:country
+                },
+                headers: {
+                    'X-CSRF-Token': '{{ csrf_token() }}',
+                },
+                async:false,
+                success: function(result){
+                    $('#city_2').html('');
+                    $('#city_2').append('<option value="" selected hidden>Select City</option>');
+                    result.forEach(element => {
+                        console.log(element.id);
+                        $('#city_2').append('<option value="' + element.id+ '">' + element.city_name+ '</option>');
+                    });
+                    $('#city_2').selectpicker('refresh');
+                }
+            });
+        }
+    });
+
+    $('#city_2').on('change',function()
+    {
+        var city = $('#city_2').val();
+        // alert(country);
+        if(city != "")
+        {
+            $.ajax
+            ({
+                url: "{{ route('district.filter_by_city') }}", 
+                method:'post',
+                data:{
+                    id:city
+                },
+                headers: {
+                    'X-CSRF-Token': '{{ csrf_token() }}',
+                },
+                async:false,
+                success: function(result){
+                    $('#district_2').html('');
+                    $('#district_2').append('<option value="" selected hidden>Select District</option>');
+                    result.forEach(element => {
+                        console.log(element.id);
+                        $('#district_2').append('<option value="' + element.id+ '">' + element.district_name+ '</option>');
+                    });
+                    $('#district_2').selectpicker('refresh');
+                }
+            });
+        }
+    });
+</script>
+@endsection

@@ -81,24 +81,28 @@
                                         <div class="col-md-2 col order-1 order-md-0">
                                             @if ($cartItem['digital'] != 1 && $product->auction_product == 0)
                                                 <div class="d-flex flex-column align-items-start aiz-plus-minus mr-2 ml-0">
+                                                    @if($cartItem['is_rfp'] == 0)
                                                     <button
                                                         class="btn col-auto btn-icon btn-sm btn-circle btn-light"
                                                         type="button" data-type="plus"
                                                         data-field="quantity[{{ $cartItem['id'] }}]">
                                                         <i class="fa fa-plus"></i>
                                                     </button>
+                                                    @endif
                                                     <input type="number" name="quantity[{{ $cartItem['id'] }}]"
                                                         class="col border-0 text-left px-0 flex-grow-1 fs-14 input-number quantity_product"
                                                         placeholder="1" value="{{ $cartItem['quantity'] }}"
                                                         min="{{ $product->min_qty }}"
                                                         max="{{ $product_stock->qty }}"
                                                         onchange="updateQuantity({{ $cartItem['id'] }}, this)" style="padding-left:0.75rem !important;">
+                                                    @if($cartItem['is_rfp'] == 0)
                                                     <button
                                                         class="btn col-auto btn-icon btn-sm btn-circle btn-light"
                                                         type="button" data-type="minus"
                                                         data-field="quantity[{{ $cartItem['id'] }}]">
                                                         <i class="fa fa-minus"></i>
                                                     </button>
+                                                    @endif
                                                 </div>
                                             @elseif($product->auction_product == 1)
                                                 <span class="fw-700 fs-14">1</span>
@@ -145,7 +149,7 @@
                             </div>
                         @endforeach
                     @endempty
-                    <button class="btn add_new_address" onclick="add_new_address()"><i class="fa fa-plus" aria-hidden="true"></i> New Address</button>
+                    {{-- <button class="btn add_new_address" onclick="add_new_address()"><i class="fa fa-plus" aria-hidden="true"></i> New Address</button> --}}
                 </div>
             </div>
             <div class="col-xxl-3 col-xl-10 mx-auto">

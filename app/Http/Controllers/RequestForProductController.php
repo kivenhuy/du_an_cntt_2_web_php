@@ -44,6 +44,16 @@ class RequestForProductController extends Controller
         }
     }
 
+    public function seller_update_price(Request $request)
+    {
+        if(isset($request->id_rfp))
+        {
+            $price =$request->price; // 1,000,000
+            $Rfq_data = RequestForProduct::find($request->id_rfq);
+            $Rfq_data->update(['price' => $price,'status' => 2]);
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -122,7 +132,7 @@ class RequestForProductController extends Controller
             }
             elseif(Auth::user()->user_type == 'seller')
             {
-
+                return view('seller.request_product.show',['product'=>$product,'buyer'=>$buyer,'seller'=>$seller,'data_request'=>$data_request]);
             }
             else
             {
@@ -184,15 +194,15 @@ class RequestForProductController extends Controller
         $data_request = RequestForProduct::where('shop_id',Auth::user()->shop->id)->get();
         $out =  DataTables::of($data_request)->make(true);
         $data = $out->getData();
-        for($i=0; $i < count($data->data); $i++) {
+        for($i=0; $i < count($data->data); $i++) 
+        {
             // dd($data->data[$i]->id);
             $output = '';
             $output .= ' <a href="'.url(route('request_for_product.get_details_data',['id'=>$data->data[$i]->id])).'" class="btn btn-info btn-xs" data-toggle="tooltip" title="Show Details" style="display:inline;padding:2px 5px 3px 5px;"><i class="fa fa-eye"></i></a>';
             $data->data[$i]->product_name = Products::find($data->data[$i]->product_id)->name;
             $data->data[$i]->buyer_name = User::find($data->data[$i]->buyer_id)->name;
-            $data->data[$i]->price = single_price($data->data[$i]->price);
             $data->data[$i]->action = (string)$output;
-            }
+        }
         $out->setData($data);
         return $out;
     }
@@ -214,5 +224,23 @@ class RequestForProductController extends Controller
             }
         $out->setData($data);
         return $out;
+    }
+
+    public function approve_price(Request $request)
+    {
+        if(isset($request->id_rfp))
+        {
+            $Rfq_data = RequestForProduct::find($request->id_rfp);
+            $Rfq_data->update(['status' => 3]);
+        }
+    }
+
+    public function reject_price(Request $request)
+    {
+        if(isset($request->id_rfp))
+        {
+            $Rfq_data = RequestForProduct::find($request->id_rfp);
+            $Rfq_data->update(['status' => 1,'price'=>0,'offer_price'=>$request->price]);
+        }
     }
 }

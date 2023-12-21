@@ -37,7 +37,7 @@
                                         <tr class="" style="height: auto">
                                             <td style="padding-top:24px">
                                                 <div style="display: flex;align-items: center">
-                                                    <img src="{{static_asset($product->url_img)}}" width="115px" height="115px" alt="">
+                                                    <img src="{{ uploaded_asset($product->thumbnail_img) }}" width="115px" height="115px" alt="">
                                                     <div style="display: flex;flex-direction: column;padding-left: 16px;">
                                                         <span class="rfq_product_name" style="margin-bottom:6px;" >{{ $product->name }}</span>
                                                     </div>

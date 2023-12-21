@@ -9062,7 +9062,7 @@ background-color: transparent;
 font-size: 0;
 }
 .modal-header .close:before {
-content: "\f0da";
+content: "\f00d";
 font-family: "FontAwesome";
 font-weight: 900;
 font-size: 20px;

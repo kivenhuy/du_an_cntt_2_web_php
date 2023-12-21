@@ -62,6 +62,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::controller(CartController::class)->group(function () {
         Route::get('/cart', 'index')->name('cart');
         Route::post('/cart/addToCart', 'addToCart')->name('cart.addToCart');
+        Route::post('/cart/addToCart_RFP_request', 'addToCart_RFP_request')->name('cart.addToCart_RFP_request');
         Route::post('/cart/show-cart-modal', 'showCartModal')->name('cart.showCartModal');
         Route::post('/cart/removeFromCart', 'removeFromCart')->name('cart.removeFromCart');
         Route::post('/cart/update_select_item', 'update_select_item')->name('cart.update_select_item');
@@ -87,12 +88,21 @@ Route::group(['middleware' => ['auth']], function () {
     // Request for Product
     Route::controller(RequestForProductController::class)->group(function () {
         Route::get('/request_for_product', 'index')->name('request_for_product.index');
-        Route::post('/request_for_product/data_ajax', 'customer_dataajax')->name('request_for_product.customer_dataajax');
+        Route::post('/request_for_product/store', 'store')->name('request_for_product.store');
         Route::get('/request_for_product/data_ajax', 'customer_dataajax')->name('request_for_product.customer_dataajax');
         Route::get('/request_for_product/get_detail/{id}', 'get_details_data')->name('request_for_product.get_details_data');
         Route::post('/request_for_product/reject_price', 'reject_price')->name('request_for_product.reject_price');
+        Route::post('/request_for_product/approve_price', 'approve_price')->name('request_for_product.approve_price');
     });
     
+
+    // Address 
+    Route::resource('addresses', AddressController::class);
+    Route::controller(AddressController::class)->group(function () {
+        Route::post('/addresses/update/{id}', 'update')->name('addresses.update');
+        Route::get('/addresses/destroy/{id}', 'destroy')->name('addresses.destroy');
+        Route::get('/addresses/set_default/{id}', 'set_default')->name('addresses.set_default');
+    });
 });
 
 

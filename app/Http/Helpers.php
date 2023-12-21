@@ -277,14 +277,17 @@ if (!function_exists('cart_product_price')) {
             $str = $cart_product['variation'];
         }
         $price = 0;
-        
+       
         $product_stock = $product->product_stock;
         if ($product_stock) {
             $price = $product_stock->price;
         }
         //discount calculation
         $discount_applicable = false;
-
+        if($cart_product['is_rfp'] == 1)
+        {
+            $price = $cart_product['price'];
+        }
         if ($product->discount_start_date == null) {
             $discount_applicable = true;
         } elseif (
