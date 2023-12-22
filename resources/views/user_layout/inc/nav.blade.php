@@ -208,7 +208,75 @@
                 </div>
             </div>
         </div>
-    
-       
+        @if(Auth::check())
+        <div class="d-none d-lg-block position-relative bg-primary h-50px" style="height:70px;background-color:#2E7F25 !important">
+            <div class="container h-100">
+                <div class="d-flex h-100">
+                   
+                    <div class="ml-xl-4 w-100 overflow-hidden">
+                        <div class="d-flex align-items-center justify-content-center justify-content-xl-start h-100">
+                            <ul class="list-inline mb-0 pl-0 hor-swipe c-scrollbar-light">
+        
+                                <li class="list-inline-item mr-0 animate-underline-white">
+                                    <a href="{{route('homepage')}}"
+                                        class="fs-13 px-3 py-3 d-inline-block fw-700 text-white header_menu_links hov-bg-black-10">
+                                        {{ translate('Home') }}
+                                    </a>
+                                </li>
+                                <li class="list-inline-item mr-0 animate-underline-white">
+                                    <a href="{{route('homepage')}}"
+                                        class="fs-13 px-3 py-3 d-inline-block fw-700 text-white header_menu_links hov-bg-black-10">
+                                        {{ translate('All Seller') }}
+                                    </a>
+                                </li>
+                                <li class="list-inline-item mr-0 animate-underline-white">
+                                    <a href="{{route('homepage')}}"
+                                        class="fs-13 px-3 py-3 d-inline-block fw-700 text-white header_menu_links hov-bg-black-10">
+                                        {{ translate('All Category') }}
+                                    </a>
+                                </li>
+                                <li class="list-inline-item mr-0 animate-underline-white">
+                                    <a href="{{route('comming-soon')}}"
+                                        class="fs-13 px-3 py-3 d-inline-block fw-700 text-white header_menu_links hov-bg-black-10">
+                                        {{ translate('News') }}
+                                    </a>
+                                </li>
+                                <li class="list-inline-item mr-0 animate-underline-white">
+                                    <a href="{{route('comming-soon')}}"
+                                        class="fs-13 px-3 py-3 d-inline-block fw-700 text-white header_menu_links hov-bg-black-10">
+                                        {{ translate('About Us') }}
+                                    </a>
+                                </li>
+                                <li class="list-inline-item mr-0 animate-underline-white">
+                                    <a href="{{route('comming-soon')}}"
+                                        class="fs-13 px-3 py-3 d-inline-block fw-700 text-white header_menu_links hov-bg-black-10">
+                                        {{ translate('Discount') }}
+                                    </a>
+                                </li>
+                                <li class="list-inline-item mr-0 animate-underline-white">
+                                    <a href="{{route('comming-soon')}}"
+                                        class="fs-13 px-3 py-3 d-inline-block fw-700 text-white header_menu_links hov-bg-black-10">
+                                        {{ translate('Support') }}
+                                    </a>
+                                </li>
+                                <li class="list-inline-item mr-0 animate-underline-white">
+                                    <a href="{{route('comming-soon')}}"
+                                        class="fs-13 px-3 py-3 d-inline-block fw-700 text-white header_menu_links hov-bg-black-10">
+                                        {{ translate('Resources') }}
+                                    </a>
+                                </li>
+                               
+                            </ul>
+                        </div>
+                        
+                    </div>
+                   
+                    <!-- Cart -->
+                </div>
+                
+            </div>
+            
+        </div>
+        @endif
     </header>
 

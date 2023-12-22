@@ -126,6 +126,12 @@
                         <span class="aiz-side-nav-text">{{translate('Request For Product')}}</span>
                     </a>
                 </li>
+                <li class="aiz-side-nav-item">
+                    <a href="{{route('carriers.index')}}" class="aiz-side-nav-link">
+                        <i class="fa fa-list aiz-side-nav-icon"></i>
+                        <span class="aiz-side-nav-text">{{translate('Shipping Carrier')}}</span>
+                    </a>
+                </li>
 
                 
             </ul><!-- .aiz-side-nav -->

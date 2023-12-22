@@ -64,6 +64,11 @@ class HomeController extends Controller
         }
     }
 
+    public function comming_soon()
+    {
+        return view('user_layout.comming_soon');
+    }
+
     public function dashboard()
     {
         if (Auth::user()->user_type == 'customer' || Auth::user()->user_type == 'enterprise' ) 

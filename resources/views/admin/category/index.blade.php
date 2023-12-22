@@ -41,12 +41,12 @@
       <!-- /.col -->
     </div>
     <!-- /.row -->
-  </div>
+</div>
     
 @endsection
 @section('script')
 <script>
-     $(document).ready(function()
+$(document).ready(function()
   {   
   
           var rfq_table = $("#example1").DataTable

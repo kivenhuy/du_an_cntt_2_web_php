@@ -4,6 +4,7 @@ use App\Http\Controllers\AddressController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Customer\CheckoutController;
 use App\Http\Controllers\Customer\HomeController;
 use App\Http\Controllers\EnterpriseController;
 use App\Http\Controllers\PurchaseHistoryController;
@@ -38,6 +39,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::controller(HomeController::class)->group(function () {
         Route::get('/', 'index')->name('homepage');
+        Route::get('/comming-soon', 'comming_soon')->name('comming-soon');
         Route::get('/dashboard', 'dashboard')->name('user.dashboard');
         Route::get('/profile', 'profile')->name('profile');
         Route::get('/product/{slug}', 'product')->name('product');
@@ -102,6 +104,16 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/addresses/update/{id}', 'update')->name('addresses.update');
         Route::get('/addresses/destroy/{id}', 'destroy')->name('addresses.destroy');
         Route::get('/addresses/set_default/{id}', 'set_default')->name('addresses.set_default');
+    });
+
+    // Checkout
+    Route::group(['prefix' => 'checkout'], function () {
+        Route::controller(CheckoutController::class)->group(function () {
+            Route::get('/final', 'final_checkout')->name('checkout.final_checkout');
+            Route::post('/update_shipping_fee', 'update_shipping_fee')->name('checkout.update_shipping_fee');
+            Route::post('/update_total_shipping_fee', 'update_total_shipping_fee')->name('checkout.update_total_shipping_fee');
+           
+        });
     });
 });
 
