@@ -272,43 +272,44 @@
                     </div>
                 @endif
 
-                <!-- Quantity + Add to cart -->
-                <div class="row no-gutters mb-3" style="margin-bottom: 32px !important;">
-                    <div class="col-sm-2">
-                        <div class="text-secondary fs-14 fw-400 mt-2 text_brand">{{ translate('Quantity') }}</div>
-                    </div>
-                    <div class="col-sm-10">
-                        <div class="product-quantity d-flex align-items-center">
-                            <div class="row no-gutters align-items-center aiz-plus-minus mr-3" style="width: 130px;">
-                                <button class="btn col-auto btn-icon btn-sm btn-light rounded-0" type="button"
-                                    data-type="minus" data-field="quantity" disabled="">
-                                    <i class="fa fa-minus"></i>
-                                </button>
-                                <input type="number" name="quantity"
-                                    class="col border-0 text-center flex-grow-1 fs-16 input-number" placeholder="1"
-                                    value="{{ $detailedProduct->min_qty }}" min="{{ $detailedProduct->min_qty }}"
-                                    max="10" lang="en">
-                                <button class="btn col-auto btn-icon btn-sm btn-light rounded-0" type="button"
-                                    data-type="plus" data-field="quantity">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                            </div>
-                            @php
-                                $qty = 0;
-                                // foreach ($detailedProduct->stocks as $key => $stock) {
-                                    $qty += $detailedProduct->product_stock->qty;
-                                // }product_stock
-                            @endphp
-                            <div class="avialable-amount opacity-60">
-                                
-                                    <span id="available-quantity">{{ $qty }}</span>
-                                    {{ translate('available') }}
-                                
+                @if(Auth::user()->user_type != "enterprise")
+                    <!-- Quantity + Add to cart -->
+                    <div class="row no-gutters mb-3" style="margin-bottom: 32px !important;">
+                        <div class="col-sm-2">
+                            <div class="text-secondary fs-14 fw-400 mt-2 text_brand">{{ translate('Quantity') }}</div>
+                        </div>
+                        <div class="col-sm-10">
+                            <div class="product-quantity d-flex align-items-center">
+                                <div class="row no-gutters align-items-center aiz-plus-minus mr-3" style="width: 130px;">
+                                    <button class="btn col-auto btn-icon btn-sm btn-light rounded-0" type="button"
+                                        data-type="minus" data-field="quantity" disabled="">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                    <input type="number" name="quantity"
+                                        class="col border-0 text-center flex-grow-1 fs-16 input-number" placeholder="1"
+                                        value="{{ $detailedProduct->min_qty }}" min="{{ $detailedProduct->min_qty }}"
+                                        max="10" lang="en">
+                                    <button class="btn col-auto btn-icon btn-sm btn-light rounded-0" type="button"
+                                        data-type="plus" data-field="quantity">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                                @php
+                                    $qty = 0;
+                                    // foreach ($detailedProduct->stocks as $key => $stock) {
+                                        $qty += $detailedProduct->product_stock->qty;
+                                    // }product_stock
+                                @endphp
+                                <div class="avialable-amount opacity-60">
+                                    
+                                        <span id="available-quantity">{{ $qty }}</span>
+                                        {{ translate('available') }}
+                                    
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-
+                @endif
                 <!-- Additional Cost -->
                 @if ($detailedProduct->is_use_additional_cost)
                     <div class="row no-gutters mb-3 mb-4">
@@ -325,21 +326,6 @@
                     </div>
                 @endif
             @endif
-
-            <!-- Total Price -->
-            {{-- <div class="row no-gutters pb-3 d-none" id="chosen_price_div">
-                <div class="col-sm-2">
-                    <div class="text-secondary fs-14 fw-400 mt-1 ">{{ translate('Total Price') }}</div>
-                </div>
-                <div class="col-sm-10">
-                    <div class="product-price">
-                        <strong id="chosen_price" class="fs-20 fw-700 text-primary">
-
-                        </strong>
-                    </div>
-                </div>
-            </div> --}}
-
         </form>
     @endif
 
@@ -358,6 +344,7 @@
                         <div class="row">
                             <input type="hidden" value="{{$detailedProduct->id}}" name="id_product" id="id_product">
                             <div class="setting_for_button" style="">
+                                @if(Auth::user()->user_type != "enterprise")
                                 <div class="pl-3 pr-0" style="max-width:250px !important">
                                     <button type="button" 
                                         class="btn btn-warning buy-now fw-600 add_to_cart min-w-150px rounded-4"
@@ -368,28 +355,15 @@
                                         <span class="d-md-inline-block text_button_detail_page font-size-mobile"> {{ translate('Add to cart') }}</span>
                                     </button>
                                 </div>
-                                @if(isset($order_sample) && $order_sample->is_active == 1)
-                                    <div class="pl-3 pr-0" style="max-width:200px !important">
-                                        <button type="button" class="btn btn-primary buy-now fw-600 add-to-cart min-w-140px rounded-4"
-                                            @if (Auth::check()) onclick="OrderSample()" @else onclick="showLoginModal()" @endif>
-                                            <i class="fa fa-shopping-cart" style="font-size: 16px"></i> 
-                                            {{-- <img src="{{static_asset('uploads/all/eP7lX2HLlbLjmFYZtMUZe0R4QVC6qnEEcurewNOq.png')}}" alt=""> --}}
-                                            <span class="d-md-inline-block text_button_detail_page font-size-mobile"> {{ translate('Oder Sample') }}</span>
-                                        </button>
-                                    </div>
-                                    {{-- <button type="button" class="btn btn-primary mb-2 order-sample fw-600 add-to-cart min-w-150px rounded-0 font-size-mobile"
-                                        @if (Auth::check()) onclick="OrderSample()" @else onclick="showLoginModal()" @endif>
-                                        <i class="la la-shopping-cart"></i> {{ translate('Oder Sample') }}
-                                    </button> --}}
-                                @else
-                                    <div class="pl-3 pr-0" style="max-width:180px !important">
-                                        <button type="button" class="btn btn-primary buy-now fw-600 add-to-cart min-w-140px rounded-4"
-                                            @if (Auth::check()) onclick="buyNow()" @else onclick="showLoginModal()" @endif>
-                                            <i class="fa fa-shopping-cart" style="font-size: 16px"></i> 
-                                            {{-- <img src="{{static_asset('uploads/all/eP7lX2HLlbLjmFYZtMUZe0R4QVC6qnEEcurewNOq.png')}}" alt=""> --}}
-                                            <span class="d-md-inline-block text_button_detail_page font-size-mobile"> {{ translate('Buy Now') }}</span>
-                                        </button>
-                                    </div>
+                                
+                                <div class="pl-3 pr-0" style="max-width:180px !important">
+                                    <button type="button" class="btn btn-primary buy-now fw-600 add-to-cart min-w-140px rounded-4"
+                                        @if (Auth::check()) onclick="buyNow()" @else onclick="showLoginModal()" @endif>
+                                        <i class="fa fa-shopping-cart" style="font-size: 16px"></i> 
+                                        {{-- <img src="{{static_asset('uploads/all/eP7lX2HLlbLjmFYZtMUZe0R4QVC6qnEEcurewNOq.png')}}" alt=""> --}}
+                                        <span class="d-md-inline-block text_button_detail_page font-size-mobile"> {{ translate('Buy Now') }}</span>
+                                    </button>
+                                </div>
                                 @endif
                                 @if(Auth::user()->user_type == 'enterprise')
                                     <div class="pl-3 pr-0" style="max-width:200px !important">
@@ -411,31 +385,7 @@
                 <button type="button" class="btn btn-secondary out-of-stock fw-600 d-none" disabled>
                     <i class="la la-cart-arrow-down"></i> {{ translate('Out of Stock') }}
                 </button>
-            @elseif ($detailedProduct->digital == 1)
-                <button type="button"
-                    class="btn btn-warning mr-2 mb-2 add-to-cart fw-600 min-w-150px rounded-0 text-white font-size-mobile"
-                    @if (Auth::check()) onclick="addToCart()" @else onclick="showLoginModal()" @endif>
-                    <i class="fa fa-shopping-bag"></i>
-                    <span class="d-md-inline-block"> {{ translate('Add to cart') }}</span>
-                </button>
-                @if(isset($order_sample) && $order_sample->is_active == 1)
-                    <button type="button" class="btn btn-primary mb-2 order-sample fw-600 add-to-cart min-w-150px rounded-0 font-size-mobile"
-                        @if (Auth::check()) onclick="OrderSample()" @else onclick="showLoginModal()" @endif>
-                        <i class="la la-shopping-cart"></i> {{ translate('Oder Sample') }}
-                    </button>
-                @else
-                    <button type="button" class="btn btn-primary mb-2 buy-now fw-600 add-to-cart min-w-150px rounded-0 font-size-mobile"
-                        @if (Auth::check()) onclick="buyNow()" @else onclick="showLoginModal()" @endif>
-                        <i class="la la-shopping-cart"></i> {{ translate('Buy Now') }}
-                    </button>
-                @endif
-                <button type="button"
-                    class="btn btn-warning mr-2 mb-2 send-request fw-600 min-w-150px rounded-0 text-white font-size-mobile"
-                    @if (Auth::check()) onclick="SendRFQRequest()" @else onclick="showLoginModal()" @endif>
-                    <i class="fa fa-shopping-bag"></i>
-                    <span class="d-md-inline-block"> {{ translate('Send RFQ Request') }}</span>
-                </button>
-                
+            
             @endif
         </div>
 
@@ -451,14 +401,15 @@
                 <button type="button" class="close absolute-top-right btn-icon close z-1 btn-circle bg-gray mr-2 mt-2 d-flex justify-content-center align-items-center" data-dismiss="modal" aria-label="Close" style="background: #ededf2; width: calc(2rem + 2px); height: calc(2rem + 2px);">
                     <span aria-hidden="true" class="fs-24 fw-700" style="margin-left: 2px;">&times;</span>
                 </button>
-                <form class="form-default" role="form" action="" method="POST">
+                <form class="form-default" role="form" action="{{route('request_for_product.store')}}" method="POST">
                     @csrf
                     <div class="modal-header">
-                        <h5 class="modal-title"> {{translate('Request For RFQ')}} </h5>
+                        <h5 class="modal-title"> {{translate('Request For Product')}} </h5>
                     </div>
                     <div class="modal-body">
                         <div class="form-group row">
                             <input type="hidden" name="product_id" value={{ $detailedProduct->id }}>
+                            <input type="hidden" name="shop_id" value={{$detailedProduct->user->shop->id}}>
                             <div class="col-sm-4">
                                 <label>{{translate('Enter custom quantity')}}</label>
                                 <div class="product-quantity d-flex align-items-center">
@@ -483,10 +434,10 @@
                             <div class="col-sm-4">
                                 <label>{{translate('Order Date')}}</label>      
                                 <select class="form-control aiz-selectpicker" name="order_date" id="order_date" >
-                                    <option value="every_day" >Every Day</option>
-                                    <option value="each_7_day" >Each 7 Days</option>
-                                    <option value="each_14_day" >Each 14 Days</option>
-                                    <option value="each_30_day" >Each 30 Days</option>
+                                    <option value="1" >Every Day</option>
+                                    <option value="7" >Each 7 Days</option>
+                                    <option value="14" >Each 14 Days</option>
+                                    <option value="30" >Each 30 Days</option>
                                 </select>
                             </div>
                             
@@ -494,11 +445,11 @@
                         <div class="form-group row">    
                             <div class="col-sm-4">
                                 <label>{{translate('From Date')}}</label>
-                                <input required="" type="datetime-local" class="form-control" name="dor" id="dor">
+                                <input required="" type="datetime-local" class="form-control" name="from_date" id="from_date">
                             </div>
                             <div class="col-sm-4">
                                 <label>{{translate('To Date')}}</label>
-                                <input required="" type="datetime-local" class="form-control" name="dor" id="dor">
+                                <input required="" type="datetime-local" class="form-control" name="to_date" id="to_date">
                             </div>      
                         </div>  
                     </div>

@@ -8,6 +8,7 @@ use App\Models\City;
 use App\Models\Country;
 use App\Models\District;
 use App\Models\Products;
+use App\Models\RequestForProduct;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,9 +30,9 @@ class CartController extends Controller
             $address = Address::where('user_id', Auth::user()->id)->get();
             foreach($address as $data_address)
             {
-                $city_name = City::find($data_address->city_id)->name;
-                $country_name = Country::find($data_address->country_id)->name;
-                $district_name = District::find($data_address->district_id)->name;
+                $city_name = City::find($data_address->city_id)->city_name;
+                $country_name = Country::find($data_address->country_id)->country_name;
+                $district_name = District::find($data_address->district_id)->district_name;
                 $user_name = User::find($data_address->user_id)->name;
                 $str = $user_name.', '.$data_address->phone.', '.$data_address->address.', '.$district_name.', '.$city_name.', '.$country_name;
                 $data_address->full_adress = $str;
@@ -151,6 +152,7 @@ class CartController extends Controller
         $data['quantity'] = $request['quantity'];
         $data['price'] = $price;
         $data['shipping_cost'] = 0;
+        $data['is_rfp'] = 0;
         if ($request['quantity'] == null){
             $data['quantity'] = 1;
         }
@@ -161,7 +163,7 @@ class CartController extends Controller
             foreach ($carts as $key => $cartItem)
             {
                 $cart_product = Products::where([['id', $cartItem['product_id']]])->first();
-                if($cartItem['product_id'] == $request->id) {
+                if($cartItem['product_id'] == $request->id  && $cartItem['is_rfp'] != 1) {
                     $product_stock = $cart_product->product_stock;
                     $quantity = $product_stock->qty;
                     if($quantity < $cartItem['quantity'] + $request['quantity']){
@@ -318,9 +320,9 @@ class CartController extends Controller
             $address = Address::where('user_id', Auth::user()->id)->get();
             foreach($address as $data_address)
             {
-                $city_name = City::find($data_address->city_id)->name;
-                $country_name = Country::find($data_address->country_id)->name;
-                $district_name = District::find($data_address->district_id)->name;
+                $city_name = City::find($data_address->city_id)->city_name;
+                $country_name = Country::find($data_address->country_id)->country_name;
+                $district_name = District::find($data_address->district_id)->district_name;
                 $user_name = User::find($data_address->user_id)->name;
                 $str = $user_name.', '.$data_address->phone.', '.$data_address->address.', '.$city_name.', '.$district_name.', '.$country_name;
                 $data_address->full_adress = $str;
@@ -334,5 +336,84 @@ class CartController extends Controller
             'cart_view' => view('user_layout.partials.cart_details', compact('carts','address'))->render(),
             'nav_cart_view' => view('user_layout.partials.cart')->render(),
         );
+    }
+
+    public function addToCart_RFP_request(Request $request)
+    {
+        $rfp_record = RequestForProduct::find($request->id_rfp);
+        $product = Products::find($rfp_record->product_id);
+        $carts = array();
+        $data = array();
+
+        if(auth()->user() != null) {
+            $user_id = Auth::user()->id;
+            $data['user_id'] = $user_id;
+            $carts = Cart::where('user_id', $user_id)->get();
+        } 
+
+        $data['product_id'] = $product->id;
+        $data['owner_id'] = $product->user_id;
+
+        $str = '';
+        $tax = 0;
+       
+        $price = $rfp_record->price;
+        $product->unit_price = $rfp_record->price;
+        $data['quantity'] = $rfp_record->quantity;
+        $data['price'] = $price;
+        //$data['shipping'] = 0;
+        $data['shipping_cost'] = 0;
+        $data['is_rfp'] = 1;
+        // if ($request['quantity'] == null){
+        //     $data['quantity'] = 1;
+        // }
+
+        if($carts && count($carts) > 0)
+        {
+            $foundInCart = false;
+            foreach ($carts as $key => $cartItem)
+            {
+                $cart_product = Products::where([['id', $cartItem['product_id']]])->first();
+                if($cartItem['product_id'] == $request->id &&  $cartItem['is_rfp'] == 1) {
+                    $product_stock = $cart_product->product_stock;
+                    $quantity = $product_stock->qty;
+                    if($quantity < $cartItem['quantity'] + $request['quantity']){
+                        return array(
+                            'status' => 0,
+                            'cart_count' => count($carts),
+                            'modal_view' => view('user_layout.partials.outOfStockCart')->render(),
+                            'nav_cart_view' => view('user_layout.partials.cart')->render(),
+                        );
+                    }
+                    $foundInCart = true;
+                    $cartItem['quantity'] += $request['quantity'];
+                    $cartItem['price'] = $price;
+                    $cartItem->save();
+                }
+            }
+            if (!$foundInCart) {
+                Cart::create($data);
+            }
+        }
+        else
+        {
+            Cart::create($data);
+        }
+
+        if(auth()->user() != null) {
+            $user_id = Auth::user()->id;
+            $carts = Cart::where('user_id', $user_id)->get();
+        } else {
+            $temp_user_id = $request->session()->get('temp_user_id');
+            $carts = Cart::where('temp_user_id', $temp_user_id)->get();
+        }
+        
+        return array(
+            'status' => 1,
+            'cart_count' => count($carts),
+            'modal_view' => view('user_layout.partials.addedToCart', compact('product', 'data'))->render(),
+            'nav_cart_view' => view('user_layout.partials.cart')->render(),
+        );
+        
     }
 }

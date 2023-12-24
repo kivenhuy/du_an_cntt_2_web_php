@@ -18,11 +18,11 @@ return new class extends Migration
             $table->integer('country_id');
             $table->integer('city_id');
             $table->integer('district_id');
-            $table->string('lng');
-            $table->string('lat');
+            $table->string('lng')->nullable();
+            $table->string('lat')->nullable();
             $table->string('postal_code');
             $table->string('phone');
-            $table->integer('set_default');
+            $table->integer('set_default')->default(0);
             $table->timestamps();
         });
     }

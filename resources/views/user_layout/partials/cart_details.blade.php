@@ -81,24 +81,28 @@
                                         <div class="col-md-2 col order-1 order-md-0">
                                             @if ($cartItem['digital'] != 1 && $product->auction_product == 0)
                                                 <div class="d-flex flex-column align-items-start aiz-plus-minus mr-2 ml-0">
+                                                    @if($cartItem['is_rfp'] == 0)
                                                     <button
                                                         class="btn col-auto btn-icon btn-sm btn-circle btn-light"
                                                         type="button" data-type="plus"
                                                         data-field="quantity[{{ $cartItem['id'] }}]">
                                                         <i class="fa fa-plus"></i>
                                                     </button>
+                                                    @endif
                                                     <input type="number" name="quantity[{{ $cartItem['id'] }}]"
                                                         class="col border-0 text-left px-0 flex-grow-1 fs-14 input-number quantity_product"
                                                         placeholder="1" value="{{ $cartItem['quantity'] }}"
                                                         min="{{ $product->min_qty }}"
                                                         max="{{ $product_stock->qty }}"
                                                         onchange="updateQuantity({{ $cartItem['id'] }}, this)" style="padding-left:0.75rem !important;">
+                                                    @if($cartItem['is_rfp'] == 0)
                                                     <button
                                                         class="btn col-auto btn-icon btn-sm btn-circle btn-light"
                                                         type="button" data-type="minus"
                                                         data-field="quantity[{{ $cartItem['id'] }}]">
                                                         <i class="fa fa-minus"></i>
                                                     </button>
+                                                    @endif
                                                 </div>
                                             @elseif($product->auction_product == 1)
                                                 <span class="fw-700 fs-14">1</span>
@@ -145,42 +149,10 @@
                             </div>
                         @endforeach
                     @endempty
-                    <button class="btn add_new_address" onclick="add_new_address()"><i class="fa fa-plus" aria-hidden="true"></i> New Address</button>
+                    {{-- <button class="btn add_new_address" onclick="add_new_address()"><i class="fa fa-plus" aria-hidden="true"></i> New Address</button> --}}
                 </div>
             </div>
             <div class="col-xxl-3 col-xl-10 mx-auto">
-                {{-- <div class="border bg-white p-3 p-lg-4 text-left" style="margin-bottom: 20px !important">
-                    <div class="mb-4">
-                        <div class="coupon">
-                            <div class="apply_coupons" style="margin-bottom: 14px;">
-                                <span style="
-                                font-family: 'Quicksand',sans-serif !important;
-                                font-size: 24px;
-                                font-weight: 700;
-                                line-height: 32px;
-                                letter-spacing: -0.0004em;
-                                text-align: left;
-                                color:#253D4E;
-                                ">Apply Coupon</span>
-                            </div>
-                            <div class="promo_code" style="margin-bottom: 32px;">
-                                <span style="font-family: 'Roboto',sans-serif !important;
-                                font-size: 16px;
-                                font-weight: 400;
-                                line-height: 20px;
-                                letter-spacing: -0.0004em;
-                                text-align: left;
-                                color:#797979;">Using A Promo Code?</span>
-                            </div>
-
-                            <div class="pt-site-footer__submit">
-                                <input class="coupon_code" type="text" placeholder="Your coupon">
-                                <button class="button_coupon">Apply</button>
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
-
                 <div class="border bg-white p-3 p-lg-4 text-left">
                     <div class="mb-4">
                         <div class="px-0 py-2 mb-4  d-flex justify-content-between">
@@ -197,7 +169,7 @@
                         </div>
                     </div>
                     <div class="col-md-12 text-center" style="background-color: #2E7F25">
-                        <a id="myLink" href="" style="border:none;background-color: #2E7F25 !important" class="btn btn-primary fs-14 fw-700 rounded-0 px-4 disabled " >
+                        <a id="myLink" href="{{ route('checkout.final_checkout') }}" style="border:none;background-color: #2E7F25 !important" class="btn btn-primary fs-14 fw-700 rounded-0 px-4 disabled " >
                             Proceed To Checkout
                         </a>
                     </div>
@@ -413,6 +385,31 @@
                         
                     }
                 });
+    }
+
+    function handleClick(myRadio) {
+        var address_id = myRadio.value;
+        // var id_radio = myRadio.id;
+        // var final_price = $('#final_price').val();
+        $.ajax
+            ({
+                url: "{{route('checkout.update_shipping_fee')}}",
+                method:'post',
+                data:{
+                    address_id:address_id,
+                },
+                headers: {
+                    'X-CSRF-Token': '{{ csrf_token() }}',
+                },
+                success: function(data){
+                    if ($('input[class=check_box_child]:checked').length > 0) {
+                            $('#myLink').removeClass('disabled')
+                        }
+                }, 
+                error: function(){
+                    
+                }
+            });
     }
   
 

@@ -4,9 +4,9 @@ use App\Http\Controllers\AddressController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Customer\CheckoutController;
 use App\Http\Controllers\Customer\HomeController;
 use App\Http\Controllers\EnterpriseController;
-use App\Http\Controllers\FarmManagement\CultivationController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\UploadsController;
@@ -37,6 +37,9 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::controller(HomeController::class)->group(function () {
         Route::get('/', 'index')->name('homepage');
+        Route::get('/comming-soon', 'comming_soon')->name('comming-soon');
+        Route::get('/dashboard', 'dashboard')->name('user.dashboard');
+        Route::get('/profile', 'profile')->name('profile');
         Route::get('/product/{slug}', 'product')->name('product');
         Route::get('/terms', 'terms')->name('terms');
     });
@@ -52,12 +55,14 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/file-uploader/download/{id}', 'attachment_download')->name('download_attachment');
     });
 
-    
+    // Purchase History
+    Route::resource('purchase_history', PurchaseHistoryController::class);
 
     // Cart
     Route::controller(CartController::class)->group(function () {
         Route::get('/cart', 'index')->name('cart');
         Route::post('/cart/addToCart', 'addToCart')->name('cart.addToCart');
+        Route::post('/cart/addToCart_RFP_request', 'addToCart_RFP_request')->name('cart.addToCart_RFP_request');
         Route::post('/cart/show-cart-modal', 'showCartModal')->name('cart.showCartModal');
         Route::post('/cart/removeFromCart', 'removeFromCart')->name('cart.removeFromCart');
         Route::post('/cart/update_select_item', 'update_select_item')->name('cart.update_select_item');
@@ -79,7 +84,6 @@ Route::group(['middleware' => ['auth']], function () {
         // Route::get('/category/{category_slug}', 'listingByCategory')->name('products.category');
         // Route::get('/brand/{brand_slug}', 'listingByBrand')->name('products.brand');
     });
-
 
 
     
