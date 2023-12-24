@@ -7,8 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Customer\CheckoutController;
 use App\Http\Controllers\Customer\HomeController;
 use App\Http\Controllers\EnterpriseController;
-use App\Http\Controllers\PurchaseHistoryController;
-use App\Http\Controllers\RequestForProductController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\UploadsController;
@@ -87,34 +85,8 @@ Route::group(['middleware' => ['auth']], function () {
         // Route::get('/brand/{brand_slug}', 'listingByBrand')->name('products.brand');
     });
 
-    // Request for Product
-    Route::controller(RequestForProductController::class)->group(function () {
-        Route::get('/request_for_product', 'index')->name('request_for_product.index');
-        Route::post('/request_for_product/store', 'store')->name('request_for_product.store');
-        Route::get('/request_for_product/data_ajax', 'customer_dataajax')->name('request_for_product.customer_dataajax');
-        Route::get('/request_for_product/get_detail/{id}', 'get_details_data')->name('request_for_product.get_details_data');
-        Route::post('/request_for_product/reject_price', 'reject_price')->name('request_for_product.reject_price');
-        Route::post('/request_for_product/approve_price', 'approve_price')->name('request_for_product.approve_price');
-    });
+
     
-
-    // Address 
-    Route::resource('addresses', AddressController::class);
-    Route::controller(AddressController::class)->group(function () {
-        Route::post('/addresses/update/{id}', 'update')->name('addresses.update');
-        Route::get('/addresses/destroy/{id}', 'destroy')->name('addresses.destroy');
-        Route::get('/addresses/set_default/{id}', 'set_default')->name('addresses.set_default');
-    });
-
-    // Checkout
-    Route::group(['prefix' => 'checkout'], function () {
-        Route::controller(CheckoutController::class)->group(function () {
-            Route::get('/final', 'final_checkout')->name('checkout.final_checkout');
-            Route::post('/update_shipping_fee', 'update_shipping_fee')->name('checkout.update_shipping_fee');
-            Route::post('/update_total_shipping_fee', 'update_total_shipping_fee')->name('checkout.update_total_shipping_fee');
-           
-        });
-    });
 });
 
 
