@@ -6,6 +6,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Customer\HomeController;
 use App\Http\Controllers\EnterpriseController;
+use App\Http\Controllers\FarmManagement\CultivationController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\UploadsController;
@@ -78,6 +79,7 @@ Route::group(['middleware' => ['auth']], function () {
         // Route::get('/category/{category_slug}', 'listingByCategory')->name('products.category');
         // Route::get('/brand/{brand_slug}', 'listingByBrand')->name('products.brand');
     });
+
 
 
     

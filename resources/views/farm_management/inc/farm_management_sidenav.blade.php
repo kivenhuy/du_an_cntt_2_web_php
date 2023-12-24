@@ -24,6 +24,7 @@
                         <span class="aiz-side-nav-arrow"></span>
                     </a>
                     <!--Submenu-->
+                    {{-- Farmer --}}
                     <ul class="aiz-side-nav-list level-2">
                         <li class="aiz-side-nav-item">
                             <a href="{{ route('farmer.index') }}"
@@ -32,6 +33,15 @@
                             </a>
                         </li>
                     </ul>
+                    {{-- Cultivation --}}
+                    {{-- <ul class="aiz-side-nav-list level-2">
+                        <li class="aiz-side-nav-item">
+                            <a href="{{ route('cultivation.index') }}"
+                                class="aiz-side-nav-link ">
+                                <span class="aiz-side-nav-text">Cultivation</span>
+                            </a>
+                        </li>
+                    </ul> --}}
                 </li>
 
             </ul><!-- .aiz-side-nav -->

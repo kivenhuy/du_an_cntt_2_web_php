@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Yajra\DataTables\DataTables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Uploads;
 
 class FarmerDetailsController extends Controller
 {

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\FarmManagement;
 use App\Http\Controllers\Controller;
 use App\Models\Cultivation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class CultivationController extends Controller
 {
@@ -13,7 +15,7 @@ class CultivationController extends Controller
      */
     public function index()
     {
-        //
+        return view('farm_management.cultivation.index');
     }
 
     /**
@@ -29,7 +31,22 @@ class CultivationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $cultivation = new Cultivation();
+        $mytime = Carbon::now();
+        $data = [
+            'updated_at'   => $mytime,
+            'created_at'   => $mytime,
+            'staff_id'   => Auth::user()->id,
+            'cultivation_name'    =>$request->cultivation_name,
+            'harvest_Season'      =>$request->harvest_Season,
+            'crop_variety'      => $request-> crop_variety,
+            'sowing_Date'       => $request-> sowing_Date,
+            'expected_Date_of_Harvest_after_Sowing'          => $request-> expected_Date_of_Harvest_after_Sowing,
+            'est_Yield'          => $request-> est_Yield,
+            'seed_Quantity_unit'           => $request-> seed_Quantity_unit,
+        ];
+        $cultivation->create($data);
+        return redirect()->route("cultivation.index")->with('success','Farmer created successfull');
     }
 
     /**
