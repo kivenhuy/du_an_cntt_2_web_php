@@ -11,14 +11,16 @@
                         <div class="col">
                             <h5 class="mb-md-0 h6">All Products</h5>
                         </div>
-                        <div class="col">
-                            <div class="mar-all mb-2" style=" text-align: end;">
-                                <a href="{{route('seller.products.create')}}">
-                                    <button type="submit" name="button" value="publish"
-                                        class="btn btn-primary">Create</button>
-                                </a>
+                        @if (Auth::user()->shop->verification_status == 1)
+                            <div class="col">
+                                <div class="mar-all mb-2" style=" text-align: end;">
+                                    <a href="{{route('seller.products.create')}}">
+                                        <button type="submit" name="button" value="publish"
+                                            class="btn btn-primary">Create</button>
+                                    </a>
+                                </div>
                             </div>
-                        </div>
+                        @endif
                     </div>
                     <div class="card-body" >
                         <table id="example1" class="table table-bordered table-striped">

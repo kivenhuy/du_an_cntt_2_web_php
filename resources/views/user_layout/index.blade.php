@@ -2,6 +2,57 @@
 
 @section('content')
 
+<div class="home-banner-area mb-3" >
+    <div class="container wow animate__animated animate__fadeIn"  style=" max-width: 1200px !important;margin-top: 15px;height: auto;">
+        <div class="d-flex flex-wrap position-relative" style="justify-content: space-between;">
+            <div class="position-static d-none d-xl-block wow animate__animated animate__fadeInUp" data-wow-delay=".1s">
+                @include('user_layout.partials.category_menu')
+            </div>
+
+            <!-- Sliders -->
+            <div class="home-slider wow animate__animated animate__fadeInUp" data-wow-delay=".2s">
+                    <div class="aiz-carousel dots-inside-bottom mobile-img-auto-height" data-autoplay="true">
+                            <div class="carousel-box">
+                                <a href="">
+                                    <!-- Image -->
+                                    <img class="d-block mw-100 img-fit overflow-hidden h-sm-auto h-md-320px h-lg-460px overflow-hidden b-radius-10 "
+                                        alt="{{ env('APP_NAME')}}"
+                                        src="{{ static_asset('assets/img/ivSNgQP3jxEHTHTOQXNAaGWlHOO3a1PQIw3w9EPJ.jpg')}}"
+                                        style="height: auto;">
+                                </a>
+                            </div>
+                            <div class="carousel-box">
+                                <a href="">
+                                    <!-- Image -->
+                                    <img class="d-block mw-100 img-fit overflow-hidden h-sm-auto h-md-320px h-lg-460px overflow-hidden b-radius-10 "
+                                        alt="{{ env('APP_NAME')}}"
+                                        src="{{ static_asset('assets/img/mrAmhwgz6ra35VyilLmTTvbYPZygvz5DpHz3rkWO.jpg')}}"
+                                        style="height: auto;">
+                                </a>
+                            </div>
+                            <div class="carousel-box">
+                                <a href="">
+                                    <!-- Image -->
+                                    <img class="d-block mw-100 img-fit overflow-hidden h-sm-auto h-md-320px h-lg-460px overflow-hidden b-radius-10 "
+                                        alt="{{ env('APP_NAME')}}"
+                                        src="{{ static_asset('assets/img/5eqxZWoCFvy34jUzGiv31uDlrurvkQguk2Rij9PH.jpg')}}"
+                                        style="height: auto;">
+                                </a>
+                            </div>
+                            <div class="carousel-box">
+                                <a href="">
+                                    <!-- Image -->
+                                    <img class="d-block mw-100 img-fit overflow-hidden h-sm-auto h-md-320px h-lg-460px overflow-hidden b-radius-10 "
+                                        alt="{{ env('APP_NAME')}}"
+                                        src="{{ static_asset('assets/img/tSOUv04QuIRGBNgCKL2wXDri9VwX1C46yYGWDTIR.png')}}"
+                                        style="height: auto;">
+                                </a>
+                            </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 {{-- Best Seliing --}}
 <div id="section_best_selling" style="margin-bottom: 0px">
@@ -55,28 +106,6 @@
                                     </div>
                                 </div>
                                 
-                                <!-- add to cart -->
-                                {{-- <a class="cart-btn absolute-bottom-left w-100 h-35px aiz-p-hov-icon text-white fs-13 fw-700 d-flex flex-column justify-content-center align-items-center @if (in_array($product->id, $cart_added)) active @endif"
-                                    href="javascript:void(0)"
-                                    @if (Auth::check()) onclick="showAddToCartModal({{ $product->id }})" @else onclick="showLoginModal()" @endif>
-                                    <span class="cart-btn-text">
-                                        {{ translate('Add to Cart') }}
-                                    </span>
-                                    <br>
-                                    <span><i class="las la-2x la-shopping-cart"></i></span>
-                                </a> --}}
-                        {{-- @if (home_price($data_selling_product) != home_discounted_price($data_selling_product))
-                        <div class="tag_discount">
-                            <span>-{{ discount_in_percentage($data_selling_product) }}%</span>
-                        </div>
-                        @endif
-
-                        @php
-                        $product_url = route('product', $data_selling_product->slug);
-                            if ($data_selling_product->auction_product == 1) {
-                                $product_url = route('auction-product', $data_selling_product->slug);
-                            }
-                        @endphp --}}
                         <div class="top_selling_img">
                             <a href="{{ route('product', $data_selling_product->slug) }}" class="d-block h-100">
                                 <img class="lazyload mx-auto img-fit has-transition img_product_top_selling" width="180px" height="180px" src="{{ static_asset('assets/img/placeholder.jpg') }}"
@@ -94,11 +123,6 @@
                                 </div>
                             {{-- </a> --}}
                             <div class="name_product_top_selling" style="margin-bottom: 6px">
-                                {{-- <span class="fa fa-star checked" style="color: orange"></span>
-                                <span class="fa fa-star checked" style="color: orange"></span>
-                                <span class="fa fa-star checked" style="color: orange"></span>
-                                <span class="fa fa-star"></span>
-                                <span class="fa fa-star"></span> --}}
                                 
                                         <span class="rating rating-mr-1">
                                             {{ renderStarRating($data_selling_product->rating) }}
@@ -131,7 +155,7 @@
                 <!-- Title -->
                 <div class="title_for_section">
                     <h3 class="fs-16 fs-md-20 fw-700 mb-2 mb-sm-0">
-                        <span class="top_selling_homepage">{{ translate('Best Price Today') }}</span>
+                        <span class="top_selling_homepage">{{ translate('Fresh Everyday') }}</span>
                     </h3>
                 </div>
             </div>
@@ -145,8 +169,7 @@
                             </span>
                         </div>
                     </div>
-                    {{-- <img src="{{static_asset('uploads/all/fyvEWPLCmizQMVTja8OvtkhaCINaWF9RViHiewa8.png')}}" alt="" width="100%"> --}}
-                    {{-- <img src="{{static_asset('uploads/all/owiE8yVzKzZzBn4H9GCG97UPj71nfvPTYwRQxzgQ.png')}}" alt=""> --}}
+                   
                     
                 </div>
                 @foreach($fresh_today_products as $data_selling_product)
@@ -185,35 +208,13 @@
                                         </a>
                                     </div>
                                 </div>
-                                
-                                <!-- add to cart -->
-                                {{-- <a class="cart-btn absolute-bottom-left w-100 h-35px aiz-p-hov-icon text-white fs-13 fw-700 d-flex flex-column justify-content-center align-items-center @if (in_array($product->id, $cart_added)) active @endif"
-                                    href="javascript:void(0)"
-                                    @if (Auth::check()) onclick="showAddToCartModal({{ $product->id }})" @else onclick="showLoginModal()" @endif>
-                                    <span class="cart-btn-text">
-                                        {{ translate('Add to Cart') }}
-                                    </span>
-                                    <br>
-                                    <span><i class="las la-2x la-shopping-cart"></i></span>
-                                </a> --}}
-                        {{-- @if (home_price($data_selling_product) != home_discounted_price($data_selling_product))
-                        <div class="tag_discount">
-                            <span>-{{ discount_in_percentage($data_selling_product) }}%</span>
-                        </div>
-                        @endif
-
-                        @php
-                        $product_url = route('product', $data_selling_product->slug);
-                            if ($data_selling_product->auction_product == 1) {
-                                $product_url = route('auction-product', $data_selling_product->slug);
-                            }
-                        @endphp --}}
                         <div class="top_selling_img">
-                            {{-- <a href="{{ $product_url }}" class="d-block h-100"> --}}
+                            <a href="{{ route('product', $data_selling_product->slug) }}" class="d-block h-100">
                                 <img class="lazyload mx-auto img-fit has-transition img_product_top_selling" width="180px" height="180px" src="{{ static_asset('assets/img/placeholder.jpg') }}"
                                     data-src="{{ uploaded_asset($data_selling_product->thumbnail_img) }}" alt="{{ $data_selling_product->name}}"
                                     title="{{ $data_selling_product->name }}"
                                     onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
+                            </a>
                         </div>
                         
                         <div class="content_top_selling ">
@@ -224,11 +225,7 @@
                                 </div>
                             {{-- </a> --}}
                             <div class="name_product_top_selling" style="margin-bottom: 6px">
-                                {{-- <span class="fa fa-star checked" style="color: orange"></span>
-                                <span class="fa fa-star checked" style="color: orange"></span>
-                                <span class="fa fa-star checked" style="color: orange"></span>
-                                <span class="fa fa-star"></span>
-                                <span class="fa fa-star"></span> --}}
+                               
                                 
                                         <span class="rating rating-mr-1">
                                             {{ renderStarRating($data_selling_product->rating) }}
@@ -306,25 +303,16 @@
                                     </div>
                                 </div>
                                 
-                                {{-- @if (home_price($new_product) != home_discounted_price($new_product))
-                                    <div class="tag_discount">
-                                        <span>-{{ discount_in_percentage($new_product) }}%</span>
-                                    </div>
-                                @endif --}}
+                               
                                
                                 <div class="top_selling_img">
-                                    {{-- <a href="{{$product_url}}" class="d-block h-100"> --}}
+                                    <a href="{{ route('product', $new_product->slug) }}" class="d-block h-100">
                                         <img class="lazyload mx-auto img-fit has-transition img_product_top_selling" width="180px" height="180px" src="{{ static_asset('assets/img/placeholder.jpg') }}"
                                             data-src="{{ uploaded_asset($new_product->thumbnail_img) }}" alt=""
                                             title=""
                                             onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
                                     </a>
-                                    {{-- <img class="img_product_top_selling" src={{ static_asset($data_selling_product->img_url) }} alt=""> --}}
-                                    {{-- @if($new_product->img_url != "")
                                     
-                                    @else
-                                        <img class="img_product_top_selling" src={{ static_asset('assets/img/placeholder-rect.jpg') }} alt="">
-                                    @endif --}}
                                 </div>
                                 
                                 <div class="content_top_selling ">
@@ -335,11 +323,6 @@
                                         </div>
                                     </a>
                                     <div class="name_product_top_selling" style="margin-bottom: 6px">
-                                        {{-- <span class="fa fa-star checked" style="color: orange"></span>
-                                        <span class="fa fa-star checked" style="color: orange"></span>
-                                        <span class="fa fa-star checked" style="color: orange"></span>
-                                        <span class="fa fa-star"></span>
-                                        <span class="fa fa-star"></span> --}}
                                         
                                         <span class="rating rating-mr-1">
                                             {{ renderStarRating($new_product->rating) }}
@@ -350,21 +333,7 @@
                                             {{$new_product->user?->shop?->name}}
                                         </a>
                                     </div>
-                                    {{-- @if (home_price($new_product) != home_discounted_price($new_product))
-
-                                        <div style="display:flex">
-                                            <div class="price_product_top_selling">
-                                                {{home_discounted_base_price($new_product)}}
-                                            </div>
-                                            <del class="fs-14 opacity-60 ml-2 price_product_top_selling color-7">
-                                                {{ home_price($new_product) }}
-                                            </del>
-                                        </div>
-                                    @else
-                                        <div class="price_product_top_selling">
-                                            {{home_discounted_base_price($new_product)}}
-                                        </div>
-                                    @endif --}}
+                                    
                                     <div class="price_product_top_selling">
                                         {{"đ " . number_format($new_product->unit_price, 0, ".", ",")  }}
                                     </div>

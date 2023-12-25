@@ -164,7 +164,7 @@
                         <div class="aiz-user-top-menu bg-white rounded-0 border-top shadow-sm" style="width:220px;">
                             <ul class="list-unstyled no-scrollbar mb-0 text-left">
                                 <li class="user-top-nav-element border border-top-0" data-id="1">
-                                    <a href="" class="text-truncate text-dark px-4 fs-14 d-flex align-items-center hov-column-gap-1">
+                                    <a href="{{ route('user.dashboard') }}" class="text-truncate text-dark px-4 fs-14 d-flex align-items-center hov-column-gap-1">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
                                             <g id="Group_25261" data-name="Group 25261" transform="translate(-27.466 -542.963)">
                                                 <path id="Path_2953" data-name="Path 2953" d="M14.5,5.963h-4a1.5,1.5,0,0,0,0,3h4a1.5,1.5,0,0,0,0-3m0,2h-4a.5.5,0,0,1,0-1h4a.5.5,0,0,1,0,1" transform="translate(22.966 537)" fill="#b5b5bf"></path>
@@ -177,7 +177,7 @@
                                                 <path id="Path_2960" data-name="Path 2960" d="M13.5,28.963h5a.5.5,0,0,1,0,1h-5a.5.5,0,0,1,0-1" transform="translate(20.966 525.5)" fill="#b5b5bf"></path>
                                             </g>
                                         </svg>
-                                        <span class="user-top-menu-name has-transition ml-3">Purchase History</span>
+                                        <span class="user-top-menu-name has-transition ml-3">Dashboard</span>
                                     </a>
                                 </li>
                                 <li class="user-top-nav-element border border-top-0" data-id="1">
@@ -208,7 +208,75 @@
                 </div>
             </div>
         </div>
-    
-       
+        @if(Auth::check())
+        <div class="d-none d-lg-block position-relative bg-primary h-50px" style="height:70px;background-color:#2E7F25 !important">
+            <div class="container h-100">
+                <div class="d-flex h-100">
+                   
+                    <div class="ml-xl-4 w-100 overflow-hidden">
+                        <div class="d-flex align-items-center justify-content-center justify-content-xl-start h-100">
+                            <ul class="list-inline mb-0 pl-0 hor-swipe c-scrollbar-light">
+        
+                                <li class="list-inline-item mr-0 animate-underline-white">
+                                    <a href="{{route('homepage')}}"
+                                        class="fs-13 px-3 py-3 d-inline-block fw-700 text-white header_menu_links hov-bg-black-10">
+                                        {{ translate('Home') }}
+                                    </a>
+                                </li>
+                                <li class="list-inline-item mr-0 animate-underline-white">
+                                    <a href="{{route('homepage')}}"
+                                        class="fs-13 px-3 py-3 d-inline-block fw-700 text-white header_menu_links hov-bg-black-10">
+                                        {{ translate('All Seller') }}
+                                    </a>
+                                </li>
+                                <li class="list-inline-item mr-0 animate-underline-white">
+                                    <a href="{{route('homepage')}}"
+                                        class="fs-13 px-3 py-3 d-inline-block fw-700 text-white header_menu_links hov-bg-black-10">
+                                        {{ translate('All Category') }}
+                                    </a>
+                                </li>
+                                <li class="list-inline-item mr-0 animate-underline-white">
+                                    <a href="{{route('comming-soon')}}"
+                                        class="fs-13 px-3 py-3 d-inline-block fw-700 text-white header_menu_links hov-bg-black-10">
+                                        {{ translate('News') }}
+                                    </a>
+                                </li>
+                                <li class="list-inline-item mr-0 animate-underline-white">
+                                    <a href="{{route('comming-soon')}}"
+                                        class="fs-13 px-3 py-3 d-inline-block fw-700 text-white header_menu_links hov-bg-black-10">
+                                        {{ translate('About Us') }}
+                                    </a>
+                                </li>
+                                <li class="list-inline-item mr-0 animate-underline-white">
+                                    <a href="{{route('comming-soon')}}"
+                                        class="fs-13 px-3 py-3 d-inline-block fw-700 text-white header_menu_links hov-bg-black-10">
+                                        {{ translate('Discount') }}
+                                    </a>
+                                </li>
+                                <li class="list-inline-item mr-0 animate-underline-white">
+                                    <a href="{{route('comming-soon')}}"
+                                        class="fs-13 px-3 py-3 d-inline-block fw-700 text-white header_menu_links hov-bg-black-10">
+                                        {{ translate('Support') }}
+                                    </a>
+                                </li>
+                                <li class="list-inline-item mr-0 animate-underline-white">
+                                    <a href="{{route('comming-soon')}}"
+                                        class="fs-13 px-3 py-3 d-inline-block fw-700 text-white header_menu_links hov-bg-black-10">
+                                        {{ translate('Resources') }}
+                                    </a>
+                                </li>
+                               
+                            </ul>
+                        </div>
+                        
+                    </div>
+                   
+                    <!-- Cart -->
+                </div>
+                
+            </div>
+            
+        </div>
+        @endif
     </header>
 

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('owner_id');
             $table->integer('user_id');
-            $table->integer('address_id');
+            $table->integer('address_id')->nullable();
             $table->integer('product_id');
             $table->string('variation')->nullable();
             $table->double('price',20,2);
@@ -28,6 +28,7 @@ return new class extends Migration
             $table->integer('coupon_applied')->default(0);
             $table->integer('quantity');
             $table->integer('is_checked')->default(0);
+            $table->integer('is_rfp')->default(0);
             $table->timestamps();
         });
     }
