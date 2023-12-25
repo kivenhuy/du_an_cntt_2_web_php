@@ -88,77 +88,105 @@
                         </table>
                     </div>
 
-                    <div class="addtional_info_buyer">
-                        <div class="head_addtional_info_buyer">
-                            <span>{{translate('Additional Detail Buyer')}}</span>
-                        </div>
-                        <div class="body_addtional_info_buyer col-12">
-                            <div class="col-6">
-                                <div class="sub_data_addition_info">
-                                    <span class="title_addtional_info">{{translate('Buyer Name')}}</span>
-                                    <div class="data_addtional_info">
-                                        {{$buyer->name}}
-                                    </div>
+                    <div class="row">
+                        <div class="col-7">
+                            <div class="addtional_info_buyer">
+                                <div class="head_addtional_info_buyer">
+                                    <span>{{translate('Additional Detail Buyer')}}</span>
                                 </div>
-                                <div>
-                                    <span class="title_addtional_info">{{translate('Mobile')}}</span>
-                                    <div class="data_addtional_info"> 
-                                        {{$buyer->phone}}
+                                <div class="body_addtional_info_buyer col-12">
+                                    <div class="col-6">
+                                        <div class="sub_data_addition_info">
+                                            <span class="title_addtional_info">{{translate('Buyer Name')}}</span>
+                                            <div class="data_addtional_info">
+                                                {{$buyer->name}}
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <span class="title_addtional_info">{{translate('Mobile')}}</span>
+                                            <div class="data_addtional_info"> 
+                                                {{$buyer->phone}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="sub_data_addition_info">
+                                            <span class="title_addtional_info">{{translate('Email')}}</span>
+                                            <div class="data_addtional_info">
+                                                {{$buyer->email}}
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <span class="title_addtional_info">{{translate('Address')}}</span>
+                                            <div class="data_addtional_info">
+                                                {{$buyer->address}}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-6">
-                                <div class="sub_data_addition_info">
-                                    <span class="title_addtional_info">{{translate('Email')}}</span>
-                                    <div class="data_addtional_info">
-                                        {{$buyer->email}}
-                                    </div>
+                            <div class="addtional_info_buyer">
+                                <div class="head_addtional_info_buyer">
+                                    <span>{{translate('Additional Detail Seller')}}</span>
                                 </div>
-                                <div>
-                                    <span class="title_addtional_info">{{translate('Address')}}</span>
-                                    <div class="data_addtional_info">
-                                        {{$buyer->address}}
+                                <div class="body_addtional_info_buyer col-12">
+                                    <div class="col-6">
+                                        <div class="sub_data_addition_info">
+                                            <span class="title_addtional_info">{{translate('Seller Name')}}</span>
+                                            <div class="data_addtional_info">
+                                                {{$seller->name}}
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <span class="title_addtional_info">{{translate('Mobile')}}</span>
+                                            <div class="data_addtional_info"> 
+                                                {{$seller->user->phone}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="sub_data_addition_info">
+                                            <span class="title_addtional_info">{{translate('Email')}}</span>
+                                            <div class="data_addtional_info">
+                                                {{$seller->user->email}}
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <span class="title_addtional_info">{{translate('Address')}}</span>
+                                            <div class="data_addtional_info">
+                                                {{$seller->address}}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                       
+                        <div class="col-4">
+                            <div class="addtional_info_shipping_schdule ">
+                                <div class="head_addtional_info_buyer">
+                                    <span>{{translate('Schedule For Shipping')}}</span>
+                                </div>
+                                <div class="body_addtional_info_buyer col-12">
+                                    <div class="col-6">
+                                        <div class="sub_data_addition_info">
+                                            <span class="title_addtional_info">{{translate('Shipping Date')}}</span>
+                                            @foreach (json_decode($data_request->shipping_date) as $each_day)
+                                                <div class="data_addtional_info">
+                                                    {{date('d-m-Y', strtotime($each_day))}}
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        
                     </div>
 
-                    <div class="addtional_info_buyer">
-                        <div class="head_addtional_info_buyer">
-                            <span>{{translate('Additional Detail Seller')}}</span>
-                        </div>
-                        <div class="body_addtional_info_buyer col-12">
-                            <div class="col-6">
-                                <div class="sub_data_addition_info">
-                                    <span class="title_addtional_info">{{translate('Seller Name')}}</span>
-                                    <div class="data_addtional_info">
-                                        {{$seller->name}}
-                                    </div>
-                                </div>
-                                <div>
-                                    <span class="title_addtional_info">{{translate('Mobile')}}</span>
-                                    <div class="data_addtional_info"> 
-                                        {{$seller->user->phone}}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="sub_data_addition_info">
-                                    <span class="title_addtional_info">{{translate('Email')}}</span>
-                                    <div class="data_addtional_info">
-                                        {{$seller->user->email}}
-                                    </div>
-                                </div>
-                                <div>
-                                    <span class="title_addtional_info">{{translate('Address')}}</span>
-                                    <div class="data_addtional_info">
-                                        {{$seller->address}}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
 
                 </div>
             </div>
@@ -203,6 +231,17 @@
             font-weight: 700 !important;
             line-height: 28px;
             letter-spacing: 0.25px;
+        }
+
+        .addtional_info_shipping_schdule
+        {
+            margin-top: 2rem;
+            margin-left: 1rem;
+            height: auto;
+            max-width: 871px;
+            border: 1px solid #D1D1D1;
+            border-radius: 10px;
+            padding: 0px 0px 0px 24px;
         }
 
         .rfq_price_update:focus {

@@ -73,6 +73,26 @@
                         </table>
                     </div>
 
+                    <div class="addtional_info_shipping_schdule ">
+                        <div class="head_addtional_info_buyer">
+                            <span>{{translate('Schedule For Shipping')}}</span>
+                        </div>
+                        <div class="body_addtional_info_buyer col-12">
+                            <div class="col-6">
+                                <div class="sub_data_addition_info">
+                                    <span class="title_addtional_info">{{translate('Shipping Date')}}</span>
+                                    @foreach (json_decode($data_request->shipping_date) as $each_day)
+                                        <div class="data_addtional_info">
+                                            {{date('d-m-Y', strtotime($each_day))}}
+                                        </div>
+                                    @endforeach
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+
                     @if($data_request->status == 2)
                     <div class="parent_appprove_rfp">
                         <div class="text_approval">
@@ -107,6 +127,58 @@
             letter-spacing: 0.25px;
             text-align: center;
             color: #FFFFFF;
+        }
+        .addtional_info_shipping_schdule
+        {
+            margin-top: 2rem;
+            margin-left: 1rem;
+            height: auto;
+            max-width: 500px;
+            border: 1px solid #D1D1D1;
+            border-radius: 10px;
+            padding: 0px 0px 0px 24px;
+        }
+        .head_addtional_info_buyer
+        {
+            height: auto;
+            border-bottom: 1px solid #D1D1D1;
+            font-family: 'Quicksand',sans-serif !important;
+            font-size: 24px !important; 
+            font-weight: 700 !important; 
+            line-height: 32px;
+            letter-spacing: -0.0004em;
+            text-align: left;
+            color: #253D4E;
+            padding: 24px 0px 24px 0px;
+        }
+        .sub_data_addition_info
+        {
+            margin-bottom: 24px;
+        }
+        .title_addtional_info
+        {
+            font-family: 'Roboto',sans-serif !important;
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 20px;
+            letter-spacing: -0.0004em;
+            text-align: left;
+            color: #333333;
+        }
+        .data_addtional_info
+        {
+            font-family: 'Roboto',sans-serif !important;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 32px;
+            letter-spacing: -0.0004em;
+            text-align: left;
+            color: #797979;
+        }
+        .body_addtional_info_buyer
+        {
+            display: flex;
+            padding: 24px 0px 32px 0px;
         }
         .EdApprove
         {

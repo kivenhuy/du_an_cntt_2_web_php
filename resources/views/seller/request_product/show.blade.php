@@ -97,117 +97,70 @@
                    
                 </div>
 
-                <div class="addtional_info_buyer">
-                    <div class="head_addtional_info_buyer">
-                        <span>{{translate('Additional Detail Buyer')}}</span>
-                    </div>
-                    <div class="body_addtional_info_buyer col-12">
-                        <div class="col-6">
-                            <div class="sub_data_addition_info">
-                                <span class="title_addtional_info">{{translate('Buyer Name')}}</span>
-                                <div class="data_addtional_info">
-                                    {{$buyer->name}}
+                <div class="row">
+                    <div class="addtional_info_buyer col-8">
+                        <div class="head_addtional_info_buyer">
+                            <span>{{translate('Additional Detail Buyer')}}</span>
+                        </div>
+                        <div class="body_addtional_info_buyer col-12">
+                            <div class="col-6">
+                                <div class="sub_data_addition_info">
+                                    <span class="title_addtional_info">{{translate('Buyer Name')}}</span>
+                                    <div class="data_addtional_info">
+                                        {{$buyer->name}}
+                                    </div>
+                                </div>
+                                <div>
+                                    <span class="title_addtional_info">{{translate('Mobile')}}</span>
+                                    <div class="data_addtional_info"> 
+                                        {{$buyer->phone}}
+                                    </div>
                                 </div>
                             </div>
-                            <div>
-                                <span class="title_addtional_info">{{translate('Mobile')}}</span>
-                                <div class="data_addtional_info"> 
-                                    {{$buyer->phone}}
+                            <div class="col-6">
+                                <div class="sub_data_addition_info">
+                                    <span class="title_addtional_info">{{translate('Email')}}</span>
+                                    <div class="data_addtional_info">
+                                        {{$buyer->email}}
+                                    </div>
+                                </div>
+                                <div>
+                                    <span class="title_addtional_info">{{translate('Address')}}</span>
+                                    <div class="data_addtional_info">
+                                        {{$buyer->address}}
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-6">
-                            <div class="sub_data_addition_info">
-                                <span class="title_addtional_info">{{translate('Email')}}</span>
-                                <div class="data_addtional_info">
-                                    {{$buyer->email}}
+                    </div>
+
+                    <div class="addtional_info_shipping_schdule col-4">
+                        <div class="head_addtional_info_buyer">
+                            <span>{{translate('Schedule For Shipping')}}</span>
+                        </div>
+                        <div class="body_addtional_info_buyer col-12">
+                            <div class="col-6">
+                                <div class="sub_data_addition_info">
+                                    <span class="title_addtional_info">{{translate('Shipping Date')}}</span>
+                                    @foreach (json_decode($data_request->shipping_date) as $each_day)
+                                        <div class="data_addtional_info">
+                                            {{date('d-m-Y', strtotime($each_day))}}
+                                        </div>
+                                    @endforeach
                                 </div>
+                                
                             </div>
-                            <div>
-                                <span class="title_addtional_info">{{translate('Address')}}</span>
-                                <div class="data_addtional_info">
-                                    {{$buyer->address}}
-                                </div>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
-
-                {{-- <div class="addtional_info_buyer">
-                    <div class="head_addtional_info_buyer">
-                        <span>Additional Detail Seller</span>
-                    </div>
-                    <div class="body_addtional_info_buyer col-12">
-                        <div class="col-6">
-                            <div class="sub_data_addition_info">
-                                <span class="title_addtional_info">Seller Name</span>
-                                <div class="data_addtional_info">
-                                    {{$seller->name}}
-                                </div>
-                            </div>
-                            <div>
-                                <span class="title_addtional_info">Mobile</span>
-                                <div class="data_addtional_info"> 
-                                    {{$seller->phone}}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="sub_data_addition_info">
-                                <span class="title_addtional_info">Email</span>
-                                <div class="data_addtional_info">
-                                    {{$seller->email}}
-                                </div>
-                            </div>
-                            <div>
-                                <span class="title_addtional_info">Address</span>
-                                <div class="data_addtional_info">
-                                    {{$seller->address}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
+                
 
             </div>
         </div>
     </div>
 
-    {{-- <div class="card-footer">
-        @if($data_request->status == 2)
-            <div class="col-3">
-                <button id={{$data_request->id}} type="button" class="btn btn-primary btn-block fw-700 fs-14 rounded-4 EdApprove">Approve Price</button>
-            </div>
-            <div class="col-3">
-                <button id={{$data_request->id}} type="button" class="btn btn-danger btn-block fw-700 fs-14 rounded-4 EdOpenReject">Reject Price</button>
-            </div>
-        @endif
-        
-    </div> --}}
-
-    {{-- <div id="myModal" class="modal fade" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="md-form mb-5">
-                    <label data-error="wrong" data-success="right" for="defaultForm-email">Offer Price to negotiable </label>
-                    <input type="number" id="price" name="price"  class="form-control validate" placeholder="0.00">
-                    <input type="number" id="id_rfp" name="id_rfp" style="display: none">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary EdReject">Save changes</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div> --}}
-
+   
 
 </div>
 
@@ -285,6 +238,16 @@
     .addtional_info_buyer
     {
         margin-top: 2rem;
+        height: auto;
+        max-width: 871px;
+        border: 1px solid #D1D1D1;
+        border-radius: 10px;
+        padding: 0px 0px 0px 24px;
+    }
+    .addtional_info_shipping_schdule
+    {
+        margin-top: 2rem;
+        margin-left: 1rem;
         height: auto;
         max-width: 871px;
         border: 1px solid #D1D1D1;

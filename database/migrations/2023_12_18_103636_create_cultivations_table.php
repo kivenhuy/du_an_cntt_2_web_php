@@ -17,10 +17,11 @@ return new class extends Migration
             $table->string('cultivation_name');
             $table->string('harvest_Season');
             $table->string('crop_variety');
-            $table->timestamps('sowing_Date');
-            $table->timestamps('expected_Date_of_Harvest_after_Sowing');
+            $table->timestamp('sowing_Date');
+            $table->timestamp('expected_Date_of_Harvest_after_Sowing');
             $table->string('est_Yield');
             $table->string('seed_Quantity_unit');
+            $table->timestamps();
         });
     }
 

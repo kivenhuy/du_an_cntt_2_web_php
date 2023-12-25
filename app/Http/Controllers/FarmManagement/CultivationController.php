@@ -4,8 +4,10 @@ namespace App\Http\Controllers\FarmManagement;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cultivation;
+use App\Models\FarmerDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
 
 class CultivationController extends Controller
@@ -23,7 +25,8 @@ class CultivationController extends Controller
      */
     public function create()
     {
-        //
+        $all_farmer = FarmerDetails::all();
+        return view('farm_management.cultivation.create',compact('all_farmer'));
     }
 
     /**
@@ -37,6 +40,7 @@ class CultivationController extends Controller
             'updated_at'   => $mytime,
             'created_at'   => $mytime,
             'staff_id'   => Auth::user()->id,
+            'farmer_id'   => $request->farmer_id,
             'cultivation_name'    =>$request->cultivation_name,
             'harvest_Season'      =>$request->harvest_Season,
             'crop_variety'      => $request-> crop_variety,
@@ -79,5 +83,29 @@ class CultivationController extends Controller
     public function destroy(Cultivation $cultivation)
     {
         //
+    }
+
+    public function dtajax(Request $request)
+    {
+        $cultivationDetails = Cultivation::all()->sortDesc();
+        $out =  DataTables::of($cultivationDetails)->make(true);
+        $data = $out->getData();
+        for($i=0; $i < count($data->data); $i++) {
+            $output = '';
+            $today = Carbon::parse($data->data[$i]->expected_Date_of_Harvest_after_Sowing);
+            if($today->isToday())
+            {
+                $output .= ' <a href="'.url(route('cultivation.upload_to_product',['id'=>$data->data[$i]->id])).'" class="btn btn-warning btn-xs" data-toggle="tooltip" title="Convert To Product" style="display:inline;padding:2px 5px 3px 5px;"><i class="fa fa-upload"></i></a>';
+            }
+            $data->data[$i]->farmer_name = Cultivation::find($data->data[$i]->id)->farmer->full_name;
+            $data->data[$i]->action = (string)$output;
+        }
+        $out->setData($data);
+        return $out;
+    }
+    
+    public function upload_to_product(Request $request)
+    {
+        
     }
 }

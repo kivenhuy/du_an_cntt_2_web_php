@@ -17,7 +17,10 @@ Route::group(['middleware' => ['auth'],'prefix' => 'farm_management'], function 
 
 
     Route::get("/cultivation", [FarmManagementCultivationController::class, 'index'])->name('cultivation.index');
-    Route::post("/add_cultivation", [FarmManagementCultivationController::class, 'store'])->name('cultivation.store');
+    Route::get("/cultivation/create", [FarmManagementCultivationController::class, 'create'])->name('cultivation.create');
+    Route::get("/cultivation/dataajax", [FarmManagementCultivationController::class, 'dtajax'])->name('cultivation.dtajax');
+    Route::post("/cultivation/add_cultivation", [FarmManagementCultivationController::class, 'store'])->name('cultivation.store');
+    Route::post("/cultivation/upload_to_product", [FarmManagementCultivationController::class, 'upload_to_product'])->name('cultivation.upload_to_product');
 
 
 });

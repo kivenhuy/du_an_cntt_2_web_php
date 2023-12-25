@@ -12,6 +12,7 @@ class RequestForProduct extends Model
         'product_id',
         'shop_id',
         'buyer_id',
+        'code',
         'from_date',
         'to_date',
         'code',
