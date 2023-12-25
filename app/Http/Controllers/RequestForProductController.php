@@ -78,7 +78,7 @@ class RequestForProductController extends Controller
         $distance_between_date = intdiv($days,(int)$request->order_date);
         $arr_shipping_date = [];
         array_push($arr_shipping_date,$start->format('m/d/Y'));
-        for($i = 0;$i <= $distance_between_date;$i++)
+        for($i = 0;$i <= $distance_between_date-1;$i++)
         {
             $start_date = $start_date->addDay((int)$request->order_date);
             array_push($arr_shipping_date,$start_date->format('m/d/Y'));
