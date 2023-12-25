@@ -49,7 +49,7 @@ class RequestForProductController extends Controller
         if(isset($request->id_rfp))
         {
             $price =$request->price; // 1,000,000
-            $Rfq_data = RequestForProduct::find($request->id_rfq);
+            $Rfq_data = RequestForProduct::find($request->id_rfp);
             $Rfq_data->update(['price' => $price,'status' => 2]);
         }
     }

@@ -19,7 +19,10 @@ class Cultivation extends Model
         'expected_Date_of_Harvest_after_Sowing',
         'est_Yield',
         'seed_Quantity_unit',
-        'updated_at',
-        'created_at',
     ];
+
+    public function farmer()
+    {
+        return $this->belongsTo(FarmerDetails::class,'farmer_id','id');
+    }
 }

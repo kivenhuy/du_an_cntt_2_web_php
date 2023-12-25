@@ -39,7 +39,7 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated dropdown-menu-md">
                         <a href="{{ route('seller.dashboard') }}" class="dropdown-item">
-                            <i class="las la-user-circle"></i>
+                            <i class="fa fa-home"></i>
                             <span>{{translate('Ecomerce Dashboard')}}</span>
                         </a>
 
@@ -49,7 +49,7 @@
                         </a>
 
                         <a href="{{ route('seller.logout')}}" class="dropdown-item">
-                            <i class="las la-sign-out-alt"></i>
+                            <i class="fa fa-sign-out"></i>
                             <span>{{translate('Logout')}}</span>
                         </a>
                     </div>
