@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
@@ -179,6 +180,17 @@ class LoginController extends Controller
             "password" => $request->password,
             "password_confirmation" => $request->password_confirmation,
         ];
+
+        $upsteamUrl = env('SUPERMARKET_URL');
+        $signupApiUrl = $upsteamUrl . '/auth/register';
+        $data_cooperative = [
+            'name' => $request->name,
+            'username' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password,
+            'phone_number' => $request->phone,
+        ];
+        $response = Http::post($signupApiUrl,$data_cooperative);
         $user = $this->create($data_created);
         if($user)
         {
@@ -199,13 +211,12 @@ class LoginController extends Controller
         ];
         if (auth()->attempt($credential)) {
             $user_login = Auth::user();
-            if($user_login->user_type == "seller")
+            try
             {
-                return redirect()->route('seller.dashboard');
+                
             }
-            else if($user_login->user_type == "admin")
-            {
-                return redirect()->route('admin.dashboard');
+            catch(\Exception $exception) {
+                
             }
             return redirect()->route('homepage');
         }
