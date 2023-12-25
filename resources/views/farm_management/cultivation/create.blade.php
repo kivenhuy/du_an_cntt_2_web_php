@@ -82,14 +82,14 @@
                     <div class="form-group row">
                         <label class="col-md-3 col-from-label">Expected Date of Harvest after Sowing</label>
                         <div class="col-md-8">
-                            <input required="" type="datetime-local" class="form-control" name="expected_Date_of_Harvest_after_Sowing" id="expected_Date_of_Harvest_after_Sowing">
+                            <input  type="datetime-local" class="form-control" name="expected_Date_of_Harvest_after_Sowing" id="expected_Date_of_Harvest_after_Sowing">
                         </div>
                     </div>
                     {{-- Sowing Date --}}
                     <div class="form-group row">
                         <label class="col-md-3 col-from-label">Sowing Date</label>
                         <div class="col-md-8">
-                            <input required="" type="datetime-local" class="form-control" name="sowing_Date" id="sowing_Date">
+                            <input  type="datetime-local" class="form-control" name="sowing_Date" id="sowing_Date">
                         </div>
                     </div>
                     {{-- est_Yield --}}
