@@ -14,6 +14,7 @@ class RequestForProduct extends Model
         'buyer_id',
         'from_date',
         'to_date',
+        'code',
         'shipping_date',
         'distance_between_shipping_date',
         'quantity',
