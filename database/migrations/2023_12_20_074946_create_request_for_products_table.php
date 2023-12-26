@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('product_id');
             $table->string('code');
+            $table->string('product_name');
             $table->integer('shop_id');
             $table->integer('buyer_id');
             $table->timestamp('from_date');

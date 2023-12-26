@@ -180,17 +180,6 @@ class LoginController extends Controller
             "password" => $request->password,
             "password_confirmation" => $request->password_confirmation,
         ];
-
-        $upsteamUrl = env('SUPERMARKET_URL');
-        $signupApiUrl = $upsteamUrl . '/auth/register';
-        $data_cooperative = [
-            'name' => $request->name,
-            'username' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password,
-            'phone_number' => $request->phone,
-        ];
-        $response = Http::post($signupApiUrl,$data_cooperative);
         $user = $this->create($data_created);
         if($user)
         {
@@ -198,7 +187,7 @@ class LoginController extends Controller
             $enterprise->user_id = $user->id;
             $enterprise->bussiness_name = $request->bussiness_name;
             $enterprise->organization_type = $request->organization_type;
-            $enterprise->business_type = json_encode($request->bussiness_type);
+            $enterprise->bussiness_type = json_encode($request->bussiness_type);
             $enterprise->fax_number = $request->fax_number;
             $enterprise->tax_number = $request->tax_number;
             $enterprise->regis_number = $request->registration_number;
@@ -213,7 +202,17 @@ class LoginController extends Controller
             $user_login = Auth::user();
             try
             {
-                
+                $upsteamUrl = env('SUPERMARKET_URL');
+                $signupApiUrl = $upsteamUrl . '/auth/register';
+                $data_cooperative = [
+                    'name' => $request->name,
+                    'username' => $request->name,
+                    'email' => $request->email,
+                    'password' => $request->password,
+                    'phone_number' => $request->phone,
+                    'ecom_user_id' => $user->id,
+                ];
+                $response = Http::post($signupApiUrl,$data_cooperative);
             }
             catch(\Exception $exception) {
                 

@@ -111,15 +111,7 @@ Route::group(['middleware' => ['auth']], function () {
         // Route::get('/brand/{brand_slug}', 'listingByBrand')->name('products.brand');
     });
 
-    // Request for Product
-    Route::controller(RequestForProductController::class)->group(function () {
-        Route::get('/request_for_product', 'index')->name('request_for_product.index');
-        Route::post('/request_for_product/store', 'store')->name('request_for_product.store');
-        Route::get('/request_for_product/data_ajax', 'customer_dataajax')->name('request_for_product.customer_dataajax');
-        Route::get('/request_for_product/get_detail/{id}', 'get_details_data')->name('request_for_product.get_details_data');
-        Route::post('/request_for_product/reject_price', 'reject_price')->name('request_for_product.reject_price');
-        Route::post('/request_for_product/approve_price', 'approve_price')->name('request_for_product.approve_price');
-    });
+
     
 
     // Address 

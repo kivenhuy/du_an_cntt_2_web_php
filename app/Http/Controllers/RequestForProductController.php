@@ -86,9 +86,10 @@ class RequestForProductController extends Controller
         $data_request = [
             'product_id'=>$request->product_id,
             'code'=>$code_rfq,
+            'product_name'=>Products::find($request->product_id)->name,
             'shop_id'=>$request->shop_id,
             'buyer_id'=>Auth::user()->id,
-            'from_date'=>$start,
+            'from_date'=>Carbon::parse($request->from_date),
             'to_date'=>$end,
             'shipping_date'=>json_encode($arr_shipping_date),
             'distance_between_shipping_date' =>(int)$request->order_date,
@@ -180,8 +181,7 @@ class RequestForProductController extends Controller
             // dd($data->data[$i]->id);
             $output = '';
             $output .= ' <a href="'.url(route('request_for_product.get_details_data',['id'=>$data->data[$i]->id])).'" class="btn btn-info btn-xs" data-toggle="tooltip" title="Show Details" style="display:inline;padding:2px 5px 3px 5px;"><i class="fa fa-eye"></i></a>';
-            $data->data[$i]->product_name = Products::find($data->data[$i]->product_id)->name;
-            $data->data[$i]->seller_name = Shop::find($data->data[$i]->shop_id)->name;
+            $data->data[$i]->seller_name = Shop::find($data->data[$i]->shop_id)?->name;
             $data->data[$i]->price = single_price($data->data[$i]->price);
             $data->data[$i]->action = (string)$output;
             }
@@ -216,9 +216,8 @@ class RequestForProductController extends Controller
             // dd($data->data[$i]->id);
             $output = '';
             $output .= ' <a href="'.url(route('request_for_product.get_details_data',['id'=>$data->data[$i]->id])).'" class="btn btn-info btn-xs" data-toggle="tooltip" title="Show Details" style="display:inline;padding:2px 5px 3px 5px;"><i class="fa fa-eye"></i></a>';
-            $data->data[$i]->product_name = Products::find($data->data[$i]->product_id)->name;
             $data->data[$i]->buyer_name = User::find($data->data[$i]->buyer_id)->name;
-            $data->data[$i]->seller_name = Shop::find($data->data[$i]->shop_id)->name;
+            $data->data[$i]->seller_name = Shop::find($data->data[$i]->shop_id)?->name;
             $data->data[$i]->price = single_price($data->data[$i]->price);
             $data->data[$i]->action = (string)$output;
             }
