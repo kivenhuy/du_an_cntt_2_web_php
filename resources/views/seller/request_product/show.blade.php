@@ -32,15 +32,27 @@
                             {{-- @foreach ($order->orderDetails as $key => $orderDetail) --}}
                                 @if (isset($data_request))
                                     <tr class="" style="height: auto">
-                                        <td style="padding-top:24px">
-                                            <div style="display: flex;align-items: center">
-                                                <img src="{{ uploaded_asset($product->thumbnail_img) }}" width="115px" height="115px" alt="">
-                                                <div style="display: flex;flex-direction: column;padding-left: 16px;">
-                                                    <span class="rfp_product_name" style="margin-bottom:6px;" >{{ $product->name }}</span>
-                                                </div>
+                                        @if(!empty($product))
+                                            <td style="padding-top:24px">
+                                                <div style="display: flex;align-items: center">
+                                                    <img src="{{ uploaded_asset($product->thumbnail_img) }}" width="115px" height="115px" alt="">
+                                                    <div style="display: flex;flex-direction: column;padding-left: 16px;">
+                                                        <span class="rfp_product_name" style="margin-bottom:6px;" >{{ $product->name }}</span>
+                                                    </div>
 
-                                            </div>  
-                                        </td>
+                                                </div>  
+                                            </td>
+                                        @else
+                                            <td style="padding-top:24px">
+                                                <div style="display: flex;align-items: center">
+                                                    <img src="" width="115px" height="115px" alt="">
+                                                    <div style="display: flex;flex-direction: column;padding-left: 16px;">
+                                                        <span class="rfp_product_name" style="margin-bottom:6px;" >{{ $data_request->product_name }}</span>
+                                                    </div>
+
+                                                </div>  
+                                            </td>
+                                        @endif
                                         <td>
                                             
                                                 <span class="rfp_product_name">{{$data_request->quantity}} x {{$data_request->unit}}</span>
@@ -160,8 +172,15 @@
         </div>
     </div>
 
-   
-
+    <div class="card-footer">
+        @if($is_accept != 0)
+            <input type="hidden" id="product_id" value="{{$product_id}}">
+            <div class="col-3">
+                <button id={{$data_request->id}} type="button" class="btn btn-primary btn-block fw-700 fs-14 rounded-4 EdApprove">Accept Request</button>
+            </div>
+        @endif
+        
+    </div>
 </div>
 
 <style>
@@ -397,44 +416,69 @@
 @section('script')
 <script>
     $(document).on("click", ".EdSubmitFinal", function()
+    {
+        var price = $('#unit_price').val();
+        var serviceID = $(this).attr('id');
+        if(price > 0 )
         {
-            var price = $('#unit_price').val();
-            var serviceID = $(this).attr('id');
-            if(price > 0 )
-            {
-                $.ajax
-                ({
-                    url: "{{route('seller.request_for_product.seller_dataajax')}}",
-                    method:'post',
-                    data:{
-                        id_rfp:serviceID,
-                        price:price,
-                    },
-                    headers: {
-                        'X-CSRF-Token': '{{ csrf_token() }}',
-                    },
-                    success: function(data){
-                        location.reload();
-                        AIZ.plugins.notify('success','Update Price Successfully!!!!');
-                    }, 
-                    error: function(){
-                        AIZ.plugins.notify('danger','Some Thing Went Wrong!!!!');
-                    }
-                });
-                
-            }
-            else
-            {
-                AIZ.plugins.notify('danger','Please Input Price');
-            }
+            $.ajax
+            ({
+                url: "{{route('seller.request_for_product.seller_update_price')}}",
+                method:'post',
+                data:{
+                    id_rfp:serviceID,
+                    price:price,
+                },
+                headers: {
+                    'X-CSRF-Token': '{{ csrf_token() }}',
+                },
+                success: function(data){
+                    location.reload();
+                    AIZ.plugins.notify('success','Update Price Successfully!!!!');
+                }, 
+                error: function(){
+                    AIZ.plugins.notify('danger','Some Thing Went Wrong!!!!');
+                }
+            });
             
-        });
-
-        function open_update_price(data)
-        {
-            $('#rfp_price').attr('hidden',true);
-            $('#rfp_price_update').removeAttr('hidden');
-            // alert('aaa');
         }
+        else
+        {
+            AIZ.plugins.notify('danger','Please Input Price');
+        }
+        
+    });
+
+    $(document).on("click", ".EdApprove", function()
+    {
+        var serviceID = $(this).attr('id');
+        var product_id = $('#product_id').val();
+        $.ajax
+        ({
+            url: "{{route('seller.request_for_product.seller_accept_request')}}",
+            method:'post',
+            data:{
+                id_rfp:serviceID,
+                product_id:product_id,
+            },
+            headers: {
+                'X-CSRF-Token': '{{ csrf_token() }}',
+            },
+            success: function(data){
+                location.reload();
+                AIZ.plugins.notify('success','Aceept Request Successfully!!!!');
+            }, 
+            error: function(){
+                AIZ.plugins.notify('danger','Some Thing Went Wrong!!!!');
+            }
+        });
+    });
+
+    function open_update_price(data)
+    {
+        $('#rfp_price').attr('hidden',true);
+        $('#rfp_price_update').removeAttr('hidden');
+        // alert('aaa');
+    }
 </script>
 @endsection

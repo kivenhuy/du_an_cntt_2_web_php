@@ -57,4 +57,16 @@ class Products extends Model
         return $this->hasOne(ProductStock::class,'product_id','id');
     }
 
+    public function getImgUrlAttribute()
+    {
+        $data =uploaded_asset($this->thumbnail_img);
+        return $data;
+    }
+
+    public function getQtyAttribute()
+    {
+        $data =($this->product_stock);
+        return $data->qty;
+    }
+
 }

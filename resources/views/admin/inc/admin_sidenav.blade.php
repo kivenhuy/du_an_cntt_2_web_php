@@ -120,12 +120,31 @@
                         </li>
                     </ul>
                 </li>
+
                 <li class="aiz-side-nav-item">
-                    <a href="{{route('request_for_product.admin_index')}}" class="aiz-side-nav-link">
-                        <i class="fa fa-list aiz-side-nav-icon"></i>
-                        <span class="aiz-side-nav-text">{{translate('Request For Product')}}</span>
+                    <a href="#" class="aiz-side-nav-link">
+                        <i class="fa fa-industry aiz-side-nav-icon"></i>
+                        <span class="aiz-side-nav-text">{{ translate('Request For Product') }}</span>
+                        <span class="aiz-side-nav-arrow"></span>
                     </a>
+                    <ul class="aiz-side-nav-list level-2">
+                        <li class="aiz-side-nav-item">
+                            <a href="{{route('request_for_product.admin_index')}}" class="aiz-side-nav-link">
+                                <i class="fa fa-list aiz-side-nav-icon"></i>
+                                <span class="aiz-side-nav-text">{{translate('Ecom Request')}}</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="aiz-side-nav-list level-2">
+                        <li class="aiz-side-nav-item">
+                            <a href="{{route('request_for_product.admin_supermarket_index')}}" class="aiz-side-nav-link">
+                                <i class="fa fa-list aiz-side-nav-icon"></i>
+                                <span class="aiz-side-nav-text">{{translate('Supermarket Request')}}</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
+               
                 <li class="aiz-side-nav-item">
                     <a href="{{route('carriers.index')}}" class="aiz-side-nav-link">
                         <i class="fa fa-list aiz-side-nav-icon"></i>

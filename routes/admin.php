@@ -86,8 +86,10 @@ Route::group(['middleware' => ['auth'],'prefix' => 'admin'], function () {
 
     Route::controller(RequestForProductController::class)->group(function () {
         Route::get('/request_for_product', 'admin_index')->name('request_for_product.admin_index');
+        Route::get('/request_for_product/supermarket', 'admin_supermarket_index')->name('request_for_product.admin_supermarket_index');
         Route::post('/request_for_product/approved', 'admin_approved')->name('request_for_product.admin_approved');
         Route::get('/request_for_product/admin_dataajax', 'admin_dataajax')->name('request_for_product.admin_dataajax');
+        Route::get('/request_for_product/admin_supermarket_dataajax', 'admin_supermarket_dataajax')->name('request_for_product.admin_supermarket_dataajax');
     });
 
     // Carrier

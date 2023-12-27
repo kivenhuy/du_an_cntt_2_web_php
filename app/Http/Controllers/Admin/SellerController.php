@@ -46,6 +46,6 @@ class SellerController extends Controller
             flash(translate('Seller has been approved successfully'))->success();
         }
         flash(translate('Something went wrong'))->error();
-        return back();
+        return 1;
     }
 }

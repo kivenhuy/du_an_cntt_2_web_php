@@ -22,6 +22,11 @@ class RequestForProductController extends Controller
        return view('user_layout.request_product.index');
     }
 
+    public function seller_supermarket_index()
+    {
+       return view('seller.request_product.supermarket_index');
+    }
+
     public function seller_index()
     {
        return view('seller.request_product.index');
@@ -29,6 +34,11 @@ class RequestForProductController extends Controller
     public function admin_index()
     {
        return view('admin.request_product.index');
+    }
+    
+    public function admin_supermarket_index()
+    {
+       return view('admin.request_product.supermarket_index');
     }
 
     public function admin_approved(Request $request)
@@ -51,6 +61,19 @@ class RequestForProductController extends Controller
             $price =$request->price; // 1,000,000
             $Rfq_data = RequestForProduct::find($request->id_rfp);
             $Rfq_data->update(['price' => $price,'status' => 2]);
+        }
+    }
+
+    public function seller_accept_request(Request $request)
+    {
+        if(isset($request->id_rfp))
+        {
+            $price =$request->price; // 1,000,000
+            $Rfq_data = RequestForProduct::find($request->id_rfp);
+            if($Rfq_data)
+            {
+                $Rfq_data->update(['product_id' => $request->product_id,'shop_id'=>Auth::user()->shop->id]);
+            }   
         }
     }
 
@@ -124,26 +147,32 @@ class RequestForProductController extends Controller
         $data_request = RequestForProduct::find($id);
         if($data_request)
         {
-            $product = Products::find($data_request->product_id);
+            $product = Products::where('id',$data_request->product_id)->first();
             $buyer = User::find($data_request->buyer_id);
-            $seller = Shop::find($data_request->shop_id);
+            $seller = Shop::where('id',$data_request->shop_id)->first();
             if(Auth::user()->user_type == 'enterprise')
             {
                 return view('user_layout.request_product.show',['product'=>$product,'buyer'=>$buyer,'seller'=>$seller,'data_request'=>$data_request]);
             }
             elseif(Auth::user()->user_type == 'seller')
             {
-                return view('seller.request_product.show',['product'=>$product,'buyer'=>$buyer,'seller'=>$seller,'data_request'=>$data_request]);
+                $is_accept = 0;
+                $product_id = 0;
+                if($data_request->product_id == 0)
+                {
+                    $data_product = Products::where('name', 'like', '%' .$data_request->product_name. '%')->first();
+                    if(!empty($data_product))
+                    {
+                        $is_accept = 1;  
+                        $product_id = $data_product->id;
+                    }
+                }   
+                return view('seller.request_product.show',['product_id'=>$product_id,'is_accept'=>$is_accept,'product'=>$product,'buyer'=>$buyer,'seller'=>$seller,'data_request'=>$data_request]);
             }
             else
             {
                 return view('admin.request_product.show',['product'=>$product,'buyer'=>$buyer,'seller'=>$seller,'data_request'=>$data_request]);
             }
-        }
-        else
-        {
-            flash(translate('Some missing happend'))->danger();
-            return back();
         }
     }
 
@@ -174,7 +203,7 @@ class RequestForProductController extends Controller
 
     public function customer_dataajax(Request $request)
     {
-        $data_request = RequestForProduct::where('buyer_id',Auth::user()->id)->get();
+        $data_request = RequestForProduct::where([['buyer_id',Auth::user()->id],['product_id','!=',0]])->get();
         $out =  DataTables::of($data_request)->make(true);
         $data = $out->getData();
         for($i=0; $i < count($data->data); $i++) {
@@ -191,7 +220,8 @@ class RequestForProductController extends Controller
 
     public function seller_dataajax(Request $request)
     {
-        $data_request = RequestForProduct::where('shop_id',Auth::user()->shop->id)->get();
+        
+        $data_request = RequestForProduct::where([['shop_id',Auth::user()->shop->id],['product_id','!=',0]])->get();
         $out =  DataTables::of($data_request)->make(true);
         $data = $out->getData();
         for($i=0; $i < count($data->data); $i++) 
@@ -207,9 +237,49 @@ class RequestForProductController extends Controller
         return $out;
     }
 
+    public function seller_supermarket_dataajax(Request $request)
+    {
+        
+        $data_request = RequestForProduct::where([['shop_id',0],['product_id',0]])->get();
+        $out =  DataTables::of($data_request)->make(true);
+        $data = $out->getData();
+        for($i=0; $i < count($data->data); $i++) 
+        {
+            // dd($data->data[$i]->id);
+            $output = '';
+            if($data->data[$i]->status != 0)
+            {
+                $output .= ' <a href="'.url(route('request_for_product.get_details_data',['id'=>$data->data[$i]->id])).'" class="btn btn-info btn-xs" data-toggle="tooltip" title="Show Details" style="display:inline;padding:2px 5px 3px 5px;"><i class="fa fa-eye"></i></a>';
+            }
+            
+            $data->data[$i]->buyer_name = User::find($data->data[$i]->buyer_id)->name;
+            $data->data[$i]->action = (string)$output;
+        }
+        $out->setData($data);
+        return $out;
+    }
+
+    public function admin_supermarket_dataajax(Request $request)
+    {
+        $data_request = RequestForProduct::where([['shop_id',0],['product_id',0]])->get();
+        $out =  DataTables::of($data_request)->make(true);
+        $data = $out->getData();
+        for($i=0; $i < count($data->data); $i++) {
+            // dd($data->data[$i]->id);
+            $output = '';
+            $output .= ' <a href="'.url(route('request_for_product.get_details_data',['id'=>$data->data[$i]->id])).'" class="btn btn-info btn-xs" data-toggle="tooltip" title="Show Details" style="display:inline;padding:2px 5px 3px 5px;"><i class="fa fa-eye"></i></a>';
+            $data->data[$i]->buyer_name = User::find($data->data[$i]->buyer_id)->name;
+            $data->data[$i]->seller_name = Shop::find($data->data[$i]->shop_id)?->name;
+            $data->data[$i]->price = single_price($data->data[$i]->pre);
+            $data->data[$i]->action = (string)$output;
+            }
+        $out->setData($data);
+        return $out;
+    }
+
     public function admin_dataajax(Request $request)
     {
-        $data_request = RequestForProduct::all();
+        $data_request = RequestForProduct::where('product_id','!=',0)->get();
         $out =  DataTables::of($data_request)->make(true);
         $data = $out->getData();
         for($i=0; $i < count($data->data); $i++) {

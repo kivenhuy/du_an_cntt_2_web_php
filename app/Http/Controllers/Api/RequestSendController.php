@@ -59,21 +59,21 @@ class RequestSendController extends Controller
 
    
 
-    public function get_data(Request $request)
+    public function show($id)
     {
-        $data_request = RequestForProduct::find($request->id);
+        $data_request = RequestForProduct::find($id)->append(['seller_name', 'unit_price']);
         if($data_request)
         {
-            $product = Products::findOrFail($data_request->product_id);
+            $product = Products::where('id',$data_request->product_id)->first()->append('img_url');
             $buyer = User::find($data_request->buyer_id);
-            $seller = Shop::findOrFail($data_request->shop_id);
+            $seller = Shop::where('id',$data_request->shop_id)->first();
             return response()->json([
                 'result' => false,
-                'message'=>'Data not found',
+                'message'=>'Get data Successfully',
                 'data'=>[
-                    'product'=>$product,
+                    'product'=>(object)$product,
                     'buyer'=>$buyer,
-                    'seller'=>$seller,
+                    'seller'=>(object)$seller,
                     'data_request'=>$data_request,
                 ]
             ]);
