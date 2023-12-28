@@ -374,19 +374,11 @@ class CartController extends Controller
             foreach ($carts as $key => $cartItem)
             {
                 $cart_product = Products::where([['id', $cartItem['product_id']]])->first();
-                if($cartItem['product_id'] == $request->id &&  $cartItem['is_rfp'] == 1) {
+                if($cartItem['product_id'] == $product->id &&  $cartItem['is_rfp'] == 1 &&  $cartItem['price'] == $price) {
                     $product_stock = $cart_product->product_stock;
                     $quantity = $product_stock->qty;
-                    if($quantity < $cartItem['quantity'] + $request['quantity']){
-                        return array(
-                            'status' => 0,
-                            'cart_count' => count($carts),
-                            'modal_view' => view('user_layout.partials.outOfStockCart')->render(),
-                            'nav_cart_view' => view('user_layout.partials.cart')->render(),
-                        );
-                    }
                     $foundInCart = true;
-                    $cartItem['quantity'] += $request['quantity'];
+                    $cartItem['quantity'] += $rfp_record->quantity;
                     $cartItem['price'] = $price;
                     $cartItem->save();
                 }

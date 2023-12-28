@@ -270,7 +270,7 @@ class RequestForProductController extends Controller
             $output .= ' <a href="'.url(route('request_for_product.get_details_data',['id'=>$data->data[$i]->id])).'" class="btn btn-info btn-xs" data-toggle="tooltip" title="Show Details" style="display:inline;padding:2px 5px 3px 5px;"><i class="fa fa-eye"></i></a>';
             $data->data[$i]->buyer_name = User::find($data->data[$i]->buyer_id)->name;
             $data->data[$i]->seller_name = Shop::find($data->data[$i]->shop_id)?->name;
-            $data->data[$i]->price = single_price($data->data[$i]->pre);
+            $data->data[$i]->price = single_price($data->data[$i]->price);
             $data->data[$i]->action = (string)$output;
             }
         $out->setData($data);

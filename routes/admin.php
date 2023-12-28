@@ -93,10 +93,12 @@ Route::group(['middleware' => ['auth'],'prefix' => 'admin'], function () {
     });
 
     // Carrier
-    Route::resource('carriers', CarrierController::class);
     Route::controller(CarrierController::class)->group(function () {
         Route::post('/carriers/update_status', 'updateStatus')->name('carriers.update_status');
-        Route::get('/carriers/dtajax', 'dtajax')->name('carriers.dtajax');
+        Route::post('/carriers/store', 'store')->name('carriers.store');
+        Route::get('/carriers/create', 'create')->name('carriers.create');
+        Route::get('/carriers', 'index')->name('carriers.index');
+        Route::get('/carriers/data_ajax', 'data_ajax')->name('carriers.data_ajax');
     });
 
 });

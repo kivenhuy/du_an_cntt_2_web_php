@@ -28,6 +28,8 @@ Route::group(['prefix' => 'v2'], function () {
         Route::post('/send_request/store', 'store')->name('send_request.store');
         Route::get('/send_request/get_detail/{id}', 'show')->name('send_request.get_detail');
         Route::post('/send_request/get_all', 'index')->name('send_request.get_all');
+        Route::post('/send_request/add_product_to_cart', 'approve_price')->name('send_request.approve_price');
+        Route::post('/send_request/reject_price', 'reject_price')->name('send_request.reject_price');
     });
 
     Route::controller(SuggestProductController::class)->group(function () {

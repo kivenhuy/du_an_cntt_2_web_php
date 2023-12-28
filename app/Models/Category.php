@@ -13,4 +13,17 @@ class Category extends Model
     {
         return $this->hasMany(Products::class,'category_id','id');
     }
+
+
+    public function product_stock()
+    {
+
+        return $this->hasManyThrough(
+            ProductStock::class, 
+            Products::class,
+            'category_id',// Foreign key on the environments table...
+            'product_id', // Foreign key on the deployments table...
+            'id', // Local key on the projects table...
+            'id');
+    }
 }

@@ -71,10 +71,9 @@ class CarrierController extends Controller
         //
     }
 
-    public function dtajax(Request $request)
+    public function data_ajax(Request $request)
     {
         $carrier = Carrier::all();
-        dd($carrier);
         $out =  DataTables::of($carrier)->make(true);
         $data = $out->getData();
         for($i=0; $i < count($data->data); $i++) {

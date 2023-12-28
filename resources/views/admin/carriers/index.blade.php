@@ -63,10 +63,13 @@
               searching: false,
               bSort:false,
               serverSide: true,
-                  ajax: "{{ route('carriers.dtajax') }}",
+                  ajax: "{{ route('carriers.data_ajax') }}",
                   columns: [
-                            {data: 'logo', name: 'logo', render: function(data){
-                              return (data=="")?"":data;
+                            {data: 'logo', name: 'logo', render: function(data, type, row){
+                              return (data=="")?
+                              '<img src="" alt="" class="mw-100 ">'
+                              :
+                              '<img src="'+row.logo+'" alt="" class="mw-100" style="width:80px;height:60px">';
                             }},
                             {data: 'name', name: 'name', render: function(data){
                               return (data=="")?"":data;

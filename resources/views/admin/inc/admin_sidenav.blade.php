@@ -2,6 +2,7 @@
     <div class="aiz-sidebar left c-scrollbar">
         <div class="aiz-side-nav-logo-wrap">
             <a href="{{ route('admin.dashboard') }}" class="d-block text-left">
+                <img src="{{ static_asset('assets/img/DTQSbmTVlRIyc56RV4e98YWpf1fa9dfsKYb2IojK.jpg') }}" alt="" class="mw-100 h-30px h-md-65px" style="height: 40px;width: 40px;">
                 
             </a>
         </div>

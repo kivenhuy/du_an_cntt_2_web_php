@@ -75,7 +75,7 @@
                                 <select class="form-control aiz-selectpicker" name="billing_type"
                                     onchange="update_price_range_form()" id="billing_type" data-live-search="true">
                                     <option value="weight_based">{{ translate('According to Weight') }}</option>
-                                    <option value="price_based">{{ translate('According to Price') }}</option>
+                                    <option value="fast_shipping">{{ translate('Fast Shipping 2 Hours') }}</option>
                                 </select>
                             </div>
                         </div>
@@ -183,11 +183,11 @@
 
             $(".carrier_range_form_header_text").html(billing_type === 'weight_based' ?
                 "{{ translate('Weight based carrier price range') }}" :
-                "{{ translate('Price based carrier price range') }}");
+                "{{ translate('Weight based carrier price range') }}");
             $(".price_range_text").html(billing_type === 'weight_based' ?
                 "{{ translate('Will be applied when the weight is') }}" :
-                "{{ translate('Will be applied when the price is') }}");
-            $(".bill_based_on").html(billing_type === 'weight_based' ? "{{ translate('kg') }}" : "$");
+                "{{ translate('Will be applied when the Weight is') }}");
+            $(".bill_based_on").html(billing_type === 'weight_based' ? "{{ translate('kg') }}" : "kg");
 
         }
 

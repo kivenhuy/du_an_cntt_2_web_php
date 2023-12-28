@@ -129,8 +129,12 @@
                                                 @foreach($carrier_list as $carrier_key => $carrier)
                                                     <div style="margin-bottom: 1rem;display: flex;align-items: center">
                                                        
-                                                        <input onclick="handleClick(this);" class="radio_button_checkout" type="radio" id="shipping_fee_{{ $key_user }}" name="shipping_fee_{{ $key_user }}" value="{{carrier_base_price($carts, $carrier->id, $key_user)}}"/>
-                                                        <span for="shipping_fee" class="delivery_type">{{ $carrier->name }}</span>
+                                                        <input onclick="handleClick(this);" class="radio_button_checkout" type="radio" id="shipping_fee_{{ $key_user }}" name="shipping_fee_{{ $key_user }}" value="{{carrier_base_price($carts, $carrier->id, $key_user)}}" data-shipping="{{$carrier->carrier_ranges->first()->billing_type}}"/>
+                                                        @if($carrier->carrier_ranges->first()->billing_type == 'weight_based')
+                                                            <span for="shipping_fee" class="delivery_type">{{ $carrier->name }}</span>
+                                                        @else
+                                                            <span for="shipping_fee" class="delivery_type">{{ $carrier->name }} (2 hour)</span>
+                                                        @endif
                                                         <div style="position: relative;left: 16px;">
                                                             <span class="price_shipping">{{ single_price(carrier_base_price($carts, $carrier->id, $key_user)) }}</span>
                                                         </div>
@@ -338,15 +342,12 @@
         
         function handleClick(myRadio) {
             var total_shipping = 0 ;
+            var shipping = "";
             var final_price = $('#final_price').val();
-            var data_id_seller = myRadio.name.replace('shipping_fee_','');
-            var shipping_type = myRadio.value;            
+            var data_id_seller = myRadio.name.replace('shipping_fee_','');  
             $("input[class=radio_button_checkout]:checked").each(function() {
                 var value = $(this).val();
-                if(value == "pickup_point")
-                {
-                    value = 0;
-                }
+                shipping = $(this).attr("data-shipping");
                 total_shipping = total_shipping + parseInt(value);
             });
             $.ajax
@@ -357,7 +358,7 @@
                         total_shipping:total_shipping,
                         final_price:final_price,
                         data_id_seller:data_id_seller,
-                        shipping_type:shipping_type,
+                        shipping_type:shipping,
                     },
                     headers: {
                         'X-CSRF-Token': '{{ csrf_token() }}',
