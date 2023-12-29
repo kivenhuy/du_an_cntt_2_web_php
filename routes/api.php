@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Api\RequestForProductController;
 use App\Http\Controllers\Api\RequestSendController;
 use App\Http\Controllers\Api\SuggestProductController;
+use App\Http\Controllers\Api\UploadsProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -34,6 +36,14 @@ Route::group(['prefix' => 'v2'], function () {
 
     Route::controller(SuggestProductController::class)->group(function () {
         Route::get('/suggest_for_supermarket', 'suggest_for_supermarket')->name('suggest_for_supermarket');
+    });
+
+    Route::controller(CategoryController::class)->group(function () {
+        Route::get('/category/get_all', 'get_all_for_farm_manage')->name('categories.get_all_for_farm_manage');
+    });
+
+    Route::controller(UploadsProductController::class)->group(function () {
+        Route::post('/upload_product/store', 'add_product_from_farm')->name('upload_product.add_product_from_farm');
     });
 });
 

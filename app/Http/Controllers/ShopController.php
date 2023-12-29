@@ -36,6 +36,8 @@ class ShopController extends Controller
             'district' => $request->district,
             'address' => $request->address,
         ];
+        $upsteamUrl = env('FARM_URL');
+        $signupApiUrl = $upsteamUrl . '/auth/register';
         $user = User::create($data_created);
         if ($user) {
             $shop = new Shop;
@@ -58,6 +60,7 @@ class ShopController extends Controller
                         $data_cooperative = [
                             'name' => $user->name,
                             'username' => $user->name,
+                            'ecom_user_id' => $user->id,
                             'email' => $user->email,
                             'password' => $request->password,
                             'phone_number' => $user->phone,

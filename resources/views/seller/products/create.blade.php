@@ -15,7 +15,7 @@
 
 
 
-        <form class="" action="{{ route('seller.products.store') }}" method="POST" enctype="multipart/form-data"id="choice_form">
+        <form class="" action="{{ route('seller.products.store') }}" method="POST" enctype="multipart/form-data" id="choice_form">
         <div class="row gutters-5">
             <div class="col-lg-8">
                 @csrf
