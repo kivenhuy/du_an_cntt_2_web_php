@@ -187,7 +187,7 @@ class LoginController extends Controller
             $enterprise->user_id = $user->id;
             $enterprise->bussiness_name = $request->bussiness_name;
             $enterprise->organization_type = $request->organization_type;
-            $enterprise->bussiness_type = json_encode($request->bussiness_type);
+            $enterprise->business_type = json_encode($request->bussiness_type);
             $enterprise->fax_number = $request->fax_number;
             $enterprise->tax_number = $request->tax_number;
             $enterprise->regis_number = $request->registration_number;
