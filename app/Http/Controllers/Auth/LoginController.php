@@ -191,6 +191,7 @@ class LoginController extends Controller
             'phone_number' => $request->phone,
         ];
         $response = Http::post($signupApiUrl,$data_cooperative);
+        dd($response->body());
         $user = $this->create($data_created);
         if($user)
         {
