@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
+use App\Models\Carrier;
 use App\Models\Cart;
 use App\Models\Products;
 use Auth;
@@ -45,8 +46,19 @@ class CheckoutController extends Controller
             array_push($product_ids, $cartItem['product_id']);
             $seller_products[$product->user_id] = $product_ids;
         }
-        $carrier_list = array();
+        $carrier_list = Carrier::all();
         return view('user_layout.checkout.payment_select', compact('discount','carts','seller_products','carrier_list'));
     }
 
+    public function update_total_shipping_fee(Request $request)
+    {
+        dd($request->all());
+        $total_price = $request->total_shipping + $request->final_price;
+        $user = Auth::user();
+        $cart_data = Cart::where([['user_id',$user->id],['owner_id',(int)$request->data_id_seller]])->update(['shipping_type' => '']);
+        return [
+            'total_price' =>single_price($total_price),
+            'shipping_price'=>  single_price( $request->total_shipping),
+        ];
+    }
 }

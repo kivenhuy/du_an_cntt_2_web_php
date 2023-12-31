@@ -7,9 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class RequestForProduct extends Model
 {
+
     use HasFactory;
     protected $fillable = [
         'product_id',
+        'product_name',
         'shop_id',
         'buyer_id',
         'code',
@@ -23,4 +25,23 @@ class RequestForProduct extends Model
         'price',
         'status',
     ];
+
+    public function getSellerNameAttribute()
+    {
+        if($this->shop_id != 0)
+        {
+            $data =Shop::find($this->shop_id)->name;
+        }
+        else
+        {
+            $data = "";
+        }
+        return $data;
+    }
+
+    public function getUnitPriceAttribute()
+    {
+        $data =single_price($this->price);
+        return $data;
+    }
 }

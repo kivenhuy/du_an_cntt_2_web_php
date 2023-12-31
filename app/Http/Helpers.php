@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\Carrier;
 use App\Models\Currency;
+use App\Models\Products;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -311,4 +313,76 @@ if (!function_exists('cart_product_price')) {
             return $price;
         }
     }
+}
+
+if (!function_exists('carrier_base_price')) {
+    function carrier_base_price($carts, $carrier_id, $owner_id)
+    {
+        $shipping = 0;
+       
+        foreach ($carts as $key => $cartItem) {
+            if ($cartItem->owner_id == $owner_id) {
+                $shipping_cost = getShippingCost($carts, $key, $carrier_id);
+                $shipping += $shipping_cost;
+            }
+        }
+        return $shipping;
+    }
+}
+
+function getShippingCost($carts, $index, $carrier = '')
+{
+    $seller_products = array();
+    $seller_product_total_weight = array();
+
+    $cartItem = $carts[$index];
+    $product = Products::find($cartItem['product_id']);
+
+    if ($product->digital == 1) {
+        return 0;
+    }
+
+    foreach ($carts as $key => $cart_item) {
+        $item_product = Products::find($cart_item['product_id']);
+        
+        $product_ids = array();
+        $weight = 0;
+        if (isset($seller_products[$item_product->user_id])) {
+            $product_ids = $seller_products[$item_product->user_id];
+            $weight += $seller_product_total_weight[$item_product->user_id];
+
+        }
+        array_push($product_ids, $cart_item['product_id']);
+        $seller_products[$item_product->user_id] = $product_ids;
+
+        
+        $weight += ($item_product->weight * $cart_item['quantity']);
+        $seller_product_total_weight[$item_product->user_id] = $weight;
+
+
+    }
+
+   
+
+    $carrier = Carrier::find($carrier);
+    if ($carrier->carrier_ranges->first()) {
+        $carrier_billing_type   = $carrier->carrier_ranges->first()->billing_type;
+        $itemsWeightOrPrice =  $seller_product_total_weight[$product->user_id];
+
+    }
+
+    foreach ($carrier->carrier_ranges as $carrier_range) {
+        $check_high_weight = intdiv($itemsWeightOrPrice,(int)$carrier_range->delimiter2);
+        if ($check_high_weight >= 2 ) {
+            $carrier_price = $carrier_range->carrier_range_prices->first()->price;
+            return ($carrier_price * $check_high_weight/ count($seller_products[$product->user_id]));
+        }
+        else
+        {
+            $carrier_price = $carrier_range->carrier_range_prices->first()->price;
+            return ($carrier_price / count($seller_products[$product->user_id]));
+        }
+    }
+    return 0;
+    
 }

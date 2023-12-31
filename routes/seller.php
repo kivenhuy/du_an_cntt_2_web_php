@@ -27,7 +27,10 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::controller(RequestForProductController::class)->group(function () {
         Route::get('/seller/request_for_product', 'seller_index')->name('request_for_product.seller_index');
+        Route::get('/seller/request_for_product/supermarket', 'seller_supermarket_index')->name('request_for_product.seller_supermarket_index');
         Route::get('/seller/request_for_product/seller_dataajax', 'seller_dataajax')->name('request_for_product.seller_dataajax');
-        Route::post('/seller/request_for_product/seller_update_price', 'seller_update_price')->name('seller.request_for_product.seller_dataajax');
+        Route::get('/seller/request_for_product/seller_supermarket_dataajax', 'seller_supermarket_dataajax')->name('request_for_product.seller_supermarket_dataajax');
+        Route::post('/seller/request_for_product/seller_update_price', 'seller_update_price')->name('seller.request_for_product.seller_update_price');
+        Route::post('/seller/request_for_product/seller_accept_request', 'seller_accept_request')->name('seller.request_for_product.seller_accept_request');
     });
 });

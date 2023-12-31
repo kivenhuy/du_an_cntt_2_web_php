@@ -26,6 +26,16 @@ class CategoryController extends Controller
         return view('admin.category.create');
     }
 
+    public function get_all_for_farm_manage(){
+        $data_cate = Category::all();
+        return response()->json([
+            'result' => true,
+            'data'=>[
+                'category_data'=>$data_cate
+            ]
+        ]);
+    }
+
     /**
      * Store a newly created resource in storage.
      */

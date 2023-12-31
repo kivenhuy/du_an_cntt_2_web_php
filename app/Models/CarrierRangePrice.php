@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class CarrierRangePrice extends Model
 {
     use HasFactory;
+    public function carrier()
+    {
+        return $this->belongsTo(Carrier::class);
+    }
+
+    public function carrier_ranges()
+    {
+        return $this->belongsTo(CarrierRange::class);
+    }
 }

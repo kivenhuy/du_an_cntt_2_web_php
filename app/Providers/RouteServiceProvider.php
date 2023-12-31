@@ -29,6 +29,8 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapFarmManagementRoutes();
 
         $this->mapAdminRoutes();
+
+        $this->mapApiRoutes();
     }
 
     protected function mapWebRoutes()
@@ -59,6 +61,13 @@ class RouteServiceProvider extends ServiceProvider
         ->group(base_path('routes/farm_management.php'));
     }
   
+    protected function mapApiRoutes()
+    {
+        Route::prefix('api')
+        ->middleware('api')
+        ->namespace($this->namespace)
+        ->group(base_path('routes/api.php'));
+    }
 
     /**
      * Define your route model bindings, pattern filters, and other route configuration.
