@@ -37,6 +37,7 @@ Route::group(['prefix' => 'v2'], function () {
 
     Route::controller(SuggestProductController::class)->group(function () {
         Route::get('/suggest_for_supermarket', 'suggest_for_supermarket')->name('suggest_for_supermarket');
+        Route::get('/suggest_for_farm', 'suggest_for_farm')->name('suggest_for_farm');
     });
 
     Route::controller(CategoryController::class)->group(function () {

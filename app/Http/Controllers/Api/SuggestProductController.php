@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Products;
 use App\Models\ProductStock;
 use App\Models\RequestForProduct;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class SuggestProductController extends Controller
@@ -94,6 +95,27 @@ class SuggestProductController extends Controller
                 'paddy_cate_products'=>$productPaddyFomarts,
                 'seafood_cate_products'=>$productSeafoodFomarts,
                 'fresh_fruits_cate_products'=>$productFreshFruitsFomarts,
+                'all_order'=>$orderFormat,
+            ]
+        ]);
+    }
+
+    public function suggest_for_farm()
+    {
+        $all_order = RequestForProduct::where('product_id','!=',0)->orderBy('quantity','desc')->take(20)->get();
+        // $top_super_market_order =  
+        // Top Order
+        foreach ($all_order as $each_order) {
+            $buyer_name = User::find($each_order->buyer_id)->name;
+            $orderFormat[] = [
+                $each_order->product_name,
+                $each_order->quantity,
+            ];
+
+        }
+        return response()->json([
+            'result' => true,
+            'data'=>[
                 'all_order'=>$orderFormat,
             ]
         ]);
