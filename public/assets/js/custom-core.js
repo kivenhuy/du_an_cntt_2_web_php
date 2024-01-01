@@ -13,6 +13,7 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
     AIZ.data = {
         csrf: $('meta[name="csrf-token"]').attr("content"),
         appUrl: $('meta[name="app-url"]').attr("content"),
+        farmUrl: 'http://127.0.0.1:4000/',
         fileBaseUrl: $('meta[name="file-base-url"]').attr("content"),
     };
     AIZ.uploader = {
@@ -326,11 +327,19 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
                         var thumb = "";
                         var hidden = "";
                         if (data[i].type === "image") {
-                            thumb =
-                                '<img src="' +
-                                AIZ.data.appUrl +
-                                data[i].file_name +
-                                '" class="img-fit">';
+                            if (data[i].is_farm_photo == 0) {
+                                thumb =
+                                    '<img src="' +
+                                    AIZ.data.appUrl +
+                                    data[i].file_name +
+                                    '" class="img-fit">';
+                            } else {
+                                thumb =
+                                    '<img src="' +
+                                    'http://127.0.0.1:4000/' +
+                                    data[i].file_name +
+                                    '" class="img-fit">';
+                            }
                         } else {
                             thumb = '<i class="la la-file-text"></i>';
                         }

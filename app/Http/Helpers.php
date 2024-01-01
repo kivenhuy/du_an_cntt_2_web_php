@@ -11,6 +11,10 @@ if (!function_exists('uploaded_asset')) {
     function uploaded_asset($id)
     {
         if (($asset = \App\Models\Uploads::find($id)) != null) {
+            if($asset->is_farm_photo == 1)
+            {
+                return $asset->external_link == null ? env('FARM_URL_PHOTO').$asset->file_name: $asset->external_link;
+            }
             return $asset->external_link == null ? my_asset($asset->file_name) : $asset->external_link;
         }
         return static_asset('assets/img/placeholder.jpg');

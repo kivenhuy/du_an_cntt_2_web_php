@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\RequestForProductController;
 use App\Http\Controllers\Api\RequestSendController;
 use App\Http\Controllers\Api\SuggestProductController;
 use App\Http\Controllers\Api\UploadsProductController;
+use App\Http\Controllers\UploadsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -45,5 +46,9 @@ Route::group(['prefix' => 'v2'], function () {
     Route::controller(UploadsProductController::class)->group(function () {
         Route::post('/upload_product/store', 'add_product_from_farm')->name('upload_product.add_product_from_farm');
     });
+
+    // Route::controller(UploadsController::class)->group(function () {
+    //     Route::post('/upload_product/store', 'add_product_from_farm')->name('upload_product.add_product_from_farm');
+    // });
 });
 

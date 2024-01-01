@@ -254,56 +254,19 @@ class UploadsController extends Controller
             "xls" => "document",
             "xlsx" => "document"
         );
-        return $file;
         if (!empty($file)) {
+            $name = explode("/", $file)[2];
             $upload = new Uploads();
-            $extension = strtolower($file->getClientOriginalExtension());
-           
-            if (isset($type[$extension])) {
-                $upload->file_original_name = null;
-                $arr = explode('.', $file->getClientOriginalName());
-                for ($i = 0; $i < count($arr) - 1; $i++) {
-                    if ($i == 0) {
-                        $upload->file_original_name .= $arr[$i];
-                    } else {
-                        $upload->file_original_name .= "." . $arr[$i];
-                    }
-                }
-
-
-                $path = $file->store('uploads/all', 'local');
-                $size = $file->getSize();
-
-                if ($type[$extension] == 'image') {
-                    try {
-                        $img = Image::make($file->getRealPath())->encode();
-                        $height = $img->height();
-                        $width = $img->width();
-                        if ($width > $height && $width > 1500) {
-                            $img->resize(1500, null, function ($constraint) {
-                                $constraint->aspectRatio();
-                            });
-                        } elseif ($height > 1500) {
-                            $img->resize(null, 800, function ($constraint) {
-                                $constraint->aspectRatio();
-                            });
-                        }
-                        $img->save(base_path('public/') . $path);
-                        clearstatcache();
-                        $size = $img->filesize();
-                    } catch (\Exception $e) {
-                        //dd($e);
-                    }
-                }
-                $upload->extension = $extension;
-                $upload->file_name = $path;
-                $upload->user_id = $user_id;
-                $upload->type = $type[$upload->extension];
-                $upload->file_size = $size;
-                $upload->save();
-                
-                return $upload->id;
-            }
+            $upload->file_original_name = explode(".", $name)[0];
+            $upload->extension = explode(".", $name)[1];
+            $upload->file_name = $file;
+            $upload->user_id = $user_id;
+            $upload->type = 'image';
+            $upload->is_farm_photo = 1;
+            $upload->file_size = 1000;
+            $upload->save();
+            
+            return $upload->id;
         }
     }
 }

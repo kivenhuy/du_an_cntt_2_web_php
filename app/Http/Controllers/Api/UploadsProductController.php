@@ -15,19 +15,15 @@ class UploadsProductController extends Controller
 {
     public function add_product_from_farm(Request $request)
     {
-        // Create Product
+        // Create Product   
         $photo_ids = [];
         if (!empty($request->all()['photos_img'])) {
-            foreach ($request->all()['photos_img'] as $photo) {    
                                     
-                $id = (new UploadsController)->upload_photo($photo,$request->ecom_user_id);
-               
-                if (!empty($id)) {
-                    array_push($photo_ids, $id);
-                }
-            } 
+            $id = (new UploadsController)->upload_photo($request->all()['photos_img'],$request->ecom_user_id);
+            if (!empty($id)) {
+                array_push($photo_ids, $id);
+            }
         }
-        
         if(count($photo_ids)>0)
         {
             $request->request->add(['photos' => implode(',', $photo_ids)]);
