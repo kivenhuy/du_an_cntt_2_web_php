@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('file_size');
             $table->string('extension');
             $table->string('type');
+            $table->integer('is_farm_photo')->default(0);
             $table->string('external_link')->nullable();
             $table->timestamps();
         });

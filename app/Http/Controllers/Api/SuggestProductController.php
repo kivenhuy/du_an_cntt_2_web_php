@@ -16,7 +16,7 @@ class SuggestProductController extends Controller
     {
         $paddy_cate_products = Category::where('name','Paddy')->first()->product_stock->sortByDesc('qty')->take(10);
         $seafood_cate_products = Category::where('name','Seafood')->first()->product_stock->sortByDesc('qty')->take(10);
-        $fresh_fruits_cate_products = Category::where('name','Fresh – Fruits')->first()->product_stock->sortByDesc('qty')->take(10);
+        $fresh_fruits_cate_products = Category::where('name','Fresh - Fruits')->first()->product_stock->sortByDesc('qty')->take(10);
         $products = ProductStock::all()->sortByDesc('qty')->take(10);
         $products_with_short_shelf_life = ProductStock::whereHas('product', function ($query) {
             $query->where('short_shelf_life','=','1');

@@ -23,7 +23,7 @@ class EnterpriseController extends Controller
             $enterprise_data = User::find( $data->data[$i]->id);
             $data->data[$i]->bussiness_name = $enterprise_data->enterprise_detail->bussiness_name;
             $data->data[$i]->organization_type = $enterprise_data->enterprise_detail->organization_type;
-            $data->data[$i]->bussiness_type = implode(", ",json_decode($enterprise_data->enterprise_detail->bussiness_type));
+            $data->data[$i]->bussiness_type = "";
             $output = '';
             $data->data[$i]->action = (string)$output;
         }

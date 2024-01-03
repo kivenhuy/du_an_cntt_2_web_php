@@ -47,7 +47,7 @@ class UploadsProductController extends Controller
         return response()->json([
             'result' => true,
             'message' =>'Product Added Successfully',
-            'data'=>true,
+            'data'=>$product->id,
         ]);
     }
 
