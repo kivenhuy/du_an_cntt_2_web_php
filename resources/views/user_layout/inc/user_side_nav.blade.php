@@ -54,14 +54,16 @@
                     </a>
                 </li>
 
-               <!-- Purchase History -->
-               <li class="aiz-side-nav-item">
-                <a href="{{ route('request_for_product.index') }}" class="aiz-side-nav-link {{ areActiveRoutes(['request_for_product.index', 'purchase_history.details']) }}">
-                    <i class="fa fa-list" aria-hidden="true"></i>
-                    <span class="aiz-side-nav-text ml-3">{{ translate('Request For Product') }}</span>
-                    
-                </a>
-            </li>
+               <!-- Request For Product -->
+               @if(Auth::user()->user_type === "enterprise")
+                <li class="aiz-side-nav-item">
+                        <a href="{{ route('request_for_product.index') }}" class="aiz-side-nav-link {{ areActiveRoutes(['request_for_product.index', 'purchase_history.details']) }}">
+                            <i class="fa fa-list" aria-hidden="true"></i>
+                            <span class="aiz-side-nav-text ml-3">{{ translate('Request For Product') }}</span>
+                            
+                        </a>
+                    </li>
+                @endif
                 
                 <!-- Manage Profile -->
                 <li class="aiz-side-nav-item">

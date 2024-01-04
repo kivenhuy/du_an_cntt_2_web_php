@@ -59,7 +59,11 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     // Purchase History
-    Route::resource('purchase_history', PurchaseHistoryController::class);
+    Route::controller(PurchaseHistoryController::class)->group(function () {
+        Route::get('/purchase_history', 'index')->name('purchase_history.index');
+        Route::get('/purchase_history/data_ajax', 'data_ajax')->name('purchase_history.data_ajax');
+        Route::get('/purchase_history/get_detail/{id}', 'get_detail')->name('purchase_history.get_detail');
+    });
 
     // Cart
     Route::controller(CartController::class)->group(function () {
@@ -128,7 +132,8 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/final', 'final_checkout')->name('checkout.final_checkout');
             Route::post('/update_shipping_fee', 'update_shipping_fee')->name('checkout.update_shipping_fee');
             Route::post('/update_total_shipping_fee', 'update_total_shipping_fee')->name('checkout.update_total_shipping_fee');
-           
+            Route::post('/checkout', 'checkout')->name('checkout');
+            Route::get('/order_confirmed', 'order_confirmed')->name('order_confirmed');
         });
     });
 

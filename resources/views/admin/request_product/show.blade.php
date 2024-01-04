@@ -37,9 +37,13 @@
                                         <tr class="" style="height: auto">
                                             <td style="padding-top:24px">
                                                 <div style="display: flex;align-items: center">
-                                                    <img src="{{ uploaded_asset($product->thumbnail_img) }}" width="115px" height="115px" alt="">
+                                                    @if(isset($product->thumbnail_img))
+                                                        <img src="{{ uploaded_asset($product->thumbnail_img) }}" width="115px" height="115px" alt="">
+                                                    @else
+                                                        <img src="" width="115px" height="115px" alt="">
+                                                    @endif
                                                     <div style="display: flex;flex-direction: column;padding-left: 16px;">
-                                                        <span class="rfq_product_name" style="margin-bottom:6px;" >{{ $product->name }}</span>
+                                                        <span class="rfq_product_name" style="margin-bottom:6px;" >{{ $data_request->product_name }}</span>
                                                     </div>
 
                                                 </div>  
@@ -125,41 +129,43 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="addtional_info_buyer">
-                                <div class="head_addtional_info_buyer">
-                                    <span>{{translate('Additional Detail Seller')}}</span>
-                                </div>
-                                <div class="body_addtional_info_buyer col-12">
-                                    <div class="col-6">
-                                        <div class="sub_data_addition_info">
-                                            <span class="title_addtional_info">{{translate('Seller Name')}}</span>
-                                            <div class="data_addtional_info">
-                                                {{$seller->name}}
+                            @if(isset($seller))
+                                <div class="addtional_info_buyer">
+                                    <div class="head_addtional_info_buyer">
+                                        <span>{{translate('Additional Detail Seller')}}</span>
+                                    </div>
+                                    <div class="body_addtional_info_buyer col-12">
+                                        <div class="col-6">
+                                            <div class="sub_data_addition_info">
+                                                <span class="title_addtional_info">{{translate('Seller Name')}}</span>
+                                                <div class="data_addtional_info">
+                                                    {{$seller->name}}
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <span class="title_addtional_info">{{translate('Mobile')}}</span>
+                                                <div class="data_addtional_info"> 
+                                                    {{$seller->user->phone}}
+                                                </div>
                                             </div>
                                         </div>
-                                        <div>
-                                            <span class="title_addtional_info">{{translate('Mobile')}}</span>
-                                            <div class="data_addtional_info"> 
-                                                {{$seller->user->phone}}
+                                        <div class="col-6">
+                                            <div class="sub_data_addition_info">
+                                                <span class="title_addtional_info">{{translate('Email')}}</span>
+                                                <div class="data_addtional_info">
+                                                    {{$seller->user->email}}
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <span class="title_addtional_info">{{translate('Address')}}</span>
+                                                <div class="data_addtional_info">
+                                                    {{$seller->address}}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-6">
-                                        <div class="sub_data_addition_info">
-                                            <span class="title_addtional_info">{{translate('Email')}}</span>
-                                            <div class="data_addtional_info">
-                                                {{$seller->user->email}}
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <span class="title_addtional_info">{{translate('Address')}}</span>
-                                            <div class="data_addtional_info">
-                                                {{$seller->address}}
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
-                            </div>
+                            @endif
                         </div>
                        
                         <div class="col-4">
