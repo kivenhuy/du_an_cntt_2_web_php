@@ -1,6 +1,5 @@
-@extends('user_layout.layouts.user_panel')
-
-@section('panel_content')
+@extends('admin.layouts.app')
+@section('content')
 <div class="row">
         <div class="container-fluid">
 
@@ -17,9 +16,13 @@
                           <thead>
                               <tr>
                                 <th>{{translate('Code')}}</th>
+                                <th>{{translate('Total Product')}}</th>
+                                <th>{{translate('Customer Name')}}</th>
+                                <th>{{translate('Seller Name')}}</th>
                                 <th>{{translate('Order Date')}}</th>
                                 <th>{{translate('Amount')}}</th>
                                 <th>{{translate('Shipping Status')}}</th>
+                                <th>{{translate('Payment Type')}}</th>
                                 <th>{{translate('Payment Status')}}</th>
                                 <th>{{translate('Action')}}</th>
                               </tr>
@@ -64,9 +67,18 @@ $(document).ready(function()
         searching: false,
         bSort:false,
         serverSide: true,
-            ajax: "{{ route('purchase_history.data_ajax') }}",
+            ajax: "{{ route('admin.purchase_history.data_ajax') }}",
             columns: [
                     {data: 'code', name: 'code', render: function(data){
+                        return (data=="")?"":data;
+                    }},
+                    {data: 'total_product', name: 'total_product', render: function(data,type,row){
+                        return (data=="")?"":data;
+                    }},
+                    {data: 'customer_name', name: 'customer_name', render: function(data){
+                        return (data=="")?"":data;
+                    }},
+                    {data: 'seller_name', name: 'seller_name', render: function(data){
                         return (data=="")?"":data;
                     }},
                     {data: 'order_date', name: 'order_date', render: function(data){
@@ -76,7 +88,10 @@ $(document).ready(function()
                         return (data=="")?"":data;
                     }},
                     {data: 'delivery_status', name: 'delivery_status', render: function(data){
-                        return "<span class='badge badge-inline badge-warning'>"+ data +"</span>";
+                        return data;
+                    }},
+                    {data: 'payment_type', name: 'payment_type', render: function(data){
+                        return data;
                     }},
                     {data: 'payment_status', name: 'payment_status', render: function(data){
                         if(data === "Unpaid" || data === "Pending" )

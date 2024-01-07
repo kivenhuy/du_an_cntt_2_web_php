@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Uploads;
+use App\Models\User;
 use Auth;
 use DataTables;
 use Illuminate\Http\Request;
@@ -13,22 +15,26 @@ class PurchaseHistoryController extends Controller
 {
     public function index()
     {
-        return view('user_layout.purchase_history.index');
+        return view('admin.purchase_history.index');
     }
 
     public function data_ajax(Request $request)
     {
-        $data_request = Order::with('orderDetails')->where('customer_id', Auth::user()->id)->orderBy('code', 'desc')->get();
+        $data_request = Order::with('orderDetails')->orderBy('code', 'desc')->get();
         $out =  DataTables::of($data_request)->make(true);
         $data = $out->getData();
         for($i=0; $i < count($data->data); $i++) {
             // dd($data->data[$i]->id);
             $output = '';
-            $output .= ' <a href="'.url(route('purchase_history.get_detail',['id'=>$data->data[$i]->id])).'" class="btn btn-info btn-xs" data-toggle="tooltip" title="Order Details" style="display:inline;padding:2px 5px 3px 5px;"><i class="fa fa-eye"></i></a>';
+            $output .= ' <a href="'.url(route('admin.purchase_history.get_detail',['id'=>$data->data[$i]->id])).'" class="btn btn-info btn-xs" data-toggle="tooltip" title="Order Details" style="display:inline;padding:2px 5px 3px 5px;"><i class="fa fa-eye"></i></a>';
             $data->data[$i]->action = (string)$output;
+            $data->data[$i]->customer_name = User::find($data->data[$i]->customer_id)->name;
+            $data->data[$i]->seller_name = User::find($data->data[$i]->seller_id)->name;
             $data->data[$i]->grand_total = single_price($data->data[$i]->grand_total);
+            $data->data[$i]->payment_type = (ucfirst(str_replace('_', ' ', $data->data[$i]->payment_type)));
             $data->data[$i]->delivery_status = (ucfirst($data->data[$i]->delivery_status));
             $data->data[$i]->payment_status = (ucfirst($data->data[$i]->payment_status));
+            $data->data[$i]->total_product = count(Order::find($data->data[$i]->id)->orderDetails);
         }
         $out->setData($data);
        
@@ -71,6 +77,6 @@ class PurchaseHistoryController extends Controller
             $order->amount_payment = $data_manual->amount;
             $order->trx_id = $data_manual->trx_id;
         }          
-	    return view('user_layout.purchase_history.order_details', compact('order'));
+	    return view('admin.purchase_history.order_details', compact('order'));
     }
 }

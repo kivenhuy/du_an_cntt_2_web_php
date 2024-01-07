@@ -44,4 +44,8 @@ class RequestForProduct extends Model
         $data =single_price($this->price);
         return $data;
     }
+
+    public function user()  {
+        return $this->belongsTo(User::class,'buyer_id','id');
+    }
 }

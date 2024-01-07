@@ -8,6 +8,7 @@ use App\Models\Carrier;
 use App\Models\Cart;
 use App\Models\CombineOrder;
 use App\Models\Products;
+use App\Models\RequestForProduct;
 use Auth;
 use Illuminate\Http\Request;
 use Session;
@@ -44,6 +45,8 @@ class CheckoutController extends Controller
         })->where([['user_id', Auth::user()->id],['is_checked',1]])->get();
         $seller_products = array();
         $seller_product_variation = array();
+        $seller_products_normal = array();
+        $seller_products_short = array();
         $discount = 0;
         foreach ($carts_normal as $key => $cartItem){
             $product = Products::find($cartItem['product_id']);
@@ -70,45 +73,113 @@ class CheckoutController extends Controller
     public function update_total_shipping_fee(Request $request)
     {
         $user = Auth::user();
-        if($request->type_cart === "normal_product")
+        $shipping_time = 1;
+        if($user->user_type === "enterprise")
         {
-            if($request->shipping_type === "weight_based")
+            if($request->type_cart === "normal_product")
             {
-                $shipping_type = 'Normal Shipping';
+                if($request->shipping_type === "weight_based")
+                {
+                    $shipping_type = 'Normal Shipping';
+                }
+                else
+                {
+                    $shipping_type = 'Fast Shipping';
+                }
+                $cart_data = Cart::whereHas('product', function ($query) {
+                    $query->where('short_shelf_life','=','0');
+                })->where([
+                    ['user_id',$user->id],
+                    ['owner_id',(int)$request->data_id_seller],
+                    ['is_checked',1],
+                    ['is_rfp','!=',0],
+                ])->get();
+                foreach ($cart_data as $each_cart_data)
+                { 
+                    $data_rfp = RequestForProduct::find($each_cart_data->is_rfp);
+                    if(isset($data_rfp))
+                    {
+                        $shipping_time =count(json_decode(RequestForProduct::find($each_cart_data->is_rfp)->shipping_date));
+                    }
+                    $each_cart_data->update(
+                        ['shipping_type' => $shipping_type,
+                        'shipping_cost' => $request->total_shipping * $shipping_time]
+                    );
+                   
+                }
             }
             else
             {
-                $shipping_type = 'Fast Shipping';
+                $cart_data = Cart::whereHas('product', function ($query) {
+                    $query->where('short_shelf_life','=','1');
+                })->where([
+                    ['user_id',$user->id],
+                    ['owner_id',(int)$request->data_id_seller],
+                    ['is_checked',1],
+                    ['is_rfp','!=',0],
+                ])->get();
+                foreach ($cart_data as $each_cart_data)
+                { 
+                    $data_rfp = RequestForProduct::find($each_cart_data->is_rfp);
+                    if(isset($data_rfp))
+                    {
+                        $shipping_time =count(json_decode(RequestForProduct::find($each_cart_data->is_rfp)->shipping_date));
+                    }
+                    $each_cart_data->update(
+                        ['shipping_type' => 'Fast Shipping',
+                        'shipping_cost' => $request->total_shipping * $shipping_time]
+                    );
+                }
             }
-            $cart_data = Cart::whereHas('product', function ($query) {
-                $query->where('short_shelf_life','=','0');
-            })->where([
+            $cart_shipping = Cart::where([
                 ['user_id',$user->id],
-                ['owner_id',(int)$request->data_id_seller],
                 ['is_checked',1],
-            ])->update(
-                ['shipping_type' => $shipping_type,
-                'shipping_cost' => $request->total_shipping]
-            );
+            ])->sum('shipping_cost');
+            $total_price = $cart_shipping + $request->final_price;
         }
         else
         {
-            $cart_data = Cart::whereHas('product', function ($query) {
-                $query->where('short_shelf_life','=','1');
-            })->where([
+            if($request->type_cart === "normal_product")
+            {
+                if($request->shipping_type === "weight_based")
+                {
+                    $shipping_type = 'Normal Shipping';
+                }
+                else
+                {
+                    $shipping_type = 'Fast Shipping';
+                }
+                $cart_data = Cart::whereHas('product', function ($query) {
+                    $query->where('short_shelf_life','=','0');
+                })->where([
+                    ['user_id',$user->id],
+                    ['owner_id',(int)$request->data_id_seller],
+                    ['is_checked',1],
+                ])->update(
+                    ['shipping_type' => $shipping_type,
+                    'shipping_cost' => $request->total_shipping]
+                );
+            }
+            else
+            {
+                $cart_data = Cart::whereHas('product', function ($query) {
+                    $query->where('short_shelf_life','=','1');
+                })->where([
+                    ['user_id',$user->id],
+                    ['owner_id',(int)$request->data_id_seller],
+                    ['is_checked',1],
+                ])->update(
+                    ['shipping_type' => 'Fast Shipping',
+                    'shipping_cost' => $request->total_shipping]
+                );
+            }
+            $cart_shipping = Cart::where([
                 ['user_id',$user->id],
-                ['owner_id',(int)$request->data_id_seller],
                 ['is_checked',1],
-            ])->update(
-                ['shipping_type' => 'Fast Shipping',
-                'shipping_cost' => $request->total_shipping]
-            );
+            ])->sum('shipping_cost');
+            $total_price = $cart_shipping + $request->final_price;
         }
-        $cart_shipping = Cart::where([
-            ['user_id',$user->id],
-            ['is_checked',1],
-        ])->sum('shipping_cost');
-        $total_price = $cart_shipping + $request->final_price;
+        
         return [
             'total_price' =>single_price($total_price),
             'shipping_price'=>  single_price($cart_shipping),

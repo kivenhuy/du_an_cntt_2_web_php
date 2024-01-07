@@ -46,6 +46,11 @@
                                             ">Normal Products
                                         </span>
                                     </div>
+                                    @php
+                                        $total_normal_product = 0;
+                                        $shipping_fee = 0;
+                                        $final_total_normal = 0;
+                                    @endphp
                                     @if (!empty($seller_products_normal))
                                         @foreach ($seller_products_normal as $key_user => $seller_product)
                                             <div class=" bg-white p-3 p-lg-4 text-left">
@@ -61,10 +66,7 @@
                                                     </div>
                                                     <!-- Cart Items -->
                                                     <ul class="list-group list-group-flush">
-                                                        @php
-                                                            $total_normal_product = 0;
-                                                            $shipping_fee = 0;
-                                                        @endphp
+                                                        
                                                         @foreach ($carts_normal as $key => $cartItem)
                                                             @php
                                                                 $product = \App\Models\Products::find($cartItem['product_id']);
@@ -132,7 +134,7 @@
                                                     </ul>
                                                 </div>
                                             </div>
-                                            <div style="margin-bottom: 34px;" class="delivery_type">
+                                            <div style="margin-bottom: 16px;" class="delivery_type">
                                                 Select Delivery Type:
                                                 @foreach($carrier_list as $carrier_key => $carrier)
                                                     <div style="margin-bottom: 1rem;display: flex;align-items: center">
@@ -151,6 +153,13 @@
                                                     
                                                 @endforeach
                                             </div>
+                                            @if(Auth::user()->user_type == "enterprise")
+                                            <i class="fa fa-exclamation" style="font-size: 12px;color: red;margin-left:13px" aria-hidden="true">
+                                                <span style="">That Shipping Price Apply For Each Of Order Date You Send In Request
+                                                </span>
+                                            </i>
+                                                
+                                            @endif
                                         @endforeach
                                     @endif
 
@@ -168,6 +177,11 @@
                                             ">Short Shelf Life Products
                                         </span>
                                     </div>
+                                    @php
+                                        $total_short_product = 0;
+                                        $shipping_fee = 0;
+                                        $final_total_short = 0;
+                                    @endphp
                                     @if (!empty($seller_products_short))
                                         @foreach ($seller_products_short as $key_user => $each_seller_products_short)
                                             <div class=" bg-white p-3 p-lg-4 text-left">
@@ -183,10 +197,7 @@
                                                     </div>
                                                     <!-- Cart Items -->
                                                     <ul class="list-group list-group-flush">
-                                                        @php
-                                                            $total_short_product = 0;
-                                                            $shipping_fee = 0;
-                                                        @endphp
+                                                        
                                                         @foreach ($carts_short_shelf_life as $key => $carts_short_shelf_lifeItem)
                                                             @php
                                                                 $product = \App\Models\Products::find($carts_short_shelf_lifeItem['product_id']);

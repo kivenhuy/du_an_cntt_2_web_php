@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Address;
 use App\Models\Country;
 use App\Models\EnterpriseDetails;
 use App\Models\User;
@@ -200,6 +201,15 @@ class LoginController extends Controller
         ];
         if (auth()->attempt($credential)) {
             $user_login = Auth::user();
+            $address = new Address();
+            $address->user_id   = Auth::user()->id;
+            $address->address       = $request->address_3;
+            $address->country_id    = $request->country_3;
+            $address->city_id       = $request->city_3;
+            $address->district_id   = $request->district_3;
+            $address->postal_code   = 70000;
+            $address->phone         = $request->phone;
+            $address->save();
             try
             {
                 $upsteamUrl = env('SUPERMARKET_URL');

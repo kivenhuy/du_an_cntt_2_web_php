@@ -107,6 +107,21 @@
                         </li>
                     </ul>
                 </li>
+
+                <li class="aiz-side-nav-item">
+                    <a href="#" class="aiz-side-nav-link">
+                        <i class="fa fa-shopping-cart aiz-side-nav-icon"></i>
+                        <span class="aiz-side-nav-text">{{ translate('Order') }}</span>
+                        <span class="aiz-side-nav-arrow"></span>
+                    </a>
+                    <ul class="aiz-side-nav-list level-2">
+                        <li class="aiz-side-nav-item">
+                            <a href="{{ route('admin.purchase_history.all_orders') }}" class="aiz-side-nav-link">
+                                <span class="aiz-side-nav-text">{{ translate('All Order') }}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="aiz-side-nav-item">
                     <a href="#" class="aiz-side-nav-link">
                         <i class="fa fa-industry aiz-side-nav-icon"></i>

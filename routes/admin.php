@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DistrictController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProvinceController;
+use App\Http\Controllers\Admin\PurchaseHistoryController;
 use App\Http\Controllers\Admin\SellerController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\EnterpriseController;
@@ -101,6 +102,12 @@ Route::group(['middleware' => ['auth'],'prefix' => 'admin'], function () {
         Route::get('/carriers/data_ajax', 'data_ajax')->name('carriers.data_ajax');
     });
 
+    Route::controller(PurchaseHistoryController::class)->group(function () {
+        Route::get('/purchase_history/all_orders', 'index')->name('admin.purchase_history.all_orders');
+        Route::get('/purchase_history/data_ajax', 'data_ajax')->name('admin.purchase_history.data_ajax');
+        Route::get('/purchase_history/get_detail/{id}', 'get_detail')->name('admin.purchase_history.get_detail');
+    });
+
 });
 
 Route::controller(CityController::class)->group(function () {
@@ -109,3 +116,6 @@ Route::controller(CityController::class)->group(function () {
 Route::controller(DistrictController::class)->group(function () {
     Route::post('/district/filter_by_city', 'filter_by_city')->name('district.filter_by_city');
 });
+
+
+

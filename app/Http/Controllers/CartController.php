@@ -163,7 +163,7 @@ class CartController extends Controller
             foreach ($carts as $key => $cartItem)
             {
                 $cart_product = Products::where([['id', $cartItem['product_id']]])->first();
-                if($cartItem['product_id'] == $request->id  && $cartItem['is_rfp'] != 1) {
+                if($cartItem['product_id'] == $request->id  && $cartItem['is_rfp'] == 0) {
                     $product_stock = $cart_product->product_stock;
                     $quantity = $product_stock->qty;
                     if($quantity < $cartItem['quantity'] + $request['quantity']){
@@ -363,7 +363,7 @@ class CartController extends Controller
         $data['price'] = $price;
         //$data['shipping'] = 0;
         $data['shipping_cost'] = 0;
-        $data['is_rfp'] = 1;
+        $data['is_rfp'] = $request->id_rfp;
         // if ($request['quantity'] == null){
         //     $data['quantity'] = 1;
         // }
@@ -374,7 +374,7 @@ class CartController extends Controller
             foreach ($carts as $key => $cartItem)
             {
                 $cart_product = Products::where([['id', $cartItem['product_id']]])->first();
-                if($cartItem['product_id'] == $product->id &&  $cartItem['is_rfp'] == 1 &&  $cartItem['price'] == $price) {
+                if($cartItem['product_id'] == $product->id &&  $cartItem['is_rfp'] != 0 &&  $cartItem['price'] == $price) {
                     $product_stock = $cart_product->product_stock;
                     $quantity = $product_stock->qty;
                     $foundInCart = true;

@@ -290,7 +290,7 @@ if (!function_exists('cart_product_price')) {
         }
         //discount calculation
         $discount_applicable = false;
-        if($cart_product['is_rfp'] == 1)
+        if($cart_product['is_rfp'] != 0)
         {
             $price = $cart_product['price'];
         }

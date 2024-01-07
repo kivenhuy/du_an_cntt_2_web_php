@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Request;
 
 class User extends Authenticatable
 {
@@ -72,5 +73,10 @@ class User extends Authenticatable
     public function products()
     {
         return $this->hasMany(Products::class);
+    }
+
+    public function request_products()
+    {
+        return $this->hasMany(RequestForProduct::class,'buyer_id','id');
     }
 }
