@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('payment_status')->nullable();
             $table->string('delivery_status')->nullable();
             $table->string('shipping_type')->nullable();
+            $table->timestamp('shipping_date')->nullable();
             $table->timestamps();
         });
     }

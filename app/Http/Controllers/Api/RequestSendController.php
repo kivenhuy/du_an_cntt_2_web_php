@@ -8,10 +8,12 @@ use App\Models\Products;
 use App\Models\RequestForProduct;
 use App\Models\Shop;
 use App\Models\User;
+use App\Notifications\WelcomeNotification;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Redis;
+use Notification;
 use Yajra\DataTables\DataTables;
 
 class RequestSendController extends Controller
@@ -36,10 +38,13 @@ class RequestSendController extends Controller
      */
     public function store(Request $request)
     {
+        $seller = User::where('user_type','seller')->get();
         $request_for_product = new RequestForProduct();
         foreach($request->data as $data_request)
         {
-            $request_for_product->create($data_request);
+            $success_requets = $request_for_product->create($data_request);
+            
+            Notification::send($seller, new WelcomeNotification($success_requets));
         }
         return response()->json([
             'result' => true,
@@ -95,7 +100,7 @@ class RequestSendController extends Controller
         if(isset($request->id_rfp))
         {
             $Rfq_data = RequestForProduct::find($request->id_rfp);
-            $Rfq_data->update(['status' => 3]);
+            $Rfq_data->update(['status' => 4]);
             $update_cart = $this->addToCart_RFP_request($request->id_rfp);
             if($update_cart)
             {
@@ -113,7 +118,7 @@ class RequestSendController extends Controller
         if(isset($request->id_rfp))
         {
             $Rfq_data = RequestForProduct::find($request->id_rfp);
-            $Rfq_data->update(['status' => 1]);
+            $Rfq_data->update(['status' => 2]);
         }
         return response()->json([
             'result' => true,
@@ -149,7 +154,7 @@ class RequestSendController extends Controller
         $data['price'] = $price;
         //$data['shipping'] = 0;
         $data['shipping_cost'] = 0;
-        $data['is_rfp'] = 1;
+        $data['is_rfp'] = $id;
         // if ($request['quantity'] == null){
         //     $data['quantity'] = 1;
         // }

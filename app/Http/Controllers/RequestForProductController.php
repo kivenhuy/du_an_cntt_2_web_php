@@ -7,10 +7,12 @@ use App\Models\RequestForProduct;
 use App\Models\Shop;
 use App\Models\User;
 use Auth;
+use Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Redis;
 use Yajra\DataTables\DataTables;
+use App\Notifications\WelcomeNotification;
 
 class RequestForProductController extends Controller
 {
@@ -43,6 +45,7 @@ class RequestForProductController extends Controller
 
     public function admin_approved(Request $request)
     {
+        $seller = User::where('user_type','seller')->get();
         if(Auth::user()->user_type != 'admin')
         {
             return 0;
@@ -50,6 +53,7 @@ class RequestForProductController extends Controller
         $request_product = RequestForProduct::findOrFail($request->id);
         $request_product->status = 1;
         if ($request_product->save()) {
+            Notification::send($seller, new WelcomeNotification($request_product));
             return 1;
         }
     }
@@ -60,7 +64,7 @@ class RequestForProductController extends Controller
         {
             $price =$request->price; // 1,000,000
             $Rfq_data = RequestForProduct::find($request->id_rfp);
-            $Rfq_data->update(['price' => $price,'status' => 2]);
+            $Rfq_data->update(['price' => $price,'status' => 3]);
         }
     }
 
@@ -72,7 +76,7 @@ class RequestForProductController extends Controller
             $Rfq_data = RequestForProduct::find($request->id_rfp);
             if($Rfq_data)
             {
-                $Rfq_data->update(['product_id' => $request->product_id,'shop_id'=>Auth::user()->shop->id]);
+                $Rfq_data->update(['product_id' => $request->product_id,'shop_id'=>Auth::user()->shop->id,'status' => 2]);
             }   
         }
     }
@@ -92,7 +96,7 @@ class RequestForProductController extends Controller
     {
         $request_for_product = new RequestForProduct();
         $ldate = date('Ymd');
-        $current_timestamp = Carbon::now()->timestamp; 
+        $current_timestamp = mt_rand(1000000000, 9999999999);
         $code_rfq = $ldate.'-'.$current_timestamp;
         $start = Carbon::parse($request->from_date);
         $start_date = $start;
@@ -121,7 +125,9 @@ class RequestForProductController extends Controller
             'price'=>0,
             'status'=>0,
         ];
-        $request_for_product->create($data_request);
+        $seller = Shop::find($request->shop_id)->user;
+        $success_requets = $request_for_product->create($data_request);
+        Notification::send($seller, new WelcomeNotification($success_requets));
         if($request_for_product)
         {
             flash(translate('Request for Product has been inserted successfully'))->success();
@@ -160,7 +166,7 @@ class RequestForProductController extends Controller
                 $product_id = 0;
                 if($data_request->product_id == 0)
                 {
-                    $data_product = Products::where('name', 'like', '%' .$data_request->product_name. '%')->first();
+                    $data_product = Products::where([['name', 'like', '%' .$data_request->product_name. '%'],['user_id',Auth::user()->id]])->first();
                     if(!empty($data_product))
                     {
                         $is_accept = 1;  
@@ -221,7 +227,7 @@ class RequestForProductController extends Controller
     public function seller_dataajax(Request $request)
     {
         
-        $data_request = RequestForProduct::where([['shop_id',Auth::user()->shop->id],['product_id','!=',0]])->get();
+        $data_request = RequestForProduct::where([['shop_id',Auth::user()->shop->id],['is_supermarket_request','!=',1]])->get();
         $out =  DataTables::of($data_request)->make(true);
         $data = $out->getData();
         for($i=0; $i < count($data->data); $i++) 
@@ -240,7 +246,7 @@ class RequestForProductController extends Controller
     public function seller_supermarket_dataajax(Request $request)
     {
         
-        $data_request = RequestForProduct::where([['shop_id',0],['product_id',0]])->get();
+        $data_request = RequestForProduct::where([['is_supermarket_request',1]])->get();
         $out =  DataTables::of($data_request)->make(true);
         $data = $out->getData();
         for($i=0; $i < count($data->data); $i++) 
@@ -261,7 +267,7 @@ class RequestForProductController extends Controller
 
     public function admin_supermarket_dataajax(Request $request)
     {
-        $data_request = RequestForProduct::where([['shop_id',0],['product_id',0]])->get();
+        $data_request = RequestForProduct::where([['is_supermarket_request',1]])->get();
         $out =  DataTables::of($data_request)->make(true);
         $data = $out->getData();
         for($i=0; $i < count($data->data); $i++) {
@@ -279,7 +285,7 @@ class RequestForProductController extends Controller
 
     public function admin_dataajax(Request $request)
     {
-        $data_request = RequestForProduct::where('product_id','!=',0)->get();
+        $data_request = RequestForProduct::where([['product_id','!=',0],['is_supermarket_request',0]])->get();
         $out =  DataTables::of($data_request)->make(true);
         $data = $out->getData();
         for($i=0; $i < count($data->data); $i++) {
@@ -300,7 +306,7 @@ class RequestForProductController extends Controller
         if(isset($request->id_rfp))
         {
             $Rfq_data = RequestForProduct::find($request->id_rfp);
-            $Rfq_data->update(['status' => 3]);
+            $Rfq_data->update(['status' => 4]);
         }
     }
 
@@ -309,7 +315,7 @@ class RequestForProductController extends Controller
         if(isset($request->id_rfp))
         {
             $Rfq_data = RequestForProduct::find($request->id_rfp);
-            $Rfq_data->update(['status' => 1,'price'=>0,'offer_price'=>$request->price]);
+            $Rfq_data->update(['status' => 2,'price'=>0,'offer_price'=>$request->price]);
         }
     }
 }

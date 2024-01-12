@@ -14,4 +14,16 @@ class Cart extends Model
     {
         return $this->belongsTo(Products::class);
     }
+
+    public function getShippingDateAttribute()
+    {
+        // $final_data = [];
+        if($this->is_rfp != 0)
+        {
+            $data = RequestForProduct::find($this->is_rfp)->shipping_date;
+            $data = json_decode($data);
+        }
+        
+        return $data;
+    }
 }

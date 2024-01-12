@@ -68,21 +68,22 @@
                                             </td>
                                             <td>
                                                 @if($data_request->status == 0)
-                                                
-                                                    <span class='badge badge-inline badge-secondary'>{{translate('Pending Approval')}}</span>
+                                            
+                                                <span class='badge badge-inline badge-secondary'>{{translate('Pending Admin Approval')}}</span>
                                                 
                                                 @elseif($data_request->status == 1)
                                                 
-                                                    <span class='badge badge-inline badge-warning'>{{translate('Pending Price Update')}}</span>
+                                                    <span class='badge badge-inline badge-secondary'>{{translate('Pending Seller Accept')}}</span>
                                                 
                                                 @elseif($data_request->status == 2)
                                                 
-                                                    <span class='badge badge-inline badge-info' >{{translate('Waiting For Customer')}}</span>
+                                                    <span class='badge badge-inline badge-warning'>{{translate('Pending Price Update')}}</span>
                                                 
                                                 @elseif($data_request->status == 3)
+                                                    <span class='badge badge-inline badge-info' >{{translate('Waiting For Customer')}}</span>
+                                                @elseif($data_request->status == 4)
                                                 
-                                                    <span class='badge badge-inline badge-success' style='background-color:#28a745 !important'>{{translate('Process To Checkout')}}</span>
-                                                
+                                                    <span class='badge badge-inline badge-success' style='background-color:#28a745 !important'>{{translate('Added To Cart')}}</span>
                                                 @endif
                                             </td>
                                         </tr>

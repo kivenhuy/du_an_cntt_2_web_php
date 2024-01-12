@@ -115,6 +115,87 @@
                         <div class="icon_header" id="wishlist">
                         </div>
                     </div>
+
+                    {{-- Notification --}}
+                    @if ( Auth::check() && (Auth::user()->user_type == "customer" || Auth::user()->user_type == "enterprise"))
+                        <!-- Notifications -->
+                        <ul class="list-inline mb-0 h-100 d-none d-xl-flex justify-content-end align-items-center">
+                            <li class="list-inline-item ml-3 mr-3 pr-3 pl-0 dropdown">
+                                <a class="dropdown-toggle no-arrow text-secondary fs-12" data-toggle="dropdown"
+                                    href="javascript:void(0);" role="button" aria-haspopup="false"
+                                    aria-expanded="false">
+                                    <span class="">
+                                        <span class="position-relative d-inline-block">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14.668" height="16"
+                                                viewBox="0 0 14.668 16">
+                                                <path id="_26._Notification" data-name="26. Notification"
+                                                    d="M8.333,16A3.34,3.34,0,0,0,11,14.667H5.666A3.34,3.34,0,0,0,8.333,16ZM15.06,9.78a2.457,2.457,0,0,1-.727-1.747V6a6,6,0,1,0-12,0V8.033A2.457,2.457,0,0,1,1.606,9.78,2.083,2.083,0,0,0,3.08,13.333H13.586A2.083,2.083,0,0,0,15.06,9.78Z"
+                                                    transform="translate(-0.999)" fill="#91919b" />
+                                            </svg>
+                                            @if (Auth::check() && count(Auth::user()->unreadNotifications)>0)
+                                                <span
+                                                    class="badge badge-primary badge-inline badge-pill absolute-top-right--10px">{{count(Auth::user()->unreadNotifications)}}</span>
+                                            @endif
+                                        </span>
+                                </a>
+
+                                @auth
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg py-0 rounded-0">
+                                        <div class="p-3 bg-light border-bottom">
+                                            <h6 class="mb-0">{{ translate('Notifications') }}</h6>
+                                        </div>
+                                        <div class="px-3 c-scrollbar-light overflow-auto " style="max-height:300px;">
+                                            <ul class="list-group list-group-flush">
+                                                @if(count(Auth::user()->unreadNotifications)>0)
+                                                    @forelse(Auth::user()->unreadNotifications as $notification)
+                                                        <li class="list-group-item">
+                                                            
+                                                            {{-- @if ($notification->type == 'App\Notifications\OrderNotification') --}}
+                                                                {{-- @if (Auth::user()->user_type == 'customer') --}}
+                                                                    <a href=""
+                                                                        class="text-secondary fs-12">
+                                                                        <span class="ml-2">
+                                                                            {{ translate('Order code: ') }}
+                                                                            {{ $notification->data['request_code'] }}
+                                                                            {{ translate('has been ' . ucfirst(str_replace('_', ' ', $notification->data['status']))) }}
+                                                                        </span>
+                                                                    </a>
+                                                                {{-- @elseif (Auth::user()->user_type == 'seller')
+                                                                    <a href="{{ route('seller.orders.show', encrypt($notification->data['order_id'])) }}"
+                                                                        class="text-secondary fs-12">
+                                                                        <span class="ml-2">
+                                                                            {{ translate('Order code: ') }}
+                                                                            {{ $notification->data['order_code'] }}
+                                                                            {{ translate('has been ' . ucfirst(str_replace('_', ' ', $notification->data['status']))) }}
+                                                                        </span>
+                                                                    </a>
+                                                                @endif --}}
+                                                            {{-- @endif --}}
+                                                        </li>
+                                                    @empty
+                                                        
+                                                    @endforelse
+                                                @else
+                                                    <li class="list-group-item">
+                                                        <div class="py-4 text-center fs-16">
+                                                            {{ translate('No notification found') }}
+                                                        </div>
+                                                    </li>
+                                                @endif
+                                            </ul>
+                                        </div>
+                                        <div class="text-center border-top">
+                                            <a href=""
+                                                class="text-secondary fs-12 d-block py-2">
+                                                {{ translate('View All Notifications') }}
+                                            </a>
+                                        </div>
+                                    </div>
+                                @endauth
+                            </li>
+                        </ul>
+                    @endif
+
                     {{-- Account --}}
                     <div class="ml-auto mr-0 d-none d-xl-block">
                         @auth

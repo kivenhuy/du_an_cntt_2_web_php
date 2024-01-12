@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-xl-8 mx-auto">
                     @php
-                        $first_order = $combined_order->orders->first()
+                        $first_order = $combined_order->orders->first();
                     @endphp
                     <!-- Order Confirmation Text-->
                     <div class="text-center py-4 mb-0">
@@ -87,8 +87,8 @@
                                             <thead>
                                                 <tr>
                                                     <th class="opacity-60 border-top-0 pl-0">#</th>
-                                                    <th class="opacity-60 border-top-0" width="30%">{{ translate('Product')}}</th>
-                                                    <th class="opacity-60 border-top-0">{{ translate('Variation')}}</th>
+                                                    <th class="opacity-60 border-top-0" width="20%">{{ translate('Product')}}</th>
+                                                    <th class="opacity-60 border-top-0">{{ translate('Shipping Date')}}</th>
                                                     <th class="opacity-60 border-top-0">{{ translate('Quantity')}}</th>
                                                     <th class="opacity-60 border-top-0">{{ translate('Delivery Type')}}</th>
                                                     <th class="text-right opacity-60 border-top-0 pr-0">{{ translate('Price')}}</th>
@@ -115,21 +115,15 @@
                                                             @endif
                                                         </td>
                                                         <td class="border-top-0 border-bottom">
-                                                            {{ $orderDetail->variation }}
+                                                            {{ $orderDetail->shipping_date }}
                                                         </td>
                                                         <td class="border-top-0 border-bottom">
                                                             {{ $orderDetail->quantity }}
                                                         </td>
                                                         <td class="border-top-0 border-bottom">
-                                                            @if ($order->shipping_type != null && $order->shipping_type == 'home_delivery')
-                                                                {{  translate('Home Delivery') }}
-                                                            @elseif ($order->shipping_type != null && $order->shipping_type == 'carrier')
-                                                                {{  translate('Carrier') }}
-                                                            @elseif ($order->shipping_type == 'pickup_point')
-                                                                @if ($order->pickup_point != null)
-                                                                    {{ $order->pickup_point->getTranslation('name') }} ({{ translate('Pickip Point') }})
-                                                                @endif
-                                                            @endif
+                                                            
+                                                                {{ $order->shipping_type}}
+                                                            
                                                         </td>
                                                         <td class="border-top-0 border-bottom pr-0 text-right">{{ single_price($orderDetail->price) }}</td>
                                                     </tr>
