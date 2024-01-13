@@ -104,7 +104,7 @@
 
     <!-- Order Details -->
     <div class="row gutters-16">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card rounded-0 shadow-none border mt-2 mb-4">
                 <div class="card-header border-bottom-0">
                     <h5 class="fs-16 fw-700 text-dark mb-0">{{ translate('Order Details') }}</h5>
@@ -116,6 +116,9 @@
                                 <th class="pl-0">#</th>
                                 <th width="20%">{{ translate('Product') }}</th>
                                 <th>{{ translate('Quantity') }}</th>
+                                @if(Auth::user()->user_type === 'enterprise')
+                                    <th>{{ translate('Shipping Date') }}</th>
+                                @endif
                                 <th data-breakpoints="md">{{ translate('Delivery Type') }}</th>
                                 <th>{{ translate('Price') }}</th>
                                 <th data-breakpoints="md" class="text-right pr-0">{{ translate('Review') }}</th>
@@ -140,6 +143,11 @@
                                     <td>
                                         {{ $orderDetail->quantity }}
                                     </td>
+                                    @if(Auth::user()->user_type === 'enterprise')
+                                    <td>
+                                        {{ date('d-m-Y H:i', strtotime($orderDetail->shipping_date)) }}
+                                    </td>
+                                    @endif
                                     <td>
                                         {{ $orderDetail->shipping_type }}
                                     </td>
@@ -161,8 +169,10 @@
                 </div>
             </div>
         </div>
-
+    </div>
+    <div class="row gutters-16">
         <!-- Order Ammount -->
+        <div class="col-md-8"></div>
         <div class="col-md-4">
             <div class="card rounded-0 shadow-none border mt-2">
                 <div class="card-header border-bottom-0">

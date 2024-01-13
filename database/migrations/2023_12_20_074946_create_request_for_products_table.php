@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('unit');
             $table->double('price',8,2)->default(0);
             $table->integer('status')->default(0);
+            $table->integer('is_supermarket_request')->default(0);
             $table->timestamps();
         });
     }

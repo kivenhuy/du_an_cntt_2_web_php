@@ -37,12 +37,24 @@ class CheckoutController extends Controller
 
     public function final_checkout()
     {
-        $carts_normal = Cart::whereHas('product', function ($query) {
-            $query->where('short_shelf_life','=','0');
-        })->where([['user_id', Auth::user()->id],['is_checked',1]])->get();
-        $carts_short_shelf_life = Cart::whereHas('product', function ($query) {
-            $query->where('short_shelf_life','=','1');
-        })->where([['user_id', Auth::user()->id],['is_checked',1]])->get();
+        if(Auth::user()->user_type != 'enterprise')
+        {
+            $carts_normal = Cart::whereHas('product', function ($query) {
+                $query->where('short_shelf_life','=','0');
+            })->where([['user_id', Auth::user()->id],['is_checked',1]])->get();
+            $carts_short_shelf_life = Cart::whereHas('product', function ($query) {
+                $query->where('short_shelf_life','=','1');
+            })->where([['user_id', Auth::user()->id],['is_checked',1]])->get();
+        }
+        else
+        {
+            $carts_normal = Cart::whereHas('product', function ($query) {
+                $query->where('short_shelf_life','=','0');
+            })->where([['user_id', Auth::user()->id],['is_checked',1]])->get()->append(['shpping_date']);
+            $carts_short_shelf_life = Cart::whereHas('product', function ($query) {
+                $query->where('short_shelf_life','=','1');
+            })->where([['user_id', Auth::user()->id],['is_checked',1]])->get()->append(['shpping_date']);
+        }
         $seller_products = array();
         $seller_product_variation = array();
         $seller_products_normal = array();
@@ -189,7 +201,15 @@ class CheckoutController extends Controller
     public function checkout(Request $request)
     {  
         if ($request->payment_option != null) {
-            (new OrderController)->store($request);
+            if(Auth::user()->user_type != "enterprise")
+            {
+                (new OrderController)->store($request);
+            }
+            else
+            {
+                (new OrderController)->store_enterprise($request);
+            }
+            
 
             $request->session()->put('payment_type', 'cart_payment');
             

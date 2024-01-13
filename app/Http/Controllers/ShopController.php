@@ -65,8 +65,10 @@ class ShopController extends Controller
                             'password' => $request->password,
                             'phone_number' => $user->phone,
                         ];
+                        $response = Http::withOptions([
+                            'verify' => false,
+                        ])->post($signupApiUrl,$data_cooperative);
                         
-                        $response = Http::post($signupApiUrl,$data_cooperative);
                     }
                     catch(\Exception $exception) {
                         

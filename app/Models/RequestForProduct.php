@@ -23,6 +23,7 @@ class RequestForProduct extends Model
         'quantity',
         'unit',
         'price',
+        'is_supermarket_request',
         'status',
     ];
 

@@ -359,8 +359,9 @@ class CartController extends Controller
        
         $price = $rfp_record->price;
         $product->unit_price = $rfp_record->price;
+        $shipping_time = json_decode($rfp_record->shipping_date);
         $data['quantity'] = $rfp_record->quantity;
-        $data['price'] = $price;
+        $data['price'] = $price * count($shipping_time);
         //$data['shipping'] = 0;
         $data['shipping_cost'] = 0;
         $data['is_rfp'] = $request->id_rfp;

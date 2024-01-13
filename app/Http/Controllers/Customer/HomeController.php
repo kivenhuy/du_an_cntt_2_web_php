@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Categories;
 use App\Models\Category;
 use App\Models\Products;
+use Http;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,34 +22,17 @@ class HomeController extends Controller
 
     public function product(Request $request, $slug)
     {
+       
+
         $detailedProduct  = Products::where('slug', $slug)->where('approved', 1)->first();
         $categories_data = Categories::find($detailedProduct->category_id);
         if ($detailedProduct != null && $detailedProduct->published) {
             $data_product = json_decode($detailedProduct->choice_options);
             
             $arr_attr = [];
-            // $product_queries = ProductQuery::where('product_id', $detailedProduct->id)->where('customer_id', '!=', Auth::id())->latest('id')->paginate(3);
-            // $total_query = ProductQuery::where('product_id', $detailedProduct->id)->count();
-            // $reviews = $detailedProduct->reviews()->paginate(3);
-            // // Pagination using Ajax
-            // if (request()->ajax()) {
-            //     if ($request->type == 'query') {
-            //         return Response::json(View::make('frontend.partials.product_query_pagination', array('product_queries' => $product_queries))->render());
-            //     }
-            //     if ($request->type == 'review') {
-            //         return Response::json(View::make('frontend.product_details.reviews', array('reviews' => $reviews))->render());
-            //     }
-            // }
-
-            // review status
+           
             $review_status = 0;
-            // if (Auth::check()) {
-            //     $OrderDetail = OrderDetail::with(['order' => function ($q) {
-            //         $q->where('user_id', Auth::id());
-            //     }])->where('product_id', $detailedProduct->id)->where('delivery_status', 'delivered')->first();
-            //     $review_status = $OrderDetail ? 1 : 0;
-            // }
-            // return view('frontend.product_details', compact('data_attribute', 'values', 'detailedProduct', 'product_queries', 'total_query', 'reviews', 'review_status'));
+           
             return view('user_layout.products.product_detail',
                 [
                 'detailedProduct' => $detailedProduct,

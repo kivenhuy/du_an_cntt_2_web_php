@@ -61,11 +61,11 @@
                                                 <div class="mb-4">
                                                     <!-- Headers -->
                                                     <div class="row gutters-5 d-none d-lg-flex border-bottom mb-3 text-secondary fs-12 header_table" >
-                                                        <div class="col-md-4 fw-600 text_cart_details" style="position: relative;left:32px">{{ translate('Product - ')}} {{ \App\Models\Shop::where('user_id', $key_user)->first()->name }}</div>
+                                                        <div class="col-md-3 fw-600 text_cart_details" style="position: relative;left:32px">{{ translate('Product - ')}} {{ \App\Models\Shop::where('user_id', $key_user)->first()->name }}</div>
                                                         <div class="col col-md-2 fw-600 text_cart_details">{{ translate('Qty')}}</div>
-                                                        <div class="col fw-600 text_cart_details">{{ translate('Unit')}}</div>
-                                                        {{--<div class="col fw-600">{{ translate('Tax')}}</div> --}}
-                                                        <div class="col fw-600 text_cart_details" >{{ translate('Total')}}</div>
+                                                        <div class="col col-md-1 fw-600 text_cart_details">{{ translate('Unit')}}</div>
+                                                        <div class="col col-md-2 fw-600 text_cart_details">{{ translate('Order Date')}}</div>
+                                                        <div class="col  col-md-4 fw-600 text_cart_details" >{{ translate('Total')}}</div>
                                                         
                                                     </div>
                                                     <!-- Cart Items -->
@@ -91,7 +91,7 @@
                                                                     <div class="row gutters-5 align-items-center">
                                                                         
                                                                         <!-- Product Image & name -->
-                                                                        <div class="col-md-4 d-flex align-items-center mb-2 mb-md-0">
+                                                                        <div class="col-md-3 d-flex align-items-center mb-2 mb-md-0">
                                                                             <span class="mr-2 ml-0">
                                                                                 <img src="{{ uploaded_asset($product->thumbnail_img) }}"
                                                                                     class="img-fit size-70px"
@@ -116,19 +116,24 @@
                                                                             @endif
                                                                         </div>
                                                                         <!-- Price -->
-                                                                        <div class="col-md col-4 order-2 order-md-0 my-3 my-md-0" style="max-width:130px !important">
+                                                                        <div class="col-md-1 col-4 order-2 order-md-0 my-3 my-md-0" style="max-width:130px !important">
                                                                             <span class="unit_product">{{$product->unit}}</span>
                                                                         </div>
-                                                                        {{--
+                                                                        
                                                                         <!-- Tax -->
-                                                                        <div class="col-md col-4 order-3 order-md-0 my-3 my-md-0">
-                                                                            <span class="opacity-60 fs-12 d-block d-md-none">{{ translate('Tax')}}</span>
-                                                                            <span class="fw-700 fs-14">{{ cart_product_tax($cartItem, $product) }}</span>
-                                                                        </div> --}}
+                                                                        @if(Auth::user()->user_type === "enterprise")
+                                                                            <div class="col-md-2 col-4 order-5 order-md-0 my-3 my-md-0">
+                                                                                @if(count($cartItem->shipping_date)>0)
+                                                                                    @foreach ($cartItem->shipping_date as $date)
+                                                                                        <span class="fw-700 fs-14">{{$date}}</span>
+                                                                                    @endforeach
+                                                                                @endif
+                                                                            </div>
+                                                                        @endif
                                                                         <!-- Total -->
-                                                                        <div class="col-md col-5 order-4 order-md-0 my-3 my-md-0">
+                                                                        <div class="col-md-4 col-5 order-4 order-md-0 my-3 my-md-0">
                                                                             <span class="opacity-60 fs-12 d-block d-md-none">{{ translate('Total')}}</span>
-                                                                            <span class="fw-700 fs-16 text-primary total_product" style="padding-left: 58px">{{ single_price(cart_product_price($cartItem, $product, false) * $cartItem['quantity']) }}</span>
+                                                                            <span class="fw-700 fs-16 text-primary total_product" style="">{{ single_price(cart_product_price($cartItem, $product, false) * $cartItem['quantity']) }}</span>
                                                                         </div>
                                                                         
                                                                     </div>

@@ -6,8 +6,12 @@
         <div class="form-group row">
             <div class="col-12 data_user">
                 <div class="row" style="margin-bottom:1rem">
-                    <a style="display: flex;align-items: center;margin-right: 10px" href="{{route('request_for_product.seller_index')}}" ><i style="color:black;font-size: 1.73em;" class="fa fa-long-arrow-alt-left"></i></a>
-                    <span class="rfp_code">
+                    @if($data_request->is_supermarket_request === 0)
+                        <a style="display: flex;align-items: center;margin-right: 10px" href="{{route('request_for_product.seller_index')}}" ><i style="color:black;font-size: 1.73em;" class="fa fa-long-arrow-alt-left"></i></a>
+                    @else
+                    <a style="display: flex;align-items: center;margin-right: 10px" href="{{route('request_for_product.seller_supermarket_index')}}" ><i style="color:black;font-size: 1.73em;" class="fa fa-long-arrow-alt-left"></i></a>
+                    @endif
+                        <span class="rfp_code">
                         {{translate('RFQ Code')}}: {{$data_request->code}}
                     </span>
                 </div>
@@ -64,7 +68,7 @@
                                                 <div style="">
                                                     <span class="rfp_product_name">{{ single_price($data_request->price) }}</span>
                                                 </div>
-                                                @if($data_request->status == 1 || $data_request->status == 2  )
+                                                @if(($data_request->status == 2 || $data_request->status == 3 ) && (Auth::user()->shop->id  === $data_request->shop_id))
                                                 <div>
                                                     <span style="font-family: 'Roboto',sans-serif !important;
                                                     font-size: 12px;
@@ -85,20 +89,21 @@
                                         <td>
                                             @if($data_request->status == 0)
                                             
-                                                <span class='badge badge-inline badge-secondary'>{{translate('Pending Approval')}}</span>
+                                            <span class='badge badge-inline badge-secondary'>{{translate('Pending Admin Approval')}}</span>
                                             
                                             @elseif($data_request->status == 1)
                                             
-                                                <span class='badge badge-inline badge-warning'>{{translate('Pending Price Update')}}</span>
+                                                <span class='badge badge-inline badge-secondary'>{{translate('Pending Seller Accept')}}</span>
                                             
                                             @elseif($data_request->status == 2)
                                             
-                                                <span class='badge badge-inline badge-info' >{{translate('Waiting For Customer')}}</span>
+                                                <span class='badge badge-inline badge-warning'>{{translate('Pending Price Update')}}</span>
                                             
                                             @elseif($data_request->status == 3)
+                                                <span class='badge badge-inline badge-info' >{{translate('Waiting For Customer')}}</span>
+                                            @elseif($data_request->status == 4)
                                             
                                                 <span class='badge badge-inline badge-success' style='background-color:#28a745 !important'>{{translate('Added To Cart')}}</span>
-                                            
                                             @endif
                                         </td>
                                     </tr>

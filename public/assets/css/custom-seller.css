@@ -9162,8 +9162,8 @@ div.footable-loader>span.fooicon:after {
     display: -webkit-inline-box;
     display: -ms-inline-flexbox;
     display: inline-flex;
-    height: 8px;
-    width: 8px;
+    height: 16px;
+    width: 16px;
 }
 
 .badge-dot.badge-md {

@@ -104,7 +104,6 @@ class UploadsController extends Controller
             "xls" => "document",
             "xlsx" => "document"
         );
-
         if ($request->hasFile('aiz_file')) {
             $upload = new Uploads;
             $extension = strtolower($request->file('aiz_file')->getClientOriginalExtension());
@@ -130,31 +129,30 @@ class UploadsController extends Controller
 
 
 
-                $path = $request->file('aiz_file')->store('uploads/all', 'local');
+                $path = $request->file('aiz_file')->store('assets/uploads', 'local');
                 $size = $request->file('aiz_file')->getSize();
 
-                if ($type[$extension] == 'image' ) {
-                    try {
-                        $img = Image::make($request->file('aiz_file')->getRealPath())->encode();
-                        $height = $img->height();
-                        $width = $img->width();
-                        if ($width > $height && $width > 1500) {
-                            $img->resize(1500, null, function ($constraint) {
-                                $constraint->aspectRatio();
-                            });
-                        } elseif ($height > 1500) {
-                            $img->resize(null, 800, function ($constraint) {
-                                $constraint->aspectRatio();
-                            });
-                        }
-                        $img->save(base_path('public/') . $path);
-                        clearstatcache();
-                        $size = $img->filesize();
-                    } catch (\Exception $e) {
-                        //dd($e);
-                    }
-                }
-
+                // if ($type[$extension] == 'image' ) {
+                //     try {
+                //         $img = Image::make($request->file('aiz_file')->getRealPath())->encode();
+                //         $height = $img->height();
+                //         $width = $img->width();
+                //         if ($width > $height && $width > 1500) {
+                //             $img->resize(1500, null, function ($constraint) {
+                //                 $constraint->aspectRatio();
+                //             });
+                //         } elseif ($height > 1500) {
+                //             $img->resize(null, 800, function ($constraint) {
+                //                 $constraint->aspectRatio();
+                //             });
+                //         }
+                //         $img->save(base_path('public/') . $path);
+                //         clearstatcache();
+                //         $size = $img->filesize();
+                //     } catch (\Exception $e) {
+                //         //dd($e);
+                //     }
+                // }
                 $upload->extension = $extension;
                 $upload->file_name = $path;
                 $upload->user_id = Auth::user()->id;
