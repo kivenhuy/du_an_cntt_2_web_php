@@ -17,4 +17,35 @@ class Carrier extends Model
     public function carrier_range_prices(){
     	return $this->hasMany(CarrierRangePrice::class);
     }
+
+    public function getNameBillingAttribute()
+    {
+        $data = "";
+        if($this->carrier_ranges->first())
+        {
+            $data =$this->carrier_ranges->first()->billing_type;
+        }
+        return $data;
+    }
+
+    public function getShippingPriceAttribute()
+    {
+        $data = 0;
+        if($this->carrier_range_prices)
+        {
+            $data =$this->carrier_range_prices->first()->price;
+        }
+        return single_price($data);
+    }
+    public function getShippingPriceNormalAttribute()
+    {
+        $data = 0;
+        if($this->carrier_range_prices)
+        {
+            $data =$this->carrier_range_prices->first()->price;
+        }
+        return ($data);
+    }
+
+    
 }

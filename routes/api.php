@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Api\CheckoutSupermarketController;
 use App\Http\Controllers\Api\RequestForProductController;
 use App\Http\Controllers\Api\RequestSendController;
 use App\Http\Controllers\Api\SuggestProductController;
@@ -48,8 +49,16 @@ Route::group(['prefix' => 'v2'], function () {
         Route::post('/upload_product/store', 'add_product_from_farm')->name('upload_product.add_product_from_farm');
     });
 
-    // Route::controller(UploadsController::class)->group(function () {
-    //     Route::post('/upload_product/store', 'add_product_from_farm')->name('upload_product.add_product_from_farm');
+    // Route::group(['prefix' => 'checkout_supermarket'], function () {
+        Route::controller(CheckoutSupermarketController::class)->group(function () {
+            Route::get('/checkout_supermarket/final/{id}', 'final_checkout')->name('checkout_supermarket.final_checkout');
+            Route::get('/checkout_supermarket/get_cart/{id}', 'get_cart')->name('checkout_supermarket.get_cart');
+            Route::post('/checkout_supermarket/update_shipping_fee', 'update_shipping_fee')->name('checkout_supermarket.update_shipping_fee');
+            Route::post('/checkout_supermarket/update_select_item', 'update_select_item')->name('checkout_supermarket.update_select_item');
+            Route::post('/checkout_supermarket/update_total_shipping_fee', 'update_total_shipping_fee')->name('checkout_supermarket.update_total_shipping_fee');
+            Route::post('/checkout_supermarket/checkout', 'checkout')->name('checkout_supermarket');
+            Route::get('/checkout_supermarket/order_confirmed', 'order_confirmed')->name('checkout_supermarket.order_confirmed');
+        });
     // });
 });
 

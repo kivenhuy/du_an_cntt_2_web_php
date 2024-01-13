@@ -26,4 +26,62 @@ class Cart extends Model
         
         return $data;
     }
+
+    public function getProductNameAttribute()
+    {
+        $data = "";
+        if($this->product_id != 0)
+        {
+            $data = Products::find($this->product_id)->name;
+        }
+        
+        return $data;
+    }
+
+    public function getSellerNameAttribute()
+    {
+        $data = "";
+        if($this->product_id != 0)
+        {
+            $data = User::find($this->owner_id)->name;
+        }
+        
+        return $data;
+    }
+
+    public function getImgProductAttribute()
+    {
+        $data = "";
+        if($this->product_id != 0)
+        {
+            $img_id = Products::find($this->product_id)->thumbnail_img;
+            $data = env('APP_URL').Uploads::find($img_id)->file_name;
+        }
+        
+        return $data;
+    }
+
+    public function getTotalPriceAttribute()
+    {
+        $data = single_price(0);
+        if($this->product_id != 0)
+        {
+            $product = Products::find($this->product_id);
+            $data =single_price(cart_product_price($this, $product, false) * $this->quantity);
+        }
+        return $data;
+    }
+
+    public function getTotalPriceNormalAttribute()
+    {
+        $data = single_price(0);
+        if($this->product_id != 0)
+        {
+            $product = Products::find($this->product_id);
+            $data =(cart_product_price($this, $product, false) * $this->quantity);
+        }
+        return $data;
+    }
+
+    
 }
