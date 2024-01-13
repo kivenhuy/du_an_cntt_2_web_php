@@ -102,13 +102,7 @@
                                                             @if ($orderDetail->product != null)
                                                                 <a href="{{ route('product', $orderDetail->product->slug) }}" target="_blank" class="text-reset">
                                                                     {{ $orderDetail->product->name }}
-                                                                    @php
-                                                                        if($orderDetail->combo_id != null) {
-                                                                            $combo = \App\ComboProduct::findOrFail($orderDetail->combo_id);
-
-                                                                            echo '('.$combo->combo_title.')';
-                                                                        }
-                                                                    @endphp
+                                                                    
                                                                 </a>
                                                             @else
                                                                 <strong>{{  translate('Product Unavailable') }}</strong>

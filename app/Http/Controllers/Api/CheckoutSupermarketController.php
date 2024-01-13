@@ -187,7 +187,7 @@ class CheckoutSupermarketController extends Controller
             $product = Products::find($carts_short_shelf_lifeItem['product_id']);
            
             $product_ids = array();
-            $data_rfp = RequestForProduct::find($cartItem->is_rfp);
+            $data_rfp = RequestForProduct::find($carts_short_shelf_lifeItem->is_rfp);
             $shipping_time = 1;
             if(isset($data_rfp))
             {
@@ -311,16 +311,16 @@ class CheckoutSupermarketController extends Controller
             $data_combine_id  =  $this->store_enterprise($request);
 
 
-            $request->session()->put('payment_type', 'cart_payment');
+            // $request->session()->put('payment_type', 'cart_payment');
             
-            $data['combined_order_id'] = $request->session()->get('combined_order_id');
-            $request->session()->put('payment_data', $data);
+            // $data['combined_order_id'] = $request->session()->get('combined_order_id');
+            // $request->session()->put('payment_data', $data);
 
-            if ($request->session()->get('combined_order_id') != null) 
+            if ($data_combine_id  != null) 
             {                
-                $combined_order = CombineOrder::findOrFail($request->session()->get('combined_order_id'));
+                $combined_order = CombineOrder::findOrFail($data_combine_id);
                 $manual_payment_data = array(
-                    'name'   => $request->payment_option,
+                    'name'   => $request->data['payment_option'],
                     'amount' => $combined_order->grand_total,
                     'trx_id' => $request->trx_id,
                     'photo'  => $request->photo
@@ -330,12 +330,27 @@ class CheckoutSupermarketController extends Controller
                     $order->manual_payment_data = json_encode($manual_payment_data);
                     $order->save();
                 }
-                //flash(translate('Your order has been placed successfully. Please submit payment information from purchase history'))->success();
-                return redirect()->route('order_confirmed');
+                $arr_order_details = [];
+                foreach($combined_order->orders as $each_order)
+                {
+                    $arr_order_details[(int)$each_order->id]=$each_order->orderDetails;
+                }
+                return response()->json([
+                    'result' => true,
+                    'message' => 'Checkout Successfully',
+                    'data' => [
+                        'first_order' =>$combined_order->orders->first(),
+                        'combined_order_price' =>single_price($combined_order->grand_total),
+                        'all_order' =>$combined_order->orders,
+                        'arr_order_details' =>$arr_order_details,
+                    ]   
+                ]);
             }
         } else {
-            flash(translate('Select Payment Option.'))->warning();
-            return back();
+            return response()->json([
+                'result' => false,
+                'message' => 'Checkout Failed',
+            ]);
         }
     }
 
@@ -362,8 +377,8 @@ class CheckoutSupermarketController extends Controller
 
         $shippingAddress = [];
         if ($address != null) {
-            $shippingAddress['name']        = Auth::user()->name;
-            $shippingAddress['email']       = Auth::user()->email;
+            $shippingAddress['name']        = User::find($request->data['ecom_id'])->name;
+            $shippingAddress['email']       = User::find($request->data['ecom_id'])->email;
             $shippingAddress['address']     = $address->address;
             $shippingAddress['country']     = $address->country->country_name;
             $shippingAddress['city']        = $address->city->city_name;
@@ -374,7 +389,7 @@ class CheckoutSupermarketController extends Controller
 
         // dd(json_encode($shippingAddress));
         $combined_order = new CombineOrder();
-        $combined_order->customer_id = Auth::user()->id;
+        $combined_order->customer_id = $request->data['ecom_id'];
         $combined_order->shipping_address = json_encode($shippingAddress);
         $combined_order->save();
 
@@ -393,7 +408,7 @@ class CheckoutSupermarketController extends Controller
         foreach ($seller_products as $seller_product) {
             $order = new Order();
             $order->combined_order_id = $combined_order->id;
-            $order->customer_id = Auth::user()->id;
+            $order->customer_id = $request->data['ecom_id'];
             $order->shipping_address = $combined_order->shipping_address;
             $order->payment_type = $request->data['payment_option'];
             $order->payment_status = "unpaid";
