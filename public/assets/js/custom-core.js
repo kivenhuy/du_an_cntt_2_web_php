@@ -336,7 +336,7 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
                             } else {
                                 thumb =
                                     '<img src="' +
-                                    'http://127.0.0.1:4000/' +
+                                    AIZ.data.farmUrl +
                                     data[i].file_name +
                                     '" class="img-fit">';
                             }
@@ -410,10 +410,19 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
                             ) {
                                 var thumb = "";
                                 if (data[i].type === "image") {
-                                    thumb =
-                                        '<img src="' +
-                                        data[i].file_name +
-                                        '" class="img-fit">';
+                                    if (data[i].is_farm_photo == 0) {
+                                        thumb =
+                                            '<img src="' +
+                                            AIZ.data.appUrl +
+                                            data[i].file_name +
+                                            '" class="img-fit">';
+                                    } else {
+                                        thumb =
+                                            '<img src="' +
+                                            'http://127.0.0.1:4000/' +
+                                            data[i].file_name +
+                                            '" class="img-fit">';
+                                    }
                                 } else {
                                     thumb = '<i class="la la-file-text"></i>';
                                 }
@@ -445,7 +454,7 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
                                     "</div>" +
                                     '<div class="remove">' +
                                     '<button class="btn btn-sm btn-link remove-attachment" type="button">' +
-                                    '<i class="la la-close"></i>' +
+                                    '<i class="fa fa-close"></i>' +
                                     "</button>" +
                                     "</div>" +
                                     "</div>";
@@ -621,6 +630,7 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
                         function(data) {
                             $this.next(".file-preview").html(null);
 
+                            console.log(data);
                             if (data.length > 0) {
                                 $this.find(".file-amount").html(
                                     AIZ.uploader.updateFileHtml(data)
@@ -630,12 +640,21 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
                                 ) {
                                     var thumb = "";
                                     if (data[i].type === "image") {
-                                        thumb =
-                                            '<img src="' +
-                                            data[i].file_name +
-                                            '" class="img-fit">';
+                                        if (data[i].is_farm_photo == 0) {
+                                            thumb =
+                                                '<img src="' +
+                                                AIZ.data.appUrl +
+                                                data[i].file_name +
+                                                '" class="img-fit">';
+                                        } else {
+                                            thumb =
+                                                '<img src="' +
+                                                'http://127.0.0.1:4000/' +
+                                                data[i].file_name +
+                                                '" class="img-fit">';
+                                        }
                                     } else {
-                                        thumb = '<i class="la la-file-text"></i>';
+                                        thumb = '<i class="fa fa-file-text"></i>';
                                     }
                                     var html =
                                         '<div class="d-flex justify-content-between align-items-center mt-2 file-preview-item" data-id="' +
@@ -665,7 +684,7 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
                                         "</div>" +
                                         '<div class="remove">' +
                                         '<button class="btn btn-sm btn-link remove-attachment" type="button">' +
-                                        '<i class="la la-close"></i>' +
+                                        '<i class="fa fa-close"></i>' +
                                         "</button>" +
                                         "</div>" +
                                         "</div>";

@@ -10,8 +10,12 @@
                     <div class="row" style="margin-top: 24px;">
                         <div class="col-lg-9">
                             
-                            
-                                <input type="hidden" name="owner_id" value="{{ $carts_normal[0]['owner_id'] }}">
+                                @if(is_null($carts_normal))
+                                    <input type="hidden" name="owner_id" value="{{ $carts_normal[0]['owner_id'] }}">
+                                @else
+                                    <input type="hidden" name="owner_id" value="{{ $carts_short_shelf_life[0]['owner_id'] }}">
+                                @endif
+                                
                                 <input type="hidden" id="total_shipping_price" name="total_shipping_price" value="0">
                                 <div class="header_checkout_div">
                                     <div style="margin-bottom:48px ">
