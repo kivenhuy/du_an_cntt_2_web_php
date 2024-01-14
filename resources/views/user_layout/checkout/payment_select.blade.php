@@ -10,7 +10,7 @@
                     <div class="row" style="margin-top: 24px;">
                         <div class="col-lg-9">
                             
-                                @if(is_null($carts_normal))
+                                @if(!empty($carts_normal))
                                     <input type="hidden" name="owner_id" value="{{ $carts_normal[0]['owner_id'] }}">
                                 @else
                                     <input type="hidden" name="owner_id" value="{{ $carts_short_shelf_life[0]['owner_id'] }}">
@@ -79,7 +79,7 @@
                                                                 // $product_stock = $product->stocks()->get();
                                                                 // dd($product_stock);
                                                                 // $total = $total + ($cartItem['price']  + $cartItem['tax']) * $cartItem['quantity'];
-                                                                $total_normal_product = $total_normal_product + cart_product_price($cartItem, $product, false) * $cartItem['quantity'];
+                                                                $total_normal_product = $total_normal_product + cart_product_price($cartItem, $product, false) * $cartItem['quantity'] *  count($cartItem['shipping_date']);
                                                                 $final_total_normal = $total_normal_product+$shipping_fee;
                                                                 $product_name_with_choice = $product->name;
                                                                 if ($cartItem['variation'] != null) {
