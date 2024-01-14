@@ -104,6 +104,7 @@ Route::group(['middleware' => ['auth'],'prefix' => 'admin'], function () {
 
     Route::controller(PurchaseHistoryController::class)->group(function () {
         Route::get('/purchase_history/all_orders', 'index')->name('admin.purchase_history.all_orders');
+        Route::post('/purchase_history/verify_payment', 'verify_payment')->name('admin.purchase_history.verify_payment');
         Route::get('/purchase_history/data_ajax', 'data_ajax')->name('admin.purchase_history.data_ajax');
         Route::get('/purchase_history/get_detail/{id}', 'get_detail')->name('admin.purchase_history.get_detail');
     });

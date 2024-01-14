@@ -64,7 +64,10 @@
                                                         <div class="col-md-3 fw-600 text_cart_details" style="position: relative;left:32px">{{ translate('Product - ')}} {{ \App\Models\Shop::where('user_id', $key_user)->first()->name }}</div>
                                                         <div class="col col-md-2 fw-600 text_cart_details">{{ translate('Qty')}}</div>
                                                         <div class="col col-md-1 fw-600 text_cart_details">{{ translate('Unit')}}</div>
+                                                        @if(Auth::user()->user_type === 'enterprise')
                                                         <div class="col col-md-2 fw-600 text_cart_details">{{ translate('Order Date')}}</div>
+                                                        @endif
+                                                       
                                                         <div class="col  col-md-4 fw-600 text_cart_details" >{{ translate('Total')}}</div>
                                                         
                                                     </div>
@@ -80,6 +83,12 @@
                                                                 // dd($product_stock);
                                                                 // $total = $total + ($cartItem['price']  + $cartItem['tax']) * $cartItem['quantity'];
                                                                 $total_normal_product = $total_normal_product + cart_product_price($cartItem, $product, false) * $cartItem['quantity'];
+                                                                if(Auth::user()->user_type === "enterprise")
+                                                                {
+                                                                    $total_normal_product =  $total_normal_product * count($cartItem->shipping_date);
+                                                                }
+                                                               
+                                                                
                                                                 $final_total_normal = $total_normal_product+$shipping_fee;
                                                                 $product_name_with_choice = $product->name;
                                                                 if ($cartItem['variation'] != null) {
@@ -121,6 +130,7 @@
                                                                         </div>
                                                                         
                                                                         <!-- Tax -->
+                                                                       
                                                                         @if(Auth::user()->user_type === "enterprise")
                                                                             <div class="col-md-2 col-4 order-5 order-md-0 my-3 my-md-0">
                                                                                 @if(count($cartItem->shipping_date)>0)
@@ -197,11 +207,14 @@
                                                 <div class="mb-4">
                                                     <!-- Headers -->
                                                     <div class="row gutters-5 d-none d-lg-flex border-bottom mb-3 text-secondary fs-12 header_table" >
-                                                        <div class="col-md-4 fw-600 text_cart_details" style="position: relative;left:32px">{{ translate('Product - ')}} {{ \App\Models\Shop::where('user_id', $key_user)->first()->name }}</div>
+                                                        <div class="col-md-3 fw-600 text_cart_details" style="position: relative;left:32px">{{ translate('Product - ')}} {{ \App\Models\Shop::where('user_id', $key_user)->first()->name }}</div>
                                                         <div class="col col-md-2 fw-600 text_cart_details">{{ translate('Qty')}}</div>
-                                                        <div class="col fw-600 text_cart_details">{{ translate('Unit')}}</div>
-                                                        {{--<div class="col fw-600">{{ translate('Tax')}}</div> --}}
-                                                        <div class="col fw-600 text_cart_details" >{{ translate('Total')}}</div>
+                                                        <div class="col-md-1  fw-600 text_cart_details">{{ translate('Unit')}}</div>
+                                                        @if(Auth::user()->user_type === 'enterprise')
+                                                        <div class="col col-md-2 fw-600 text_cart_details">{{ translate('Order Date')}}</div>
+                                                        @endif
+                                                        
+                                                        <div class="col-md-4 fw-600 text_cart_details" >{{ translate('Total')}}</div>
                                                         
                                                     </div>
                                                     <!-- Cart Items -->
@@ -216,6 +229,11 @@
                                                                 // dd($product_stock);
                                                                 // $total = $total + ($cartItem['price']  + $cartItem['tax']) * $cartItem['quantity'];
                                                                 $total_short_product = $total_short_product + cart_product_price($carts_short_shelf_lifeItem, $product, false) * $carts_short_shelf_lifeItem['quantity'];
+                                                                if(Auth::user()->user_type === "enterprise")
+                                                                {
+                                                                    $total_short_product = $total_short_product * count($carts_short_shelf_lifeItem->shipping_date);
+                                                                }
+                                                                // var_dump()
                                                                 $final_total_short = $total_short_product+$shipping_fee;
                                                                 $product_name_with_choice = $product->name;
                                                                 if ($carts_short_shelf_lifeItem['variation'] != null) {
@@ -227,7 +245,7 @@
                                                                     <div class="row gutters-5 align-items-center">
                                                                         
                                                                         <!-- Product Image & name -->
-                                                                        <div class="col-md-4 d-flex align-items-center mb-2 mb-md-0">
+                                                                        <div class="col-md-3 d-flex align-items-center mb-2 mb-md-0">
                                                                             <span class="mr-2 ml-0">
                                                                                 <img src="{{ uploaded_asset($product->thumbnail_img) }}"
                                                                                     class="img-fit size-70px"
@@ -252,19 +270,23 @@
                                                                             @endif
                                                                         </div>
                                                                         <!-- Price -->
-                                                                        <div class="col-md col-4 order-2 order-md-0 my-3 my-md-0" style="max-width:130px !important">
+                                                                        <div class="col-md-1 col-4 order-2 order-md-0 my-3 my-md-0" style="max-width:130px !important">
                                                                             <span class="unit_product">{{$product->unit}}</span>
                                                                         </div>
-                                                                        {{--
-                                                                        <!-- Tax -->
-                                                                        <div class="col-md col-4 order-3 order-md-0 my-3 my-md-0">
-                                                                            <span class="opacity-60 fs-12 d-block d-md-none">{{ translate('Tax')}}</span>
-                                                                            <span class="fw-700 fs-14">{{ cart_product_tax($cartItem, $product) }}</span>
-                                                                        </div> --}}
+
+                                                                        @if(Auth::user()->user_type === "enterprise")
+                                                                            <div class="col-md-2 col-4 order-5 order-md-0 my-3 my-md-0">
+                                                                                @if(count($carts_short_shelf_lifeItem->shipping_date)>0)
+                                                                                    @foreach ($carts_short_shelf_lifeItem->shipping_date as $date)
+                                                                                        <span class="fw-700 fs-14">{{$date}}</span>
+                                                                                    @endforeach
+                                                                                @endif
+                                                                            </div>
+                                                                        @endif
                                                                         <!-- Total -->
-                                                                        <div class="col-md col-5 order-4 order-md-0 my-3 my-md-0">
+                                                                        <div class="col-md-4 col-5 order-4 order-md-0 my-3 my-md-0">
                                                                             <span class="opacity-60 fs-12 d-block d-md-none">{{ translate('Total')}}</span>
-                                                                            <span class="fw-700 fs-16 text-primary total_product" style="padding-left: 58px">{{ single_price(cart_product_price($carts_short_shelf_lifeItem, $product, false) * $carts_short_shelf_lifeItem['quantity']) }}</span>
+                                                                            <span class="fw-700 fs-16 text-primary total_product" >{{ single_price(cart_product_price($carts_short_shelf_lifeItem, $product, false) * $carts_short_shelf_lifeItem['quantity']) }}</span>
                                                                         </div>
                                                                         
                                                                     </div>
@@ -290,8 +312,15 @@
                                                             <input type="radio" name="carrier_id_{{ $key_user }}" value="{{$carrier->id}}" checked="" style="display: none">
                                                         </div>
                                                     @endif
+                                                    
                                                 @endforeach
                                             </div>
+                                            @if(Auth::user()->user_type == "enterprise")
+                                            <i class="fa fa-exclamation" style="font-size: 12px;color: red;margin-left:13px" aria-hidden="true">
+                                                <span style="">That Shipping Price Apply For Each Of Order Date You Send In Request
+                                                </span>
+                                            </i>
+                                            @endif
                                         @endforeach
                                     @endif
                                 </div>
@@ -415,13 +444,14 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                     <label class="text_trans">{{ translate('Screen Shot') }}</label>
-                                                        <div class="input-group" data-toggle="aizuploader" data-type="image">
-                                                            <div class="input-group-prepend">
-                                                                <div class="input-group-text bg-soft-secondary font-weight-medium">
-                                                                    {{ translate('Browse') }}</div>
-                                                            </div>
-                                                            <div class="form-control file-amount">{{ translate('Choose image') }}
-                                                            </div>
+                                                    <div class="input-group" data-toggle="aizuploader" data-type="image"
+                                                        data-multiple="true">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text bg-soft-secondary font-weight-medium">
+                                                                {{ translate('Browse') }}</div>
+                                                        </div>
+                                                        <div class="form-control file-amount">{{ translate('Choose File') }}</div>
+                                                    
                                                             <input type="hidden" name="photo" id="photo_checking "class="selected-files">
                                                         </div>
                                                         <div class="file-preview box sm">

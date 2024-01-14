@@ -3,7 +3,8 @@
     <!-- Order id -->
     <div class="aiz-titlebar mb-4">
         <div class="row align-items-center">
-            <div class="col-md-6">
+            <div class="col-md-6" style="display: flex">
+                <a style="display: flex;align-items: center;margin-right: 10px;margin-bottom: 0.5rem" href="{{route('admin.purchase_history.all_orders')}}" ><i style="color:black;font-size: 1.73em;" class="fa fa-long-arrow-alt-left"></i></a>
                 <h1 class="fs-20 fw-700 text-dark">{{ translate('Order id') }}: {{ $order->code }}</h1>
             </div>
         </div>
@@ -70,29 +71,63 @@
                        
                         <tr>
                             <td class="w-50 fw-600">{{ translate('Payment Status') }}:</td>
-                            <td> <span class='badge badge-inline badge-warning'>{{ ucfirst($order->payment_status) }}</span></td>
+                            <td> 
+                                @if($order->payment_status != 'paid' )
+                                    <span class='badge badge-inline badge-warning'>{{ ucfirst($order->payment_status) }}</span> 
+                                    @if($order->payment_status === 'waiting for checking' )
+                                        <button  id="verify_payment">
+                                            <input type="hidden" value="{{$order->id}}" id="order_id">
+                                            <i class="fa fa-check"></i> Verify
+                                        </button>
+                                    @endif
+                                @else
+                                    <span class='badge badge-inline badge-success'>{{ ucfirst($order->payment_status) }}</span> 
+                                @endif
+                            </td>
                         </tr>
                         
                     </table>
                 </div>
                 <div class="row gutters-5">
                     <div class="col text-md-left text-center">
-                        @if (is_array(json_decode($order->manual_payment_data, true)))
-                            {{-- <div class="form-group text-left">
-                                <button type="button" 
-                                id="btn_image"
-                                class="btn btn-primary">Showing Receipt</button>
-                            </div> --}}
-                           
-                            <div id="hide_image" hidden="true">
-                                @foreach($order->img_url as $data_image)
-                                    <input type="hidden" value="{{$data_image}}">
-                                    <a href="{{url('public/'.$data_image)}}" target="_blank">
-                                        <img src="{{url('public/'.$data_image)}}" alt=""
-                                            height="100">
-                                    </a>
-                                @endforeach
-                            </div>
+                        @if($order->payment_status === "waiting for checking" || $order->payment_status === "paid")
+                        {{-- @if(Auth::user()->user_type === 'enterprise') --}}
+                            @if (is_array(json_decode($order->manual_payment_data, true)))
+                                
+                                <div class="form-group text-left">
+                                    <button type="button" 
+                                    id="btn_image"
+                                    class="btn btn-primary">Showing Receipt</button>
+                                </div>
+                            
+                                <div id="hide_image" hidden="true">
+                                    <div>
+                                        <table class="table-borderless table">
+                                            <tr>
+                                                <td class="w-50 fw-600">{{ translate('Transaction ID') }}:</td>
+                                                <td> {{ $order->trx_id }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="w-50 fw-600">{{ translate('Amound') }}:</td>
+                                                <td> {{ single_price($order->amount_payment) }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="w-50 fw-600">{{ translate('Image Verify') }}:</td>
+                                                <td>  
+                                                    @foreach($order->img_url as $data_image)
+                                                        <input type="hidden" value="{{$data_image}}">
+                                                        <a href="{{$data_image}}" target="_blank">
+                                                            <img src="{{$data_image}}" alt=""
+                                                                height="100">
+                                                        </a>
+                                                    @endforeach
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                   
+                                </div>
+                            @endif
                         @endif
                     </div>
                 </div>
@@ -274,13 +309,43 @@
 
 @section('script')
     <script type="text/javascript">
-        
-
         function showreceipt(){
             $('#showingreceipt').modal('show');
         }
         $('#btn_image').on('click',function() {
             $('#hide_image').removeAttr('hidden');
+        });
+
+        $('#verify_payment').on('click',function() {
+            var order_id = 0;
+            order_id = $('#order_id').val();
+            if(order_id != 0 )
+            {
+                $.ajax
+                ({
+                    url: "{{route('admin.purchase_history.verify_payment')}}",
+                    method:'post',
+                    data:{
+                        order_id:order_id,
+                    },
+                    headers: {
+                        'X-CSRF-Token': '{{ csrf_token() }}',
+                    },
+                    success: function(data){
+                        location.reload();
+                        AIZ.plugins.notify('success','Update Payment Status Successfully!!!!');
+                    }, 
+                    error: function(){
+                        AIZ.plugins.notify('danger','Some Thing Went Wrong!!!!');
+                    }
+                });
+                
+            }
+            else
+            {
+                AIZ.plugins.notify('danger','Some Thing Went Wrong!!!!');
+            }
+            
         });
     </script>
 @endsection

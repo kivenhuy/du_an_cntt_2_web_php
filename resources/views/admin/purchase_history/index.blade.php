@@ -62,9 +62,10 @@ $(document).ready(function()
     var rfq_table = $("#example1").DataTable
     ({
         lengthChange: true,
-        responsive: true,
+        responsive: false,
         processing: true,
         searching: false,
+        scrollX: true,
         bSort:false,
         serverSide: true,
             ajax: "{{ route('admin.purchase_history.data_ajax') }}",

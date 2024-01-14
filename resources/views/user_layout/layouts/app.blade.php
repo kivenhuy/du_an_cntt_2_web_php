@@ -3,6 +3,7 @@
 <head>
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="app-url" content="{{ getBaseURL() }}">
 
    
 
@@ -1674,10 +1675,8 @@
     @yield('modal')
 
     <!-- SCRIPTS -->
-    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> --}}
-    <script src="{{ static_asset('assets/js/vendors.js') }}"></script>
-    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> --}}
-    <script src="{{ static_asset('assets/js/custom-core.js?v=') }}{{ rand(1000,9999) }}"></script>
+    <script src="{{ static_asset('assets/js/vendors.js') }}" ></script>
+	<script src="{{ static_asset('assets/js/custom-core.js') }}" ></script>
     <script src="{{ static_asset('plugins/jquery-validation/jquery.validate.min.js') }}" ></script>
 	<script src="{{ static_asset('plugins/datatables/jquery.dataTables.min.js') }}" ></script>
 	<script src="{{ static_asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}" ></script>
