@@ -10,7 +10,7 @@
                     <div class="row" style="margin-top: 24px;">
                         <div class="col-lg-9">
                             
-                                @if(is_null($carts_normal))
+                                @if(!empty($carts_normal))
                                     <input type="hidden" name="owner_id" value="{{ $carts_normal[0]['owner_id'] }}">
                                 @else
                                     <input type="hidden" name="owner_id" value="{{ $carts_short_shelf_life[0]['owner_id'] }}">

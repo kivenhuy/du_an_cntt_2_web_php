@@ -683,23 +683,7 @@
             $(em).closest('.variant').remove();
         }
 
-        // function update_sku() {
-        //     $.ajax({
-        //         type: "POST",
-        //         url: '',
-        //         data: $('#choice_form').serialize(),
-        //         success: function(data) {
-        //             $('#sku_combination').html(data);
-        //             AIZ.plugins.fooTable();
-        //             if (data.length > 1) {
-        //                 $('#show-hide-div').hide();
-        //             } else {
-        //                 $('#show-hide-div').show();
-        //             }
-        //         }
-        //     });
-        // }
-
+       
         $('#choice_attributes').on('change', function() {
             $('#customer_choice_options').html(null);
             $.each($("#choice_attributes option:selected"), function() {

@@ -230,7 +230,7 @@ class OrderController extends Controller
                 // dd(Carbon::parse($reservationStartingDate));
                 $product = Products::find($cartItem['product_id']);
 
-                $subtotal += cart_product_price($cartItem, $product, false, false) * $cartItem['quantity'];
+                $subtotal += cart_product_price($cartItem, $product, false, false) * $cartItem['quantity'] *  count($shipping_date);
                 $product_variation = $cartItem['variation'];
                 $product_stock = $product->product_stock;
                 // if ($cartItem['quantity'] > $product_stock->qty) {
@@ -252,7 +252,7 @@ class OrderController extends Controller
                     $order_detail->variation = $product_variation;
                     
                     $order_detail->shipping_type = $cartItem['shipping_type'];
-                    
+                    $order_detail->shipping_cost = $cartItem['shipping_cost']/ count($shipping_date);
                     
 
                     $shipping += $order_detail->shipping_cost;
@@ -260,7 +260,7 @@ class OrderController extends Controller
 
                     $order_detail->quantity = $cartItem['quantity'];
                 
-                    $order_detail->price = (cart_product_price($cartItem, $product, false, false) * $cartItem['quantity']) / count($shipping_date);
+                    $order_detail->price = (cart_product_price($cartItem, $product, false, false) * $cartItem['quantity']);
                     $reservationStartingDate = $each_shipping_date ." ".$hour;
                     $order_detail->shipping_date = Carbon::parse($reservationStartingDate);
                     $order_detail->save();
