@@ -1,7 +1,17 @@
 <div class="aiz-sidebar-wrap">
     <div class="aiz-sidebar left c-scrollbar">
         <div class="aiz-side-nav-logo-wrap">
-           
+            <div class="d-block text-center my-3">
+                @if ((Auth::user()->shop)->logo != null)
+                    <img class="mw-100 mb-3" src="{{ uploaded_asset((Auth::user()->shop)->logo) }}"
+                        class="brand-icon" >
+                @else
+                    <img class="mw-100 mb-3" src="{{ uploaded_asset(0) }}" class="brand-icon"
+                        alt="">
+                @endif
+                <h3 class="fs-16  m-0 text-primary">{{ optional(Auth::user()->shop)->name }}</h3>
+                <p class="text-primary">{{ Auth::user()->email }}</p>
+            </div>
         </div>
         <div class="aiz-side-nav-wrap">
             <div class="px-20px mb-3">
@@ -57,6 +67,13 @@
                             </a>
                         </li>
                     </ul>
+                </li>
+
+                <li class="aiz-side-nav-item">
+                    <a href="{{ route('seller.shop.index') }}" class="aiz-side-nav-link">
+                        <i class="fa fa-cog aiz-side-nav-icon"></i>
+                        <span class="aiz-side-nav-text">Shop Setting</span>
+                    </a>
                 </li>
 
             </ul><!-- .aiz-side-nav -->

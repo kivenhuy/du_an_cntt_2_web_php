@@ -9,6 +9,7 @@ use App\Http\Controllers\Customer\HomeController;
 use App\Http\Controllers\EnterpriseController;
 use App\Http\Controllers\PurchaseHistoryController;
 use App\Http\Controllers\RequestForProductController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\UploadsController;
@@ -25,7 +26,11 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+Route::controller(HomeController::class)->group(function () {
+    Route::get('/', 'index')->name('homepage');
+    Route::get('/product/{slug}', 'product')->name('product');
+    Route::get('/comming-soon', 'comming_soon')->name('comming-soon');
+});
 Route::get("/login", [LoginController::class, 'showLoginForm'])->name('login.form');
 Route::post("/login", [LoginController::class, 'login'])->name('user.login');
 Route::get("/user_registration", [LoginController::class, 'showRegisterForm'])->name('user.registration_form');
@@ -39,11 +44,10 @@ Route::group(['middleware' => ['auth']], function () {
 
 
     Route::controller(HomeController::class)->group(function () {
-        Route::get('/', 'index')->name('homepage');
-        Route::get('/comming-soon', 'comming_soon')->name('comming-soon');
+        
+        Route::get('/shop/{slug}', 'shop')->name('shop.visit');
         Route::get('/dashboard', 'dashboard')->name('user.dashboard');
         Route::get('/profile', 'profile')->name('profile');
-        Route::get('/product/{slug}', 'product')->name('product');
         Route::get('/terms', 'terms')->name('terms');
     });
 
@@ -137,8 +141,8 @@ Route::group(['middleware' => ['auth']], function () {
         });
     });
 
-
-    
+    Route::post('/product_review_modal', [ReviewController::class, 'product_review_modal'])->name('product_review_modal');
+    Route::resource('/reviews', ReviewController::class);
 });
 
 

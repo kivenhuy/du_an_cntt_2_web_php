@@ -34,4 +34,9 @@ class Order extends Model
     {
         return single_price($this->grand_total - $this->orderDetails->sum('shipping_cost'));
     }
+
+    public function getUserDetailAttribute()
+    {
+        return $this->user;
+    }
 }

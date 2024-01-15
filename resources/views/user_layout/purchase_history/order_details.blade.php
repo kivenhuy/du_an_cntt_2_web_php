@@ -154,7 +154,7 @@
                                     <td class="fw-700">{{ single_price($orderDetail->price) }}</td>
                                     
                                     <td class="text-xl-right pr-0">
-                                        @if ($orderDetail->delivery_status == 'delivered')
+                                        @if ($orderDetail->delivery_status === 'delivered')
                                             <a href="javascript:void(0);"
                                                 onclick="product_review('{{ $orderDetail->product_id }}')"
                                                 class="btn btn-primary btn-sm rounded-0"> {{ translate('Review') }} </a>
@@ -264,6 +264,19 @@
 @section('script')
     <script type="text/javascript">
         
+        function product_review(product_id) {
+            $.post('{{ route('product_review_modal') }}', {
+                _token:'{{ csrf_token() }}',
+                product_id: product_id
+            }, function(data) {
+                $('#product-review-modal-content').html(data);
+                $('#product-review-modal').modal('show', {
+                    backdrop: 'static'
+                });
+                AIZ.extra.inputRating();
+            });
+        }
+
 
         function showreceipt(){
             $('#showingreceipt').modal('show');

@@ -20,9 +20,9 @@ return new class extends Migration
             $table->string('top_banner')->nullable();
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
-            $table->double('rating',8,2)->nullable();
-            $table->integer('num_of_reviews')->nullable();
-            $table->integer('num_of_sale')->nullable();
+            $table->double('rating',8,2)->default(0);
+            $table->integer('num_of_reviews')->default(0);
+            $table->integer('num_of_sale')->default(0);
             $table->integer('verification_status')->nullable();
             $table->longText('verification_info')->nullable();
             $table->string('meta_title')->nullable();

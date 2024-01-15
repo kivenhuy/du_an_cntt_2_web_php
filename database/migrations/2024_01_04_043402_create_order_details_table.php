@@ -21,7 +21,7 @@ return new class extends Migration
             $table->double('shipping_cost',20,2);
             $table->integer('quantity');
             $table->string('payment_status')->nullable();
-            $table->string('delivery_status')->nullable();
+            $table->string('delivery_status')->nullable()->default('waiting');
             $table->string('shipping_type')->nullable();
             $table->timestamp('shipping_date')->nullable();
             $table->timestamps();

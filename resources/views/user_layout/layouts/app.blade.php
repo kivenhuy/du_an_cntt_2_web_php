@@ -1705,6 +1705,15 @@
             search();
         });
 
+        function showLoginModal() {
+            @if (!Auth::check())
+            {
+                AIZ.plugins.notify('danger', "{{ translate('Please Login To Trigger Action') }}");
+            }
+            @endif
+                // $('#login_modal').modal();
+        }
+
         function search(){
             var searchKey = $('#search').val();
             

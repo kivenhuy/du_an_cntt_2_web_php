@@ -61,19 +61,166 @@
             </div>
         </div>
         
+        <div class="col-sm-6 col-md-6 col-xxl-3">
+            <div class="card shadow-none mb-4 bg-primary py-4">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <p class="small text-muted mb-0">
+                                <span class="fe fe-arrow-down fe-12"></span>
+                                <span class="fs-14 text-light">{{ translate('Total Order') }}</span>
+                            </p>
+                            <h3 class="mb-0 text-white fs-30">
+                                {{ \App\Models\Order::where('seller_id', Auth::user()->id)->where('delivery_status', 'delivered')->count() }}
+                            </h3>
+                        </div>
+                        <div class="col-auto text-right">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+                                <g id="Group_25" data-name="Group 25" transform="translate(-1561.844 1020.618)">
+                                    <path id="Path_58" data-name="Path 58"
+                                        d="M229.23,106.382h-12a6,6,0,0,0,0,12h12a6,6,0,0,0,0-12m0,10h-12a4,4,0,0,1,0-8h12a4,4,0,0,1,0,8"
+                                        transform="translate(1370.615 -1127)" fill="#FFFFFF" />
+                                    <path id="Path_59" data-name="Path 59"
+                                        d="M213.73,117.882h24a1,1,0,0,1,0,2h-24a1,1,0,0,1,0-2"
+                                        transform="translate(1372.115 -1115.5)" fill="#FFFFFF" />
+                                    <path id="Path_60" data-name="Path 60" d="M210.23,117.382a2,2,0,1,0,2,2,2,2,0,0,0-2-2"
+                                        transform="translate(1367.615 -1116)" fill="#FFFFFF" />
+                                    <line id="Line_1" data-name="Line 1" transform="translate(1578.047 -1014.618)"
+                                        fill="none" stroke="red" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="0.142" />
+                                    <line id="Line_2" data-name="Line 2" transform="translate(1609.643 -1014.618)"
+                                        fill="none" stroke="red" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="0.142" />
+                                    <path id="Path_61" data-name="Path 61"
+                                        d="M213.73,123.882h24a1,1,0,0,1,0,2h-24a1,1,0,0,1,0-2"
+                                        transform="translate(1372.115 -1109.5)" fill="#FFFFFF" />
+                                    <path id="Path_62" data-name="Path 62" d="M210.23,123.382a2,2,0,1,0,2,2,2,2,0,0,0-2-2"
+                                        transform="translate(1367.615 -1110)" fill="#FFFFFF" />
+                                    <path id="Path_63" data-name="Path 63"
+                                        d="M213.73,129.882h24a1,1,0,0,1,0,2h-24a1,1,0,1,1,0-2"
+                                        transform="translate(1372.115 -1103.5)" fill="#FFFFFF" />
+                                    <path id="Path_64" data-name="Path 64" d="M210.23,129.382a2,2,0,1,0,2,2,2,2,0,0,0-2-2"
+                                        transform="translate(1367.615 -1104)" fill="#FFFFFF" />
+                                    <line id="Line_3" data-name="Line 3" transform="translate(1609.643 -1015.618)"
+                                        fill="none" stroke="red" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="0.142" />
+                                    <line id="Line_4" data-name="Line 4" transform="translate(1578.047 -1015.618)"
+                                        fill="none" stroke="red" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="0.142" />
+                                    <path id="Path_65" data-name="Path 65"
+                                        d="M265.23,116.382a8,8,0,0,0-8-8h-7.2a1,1,0,0,0,0,2h7.2a6,6,0,0,1,6,6v44a6,6,0,0,1-6,6h-48a6,6,0,0,1-6-6v-44a6,6,0,0,1,6-6h7.2a1,1,0,0,0,0-2h-7.2a8,8,0,0,0-8,8v44a8,8,0,0,0,8,8h48a8,8,0,0,0,8-8Z"
+                                        transform="translate(1360.615 -1125)" fill="#FFFFFF" />
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-6 col-xxl-3">
+            <div class="card shadow-none mb-4 bg-primary py-4">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <p class="small text-muted mb-0">
+                                <span class="fe fe-arrow-down fe-12"></span>
+                                <span class="fs-14 text-light">{{ translate('Total Sales') }}</span>
+                            </p>
+                            <h3 class="mb-0 text-white fs-30">
+                                @php
+                                    $orderDetails = \App\Models\OrderDetail::where('seller_id', Auth::user()->id)->get();
+                                    $total = 0;
+                                    foreach ($orderDetails as $key => $orderDetail) {
+                                        if ($orderDetail->order != null && $orderDetail->order->payment_status == 'paid') {
+                                            $total += $orderDetail->price;
+                                        }
+                                    }
+                                @endphp
+                                {{ single_price($total) }}
+                            </h3>
+
+                        </div>
+                        <div class="col-auto text-right">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64.001" viewBox="0 0 64 64.001">
+                                <g id="Group_26" data-name="Group 26" transform="translate(-1571.385 1123.29)">
+                                    <line id="Line_5" data-name="Line 5" transform="translate(1572.385 -1123.29)"
+                                        fill="none" stroke="red" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="0.142" />
+                                    <path id="Path_67" data-name="Path 67"
+                                        d="M214.771,65.71a2,2,0,0,1-2-2v-59a1,1,0,0,0-2,0v59a4,4,0,0,0,4,4h59a1,1,0,0,0,0-2Z"
+                                        transform="translate(1360.615 -1127)" fill="#FFFFFF" />
+                                    <line id="Line_6" data-name="Line 6" y1="0.136" x2="0.136"
+                                        transform="translate(1586.533 -1087.117)" fill="none" stroke="red"
+                                        stroke-linecap="round" stroke-linejoin="round" stroke-width="0.142" />
+                                    <path id="Path_68" data-name="Path 68"
+                                        d="M264.6,10.027a3,3,0,0,0-4,4L247.536,27.1a2.994,2.994,0,0,0-2.594,0l-6.584-6.584a3,3,0,1,0-5.414,0L221.528,31.927a3,3,0,1,0,1.412,1.418l11.418-11.418a3,3,0,0,0,2.586,0l6.586,6.586a3,3,0,1,0,5.418,0l13.072-13.07a3,3,0,0,0,2.584-5.416M220.23,35.633a1,1,0,1,1,1-1,1,1,0,0,1-1,1m15.42-15.414a1,1,0,1,1,1-1,1,1,0,0,1-1,1M246.238,30.8a1,1,0,1,1,1-1,1,1,0,0,1-1,1m17.074-17.066a1,1,0,1,1,1-1,1,1,0,0,1-1,1"
+                                        transform="translate(1367.074 -1120.976)" fill="#FFFFFF" />
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <div class="row">
         <div class="col-sm-6 col-md-6 col-lg-3 mb-4">
             <div class="card shadow-none bg-soft-primary">
+                @php
+                    $date = date('Y-m-d');
+                    $days_ago_30 = date('Y-m-d', strtotime('-30 days', strtotime($date)));
+                    $days_ago_60 = date('Y-m-d', strtotime('-60 days', strtotime($date)));
+                    
+                    $orderTotal = \App\Models\Order::where('seller_id', Auth::user()->id)
+                        ->where('payment_status', 'paid')
+                        ->where('created_at', '>=', $days_ago_30)
+                        ->sum('grand_total');
+                @endphp
                 <div class="card-body">
                     <div class="card-title text-primary fs-16 fw-600">
-                        {{ translate('Sales Stat') }}
+                        {{ translate('Sold Amount') }}
                     </div>
-                    <canvas id="graph-1" class="w-100" height="150"></canvas>
+                    <p>{{ translate('Your Sold Amount (Current month)') }}</p>
+                    <h3 class="text-primary fw-600 fs-30">
+                        {{ single_price($orderTotal) }}
+                    </h3>
+                    <p class="mt-4">
+                        @php
+                            $orderTotal = \App\Models\Order::where('seller_id', Auth::user()->id)
+                                ->where('payment_status', 'paid')
+                                ->where('created_at', '>=', $days_ago_60)
+                                ->where('created_at', '<=', $days_ago_30)
+                                ->sum('grand_total');
+                        @endphp
+                        {{ translate('Last Month') }}: {{ single_price($orderTotal) }}
+                    </p>
                 </div>
             </div>
             
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-3 mb-4">
+            <div class="card shadow-none h-450px mb-0 h-100">
+                <div class="card-body">
+                    <div class="card-title text-primary fs-16 fw-600">
+                        {{ translate('Category wise product count') }}
+                    </div>
+                    <hr>
+                    <ul class="list-group">
+                        @foreach (\App\Models\Category::all() as $key => $category)
+                            @if (count($category->products->where('user_id', Auth::user()->id)) > 0)
+                                <li class="d-flex justify-content-between align-items-center my-2 text-primary fs-13">
+                                    {{ $category->name}}
+                                    <span class="">
+                                        {{ count($category->products->where('user_id', Auth::user()->id)) }}
+                                    </span>
+                                </li>
+                            @endif
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
         </div>
         <div class="col-sm-6 col-md-6 col-lg-3 mb-4">
             <div class="card h-450px mb-0 h-100">
@@ -83,6 +230,7 @@
                         <p class="small text-muted mb-0">
                             <span class="fs-12 fw-600">{{ translate('This Month') }}</span>
                         </p>
+                        
                     </div>
                     <div class="row align-items-center mb-4">
                         <div class="col-auto text-left">
@@ -106,7 +254,9 @@
                                 <span class="fe fe-arrow-down fe-12"></span>
                                 <span class="fs-13 text-primary fw-600">{{ translate('New Order') }}</span>
                             </p>
-                            
+                            <h3 class="mb-0" style="color: #A9A3CC">
+                                {{ \App\Models\OrderDetail::where('seller_id', Auth::user()->id)->where('delivery_status', 'waiting')->count() }}
+                            </h3>
                         </div>
                     </div>
                     <div class="row align-items-center mb-4">
@@ -143,7 +293,9 @@
                                 <span class="fe fe-arrow-down fe-12"></span>
                                 <span class="fs-13 text-primary fw-600">{{ translate('Cancelled') }}</span>
                             </p>
-                            
+                            <h3 class="mb-0" style="color: #A9A3CC">
+                                {{ \App\Models\OrderDetail::where('seller_id', Auth::user()->id)->where('delivery_status', 'cancelled')->count() }}
+                            </h3>
                         </div>
                     </div>
                     <div class="row align-items-center mb-4">
@@ -183,7 +335,9 @@
                                 <span class="fe fe-arrow-down fe-12"></span>
                                 <span class="fs-13 text-primary fw-600">{{ translate('On Delivery') }}</span>
                             </p>
-                            
+                            <h3 class="mb-0" style="color: #A9A3CC">
+                                {{ \App\Models\OrderDetail::where('seller_id', Auth::user()->id)->where('delivery_status', 'on_the_way')->count() }}
+                            </h3>
                         </div>
                     </div>
                     <div class="row align-items-center mb-4">
@@ -211,7 +365,9 @@
                                 <span class="fe fe-arrow-down fe-12"></span>
                                 <span class="fs-13 text-primary fw-600">{{ translate('Delivered') }}</span>
                             </p>
-                            
+                            <h3 class="mb-0" style="color: #A9A3CC">
+                                {{ \App\Models\OrderDetail::where('seller_id', Auth::user()->id)->where('delivery_status', 'delivered')->count() }}
+                            </h3>
                         </div>
                     </div>
 

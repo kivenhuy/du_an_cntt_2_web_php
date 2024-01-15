@@ -332,13 +332,13 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
                                     '<img src="' +
                                     AIZ.data.appUrl +
                                     data[i].file_name +
-                                    '" class="img-fit">';
+                                    '" class="img-fit 1">';
                             } else {
                                 thumb =
                                     '<img src="' +
                                     AIZ.data.farmUrl +
                                     data[i].file_name +
-                                    '" class="img-fit">';
+                                    '" class="img-fit 1">';
                             }
                         } else {
                             thumb = '<i class="la la-file-text"></i>';
@@ -413,15 +413,15 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
                                     if (data[i].is_farm_photo == 0) {
                                         thumb =
                                             '<img src="' +
-                                            AIZ.data.appUrl +
+                                            // AIZ.data.appUrl +
                                             data[i].file_name +
-                                            '" class="img-fit">';
+                                            '" class="img-fit 2">';
                                     } else {
                                         thumb =
                                             '<img src="' +
                                             'http://127.0.0.1:4000/' +
                                             data[i].file_name +
-                                            '" class="img-fit">';
+                                            '" class="img-fit 2">';
                                     }
                                 } else {
                                     thumb = '<i class="la la-file-text"></i>';
@@ -643,7 +643,7 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
                                         if (data[i].is_farm_photo == 0) {
                                             thumb =
                                                 '<img src="' +
-                                                AIZ.data.appUrl +
+                                                
                                                 data[i].file_name +
                                                 '" class="img-fit">';
                                         } else {

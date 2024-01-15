@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Categories;
 use App\Models\Category;
 use App\Models\Products;
+use App\Models\Shop;
 use Http;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -61,5 +62,15 @@ class HomeController extends Controller
         } else {
             abort(404);
         }
+    }
+
+    public function shop($slug)
+    {
+        $shop  = Shop::where('slug', $slug)->first();
+        if ($shop != null) {
+            
+            return view('user_layout.seller.shop', compact('shop'));
+        }
+        abort(404);
     }
 }

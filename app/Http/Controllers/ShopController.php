@@ -7,6 +7,7 @@ use App\Models\Seller;
 use App\Models\Shop;
 use Illuminate\Support\Facades\Http;
 use App\Models\User;
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -88,6 +89,55 @@ class ShopController extends Controller
             }
            
         }
+        flash(translate('Sorry! Something went wrong.'))->error();
+        return back();
+    }
+
+    public function index()
+    {
+        $shop = Auth::user()->shop;
+        return view('seller.shop.detail', compact('shop'));
+    }
+
+    public function update(Request $request)
+    {
+        $shop = Shop::find($request->shop_id);
+
+        if ($request->has('name') && $request->has('address')) {
+            if ($request->has('shipping_cost')) {
+                $shop->shipping_cost = $request->shipping_cost;
+            }
+
+            $shop->name             = $request->name;
+            $shop->address          = $request->address;
+            $shop->phone            = $request->phone;
+            $shop->slug             = preg_replace('/\s+/', '-', $request->name) . '-' . $shop->id;
+            $shop->meta_title       = $request->meta_title;
+            $shop->meta_description = $request->meta_description;
+            $shop->logo             = $request->logo;
+        }
+
+        if ($request->has('delivery_pickup_longitude') && $request->has('delivery_pickup_latitude')) {
+
+            $shop->delivery_pickup_longitude    = $request->delivery_pickup_longitude;
+            $shop->delivery_pickup_latitude     = $request->delivery_pickup_latitude;
+        }  elseif (
+            $request->has('top_banner') ||
+            $request->has('sliders') || 
+            $request->has('banner_full_width_1') || 
+            $request->has('banners_half_width') || 
+            $request->has('banner_full_width_2')
+        ) {
+            $shop->top_banner = $request->top_banner;
+            $shop->slider = $request->slider;
+           
+        }
+
+        if ($shop->save()) {
+            flash(translate('Your Shop has been updated successfully!'))->success();
+            return back();
+        }
+
         flash(translate('Sorry! Something went wrong.'))->error();
         return back();
     }

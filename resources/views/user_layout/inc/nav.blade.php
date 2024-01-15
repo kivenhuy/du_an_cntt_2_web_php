@@ -289,7 +289,7 @@
                 </div>
             </div>
         </div>
-        @if(Auth::check())
+        {{-- @if(Auth::check()) --}}
         <div class="d-none d-lg-block position-relative bg-primary h-50px" style="height:70px;background-color:#2E7F25 !important">
             <div class="container h-100">
                 <div class="d-flex h-100">
@@ -358,6 +358,6 @@
             </div>
             
         </div>
-        @endif
+        {{-- @endif --}}
     </header>
 

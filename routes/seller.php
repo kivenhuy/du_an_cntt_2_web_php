@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\RequestForProductController;
 use App\Http\Controllers\Seller\DashboardController;
 use App\Http\Controllers\Seller\ProductController;
+use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -34,5 +35,12 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/seller/request_for_product/seller_supermarket_dataajax', 'seller_supermarket_dataajax')->name('request_for_product.seller_supermarket_dataajax');
         Route::post('/seller/request_for_product/seller_update_price', 'seller_update_price')->name('seller.request_for_product.seller_update_price');
         Route::post('/seller/request_for_product/seller_accept_request', 'seller_accept_request')->name('seller.request_for_product.seller_accept_request');
+    });
+
+    Route::controller(ShopController::class)->group(function () {
+        Route::get('/shop', 'index')->name('seller.shop.index');
+        Route::post('/shop/update', 'update')->name('seller.shop.update');
+        Route::get('/shop/apply_for_verification', 'verify_form')->name('seller.shop.verify');
+        Route::post('/shop/verification_info_store', 'verify_form_store')->name('seller.shop.verify.store');
     });
 });

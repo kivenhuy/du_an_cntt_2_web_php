@@ -272,7 +272,46 @@
                     </div>
                 @endif
 
-                @if(Auth::user()->user_type != "enterprise")
+                @if(Auth::check())
+                    @if(Auth::user()->user_type != "enterprise")
+                        <!-- Quantity + Add to cart -->
+                        <div class="row no-gutters mb-3" style="margin-bottom: 32px !important;">
+                            <div class="col-sm-2">
+                                <div class="text-secondary fs-14 fw-400 mt-2 text_brand">{{ translate('Quantity') }}</div>
+                            </div>
+                            <div class="col-sm-10">
+                                <div class="product-quantity d-flex align-items-center">
+                                    <div class="row no-gutters align-items-center aiz-plus-minus mr-3" style="width: 130px;">
+                                        <button class="btn col-auto btn-icon btn-sm btn-light rounded-0" type="button"
+                                            data-type="minus" data-field="quantity" disabled="">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                        <input type="number" name="quantity"
+                                            class="col border-0 text-center flex-grow-1 fs-16 input-number" placeholder="1"
+                                            value="{{ $detailedProduct->min_qty }}" min="{{ $detailedProduct->min_qty }}"
+                                            max="10" lang="en">
+                                        <button class="btn col-auto btn-icon btn-sm btn-light rounded-0" type="button"
+                                            data-type="plus" data-field="quantity">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                    @php
+                                        $qty = 0;
+                                        // foreach ($detailedProduct->stocks as $key => $stock) {
+                                            $qty += $detailedProduct->product_stock->qty;
+                                        // }product_stock
+                                    @endphp
+                                    <div class="avialable-amount opacity-60">
+                                        
+                                            <span id="available-quantity">{{ $qty }}</span>
+                                            {{ translate('available') }}
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                @else
                     <!-- Quantity + Add to cart -->
                     <div class="row no-gutters mb-3" style="margin-bottom: 32px !important;">
                         <div class="col-sm-2">
@@ -310,6 +349,7 @@
                         </div>
                     </div>
                 @endif
+                
                 <!-- Additional Cost -->
                 @if ($detailedProduct->is_use_additional_cost)
                     <div class="row no-gutters mb-3 mb-4">
@@ -344,26 +384,27 @@
                         <div class="row">
                             <input type="hidden" value="{{$detailedProduct->id}}" name="id_product" id="id_product">
                             <div class="setting_for_button" style="">
+                            @if (Auth::check())
                                 @if(Auth::user()->user_type != "enterprise")
-                                <div class="pl-3 pr-0" style="max-width:250px !important">
-                                    <button type="button" 
-                                        class="btn btn-warning buy-now fw-600 add_to_cart min-w-150px rounded-4"
-                                        @if (Auth::check()) onclick="addToCart()" @else onclick="showLoginModal()" @endif>
-                                            {{-- <i class="fa fa-shopping-bag"></i> --}}
-                                            <i class="fa fa-shopping-bag" style="font-size: 16px"></i>
-                                            {{-- <img src="{{static_asset('uploads/all/km22nnFUj9qnUYI8vD3Sa0gB6sLIUeqw921muBAb.png')}}" alt=""> --}}
-                                        <span class="d-md-inline-block text_button_detail_page font-size-mobile"> {{ translate('Add to cart') }}</span>
-                                    </button>
-                                </div>
-                                
-                                <div class="pl-3 pr-0" style="max-width:180px !important">
-                                    <button type="button" class="btn btn-primary buy-now fw-600 add-to-cart min-w-140px rounded-4"
-                                        @if (Auth::check()) onclick="buyNow()" @else onclick="showLoginModal()" @endif>
-                                        <i class="fa fa-shopping-cart" style="font-size: 16px"></i> 
-                                        {{-- <img src="{{static_asset('uploads/all/eP7lX2HLlbLjmFYZtMUZe0R4QVC6qnEEcurewNOq.png')}}" alt=""> --}}
-                                        <span class="d-md-inline-block text_button_detail_page font-size-mobile"> {{ translate('Buy Now') }}</span>
-                                    </button>
-                                </div>
+                                    <div class="pl-3 pr-0" style="max-width:250px !important">
+                                        <button type="button" 
+                                            class="btn btn-warning buy-now fw-600 add_to_cart min-w-150px rounded-4"
+                                            @if (Auth::check()) onclick="addToCart()" @else onclick="showLoginModal()" @endif>
+                                                {{-- <i class="fa fa-shopping-bag"></i> --}}
+                                                <i class="fa fa-shopping-bag" style="font-size: 16px"></i>
+                                                {{-- <img src="{{static_asset('uploads/all/km22nnFUj9qnUYI8vD3Sa0gB6sLIUeqw921muBAb.png')}}" alt=""> --}}
+                                            <span class="d-md-inline-block text_button_detail_page font-size-mobile"> {{ translate('Add to cart') }}</span>
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="pl-3 pr-0" style="max-width:180px !important">
+                                        <button type="button" class="btn btn-primary buy-now fw-600 add-to-cart min-w-140px rounded-4"
+                                            @if (Auth::check()) onclick="buyNow()" @else onclick="showLoginModal()" @endif>
+                                            <i class="fa fa-shopping-cart" style="font-size: 16px"></i> 
+                                            {{-- <img src="{{static_asset('uploads/all/eP7lX2HLlbLjmFYZtMUZe0R4QVC6qnEEcurewNOq.png')}}" alt=""> --}}
+                                            <span class="d-md-inline-block text_button_detail_page font-size-mobile"> {{ translate('Buy Now') }}</span>
+                                        </button>
+                                    </div>
                                 @endif
                                 @if(Auth::user()->user_type == 'enterprise')
                                     <div class="pl-3 pr-0" style="max-width:200px !important">
@@ -374,7 +415,35 @@
                                         </button>
                                     </div>
                                 @endif
-								
+                            @else 
+                                    <div class="pl-3 pr-0" style="max-width:250px !important">
+                                        <button type="button" 
+                                            class="btn btn-warning buy-now fw-600 add_to_cart min-w-150px rounded-4"
+                                            @if (Auth::check()) onclick="addToCart()" @else onclick="showLoginModal()" @endif>
+                                                {{-- <i class="fa fa-shopping-bag"></i> --}}
+                                                <i class="fa fa-shopping-bag" style="font-size: 16px"></i>
+                                                {{-- <img src="{{static_asset('uploads/all/km22nnFUj9qnUYI8vD3Sa0gB6sLIUeqw921muBAb.png')}}" alt=""> --}}
+                                            <span class="d-md-inline-block text_button_detail_page font-size-mobile"> {{ translate('Add to cart') }}</span>
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="pl-3 pr-0" style="max-width:180px !important">
+                                        <button type="button" class="btn btn-primary buy-now fw-600 add-to-cart min-w-140px rounded-4"
+                                            @if (Auth::check()) onclick="buyNow()" @else onclick="showLoginModal()" @endif>
+                                            <i class="fa fa-shopping-cart" style="font-size: 16px"></i> 
+                                            {{-- <img src="{{static_asset('uploads/all/eP7lX2HLlbLjmFYZtMUZe0R4QVC6qnEEcurewNOq.png')}}" alt=""> --}}
+                                            <span class="d-md-inline-block text_button_detail_page font-size-mobile"> {{ translate('Buy Now') }}</span>
+                                        </button>
+                                    </div>
+                                    <div class="pl-3 pr-0" style="max-width:200px !important">
+                                        <button type="button" class="btn btn-info buy-now fw-600 add-to-cart min-w-140px rounded-4"
+                                            @if (Auth::check()) onclick="SendRFQRequest()" @else onclick="showLoginModal()" @endif>
+                                            <i class="fa fa-file-contract"></i>
+                                            <span class="d-md-inline-block text_button_detail_page font-size-mobile"> {{ translate('Send Request') }}</span>
+                                        </button>
+                                    </div>
+                                
+                            @endif
                                 
                             </div>
                          
