@@ -35,8 +35,7 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $carts = Cart::where([['user_id', Auth::user()->id],['is_checked',1]])
-            ->get();
+        $carts = Cart::where([['user_id', Auth::user()->id],['is_checked',1]])->get();
 
         if ($carts->isEmpty()) {
             flash(translate('Your cart is empty'))->warning();
@@ -73,7 +72,6 @@ class OrderController extends Controller
             array_push($product_ids, $cartItem);
             $seller_products[$product->user_id] = $product_ids;
         }
-        dd($seller_products);
        
         foreach ($seller_products as $seller_product) {
             $order = new Order;
@@ -81,6 +79,7 @@ class OrderController extends Controller
             $order->customer_id = Auth::user()->id;
             $order->shipping_address = $combined_order->shipping_address;
             $order->payment_type = $request->payment_option;
+            $order->payment_status = "unpaid";
             $order->delivery_viewed = 0;
             $order->viewed = 0;
             $order->code = date('Ymd-His') . rand(10, 99);

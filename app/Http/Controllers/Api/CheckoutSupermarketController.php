@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\UploadsController;
 use App\Models\Address;
 use App\Models\Carrier;
 use App\Models\Cart;
@@ -306,6 +307,23 @@ class CheckoutSupermarketController extends Controller
 
     public function checkout(Request $request)
     {  
+        $photo_ids = [];
+        
+        if (!empty($request->data['photo_url'])) {
+                                    
+            $id = (new UploadsController)->upload_photo_supermarket($request->data['photo_url'],$request->data['ecom_id']);
+            if (!empty($id)) {
+                array_push($photo_ids, $id);
+            }
+        }
+        if(count($photo_ids)>1)
+        {
+            $photo_img = implode(',', $photo_ids);
+        }
+        else
+        {
+            $photo_img = $photo_ids[0];
+        }
         if ($request->data['payment_option'] != null) {
 
             $data_combine_id  =  $this->store_enterprise($request);
@@ -322,8 +340,8 @@ class CheckoutSupermarketController extends Controller
                 $manual_payment_data = array(
                     'name'   => $request->data['payment_option'],
                     'amount' => $combined_order->grand_total,
-                    'trx_id' => $request->trx_id,
-                    'photo'  => $request->photo
+                    'trx_id' => $request->data['trx_id'],
+                    'photo'  => $photo_img
                 );
                 foreach ($combined_order->orders as $order) {
                     $order->manual_payment = 1;
@@ -447,13 +465,13 @@ class CheckoutSupermarketController extends Controller
                     $order_detail->product_id = $product->id;
                     $order_detail->variation = $product_variation;
                     $order_detail->shipping_type = $cartItem['shipping_type'];
-                    $order_detail->shipping_cost = $cartItem['shipping_cost']/ count($shipping_date);
+                    $order_detail->shipping_cost = $cartItem['shipping_cost'] / count($shipping_date);
                     $shipping += $order_detail->shipping_cost;
                     //End of storing shipping cost
 
                     $order_detail->quantity = $cartItem['quantity'];
                 
-                    $order_detail->price = (cart_product_price($cartItem, $product, false, false) * $cartItem['quantity']) ;
+                    $order_detail->price = (cart_product_price($cartItem, $product, false, false) * $cartItem['quantity']);
                     $reservationStartingDate = $each_shipping_date ." ".$hour;
                     $order_detail->shipping_date = Carbon::parse($reservationStartingDate);
                     $order_detail->save();

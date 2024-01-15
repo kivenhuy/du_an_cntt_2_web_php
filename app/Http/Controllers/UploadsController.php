@@ -267,4 +267,23 @@ class UploadsController extends Controller
             return $upload->id;
         }
     }
+
+    public function upload_photo_supermarket($file,$user_id)
+    {
+        
+        if (!empty($file)) {
+            $name = explode("/", $file)[2];
+            $upload = new Uploads();
+            $upload->file_original_name = explode(".", $name)[0];
+            $upload->extension = explode(".", $name)[1];
+            $upload->file_name = $file;
+            $upload->user_id = $user_id;
+            $upload->type = 'image';
+            $upload->is_farm_photo = 2;
+            $upload->file_size = 1000;
+            $upload->save();
+            
+            return $upload->id;
+        }
+    }
 }

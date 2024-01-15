@@ -44,6 +44,8 @@ class PurchaseHistoryController extends Controller
     public function get_detail($id)
     {
         $order = Order::find($id);
+    
+        // dd($order->amount_price);
         $order->delivery_viewed = 1;
         $order->save();
         
@@ -60,23 +62,34 @@ class PurchaseHistoryController extends Controller
                     $data_uploads = explode(",", $data_uploads);
                     foreach($data_uploads as $data_photo)
                     {
-                        $data_images = Uploads::findOrFail($data_photo);
-                        array_push($array_images,$data_images->file_name);
+                        // $data_images = Uploads::findOrFail($data_photo);
+                        array_push($array_images,uploaded_asset($data_photo));
                     }
                 }
                 else
                 {
                     $data_uploads = $data_manual->photo;
-                    $data_images = Uploads::findOrFail($data_uploads);
-                    array_push($array_images,$data_images->file_name);
+                    // $data_images = Uploads::findOrFail($data_uploads);
+                    array_push($array_images,uploaded_asset($data_uploads));
                 }            
                 
             }
             $order->img_url = $array_images;
+            // dd($order->img_url);
             $order->name_payment = $data_manual->name;
             $order->amount_payment = $data_manual->amount;
             $order->trx_id = $data_manual->trx_id;
         }          
 	    return view('admin.purchase_history.order_details', compact('order'));
+    }
+
+    public function verify_payment(Request $request)  {
+        $order_data = Order::find($request->order_id);
+       
+        $order_data->payment_status = 'paid';
+        $order_data->save();
+            // $order_data->update(['payment_status','paid']);
+        
+        
     }
 }
