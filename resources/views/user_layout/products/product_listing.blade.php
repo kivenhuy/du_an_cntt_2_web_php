@@ -316,7 +316,7 @@
                                                 </span>
                                             </div>
                                             <div class="name_store_top_selling" style="margin-bottom: 12px;">
-                                                <a href="{{ $product->user?->shop?->shop_url }}">
+                                                <a href="{{route('shop.visit', $product->user?->shop?->slug) }}">
                                                     {{$product->user?->shop?->name}}
                                                 </a>
                                                 
