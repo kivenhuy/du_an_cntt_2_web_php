@@ -83,7 +83,7 @@
                         <span class="d-flex align-items-center">
                             <span class="avatar avatar-sm mr-md-2">
                                 <img
-                                    src="{{ uploaded_asset(Auth::user()->avatar_original) }}"
+                                    src="{{ uploaded_asset(Auth::user()->shop->logo) }}"
                                     onerror="this.onerror=null;this.src='{{ static_asset('assets/img/avatar-place.png') }}';"
                                 >
                             </span>
@@ -99,10 +99,7 @@
                             <span>{{translate('Ecom Dashboard')}}</span>
                         </a>
 
-                        <a href="{{ route('farm_management.dashboard') }}" class="dropdown-item">
-                            <i class="fa fa-user-circle"></i>
-                            <span>{{translate('Farm Management')}}</span>
-                        </a>
+                       
 
                         <a href="{{ route('seller.logout')}}" class="dropdown-item">
                             <i class="fa fa-sign-out"></i>

@@ -116,7 +116,7 @@
                         </div>
                         
                         <div class="content_top_selling ">
-                            {{-- <a href="{{ $data_selling_product->category->category_url }}" class="mb-1">{{ $data_selling_product->category->name }}</a> --}}
+                            <a href="{{ route('products.category', $data_selling_product->category->slug) }}" class="mb-1">{{ $data_selling_product->category->name }}</a>
                             {{-- <a href="{{ $product_url }}"> --}}
                                 <div class="name_product_top_selling">
                                     {{$data_selling_product->name}}
@@ -129,7 +129,8 @@
                                         </span>
                             </div>
                             <div class="name_store_top_selling" style="margin-bottom: 12px;">
-                                {{translate('Sold By')}}  <a href="{{ $data_selling_product->user?->shop?->shop_url }}" style="font-weight:700">
+                                
+                                {{translate('Sold By')}}  <a href="{{route('shop.visit', $data_selling_product->user?->shop?->slug) }}" style="font-weight:700">
                                    {{$data_selling_product->user?->name}}
                                 </a>
                             </div>
@@ -218,7 +219,7 @@
                         </div>
                         
                         <div class="content_top_selling ">
-                            <a href="{{ $data_selling_product->category->category_url }}" class="mb-1">{{ $data_selling_product->category->name }}</a>
+                            <a href="{{ route('products.category', $data_selling_product->category->slug) }}" class="mb-1">{{ $data_selling_product->category->name }}</a>
                             {{-- <a href="{{ $product_url }}"> --}}
                                 <div class="name_product_top_selling">
                                     {{$data_selling_product->name}}
@@ -232,7 +233,7 @@
                                         </span>
                             </div>
                             <div class="name_store_top_selling" style="margin-bottom: 12px;">
-                                {{translate('Sold By')}}  <a href="{{ $data_selling_product->user?->shop?->shop_url }}" style="font-weight:700">
+                                {{translate('Sold By')}}  <a href="{{route('shop.visit', $data_selling_product->user?->shop?->slug) }}" style="font-weight:700">
                                    {{$data_selling_product->user?->name}}
                                 </a>
                             </div>
@@ -316,20 +317,19 @@
                                 </div>
                                 
                                 <div class="content_top_selling ">
-                                    <a href="{{ $new_product->category->category_url }}" class="mb-1">{{ $new_product->category->name }}</a>
+                                    <a href="{{ route('products.category', $new_product->category->slug) }}" class="mb-1">{{ $new_product->category->name }}</a>
                                     {{-- <a href="{{$product_url}}"> --}}
                                         <div class="name_product_top_selling">
                                             {{$new_product->name}}
                                         </div>
                                     </a>
                                     <div class="name_product_top_selling" style="margin-bottom: 6px">
-                                        
                                         <span class="rating rating-mr-1">
                                             {{ renderStarRating($new_product->rating) }}
                                         </span>
                                     </div>
                                     <div class="name_store_top_selling" style="margin-bottom: 12px;">
-                                        {{translate('Sold By')}}  <a href="{{ $new_product->user?->shop?->shop_url }}" style="font-weight:700">
+                                        {{translate('Sold By')}}  <a href="{{route('shop.visit', $new_product->user?->shop?->slug) }}" style="font-weight:700">
                                             {{$new_product->user?->shop?->name}}
                                         </a>
                                     </div>

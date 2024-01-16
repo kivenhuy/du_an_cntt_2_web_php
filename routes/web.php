@@ -30,6 +30,8 @@ Route::controller(HomeController::class)->group(function () {
     Route::get('/', 'index')->name('homepage');
     Route::get('/product/{slug}', 'product')->name('product');
     Route::get('/comming-soon', 'comming_soon')->name('comming-soon');
+    Route::get('/shop/{slug}', 'shop')->name('shop.visit');
+    Route::get('/category/{category_slug}', 'listingByCategory')->name('products.category');
 });
 Route::get("/login", [LoginController::class, 'showLoginForm'])->name('login.form');
 Route::post("/login", [LoginController::class, 'login'])->name('user.login');
@@ -45,7 +47,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::controller(HomeController::class)->group(function () {
         
-        Route::get('/shop/{slug}', 'shop')->name('shop.visit');
+        
         Route::get('/dashboard', 'dashboard')->name('user.dashboard');
         Route::get('/profile', 'profile')->name('profile');
         Route::get('/terms', 'terms')->name('terms');

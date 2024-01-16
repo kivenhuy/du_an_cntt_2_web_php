@@ -12257,8 +12257,7 @@ a.disabled {
 {
     width: 100%;
     height: 235px;
-    /* background-image: url('../public/uploads/all/Owf4hyiLteS5jlfMDumrofDDpysLngHEWBuM0yGZ.png'); */
-    background-image: url('../public/uploads/all/LerlHNylOl6dDHadtUav3qOLnD9dkbcZzPA7pEqM.png');
+    background-image: url('../img/LerlHNylOl6dDHadtUav3qOLnD9dkbcZzPA7pEqM.png') !important;
     margin-bottom: 69px;
 }
 .text_category
@@ -12922,6 +12921,76 @@ body
 {
     max-height: 470px;
 }
+.card_for_filter
+{
+    max-width: 850px;
+    width: 100%;
+    height: 70px;
+    border-radius: 10px;
+    background-color: rgba(245, 245, 245, 1);
+    margin: 0 16px;
+    
+}
+.data_card_for_filter
+{
+    padding: 24px;
+}
+.total_filter{
+    font-family: 'Roboto',sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: -0.0004em;
+    text-align: left;
+    width: 60%;
+    max-height: 25px;
+}
+.sort_for_filter
+{
+    max-height: 25px;
+    width: 20%;
+    align-items: center;
+}
+.sowing_for_filter
+{
+    max-height: 25px;
+    width: 20%;
+    align-items: center;
+}
+.text_for_filter
+{
+    font-family: 'Roboto',sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: rgba(126, 126, 126, 1);
+    margin-left: 6px;
+}
+.text_for_filter_select
+{
+    width: 60px;
+    border: none;
+    padding: 6px ;
+    font-family: 'Lato' ,sans-serif !important;
+    font-size: 16px !important;
+    font-weight: 400!important;
+    line-height: 24px!important;
+    letter-spacing: 0em!important;
+    text-align: left!important;
+    color: rgba(51, 51, 51, 1) !important;
+    background-color: rgba(245, 245, 245, 1);;
+}
+.number_of_products{   
+    font-family: 'Quicksand',sans-serif !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    line-height: 20px !important;
+    letter-spacing: -0.0004em !important; 
+    text-align: left;
+    color: rgba(46, 127, 37, 1) !important;
+}
 @media screen and (max-width: 440px) {
     .nav-tabs .nav-item
     {
@@ -13118,4 +13187,5 @@ body
         height: 0px;
         background: gray;
     }
+
 }

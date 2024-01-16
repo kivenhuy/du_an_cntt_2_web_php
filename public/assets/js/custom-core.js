@@ -413,7 +413,7 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
                                     if (data[i].is_farm_photo == 0) {
                                         thumb =
                                             '<img src="' +
-                                            // AIZ.data.appUrl +
+                                            AIZ.data.appUrl +
                                             data[i].file_name +
                                             '" class="img-fit 2">';
                                     } else {
@@ -643,7 +643,7 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
                                         if (data[i].is_farm_photo == 0) {
                                             thumb =
                                                 '<img src="' +
-                                                
+                                                AIZ.data.appUrl +
                                                 data[i].file_name +
                                                 '" class="img-fit">';
                                         } else {

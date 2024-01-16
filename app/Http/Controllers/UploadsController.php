@@ -175,10 +175,10 @@ class UploadsController extends Controller
         $files = Uploads::whereIn('id', $ids)->get();
         $new_file_array = [];
         foreach ($files as $file) {
-            $file['file_name'] = my_asset($file->file_name);
-            if ($file->external_link) {
-                $file['file_name'] = $file->external_link;
-            }
+            $file['file_name'] = ($file->file_name);
+            // if ($file->external_link) {
+            //     $file['file_name'] = $file->external_link;
+            // }
             $new_file_array[] = $file;
         }
         // dd($new_file_array);

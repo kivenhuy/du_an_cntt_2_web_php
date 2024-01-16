@@ -55,7 +55,7 @@ class Cart extends Model
         if($this->product_id != 0)
         {
             $img_id = Products::find($this->product_id)->thumbnail_img;
-            $data = env('APP_URL').Uploads::find($img_id)->file_name;
+            $data = env('ECOM_URL_PHOTO').Uploads::find($img_id)->file_name;
         }
         
         return $data;

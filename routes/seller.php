@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\RequestForProductController;
 use App\Http\Controllers\Seller\DashboardController;
+use App\Http\Controllers\Seller\OrderSellerController;
 use App\Http\Controllers\Seller\ProductController;
 use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
@@ -43,4 +44,12 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/shop/apply_for_verification', 'verify_form')->name('seller.shop.verify');
         Route::post('/shop/verification_info_store', 'verify_form_store')->name('seller.shop.verify.store');
     });
+
+
+    Route::controller(OrderSellerController::class)->group(function () {
+        Route::get('/orders', 'index')->name('seller.orders.index');
+        Route::get('/orders/detail/{id}', 'show')->name('seller.orders.show');
+       
+    });
+
 });

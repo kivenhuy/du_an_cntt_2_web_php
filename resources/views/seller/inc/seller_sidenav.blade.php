@@ -45,8 +45,15 @@
                 </li>
 
                 <li class="aiz-side-nav-item">
+                    <a href="{{ route('seller.orders.index') }}" class="aiz-side-nav-link">
+                        <i class="fa fa-history aiz-side-nav-icon"></i>
+                        <span class="aiz-side-nav-text">All Orders</span>
+                    </a>
+                </li>
+
+                <li class="aiz-side-nav-item">
                     <a href="#" class="aiz-side-nav-link">
-                        <i class="fa-solid fa-box aiz-side-nav-icon"></i>
+                        <i class="fa-solid fa-list-alt aiz-side-nav-icon"></i>
                         <span class="aiz-side-nav-text">Request For Product</span>
                         <span class="aiz-side-nav-arrow"></span>
                     </a>
@@ -75,6 +82,8 @@
                         <span class="aiz-side-nav-text">Shop Setting</span>
                     </a>
                 </li>
+
+               
 
             </ul><!-- .aiz-side-nav -->
         </div><!-- .aiz-side-nav-wrap -->

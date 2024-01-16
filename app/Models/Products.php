@@ -42,6 +42,11 @@ class Products extends Model
         'rating',
     ];
 
+    public function reviews()
+    {
+        return $this->hasMany(Review::class,'product_id','id')->where('status', 1);
+    }
+
     public function category()
     {
         return $this->belongsTo(Categories::class);
