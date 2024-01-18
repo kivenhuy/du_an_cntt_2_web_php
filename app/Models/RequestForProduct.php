@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class RequestForProduct extends Model
 {
-
+    
     use HasFactory;
+    protected $appends = ['seller_name','unit_price'];
     protected $fillable = [
         'product_id',
         'product_name',
@@ -49,4 +50,10 @@ class RequestForProduct extends Model
     public function user()  {
         return $this->belongsTo(User::class,'buyer_id','id');
     }
+
+    public function user_shop()  {
+        return $this->belongsTo(User::class,'shop_d','id');
+    }
+
+   
 }

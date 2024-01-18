@@ -1,7 +1,6 @@
-@extends('seller.layouts.app')
+{{-- @extends('seller.layouts.app')
 @section('panel_content')
 <div class="row">
-    {{-- <div class="col-sm-6 col-md-6 col-xxl-3"> --}}
         <div class="container-fluid">
 
             <div class="row">
@@ -49,7 +48,6 @@
             </div>
             <!-- /.row -->
           </div>
-    {{-- </div> --}}
 </div>
 @endsection
 
@@ -124,4 +122,114 @@ function update_published(el)
     });
 }
 </script>
+@endsection --}}
+
+@extends('seller.layouts.app')
+@section('panel_content')
+
+    <div class="card">
+        <form id="sort_orders" action="" method="GET">
+            <div class="card-header row gutters-5">
+                <div class="col text-center text-md-left">
+                    <h5 class="mb-md-0 h6">{{ translate('All Request') }}</h5>
+                </div>
+
+                <div class="col-md-3 ml-auto">
+                    <select class="form-control aiz-selectpicker"
+                        data-placeholder="{{ translate('Filter by Status') }}" name="status"
+                        onchange="sort_orders()">
+                        <option value="">{{ translate('Filter by Status') }}</option>
+                        <option value="0"
+                            @isset($status) @if ($status == 0) selected @endif @endisset>
+                            {{ translate('Pending') }}</option>
+                        <option value="1"
+                            @isset($status) @if ($status == 1) selected @endif @endisset>
+                            {{ translate('Aprrove') }}</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <div class="from-group mb-0">
+                        <input type="text" class="form-control" id="search" name="search"
+                            @isset($sort_search) value="{{ $sort_search }}" @endisset
+                            placeholder="{{ translate('Type Product Name & hit Enter') }}">
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="card-body">
+            <table class="table aiz-table mb-0">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th width="30%">{{ translate('Name')}}</th>
+                        <th data-breakpoints="md">{{ translate('Category')}}</th>
+                        <th data-breakpoints="md">{{ translate('Current Qty')}}</th>
+                        <th>{{ translate('Price')}}</th>
+                        {{-- @if(get_setting('product_approve_by_admin') == 1) --}}
+                        <th data-breakpoints="md">{{ translate('Approval')}}</th>
+                        {{-- @endif --}}
+                        <th data-breakpoints="md">{{ translate('Published')}}</th>
+                        <th data-breakpoints="md" class="text-right">{{ translate('Options')}}</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach ($products as $key => $product)
+                        <tr>
+                            <td>
+                                {{ $key + 1 }}
+                            </td>
+                            <td>
+                                <a href="{{ route('product', $product->slug) }}" target="_blank" class="text-reset">
+                                    {{ $product->name }}
+                                </a>
+                            </td>
+                            <td>
+                                @if ($product->category != null)
+                                    {{ $product->category->name }}
+                                @endif
+                            </td>
+                            <td>
+                                {{$product->product_stock->qty}}
+                            </td>
+                            <td>{{ $product->unit_price }}</td>
+                            
+                            <td>
+                                @if ($product->approved == 1)
+                                    <span class="badge badge-inline badge-success">{{ translate('Approved')}}</span>
+                                @else
+                                    <span class="badge badge-inline badge-info">{{ translate('Pending')}}</span>
+                                @endif
+                            </td>
+                            <td>
+                                <label class="aiz-switch aiz-switch-success mb-0">
+                                    <input onchange="" value="{{ $product->id }}" type="checkbox" <?php if($product->published == 1) echo "checked";?> >
+                                    <span class="slider round"></span>
+                                </label>
+                            </td>
+                            <td class="text-right">
+                            <a class="btn btn-soft-info btn-icon btn-circle btn-sm" href="{{route('seller.products.edit', ['id'=>$product->id, 'lang'=>env('DEFAULT_LANGUAGE')])}}" title="{{ translate('Edit') }}">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                            
+                        </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            <div class="aiz-pagination">
+                {{ $products->links() }}
+            </div>
+        </div>
+    </div>
+
+@endsection
+
+@section('script')
+    <script type="text/javascript">
+        function sort_orders(el) {
+            $('#sort_orders').submit();
+        }
+    </script>
 @endsection

@@ -10,15 +10,28 @@ use App\Models\ProductStock;
 use App\Models\User;
 use App\Utility\ProductUtility;
 use Auth;
+use DB;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return view('seller.products.index');
+        $status = null;
+        $search = null;
+        $products = Products::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc');
+        if ($request->status != null) {
+            $products = $products->where('approved',(int) $request->status);
+            $status = $request->status;
+        }
+        if ($request->has('search')) {
+            $search = $request->search;
+            $products = $products->where('name', 'like', '%' . $search . '%');
+        }
+        $products = $products->paginate(10);
+        return view('seller.products.index', compact('products', 'search','status'));
     }
 
     public function create()
