@@ -167,7 +167,9 @@ class RequestForProductController extends Controller
                 if($data_request->product_id == 0)
                 {
                     $data_product = Products::where([['name', 'like', '%' .$data_request->product_name. '%'],['user_id',Auth::user()->id]])->first();
+                    // dd($data_product);
                     if(!empty($data_product))
+                    
                     {
                         $is_accept = 1;  
                         $product_id = $data_product->id;

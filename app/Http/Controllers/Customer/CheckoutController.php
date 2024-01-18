@@ -79,6 +79,7 @@ class CheckoutController extends Controller
             $seller_products_short[$product->user_id] = $product_ids;
         }
         $carrier_list = Carrier::all();
+        // dd(gettype($carts_short_shelf_life));
         return view('user_layout.checkout.payment_select', compact('discount','carts_normal','carts_short_shelf_life','seller_products_normal','seller_products_short','carrier_list'));
     }
 

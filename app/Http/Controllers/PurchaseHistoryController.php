@@ -38,6 +38,7 @@ class PurchaseHistoryController extends Controller
     public function get_detail($id)
     {
         $order = Order::find($id);
+       
         $order->delivery_viewed = 1;
         $order->save();
         
@@ -47,7 +48,9 @@ class PurchaseHistoryController extends Controller
         {
            
             $data_manual = json_decode($order->manual_payment_data);
+            // dd($order->manual_payment_data);
             $data_uploads = $data_manual->photo;
+            
 			if(isset($data_uploads))
             {
                 if (str_contains($data_uploads, ',')) {
@@ -71,6 +74,7 @@ class PurchaseHistoryController extends Controller
             $order->amount_payment = $data_manual->amount;
             $order->trx_id = $data_manual->trx_id;
         }          
+        // dd($order);
 	    return view('user_layout.purchase_history.order_details', compact('order'));
     }
 }

@@ -341,7 +341,7 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
                                     '" class="img-fit 1">';
                             }
                         } else {
-                            thumb = '<i class="la la-file-text"></i>';
+                            thumb = '<i class="fa fa-file-text"></i>';
                         }
 
                         var html =
@@ -424,7 +424,7 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
                                             '" class="img-fit 2">';
                                     }
                                 } else {
-                                    thumb = '<i class="la la-file-text"></i>';
+                                    thumb = '<i class="fa fa-file-text"></i>';
                                 }
                                 var html =
                                     '<div class="d-flex justify-content-between align-items-center mt-2 file-preview-item" data-id="' +
@@ -905,8 +905,8 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
                     minuteStep: minuteStep,
                     defaultTime: defaultTime,
                     icons: {
-                        up: "las la-angle-up",
-                        down: "las la-angle-down",
+                        up: "fa fa-angle-up",
+                        down: "fa fa-angle-down",
                     },
                     showInputs: false,
                 });
@@ -957,7 +957,7 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
                 },
                 type: type,
                 template: '<div data-notify="container" class="aiz-notify alert alert-{0}" role="alert">' +
-                    '<button type="button" aria-hidden="true" data-notify="dismiss" class="close"><i class="las la-times"></i></button>' +
+                    '<button type="button" aria-hidden="true" data-notify="dismiss" class="close"><i class="fa fa-times"></i></button>' +
                     '<span data-notify="message">{2}</span>' +
                     '<div class="progress" data-notify="progressbar">' +
                     '<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
@@ -1187,8 +1187,8 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
                     focusOnSelect: focusOnSelect,
                     adaptiveHeight: adaptiveHeight,
                     slidesToScroll: 1,
-                    prevArrow: '<button type="button" class="slick-prev"><i class="las la-angle-left"></i></button>',
-                    nextArrow: '<button type="button" class="slick-next"><i class="las la-angle-right"></i></button>',
+                    prevArrow: '<button type="button" class="slick-prev"><i class="fa fa-angle-left"></i></button>',
+                    nextArrow: '<button type="button" class="slick-next"><i class="fa fa-angle-right"></i></button>',
                     responsive: [{
                             breakpoint: 1500,
                             settings: {
@@ -1780,24 +1780,29 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
                 var minValue = parseInt($(this).attr("min"));
                 var maxValue = parseInt($(this).attr("max"));
                 var valueCurrent = parseInt($(this).val());
+                var is_request = parseInt($(this).attr("is_request"));
+                if(is_request == 0)
+                {
+                    name = $(this).attr("name");
+                    if (valueCurrent >= minValue) {
+                        $(this).siblings("[data-type='minus']").removeAttr("disabled");
+                    } else {
+                        AIZ.plugins.notify('danger',"Sorry, the minimum limit has been reached");
+                        $(this).val(minValue);
+                    }
+                    if (valueCurrent <= maxValue) {
+                        $(this).siblings("[data-type='plus']").removeAttr("disabled");
+                    } else {
+                        AIZ.plugins.notify('danger',"Sorry, the maximum limit has been reached");
+                        // alert(("));
+                        $(this).val(maxValue);
+                    }
 
-                name = $(this).attr("name");
-                if (valueCurrent >= minValue) {
-                    $(this).siblings("[data-type='minus']").removeAttr("disabled");
-                } else {
-                    alert(translate("Sorry, the minimum limit has been reached"));
-                    $(this).val(minValue);
+                    if (typeof getVariantPrice === "function") {
+                        getVariantPrice();
+                    }
                 }
-                if (valueCurrent <= maxValue) {
-                    $(this).siblings("[data-type='plus']").removeAttr("disabled");
-                } else {
-                    alert(translate("Sorry, the maximum limit has been reached"));
-                    $(this).val(maxValue);
-                }
-
-                if (typeof getVariantPrice === "function") {
-                    getVariantPrice();
-                }
+                
 
             });
         },

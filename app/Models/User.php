@@ -79,4 +79,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(RequestForProduct::class,'buyer_id','id');
     }
+
+    public function getImgLogoAttribute()
+    {
+        $data =uploaded_asset($this->avatar_original);
+        return $data;
+    }
 }

@@ -201,11 +201,11 @@ class CheckoutSupermarketController extends Controller
             array_push($product_ids, $carts_short_shelf_lifeItem['product_id']);
             $seller_products_short[$product->user_id] = $product_ids;
         }
-        $carrier_list = Carrier::all()->append(['name_billing','shipping_price','shipping_price_normal']);
-        foreach($carrier_list as $each_carrier_list)
-        {
+        $carrier_list = Carrier::all()->append(['max_quantity','name_billing','shipping_price','shipping_price_normal']);
+        // foreach($carrier_list as $each_carrier_list)
+        // {
 
-        }
+        // }
         return response()->json([
             'result' => true,
             'message' => 'Create Request For Product',
@@ -254,7 +254,7 @@ class CheckoutSupermarketController extends Controller
                 $data_rfp = RequestForProduct::find($each_cart_data->is_rfp);
                 if(isset($data_rfp))
                 {
-                    $shipping_time =count(json_decode(RequestForProduct::find($each_cart_data->is_rfp)->shipping_date));
+                    $shipping_time = count(json_decode(RequestForProduct::find($each_cart_data->is_rfp)->shipping_date));
                 }
                 $each_cart_data->update(
                     ['shipping_type' => $shipping_type,
@@ -320,9 +320,12 @@ class CheckoutSupermarketController extends Controller
         {
             $photo_img = implode(',', $photo_ids);
         }
-        else
+        elseif(count($photo_ids) == 1)
         {
             $photo_img = $photo_ids[0];
+        }else
+        {
+            $photo_img = null;
         }
         if ($request->data['payment_option'] != null) {
 
@@ -353,6 +356,7 @@ class CheckoutSupermarketController extends Controller
                 {
                     $arr_order_details[(int)$each_order->id]=$each_order->orderDetails;
                 }
+                Cart::where('user_id', $combined_order->customer_id)->delete();
                 return response()->json([
                     'result' => true,
                     'message' => 'Checkout Successfully',
@@ -372,14 +376,14 @@ class CheckoutSupermarketController extends Controller
         }
     }
 
-    public function order_confirmed()
-    {
-        $combined_order = CombineOrder::findOrFail(Session::get('combined_order_id'));
+    // public function order_confirmed()
+    // {
+    //     $combined_order = CombineOrder::findOrFail(Session::get('combined_order_id'));
 
-        Cart::where('user_id', $combined_order->customer_id)->delete();
+        
 
-        return view('user_layout.checkout.order_confirmed', compact('combined_order'));
-    }
+    //     return view('user_layout.checkout.order_confirmed', compact('combined_order'));
+    // }
 
     public function store_enterprise(Request $request)
     {

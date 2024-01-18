@@ -11,6 +11,7 @@ use App\Models\User;
 use Http;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller
 {
@@ -211,5 +212,27 @@ class HomeController extends Controller
         $min_price = Products::where('published', 1)->min('unit_price');
         $max_price = Products::where('published', 1)->max('unit_price');
         return view('user_layout.products.product_listing', compact('total_product','min_price_choose','max_price_choose','min_price','max_price','products', 'query', 'category_id', 'brand_id', 'sort_by', 'seller_id', 'min_price', 'max_price'));
+    }
+
+    public function profile(Request $request)
+    {
+        return view('user_layout.user.profile');
+    }
+
+    public function userProfileUpdate(Request $request)
+    {
+        $user = Auth::user();
+        $user->name = $request->name;
+        $user->phone = $request->phone;
+
+        if ($request->new_password != null && ($request->new_password == $request->confirm_password)) {
+            $user->password = Hash::make($request->new_password);
+        }
+
+        $user->avatar_original = $request->photo;
+        $user->save();
+
+        flash(translate('Your Profile has been updated successfully!'))->success();
+        return back();
     }
 }

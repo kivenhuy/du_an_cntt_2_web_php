@@ -64,10 +64,10 @@ class Cart extends Model
     public function getTotalPriceAttribute()
     {
         $data = single_price(0);
-        if($this->product_id != 0)
+        if($this->product_id != 0 && $this->is_rfp !=0)
         {
             $product = Products::find($this->product_id);
-            $data =single_price(cart_product_price($this, $product, false) * $this->quantity);
+            $data =single_price(cart_product_price($this, $product, false) * $this->quantity * count($this->shipping_date));
         }
         return $data;
     }

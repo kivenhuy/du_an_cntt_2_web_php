@@ -28,6 +28,16 @@ class Carrier extends Model
         return $data;
     }
 
+    public function getMaxQuantityAttribute()
+    {
+        $data = "";
+        if($this->carrier_ranges->first())
+        {
+            $data =$this->carrier_ranges->first()->delimiter2;
+        }
+        return $data;
+    }
+
     public function getShippingPriceAttribute()
     {
         $data = 0;

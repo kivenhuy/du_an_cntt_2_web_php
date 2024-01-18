@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Api\CheckoutSupermarketController;
 use App\Http\Controllers\Api\PersonalInformationShopController;
+use App\Http\Controllers\Api\PersonalInformationSupermarketController;
 use App\Http\Controllers\Api\PurchaseHistoryController;
 use App\Http\Controllers\Api\RequestForProductController;
 use App\Http\Controllers\Api\RequestSendController;
@@ -74,6 +75,11 @@ Route::group(['prefix' => 'v2'], function () {
     Route::controller(PersonalInformationShopController::class)->group(function () {
         Route::get('/personal_information/get_detail/{id}', 'index')->name('personal_information.index');
         Route::post('/personal_information/update', 'update')->name('personal_information.update');
+    });
+
+    Route::controller(PersonalInformationSupermarketController::class)->group(function () {
+        Route::get('/personal_supermarket_information/get_detail/{id}', 'index')->name('personal_supermarket_information.index');
+        Route::post('/personal_supermarket_information/update', 'update')->name('personal_supermarket_information.update');
     });
 });
 

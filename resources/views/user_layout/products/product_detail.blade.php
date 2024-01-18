@@ -221,8 +221,10 @@
 @section('script')
     <script type="text/javascript">
         $(document).ready(function() {
-            getVariantPrice();
+            // getVariantPrice();
         });
+
+        
 
         function CopyToClipboard(e) {
             var url = $(e).data('url');

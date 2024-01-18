@@ -178,12 +178,22 @@
     </div>
 
     <div class="card-footer">
-        @if($is_accept != 0)
-            <input type="hidden" id="product_id" value="{{$product_id}}">
-            <div class="col-3">
-                <button id={{$data_request->id}} type="button" class="btn btn-primary btn-block fw-700 fs-14 rounded-4 EdApprove">Accept Request</button>
-            </div>
+        @if($data_request->shop_id == 0)
+            @if($is_accept != 0)
+                <input type="hidden" id="product_id" value="{{$product_id}}">
+                <div class="col-3">
+                    <button id={{$data_request->id}} type="button" class="btn btn-primary btn-block fw-700 fs-14 rounded-4 EdApprove">Accept Request</button>
+                </div>
+            @endif
+        @else
+            @if($data_request->status == 1)
+                <input type="hidden" id="product_id" value="{{$data_request->product_id}}">
+                <div class="col-3">
+                    <button id={{$data_request->id}} type="button" class="btn btn-primary btn-block fw-700 fs-14 rounded-4 EdApprove">Accept Request</button>
+                </div>
+            @endif
         @endif
+        
         
     </div>
 </div>

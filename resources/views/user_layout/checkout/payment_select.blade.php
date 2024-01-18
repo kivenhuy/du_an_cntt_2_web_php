@@ -9,8 +9,8 @@
             @csrf
                     <div class="row" style="margin-top: 24px;">
                         <div class="col-lg-9">
-                            
-                                @if(!empty($carts_normal))
+                                
+                                @if(!($carts_normal->isEmpty()))
                                     <input type="hidden" name="owner_id" value="{{ $carts_normal[0]['owner_id'] }}">
                                 @else
                                     <input type="hidden" name="owner_id" value="{{ $carts_short_shelf_life[0]['owner_id'] }}">
@@ -50,13 +50,14 @@
                                             ">Normal Products
                                         </span>
                                     </div>
-                                    @php
-                                        $total_normal_product = 0;
-                                        $shipping_fee = 0;
-                                        $final_total_normal = 0;
-                                    @endphp
+                                   
                                     @if (!empty($seller_products_normal))
                                         @foreach ($seller_products_normal as $key_user => $seller_product)
+                                            @php
+                                                $total_normal_product = 0;
+                                                $shipping_fee = 0;
+                                                $final_total_normal = 0;
+                                            @endphp
                                             <div class=" bg-white p-3 p-lg-4 text-left">
                                                 <div class="mb-4">
                                                     <!-- Headers -->
@@ -80,12 +81,16 @@
                                                                 $user = \App\Models\Shop::where('user_id', $key)->first();
                                                                 $product_stock = $product->product_stock->where('variant', preg_replace('/\s+/', '',$cartItem['variation']))->first();
                                                                 // $product_stock = $product->stocks()->get();
-                                                                // dd($product_stock);
+                                                                // 
                                                                 // $total = $total + ($cartItem['price']  + $cartItem['tax']) * $cartItem['quantity'];
-                                                                $total_normal_product = $total_normal_product + cart_product_price($cartItem, $product, false) * $cartItem['quantity'];
-                                                                if(Auth::user()->user_type === "enterprise")
+                                                                
+                                                                
+                                                                if(Auth::user()->user_type == "enterprise")
                                                                 {
-                                                                    $total_normal_product =  $total_normal_product * count($cartItem->shipping_date);
+                                                                    $total_normal_product =  $total_normal_product + (cart_product_price($cartItem, $product, false) * $cartItem['quantity']) * count($cartItem->shipping_date);
+                                                                }
+                                                                else {
+                                                                    $total_normal_product = $total_normal_product + (cart_product_price($cartItem, $product, false) * $cartItem['quantity']);
                                                                 }
                                                                
                                                                 
@@ -143,7 +148,12 @@
                                                                         <!-- Total -->
                                                                         <div class="col-md-4 col-5 order-4 order-md-0 my-3 my-md-0">
                                                                             <span class="opacity-60 fs-12 d-block d-md-none">{{ translate('Total')}}</span>
-                                                                            <span class="fw-700 fs-16 text-primary total_product" style="">{{ single_price(cart_product_price($cartItem, $product, false) * $cartItem['quantity']) }}</span>
+                                                                            @if(Auth::user()->user_type === "enterprise")
+                                                                                <span class="fw-700 fs-16 text-primary total_product" style="">{{ single_price(cart_product_price($cartItem, $product, false) * $cartItem['quantity'] * count($cartItem['shipping_date'])) }}</span><br>
+                                                                                <small style="color: red;font-weight: 900">This Price Is Total Price For All Order Date</small>
+                                                                            @else   
+                                                                                <span class="fw-700 fs-16 text-primary total_product" style="">{{ single_price(cart_product_price($cartItem, $product, false) * $cartItem['quantity']) }}</span><br>
+                                                                            @endif
                                                                         </div>
                                                                         
                                                                     </div>
@@ -196,13 +206,19 @@
                                             ">Short Shelf Life Products
                                         </span>
                                     </div>
-                                    @php
+                                    {{-- @php
                                         $total_short_product = 0;
                                         $shipping_fee = 0;
                                         $final_total_short = 0;
-                                    @endphp
+                                    @endphp --}}
                                     @if (!empty($seller_products_short))
+                                       
                                         @foreach ($seller_products_short as $key_user => $each_seller_products_short)
+                                            @php
+                                                $total_short_product = 0;
+                                                $shipping_fee = 0;
+                                                $final_total_short = 0;
+                                            @endphp
                                             <div class=" bg-white p-3 p-lg-4 text-left">
                                                 <div class="mb-4">
                                                     <!-- Headers -->
@@ -228,12 +244,17 @@
                                                                 // $product_stock = $product->stocks()->get();
                                                                 // dd($product_stock);
                                                                 // $total = $total + ($cartItem['price']  + $cartItem['tax']) * $cartItem['quantity'];
-                                                                $total_short_product = $total_short_product + cart_product_price($carts_short_shelf_lifeItem, $product, false) * $carts_short_shelf_lifeItem['quantity'];
-                                                                if(Auth::user()->user_type === "enterprise")
+                                                                // $total_short_product = $total_short_product + cart_product_price($carts_short_shelf_lifeItem, $product, false) * $carts_short_shelf_lifeItem['quantity'];
+                                                                
+                                                                if(Auth::user()->user_type == "enterprise")
                                                                 {
-                                                                    $total_short_product = $total_short_product * count($carts_short_shelf_lifeItem->shipping_date);
+                                                                    $total_short_product =  $total_short_product + (cart_product_price($carts_short_shelf_lifeItem, $product, false) * $cartItem['quantity']) * count($carts_short_shelf_lifeItem->shipping_date);
+                                                                }
+                                                                else {
+                                                                    $total_short_product = $total_short_product + (cart_product_price($carts_short_shelf_lifeItem, $product, false) * $carts_short_shelf_lifeItem['quantity']);
                                                                 }
                                                                 // var_dump()
+                                                                // print_r('price is'.$total_short_product);
                                                                 $final_total_short = $total_short_product+$shipping_fee;
                                                                 $product_name_with_choice = $product->name;
                                                                 if ($carts_short_shelf_lifeItem['variation'] != null) {
@@ -286,7 +307,13 @@
                                                                         <!-- Total -->
                                                                         <div class="col-md-4 col-5 order-4 order-md-0 my-3 my-md-0">
                                                                             <span class="opacity-60 fs-12 d-block d-md-none">{{ translate('Total')}}</span>
-                                                                            <span class="fw-700 fs-16 text-primary total_product" >{{ single_price(cart_product_price($carts_short_shelf_lifeItem, $product, false) * $carts_short_shelf_lifeItem['quantity']) }}</span>
+                                                                            @if(Auth::user()->user_type === "enterprise")
+                                                                                <span class="fw-700 fs-16 text-primary total_product" style="">{{ single_price(cart_product_price($carts_short_shelf_lifeItem, $product, false) * $carts_short_shelf_lifeItem['quantity'] * count($carts_short_shelf_lifeItem['shipping_date'])) }}</span><br>
+                                                                                <small style="color: red;font-weight: 900">This Price Is Total Price For All Order Date</small>
+                                                                            @else   
+                                                                                <span class="fw-700 fs-16 text-primary total_product" style="">{{ single_price(cart_product_price($carts_short_shelf_lifeItem, $product, false) * $carts_short_shelf_lifeItem['quantity']) }}</span><br>
+                                                                            @endif
+                                                                            
                                                                         </div>
                                                                         
                                                                     </div>

@@ -29,4 +29,16 @@ class AddressController extends Controller
         flash(translate('Address info Stored successfully'))->success();
         return back();
     }
+
+    public function set_default($id){
+        foreach (Auth::user()->addresses as $key => $address) {
+            $address->set_default = 0;
+            $address->save();
+        }
+        $address = Address::findOrFail($id);
+        $address->set_default = 1;
+        $address->save();
+
+        return back();
+    }
 }
