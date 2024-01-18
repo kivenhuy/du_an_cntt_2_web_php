@@ -50,7 +50,11 @@
                                             ">Normal Products
                                         </span>
                                     </div>
-                                   
+                                    @php
+                                        $total_normal_product = 0;
+                                        $shipping_fee = 0;
+                                        $final_total_normal = 0;
+                                    @endphp
                                     @if (!empty($seller_products_normal))
                                         @foreach ($seller_products_normal as $key_user => $seller_product)
                                             @php
@@ -206,11 +210,11 @@
                                             ">Short Shelf Life Products
                                         </span>
                                     </div>
-                                    {{-- @php
+                                    @php
                                         $total_short_product = 0;
                                         $shipping_fee = 0;
                                         $final_total_short = 0;
-                                    @endphp --}}
+                                    @endphp
                                     @if (!empty($seller_products_short))
                                        
                                         @foreach ($seller_products_short as $key_user => $each_seller_products_short)

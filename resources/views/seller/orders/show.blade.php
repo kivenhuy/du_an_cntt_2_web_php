@@ -66,8 +66,8 @@
                             <div id="hide_image" hidden="true">
                                 @foreach($order->img_url as $data_image)
                                     <input type="hidden" value="{{$data_image}}">
-                                    <a href="{{url('public/'.$data_image)}}" target="_blank">
-                                        <img src="{{url('public/'.$data_image)}}" alt=""
+                                    <a href="{{url($data_image)}}" target="_blank">
+                                        <img src="{{url($data_image)}}" alt=""
                                             height="100">
                                     </a>
                                 @endforeach

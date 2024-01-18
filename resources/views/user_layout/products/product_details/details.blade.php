@@ -290,7 +290,7 @@
                                         <input type="number" name="quantity" id="quantity"
                                             class="col border-0 text-center flex-grow-1 fs-16 input-number" placeholder="1"
                                             value="{{ $detailedProduct->min_qty }}" min="{{ $detailedProduct->min_qty }}"
-                                            max="{{$detailedProduct->product_stock->qty}}" lang="en">
+                                            max="{{$detailedProduct->product_stock->qty}}" is_request="0" lang="en">
                                         <button class="btn col-auto btn-icon btn-sm btn-light rounded-0" type="button"
                                             data-type="plus" data-field="quantity">
                                             <i class="fa fa-plus"></i>
@@ -328,7 +328,7 @@
                                     <input type="number" name="quantity"
                                         class="col border-0 text-center flex-grow-1 fs-16 input-number" placeholder="1"
                                         value="{{ $detailedProduct->min_qty }}" min="{{ $detailedProduct->min_qty }}"
-                                        max="10" lang="en" is_request="1">
+                                        max="10" is_request="0" lang="en" >
                                     <button class="btn col-auto btn-icon btn-sm btn-light rounded-0" type="button"
                                         data-type="plus" data-field="quantity">
                                         <i class="fa fa-plus"></i>
