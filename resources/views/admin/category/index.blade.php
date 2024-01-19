@@ -1,78 +1,68 @@
 @extends('admin.layouts.app')
 @section('content')
-{{-- @include('flash::message') --}}
-<div class="container-fluid">
 
-    <div class="row">
-      <div class="col-12">
-        <div class="card">
+    <div class="card">
+        <form id="sort_orders" action="" method="GET">
             <div class="card-header row gutters-5">
-                <div class="col">
-                    <h5 class="mb-md-0 h6">{{translate('All Categories')}}</h5>
+                <div class="col text-center text-md-left">
+                    <h5 class="mb-md-0 h6">{{ translate('Category') }}</h5>
                 </div>
-                <div class="col">
-                    <div class="mar-all mb-2" style=" text-align: end;">
-                        <a href="{{route('categories.create')}}">
-                            <button type="submit" name="button" value="publish"
-                                class="btn btn-primary">Create</button>
-                        </a>
+                <div class="col-md-3">
+                    <div class="from-group mb-0">
+                        <input type="text" class="form-control" id="search" name="search"
+                            @isset($sort_search) value="{{ $sort_search }}" @endisset
+                            placeholder="{{ translate('Type Name  & hit Enter') }}">
                     </div>
                 </div>
             </div>
-          <div class="card-body" >
-            <table id="example1" class="table table-bordered table-striped">
-              <thead>
-                  <tr>
-                    <th>{{translate('Category Name')}}</th>
-                    <th>{{translate('Category Slug')}}</th>
-                    <th>{{translate('Action')}}</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr>
-                  </tr>
-              </tbody>
-            </table>
-          </div>
-          <!-- /.card-body -->
-        </div>
-        <!-- /.card -->
-      </div>
-      <!-- /.col -->
+        </form>
+
+        @if (count($cate_data) > 0)
+            <div class="card-body p-3">
+                <table class="table aiz-table mb-0">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>{{ translate('Cateogry Icon') }}</th>
+                            <th>{{ translate('Cateogry Name') }}</th>
+                            <th data-breakpoints="lg">{{ translate('Category Slug') }}</th>
+                            <th class="text-right">{{ translate('Action') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($cate_data as $key => $each_cate_data)
+                            @if ($each_cate_data != null)
+                                <tr>
+                                    <td>
+                                        {{ $key + 1 }}
+                                    </td>
+                                    <td>
+                                      <img src="{{uploaded_asset($each_cate_data->icon)}}" alt="" style="width: 90px; height: 90px;">
+                                  </td>
+                                    <td>
+                                        {{$each_cate_data->name}}
+                                    </td>
+                                    <td>
+                                        {{$each_cate_data->slug}}
+                                    </td>
+                                </tr>
+                            @endif
+                        @endforeach
+                    </tbody>
+                </table>
+                <div class="aiz-pagination">
+                    {{ $cate_data->links() }}
+                </div>
+            </div>
+        @endif
     </div>
-    <!-- /.row -->
-</div>
-    
+
 @endsection
+
 @section('script')
-<script>
-$(document).ready(function()
-  {   
-  
-          var rfq_table = $("#example1").DataTable
-          ({
-              lengthChange: true,
-              responsive: true,
-              processing: true,
-              searching: false,
-              bSort:false,
-              serverSide: true,
-                  ajax: "{{ route('categories.data_ajax') }}",
-                  columns: [
-                            {data: 'name', name: 'name', render: function(data){
-                              return (data=="")?"":data;
-                          }},
-                          {data: 'slug', name: 'slug', render: function(data){
-                              return (data=="")?"":data;
-                          }},
-                            {
-                                    data: 'action', 
-                                    name: 'action', 
-                                    orderable: true, 
-                                    searchable: true
-                            },
-                  ],
-          }).buttons().container().appendTo('#example1_wrapper .col-md-6');
-  });
-</script>
+    <script type="text/javascript">
+        function sort_orders(el) {
+            $('#sort_orders').submit();
+        }
+    </script>
 @endsection

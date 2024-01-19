@@ -38,7 +38,7 @@ class PurchaseHistoryController extends Controller
             $orders = $orders->where('code', 'like', '%' . $sort_search . '%');
         }
 
-        $orders = $orders->paginate(2);
+        $orders = $orders->paginate(10);
         // dd($orders);
         foreach ($orders as $key => $value) {
             $order = Order::find($value->id);

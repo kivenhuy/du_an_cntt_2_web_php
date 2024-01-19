@@ -13,9 +13,30 @@ use Illuminate\Http\Request;
 
 class PurchaseHistoryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return view('admin.purchase_history.index');
+        $payment_status = null;
+        $delivery_status = null;
+        $sort_search = null;
+        $orders = Order::orderBy('id', 'desc')
+            ->where('admin_approve_status', 'approved')
+            ->distinct();
+
+        if ($request->payment_status != null) {
+            $orders = $orders->where('payment_status', $request->payment_status);
+            $payment_status = $request->payment_status;
+        }
+        if ($request->delivery_status != null) {
+            $orders = $orders->where('delivery_status', $request->delivery_status);
+            $delivery_status = $request->delivery_status;
+        }
+        if ($request->has('search')) {
+            $sort_search = $request->search;
+            $orders = $orders->where('code', 'like', '%' . $sort_search . '%');
+        }
+
+        $orders = $orders->paginate(15);
+        return view('admin.purchase_history.index',compact('orders', 'payment_status', 'delivery_status', 'sort_search'));
     }
 
     public function data_ajax(Request $request)

@@ -87,15 +87,47 @@ class RequestForProductController extends Controller
         $request_data = $request_data->paginate(10);
        return view('seller.request_product.index',compact('request_data', 'status', 'sort_search'));
     }
-    public function admin_index()
+    public function admin_index(Request $request)
     {
-        
-       return view('admin.request_product.index');
+        $status = null;
+        $sort_search = null;
+        $request_data = RequestForProduct::orderBy('id', 'desc')
+            ->orderBy('id', 'desc')
+            ->where('is_supermarket_request','!=',1)
+            ->distinct();
+        if ($request->status != null) {
+            $request_data = $request_data->where('status',(int) $request->status);
+            $status = $request->status;
+        }
+       
+        if ($request->has('search')) {
+            $sort_search = $request->search;
+            $request_data = $request_data->where('code', 'like', '%' . $sort_search . '%');
+        }
+        // dd($request_data->get()->appends(['seller_name']));
+        $request_data = $request_data->paginate(10);
+       return view('admin.request_product.index',compact('request_data', 'status', 'sort_search'));
     }
     
-    public function admin_supermarket_index()
+    public function admin_supermarket_index(Request $request)
     {
-       return view('admin.request_product.supermarket_index');
+        $status = null;
+        $sort_search = null;
+        $request_data = RequestForProduct::orderBy('id', 'desc')
+            ->orderBy('id', 'desc')
+            ->where('is_supermarket_request','=',1)
+            ->distinct();
+        if ($request->status != null) {
+            $request_data = $request_data->where('status',(int) $request->status);
+            $status = $request->status;
+        }
+       
+        if ($request->has('search')) {
+            $sort_search = $request->search;
+            $request_data = $request_data->where('code', 'like', '%' . $sort_search . '%');
+        }
+        $request_data = $request_data->paginate(10);
+       return view('admin.request_product.supermarket_index',compact('request_data', 'status', 'sort_search'));
     }
 
     public function admin_approved(Request $request)
@@ -300,63 +332,63 @@ class RequestForProductController extends Controller
     //     return $out;
     // }
 
-    public function seller_supermarket_dataajax(Request $request)
-    {
+    // public function seller_supermarket_dataajax(Request $request)
+    // {
         
-        $data_request = RequestForProduct::where([['is_supermarket_request',1]])->get();
-        $out =  DataTables::of($data_request)->make(true);
-        $data = $out->getData();
-        for($i=0; $i < count($data->data); $i++) 
-        {
-            // dd($data->data[$i]->id);
-            $output = '';
-            if($data->data[$i]->status != 0)
-            {
-                $output .= ' <a href="'.url(route('request_for_product.get_details_data',['id'=>$data->data[$i]->id])).'" class="btn btn-info btn-xs" data-toggle="tooltip" title="Show Details" style="display:inline;padding:2px 5px 3px 5px;"><i class="fa fa-eye"></i></a>';
-            }
+    //     $data_request = RequestForProduct::where([['is_supermarket_request',1]])->get();
+    //     $out =  DataTables::of($data_request)->make(true);
+    //     $data = $out->getData();
+    //     for($i=0; $i < count($data->data); $i++) 
+    //     {
+    //         // dd($data->data[$i]->id);
+    //         $output = '';
+    //         if($data->data[$i]->status != 0)
+    //         {
+    //             $output .= ' <a href="'.url(route('request_for_product.get_details_data',['id'=>$data->data[$i]->id])).'" class="btn btn-info btn-xs" data-toggle="tooltip" title="Show Details" style="display:inline;padding:2px 5px 3px 5px;"><i class="fa fa-eye"></i></a>';
+    //         }
             
-            $data->data[$i]->buyer_name = User::find($data->data[$i]->buyer_id)->name;
-            $data->data[$i]->action = (string)$output;
-        }
-        $out->setData($data);
-        return $out;
-    }
+    //         $data->data[$i]->buyer_name = User::find($data->data[$i]->buyer_id)->name;
+    //         $data->data[$i]->action = (string)$output;
+    //     }
+    //     $out->setData($data);
+    //     return $out;
+    // }
 
-    public function admin_supermarket_dataajax(Request $request)
-    {
-        $data_request = RequestForProduct::where([['is_supermarket_request',1]])->get();
-        $out =  DataTables::of($data_request)->make(true);
-        $data = $out->getData();
-        for($i=0; $i < count($data->data); $i++) {
-            // dd($data->data[$i]->id);
-            $output = '';
-            $output .= ' <a href="'.url(route('request_for_product.get_details_data',['id'=>$data->data[$i]->id])).'" class="btn btn-info btn-xs" data-toggle="tooltip" title="Show Details" style="display:inline;padding:2px 5px 3px 5px;"><i class="fa fa-eye"></i></a>';
-            $data->data[$i]->buyer_name = User::find($data->data[$i]->buyer_id)->name;
-            $data->data[$i]->seller_name = Shop::find($data->data[$i]->shop_id)?->name;
-            $data->data[$i]->price = single_price($data->data[$i]->price);
-            $data->data[$i]->action = (string)$output;
-            }
-        $out->setData($data);
-        return $out;
-    }
+    // public function admin_supermarket_dataajax(Request $request)
+    // {
+    //     $data_request = RequestForProduct::where([['is_supermarket_request',1]])->get();
+    //     $out =  DataTables::of($data_request)->make(true);
+    //     $data = $out->getData();
+    //     for($i=0; $i < count($data->data); $i++) {
+    //         // dd($data->data[$i]->id);
+    //         $output = '';
+    //         $output .= ' <a href="'.url(route('request_for_product.get_details_data',['id'=>$data->data[$i]->id])).'" class="btn btn-info btn-xs" data-toggle="tooltip" title="Show Details" style="display:inline;padding:2px 5px 3px 5px;"><i class="fa fa-eye"></i></a>';
+    //         $data->data[$i]->buyer_name = User::find($data->data[$i]->buyer_id)->name;
+    //         $data->data[$i]->seller_name = Shop::find($data->data[$i]->shop_id)?->name;
+    //         $data->data[$i]->price = single_price($data->data[$i]->price);
+    //         $data->data[$i]->action = (string)$output;
+    //         }
+    //     $out->setData($data);
+    //     return $out;
+    // }
 
-    public function admin_dataajax(Request $request)
-    {
-        $data_request = RequestForProduct::where([['product_id','!=',0],['is_supermarket_request',0]])->get();
-        $out =  DataTables::of($data_request)->make(true);
-        $data = $out->getData();
-        for($i=0; $i < count($data->data); $i++) {
-            // dd($data->data[$i]->id);
-            $output = '';
-            $output .= ' <a href="'.url(route('request_for_product.get_details_data',['id'=>$data->data[$i]->id])).'" class="btn btn-info btn-xs" data-toggle="tooltip" title="Show Details" style="display:inline;padding:2px 5px 3px 5px;"><i class="fa fa-eye"></i></a>';
-            $data->data[$i]->buyer_name = User::find($data->data[$i]->buyer_id)->name;
-            $data->data[$i]->seller_name = Shop::find($data->data[$i]->shop_id)?->name;
-            $data->data[$i]->price = single_price($data->data[$i]->price);
-            $data->data[$i]->action = (string)$output;
-            }
-        $out->setData($data);
-        return $out;
-    }
+    // public function admin_dataajax(Request $request)
+    // {
+    //     $data_request = RequestForProduct::where([['product_id','!=',0],['is_supermarket_request',0]])->get();
+    //     $out =  DataTables::of($data_request)->make(true);
+    //     $data = $out->getData();
+    //     for($i=0; $i < count($data->data); $i++) {
+    //         // dd($data->data[$i]->id);
+    //         $output = '';
+    //         $output .= ' <a href="'.url(route('request_for_product.get_details_data',['id'=>$data->data[$i]->id])).'" class="btn btn-info btn-xs" data-toggle="tooltip" title="Show Details" style="display:inline;padding:2px 5px 3px 5px;"><i class="fa fa-eye"></i></a>';
+    //         $data->data[$i]->buyer_name = User::find($data->data[$i]->buyer_id)->name;
+    //         $data->data[$i]->seller_name = Shop::find($data->data[$i]->shop_id)?->name;
+    //         $data->data[$i]->price = single_price($data->data[$i]->price);
+    //         $data->data[$i]->action = (string)$output;
+    //         }
+    //     $out->setData($data);
+    //     return $out;
+    // }
 
     public function approve_price(Request $request)
     {

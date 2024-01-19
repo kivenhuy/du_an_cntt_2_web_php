@@ -13,9 +13,19 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('admin.category.index');
+        $sort_search =null;
+        $cate_data = Category::orderBy('id', 'desc')
+            ->distinct();
+       
+        if ($request->has('search')) {
+            $sort_search = $request->search;
+            $cate_data = $cate_data->where('name', 'like', '%' . $sort_search . '%');
+        }
+        // dd($request_data->get()->appends(['seller_name']));
+        $cate_data = $cate_data->paginate(10);
+        return view('admin.category.index',compact('cate_data','sort_search'));
     }
 
     /**
@@ -91,16 +101,16 @@ class CategoryController extends Controller
         //
     }
 
-    public function data_ajax(Request $request)
-    {
-        $category_data = Category::all()->sortDesc();
-        $out =  DataTables::of($category_data)->make(true);
-        $data = $out->getData();
-        for($i=0; $i < count($data->data); $i++) {
-            $output = '';
-            $data->data[$i]->action = (string)$output;
-        }
-        $out->setData($data);
-        return $out;
-    }
+    // public function data_ajax(Request $request)
+    // {
+    //     $category_data = Category::all()->sortDesc();
+    //     $out =  DataTables::of($category_data)->make(true);
+    //     $data = $out->getData();
+    //     for($i=0; $i < count($data->data); $i++) {
+    //         $output = '';
+    //         $data->data[$i]->action = (string)$output;
+    //     }
+    //     $out->setData($data);
+    //     return $out;
+    // }
 }
