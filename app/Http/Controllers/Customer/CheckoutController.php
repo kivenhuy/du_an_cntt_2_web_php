@@ -116,7 +116,9 @@ class CheckoutController extends Controller
                     }
                     $each_cart_data->update(
                         ['shipping_type' => $shipping_type,
-                        'shipping_cost' => $request->total_shipping * $shipping_time]
+                        'shipping_cost' => $request->total_shipping * $shipping_time,
+                        'carrier_id'=>(int)$request->data_id
+                        ]
                     );
                    
                 }
@@ -140,7 +142,8 @@ class CheckoutController extends Controller
                     }
                     $each_cart_data->update(
                         ['shipping_type' => 'Fast Shipping',
-                        'shipping_cost' => $request->total_shipping * $shipping_time]
+                        'shipping_cost' => $request->total_shipping * $shipping_time,
+                        'carrier_id'=>(int)$request->data_id]
                     );
                 }
             }
@@ -170,7 +173,8 @@ class CheckoutController extends Controller
                     ['is_checked',1],
                 ])->update(
                     ['shipping_type' => $shipping_type,
-                    'shipping_cost' => $request->total_shipping]
+                    'shipping_cost' => $request->total_shipping,
+                    'carrier_id'=>(int)$request->data_id]
                 );
             }
             else
@@ -183,7 +187,8 @@ class CheckoutController extends Controller
                     ['is_checked',1],
                 ])->update(
                     ['shipping_type' => 'Fast Shipping',
-                    'shipping_cost' => $request->total_shipping]
+                    'shipping_cost' => $request->total_shipping,
+                    'carrier_id'=>(int)$request->data_id]
                 );
             }
             $cart_shipping = Cart::where([

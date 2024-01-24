@@ -201,9 +201,8 @@
                             <label class="col-md-3 control-label"
                                 for="start_date">{{ translate('Discount Date Range') }}</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control aiz-date-range" name="date_range"
-                                    placeholder="{{ translate('Select Date') }}" data-time-picker="true"
-                                    data-format="DD-MM-Y HH:mm:ss" data-separator=" to " autocomplete="off">
+                                <input type="datetime-local" class="form-control " name="expired_date"
+                                    placeholder="{{ translate('Select Date') }}"  autocomplete="off">
                             </div>
                         </div>
 

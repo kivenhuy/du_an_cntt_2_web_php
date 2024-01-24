@@ -51,7 +51,7 @@
                                 <table class="table">
                                     <tr>
                                         <td class="w-50 fw-600 border-top-0 py-2">{{ translate('Order status')}}:</td>
-                                        <td class="border-top-0 pr-0 py-2">{{ translate(ucfirst(str_replace('_', ' ', $first_order->delivery_status))) }}</td>
+                                        <td class="border-top-0 pr-0 py-2">Success</td>
                                     </tr>
                                     <tr>
                                         <td class="w-50 fw-600 border-top-0 py-2">{{ translate('Total order amount')}}:</td>

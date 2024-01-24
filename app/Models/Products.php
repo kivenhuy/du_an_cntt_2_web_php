@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -30,7 +31,7 @@ class Products extends Model
         'low_stock_quantity',
         'discount',
         'discount_type',
-        'discount_start_date',
+        'expired_date',
         'discount_end_date',
         'shipping_type',
         'est_shipping_days',
@@ -62,6 +63,11 @@ class Products extends Model
         return $this->hasOne(ProductStock::class,'product_id','id');
     }
 
+    public function order_detail()
+    {
+        return $this->hasMany(OrderDetail::class,'product_id','id');
+    }
+
     public function getImgUrlAttribute()
     {
         $data =uploaded_asset($this->thumbnail_img);
@@ -72,6 +78,19 @@ class Products extends Model
     {
         $data =($this->product_stock);
         return $data->qty;
+    }
+
+    public function getPercentDateAttribute()
+    {
+        $date = Carbon::parse($this->expired_date);
+        $created_at = Carbon::parse($this->created_at);
+        $now = Carbon::now();
+        $diff = $date->diffInDays($now);
+        $diff_2 = $date->diffInDays($created_at);
+        $final_diff = ($diff * 100)/$diff_2;
+
+        return $final_diff;
+       
     }
 
 }

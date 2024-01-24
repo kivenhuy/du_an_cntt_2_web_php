@@ -9001,6 +9001,11 @@ margin-bottom: 0;
 -ms-flex-wrap: wrap;
 flex-wrap: wrap;
 }
+.order_notification
+{
+    color: black !important;
+    font-weight: 700;
+}
 
 .pagination .page-link,
 .page-item.disabled .page-link {

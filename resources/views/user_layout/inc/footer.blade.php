@@ -103,6 +103,13 @@
                                     {{ translate('Contact Us') }} </span>
                                 </p>
                             </li>
+                            <li class="mb-2">
+                                <a href="http://localhost:3000/login">
+                                    <p class="fs-13 text-soft-light mb-0 text_footer"><span class="text_footer" style="font-family: 'Quicksand', sans-serif !important;">
+                                        {{ translate('Become a shipper') }} </span>
+                                    </p>
+                                </a>
+                            </li>
                         </ul>
                  
 

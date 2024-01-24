@@ -146,6 +146,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::post('/product_review_modal', [ReviewController::class, 'product_review_modal'])->name('product_review_modal');
+    Route::post('/shipping_history', [ReviewController::class, 'shipping_history'])->name('shipping_history');
     Route::resource('/reviews', ReviewController::class);
 });
 

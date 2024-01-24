@@ -105,7 +105,7 @@ class OrderController extends Controller
                     return redirect()->route('cart')->send();
                 } 
                 else 
-                 {
+                {
                     $product_stock->qty -= $cartItem['quantity'];
                     $product_stock->save();
                 }
@@ -123,6 +123,7 @@ class OrderController extends Controller
                 //End of storing shipping cost
 
                 $order_detail->quantity = $cartItem['quantity'];
+                $order_detail->carrier_id = $cartItem['carrier_id'];
                 $order_detail->save();
 
                 $product->num_of_sale += $cartItem['quantity'];
@@ -130,7 +131,7 @@ class OrderController extends Controller
 
                 $order->seller_id = $product->user_id;
                 $order->shipping_type = $cartItem['shipping_type'];
-                $order->carrier_id = $cartItem['carrier_id'];
+                // $order->carrier_id = $cartItem['carrier_id'];
 
 
                 if ($product->added_by == 'seller' && $product->user->seller != null) {

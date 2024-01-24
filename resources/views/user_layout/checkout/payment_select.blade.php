@@ -172,7 +172,7 @@
                                                 @foreach($carrier_list as $carrier_key => $carrier)
                                                     <div style="margin-bottom: 1rem;display: flex;align-items: center">
                                                        
-                                                        <input onclick="handleClick(this);" class="radio_button_checkout" type="radio" id="shipping_fee_{{ $key_user }}" data_cart="normal_product" name="shipping_fee_{{ $key_user }}" value="{{carrier_base_price($carts_normal, $carrier->id, $key_user)}}" data-shipping="{{$carrier->carrier_ranges->first()->billing_type}}"/>
+                                                        <input onclick="handleClick(this);" class="radio_button_checkout" type="radio" id="shipping_fee_{{ $key_user }}" data_cart="normal_product" data_id="{{$carrier->id}}" name="shipping_fee_{{ $key_user }}" value="{{carrier_base_price($carts_normal, $carrier->id, $key_user)}}" data-shipping="{{$carrier->carrier_ranges->first()->billing_type}}"/>
                                                         @if($carrier->carrier_ranges->first()->billing_type == 'weight_based')
                                                             <span for="shipping_fee" class="delivery_type">{{ $carrier->name }}</span>
                                                         @else
@@ -333,7 +333,7 @@
                                                     @if($carrier->carrier_ranges->first()->billing_type == 'fast_shipping')
                                                         <div style="margin-bottom: 1rem;display: flex;align-items: center">
                                                         
-                                                            <input onclick="handleClick_short(this);" class="radio_button_checkout_short" type="radio" id="shipping_fee_{{ $key_user }}" data_cart="short_product" name="shipping_fee_{{ $key_user }}" value="{{carrier_base_price($carts_short_shelf_life, $carrier->id, $key_user)}}" data-shipping="{{$carrier->carrier_ranges->first()->billing_type}}"/>
+                                                            <input onclick="handleClick_short(this);" class="radio_button_checkout_short" type="radio" id="shipping_fee_{{ $key_user }}" data_cart="short_product" data_id="{{$carrier->id}}" name="shipping_fee_{{ $key_user }}" value="{{carrier_base_price($carts_short_shelf_life, $carrier->id, $key_user)}}" data-shipping="{{$carrier->carrier_ranges->first()->billing_type}}"/>
                                                             
                                                                 <span for="shipping_fee" class="delivery_type">{{ $carrier->name }} (2 hour)</span>
                                                             
@@ -621,6 +621,7 @@
         function handleClick(myRadio) {
             
             var total_shipping = 0 ;
+            var data_id = 0 ;
             var shipping = "";
             var type_cart = "";
             var final_price = $('#final_price').val();
@@ -629,6 +630,7 @@
                 type_cart = ($(this).attr("data_cart"))
                 var value = $(this).val();
                 shipping = $(this).attr("data-shipping");
+                data_id = $(this).attr("data_id");
                 total_shipping = total_shipping + parseInt(value);
             });
             $.ajax
@@ -641,6 +643,7 @@
                         data_id_seller:data_id_seller,
                         shipping_type:shipping,
                         type_cart:type_cart,
+                        data_id:data_id,
                     },
                     headers: {
                         'X-CSRF-Token': '{{ csrf_token() }}',
@@ -661,11 +664,13 @@
             var shipping = "";
             var type_cart = "";
             var final_price = $('#final_price').val();
+            var data_id = 0 ;
             var data_id_seller = myRadio.name.replace('shipping_fee_','');  
             $("input[class=radio_button_checkout_short]:checked").each(function() {
                 type_cart = ($(this).attr("data_cart"))
                 var value = $(this).val();
                 shipping = $(this).attr("data-shipping");
+                data_id = $(this).attr("data_id");
                 total_shipping = total_shipping + parseInt(value);
             });
             $.ajax
@@ -678,6 +683,7 @@
                         data_id_seller:data_id_seller,
                         shipping_type:shipping,
                         type_cart:type_cart,
+                        data_id:data_id,
                     },
                     headers: {
                         'X-CSRF-Token': '{{ csrf_token() }}',

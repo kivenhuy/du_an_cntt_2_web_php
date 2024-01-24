@@ -5,22 +5,60 @@ namespace App\Http\Controllers\Customer;
 use App\Http\Controllers\Controller;
 use App\Models\Categories;
 use App\Models\Category;
+use App\Models\Order;
+use App\Models\OrderDetail;
 use App\Models\Products;
 use App\Models\Shop;
 use App\Models\User;
+use Carbon\Carbon;
 use Http;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Session;
 
 class HomeController extends Controller
 {
     public function index()
     {
+
+
+        
         $best_selling_products = Products::where('approved',1)->get()->take(4);
         $fresh_today_products = Products::where('approved',1)->where('short_shelf_life',1)->get()->sortByDesc('created_at')->take(3);
         $new_products = Products::where('approved',1)->latest()->limit(8)->get();
-        return view('user_layout.index',['best_selling_products'=>$best_selling_products,'fresh_today_products'=>$fresh_today_products,'new_products'=>$new_products]);
+        // dd($now->startOfWeek()->addWeek(2));
+
+        // dd(Session::get('start_time_range_fruits'));
+        $now = Carbon::now();
+        $fresh_fruit_high_quantity = Products::where('approved',1)
+        ->withCount('order_detail')
+        ->orderBy('order_detail_count', 'asc')
+        ->get()->append(['percent_date'])->sortBy('percent_date')->filter(function ($item) {
+            return  $item->percent_date <= 60 && $item->percent_date > 0;
+        })->values()->take(8);
+        // dd($fresh_fruit_high_quantity);
+        // dd(($fresh_fruit_high_quantity->expired_date)->diffInDays($now_4));
+
+
+        // $fresh_sea_food_high_quantity = Products::where('approved',1) 
+        //     ->orderBy('current_stock', 'desc')
+        //     ->where('short_shelf_life',1)
+        //     ->whereHas('category', function ($query) {
+        //         $query->whereIn('id',['3']);
+        //     })
+        //     ->whereBetween('created_at', [Session::get('start_time_for_sea_food'),Session::get('end_time_for_sea_food')])
+        //     ->get()->take(8);
+
+
+        return view('user_layout.index',
+        [
+            'best_selling_products'=>$best_selling_products,
+            'fresh_today_products'=>$fresh_today_products,
+            'new_products'=>$new_products,
+            // 'fresh_sea_food_high_quantity'=>$fresh_sea_food_high_quantity,
+            'fresh_fruit_high_quantity'=>$fresh_fruit_high_quantity
+        ]);
     }
 
     public function product(Request $request, $slug)

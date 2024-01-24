@@ -144,22 +144,43 @@
                                         <div class="p-3 bg-light border-bottom">
                                             <h6 class="mb-0">{{ translate('Notifications') }}</h6>
                                         </div>
-                                        <div class="px-3 c-scrollbar-light overflow-auto " style="max-height:300px;">
+                                        <div class=" c-scrollbar-light overflow-auto " style="max-height:300px;">
                                             <ul class="list-group list-group-flush">
                                                 @if(count(Auth::user()->unreadNotifications)>0)
                                                     @forelse(Auth::user()->unreadNotifications as $notification)
                                                         <li class="list-group-item">
                                                             
-                                                            {{-- @if ($notification->type == 'App\Notifications\OrderNotification') --}}
-                                                                {{-- @if (Auth::user()->user_type == 'customer') --}}
-                                                                    <a href=""
-                                                                        class="text-secondary fs-12">
-                                                                        <span class="ml-2">
-                                                                            {{ translate('Order code: ') }}
-                                                                            {{ $notification->data['request_code'] }}
-                                                                            {{ translate('has been ' . ucfirst(str_replace('_', ' ', $notification->data['status']))) }}
-                                                                        </span>
+                                                            @if ($notification->type == 'App\Notifications\OrderNotification')
+                                                                {{-- @if (Auth::user()->user_type == 'enterpriese') --}}
+                                                                @php
+                                                                    $order = App\Models\OrderDetail::find($notification->data['order_detail_id'])->order;
+                                                                @endphp
+                                                                    <a href="{{ route('purchase_history.get_detail', encrypt($order->id))}}"
+                                                                        class="text-secondary fs-14">
+                                                                        @if($notification->data['status'] == "receive_order")
+                                                                            <span class="order_notification">
+                                                                                {{ translate('Order code: ') }}
+                                                                                {{ $order->code }}
+                                                                                {{ translate('has been ' . (str_replace('_', ' ', $notification->data['status']))) }}
+                                                                                by shipper {{ $notification->data['shipper_name'] }}
+                                                                            </span>
+                                                                        @elseif($notification->data['status'] == "order_picking")
+                                                                            <span class="order_notification">
+                                                                                Shipper {{ $notification->data['shipper_name'] }} doing order picking
+                                                                                {{ translate('order code: ') }} {{ $order->code }}
+                                                                            </span>
+                                                                        @elseif($notification->data['status'] == "shipping")
+                                                                            <span class="order_notification">
+                                                                                Shipper {{ $notification->data['shipper_name'] }} is on the way to deliver
+                                                                                {{ translate('order code: ') }} {{ $order->code }}
+                                                                            </span>
+                                                                        @elseif($notification->data['status'] == "receive_order")
+                                                                            <span class="order_notification">
+                                                                                Shipper {{ $notification->data['shipper_name'] }} delivered successfully {{ translate('Order code: ') }} {{ $order->code }}
+                                                                            </span>
+                                                                        @endif
                                                                     </a>
+                                                                {{-- @elseif(Auth::user()->user_type == 'enterpriese') --}}
                                                                 {{-- @elseif (Auth::user()->user_type == 'seller')
                                                                     <a href="{{ route('seller.orders.show', encrypt($notification->data['order_id'])) }}"
                                                                         class="text-secondary fs-12">
@@ -170,7 +191,16 @@
                                                                         </span>
                                                                     </a>
                                                                 @endif --}}
-                                                            {{-- @endif --}}
+                                                            @else
+                                                                <a href=""
+                                                                    class="text-secondary fs-12">
+                                                                    <span class="ml-2">
+                                                                        {{ translate('Order code: ') }}
+                                                                        {{ $notification->data['request_code'] }}
+                                                                        {{ translate('has been ' . ucfirst(str_replace('_', ' ', $notification->data['status']))) }}
+                                                                    </span>
+                                                                </a>
+                                                            @endif
                                                         </li>
                                                     @empty
                                                         

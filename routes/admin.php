@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProvinceController;
 use App\Http\Controllers\Admin\PurchaseHistoryController;
 use App\Http\Controllers\Admin\SellerController;
+use App\Http\Controllers\Admin\ShipperController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\EnterpriseController;
 use App\Http\Controllers\RequestForProductController;
@@ -108,6 +109,12 @@ Route::group(['middleware' => ['auth'],'prefix' => 'admin'], function () {
         Route::post('/purchase_history/verify_payment', 'verify_payment')->name('admin.purchase_history.verify_payment');
         Route::get('/purchase_history/data_ajax', 'data_ajax')->name('admin.purchase_history.data_ajax');
         Route::get('/purchase_history/get_detail/{id}', 'get_detail')->name('admin.purchase_history.get_detail');
+    });
+
+    Route::controller(ShipperController::class)->group(function () {
+        Route::get('/shipper/index', 'index')->name('admin.shipper.index');
+        Route::post('/shipper/approved', 'approve_shipper')->name('admin.shipper.approved');
+        Route::get('/shipper/shipper_detail/{id}', 'shipper_detail')->name('admin.shipper_detail');
     });
 
 });

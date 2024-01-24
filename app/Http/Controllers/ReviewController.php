@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\OrderDetail;
 use App\Models\Products;
 use App\Models\Review;
+use App\Models\ShippingHistory;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -155,4 +157,12 @@ class ReviewController extends Controller
         $review = Review::where('user_id',Auth::user()->id)->where('product_id',$product->id)->first();
         return view('user_layout.partials.product_review_modal', compact('product','review'));
     }
+
+    public function shipping_history(Request $request){
+        $shipping_history = ShippingHistory::orderByDesc('created_at')->where('order_detail_id',$request->order_detail_id)->get();
+        // dd(OrderDetail::find($shipping_history[0]->order_detail_id));
+        return view('user_layout.partials.shipping_history', compact('shipping_history'));
+    }
+
+
 }

@@ -193,7 +193,7 @@
             <div class="form-group row">
                 <label class="col-lg-3 col-from-label" for="start_date">{{translate('Discount Date Range')}}</label>
                 <div class="col-lg-9">
-                    <input type="text" class="form-control aiz-date-range" value="{{ $date_range }}" name="date_range" placeholder="{{translate('Select Date')}}" data-time-picker="true" data-format="DD-MM-Y HH:mm:ss" data-separator=" to " autocomplete="off">
+                    <input  type="datetime-local" class="form-control " value="{{ $product->expired_date }}" name="expired_date" autocomplete="off">
                 </div>
             </div>
 

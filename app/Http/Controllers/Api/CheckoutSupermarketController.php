@@ -258,7 +258,8 @@ class CheckoutSupermarketController extends Controller
                 }
                 $each_cart_data->update(
                     ['shipping_type' => $shipping_type,
-                    'shipping_cost' => (int)$request->data['total_shipping'] * $shipping_time]
+                    'shipping_cost' => (int)$request->data['total_shipping'] * $shipping_time,
+                    'carrier_id'=>(int)$request->data['data_id']]
                 );
                 
             }
@@ -282,7 +283,8 @@ class CheckoutSupermarketController extends Controller
                 }
                 $each_cart_data->update(
                     ['shipping_type' => 'Fast Shipping',
-                    'shipping_cost' => $request->data['total_shipping'] * $shipping_time]
+                    'shipping_cost' => $request->data['total_shipping'] * $shipping_time,
+                    'carrier_id'=>(int)$request->data['data_id']]
                 );
             }
         }
@@ -477,6 +479,7 @@ class CheckoutSupermarketController extends Controller
                 
                     $order_detail->price = (cart_product_price($cartItem, $product, false, false) * $cartItem['quantity']);
                     $reservationStartingDate = $each_shipping_date ." ".$hour;
+                    $order_detail->carrier_id = $cartItem['carrier_id'];
                     $order_detail->shipping_date = Carbon::parse($reservationStartingDate);
                     $order_detail->save();
                 }
@@ -487,7 +490,7 @@ class CheckoutSupermarketController extends Controller
 
                 $order->seller_id = $product->user_id;
                 $order->shipping_type = $cartItem['shipping_type'];
-                $order->carrier_id = $cartItem['carrier_id'];
+                
 
 
                 if ($product->added_by == 'seller' && $product->user->seller != null) {

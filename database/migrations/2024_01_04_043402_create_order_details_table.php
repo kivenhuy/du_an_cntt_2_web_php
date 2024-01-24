@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('seller_id');
             $table->integer('product_id');
             $table->string('variation');
+            $table->integer('carrier_id');
             $table->double('price',20,2);
             $table->double('shipping_cost',20,2);
             $table->integer('quantity');

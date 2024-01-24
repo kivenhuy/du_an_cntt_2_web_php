@@ -53,7 +53,7 @@
                         </tr>
                         <tr>
                             <td class="w-50 fw-600">{{ translate('Order status') }}:</td>
-                            <td>{{ translate(ucfirst(str_replace('_', ' ', $order->delivery_status))) }}</td>
+                            <td>Success</td>
                         </tr>
                         <tr>
                             <td class="w-50 fw-600">{{ translate('Total order amount') }}:</td>
@@ -121,6 +121,7 @@
                                 @endif
                                 <th data-breakpoints="md">{{ translate('Delivery Type') }}</th>
                                 <th>{{ translate('Price') }}</th>
+                                <th>{{ translate('Shipping Status') }}</th>
                                 <th data-breakpoints="md" class="text-right pr-0">{{ translate('Review') }}</th>
                             </tr>
                         </thead>
@@ -152,7 +153,33 @@
                                         {{ $orderDetail->shipping_type }}
                                     </td>
                                     <td class="fw-700">{{ single_price($orderDetail->price) }}</td>
-                                    
+                                    @if ($orderDetail->delivery_status == 'delivered')
+                                    <td>
+                                            <span class="badge badge-inline badge-success">{{ucfirst(str_replace('_', ' ', $orderDetail->delivery_status))}}</span>
+                                            @if(count($orderDetail->shipping_history)>0)
+                                                <a href="javascript:void(0);"
+                                                    onclick="shipping_history('{{ $orderDetail->id }}')"
+                                                    class="btn btn-soft-info btn-icon btn-circle btn-sm"
+                                                    title="{{ translate('Shipping History') }}">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
+                                            @endif
+                                    </td>
+                                    @else
+                                    <td>
+                                        <span class="badge badge-inline badge-warning">
+                                            {{ ucfirst(str_replace('_', ' ', $orderDetail->delivery_status)) }}
+                                        </span>
+                                        @if(count($orderDetail->shipping_history)>0)
+                                            <a href="javascript:void(0);"
+                                                onclick="shipping_history('{{ $orderDetail->id }}')"
+                                                class="btn btn-soft-info btn-icon btn-circle btn-sm"
+                                                title="{{ translate('Shipping History') }}">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                        @endif
+                                    </td>
+                                    @endif
                                     <td class="text-xl-right pr-0">
                                         @if ($orderDetail->delivery_status === 'delivered')
                                             <a href="javascript:void(0);"
@@ -231,6 +258,35 @@
             top:0 !important;
             display:block !important; 
         }
+        .timeline-with-icons {
+        border-left: 1px solid hsl(0, 0%, 90%);
+        position: relative;
+        list-style: none;
+        }
+
+        .timeline-with-icons .timeline-item {
+        position: relative;
+        }
+
+        .timeline-with-icons .timeline-item:after {
+        position: absolute;
+        display: block;
+        top: 0;
+        }
+
+        .timeline-with-icons .timeline-icon {
+        position: absolute;
+        left: -54px;
+        background-color: hsl(217, 88.2%, 90%);
+        color: hsl(217, 88.8%, 35.1%);
+        border-radius: 50%;
+        height: 31px;
+        width: 31px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        }
+
     </style>
 @endsection
 
@@ -244,17 +300,15 @@
         </div>
     </div>
 
-    <!-- Payment Modal -->
-    <div class="modal fade" id="payment_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-                <div id="payment_modal_body">
+    <div class="modal fade" id="shipping-history-modal">
+        <div class="modal-dialog">
+            <div class="modal-content" id="shipping-history-modal-content">
 
-                </div>
             </div>
         </div>
     </div>
+
+   
 
 
     
@@ -268,6 +322,19 @@
             $.post('{{ route('product_review_modal') }}', {
                 _token:'{{ csrf_token() }}',
                 product_id: product_id
+            }, function(data) {
+                $('#product-review-modal-content').html(data);
+                $('#product-review-modal').modal('show', {
+                    backdrop: 'static'
+                });
+                AIZ.extra.inputRating();
+            });
+        }
+
+        function shipping_history(order_detail_id) {
+            $.post('{{ route('shipping_history') }}', {
+                _token:'{{ csrf_token() }}',
+                order_detail_id: order_detail_id
             }, function(data) {
                 $('#product-review-modal-content').html(data);
                 $('#product-review-modal').modal('show', {

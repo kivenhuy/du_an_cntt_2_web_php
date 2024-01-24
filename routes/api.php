@@ -1,12 +1,14 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Api\AddressController;
 use App\Http\Controllers\Api\CheckoutSupermarketController;
 use App\Http\Controllers\Api\PersonalInformationShopController;
 use App\Http\Controllers\Api\PersonalInformationSupermarketController;
 use App\Http\Controllers\Api\PurchaseHistoryController;
 use App\Http\Controllers\Api\RequestForProductController;
 use App\Http\Controllers\Api\RequestSendController;
+use App\Http\Controllers\Api\ShippingOrderController;
 use App\Http\Controllers\Api\SuggestProductController;
 use App\Http\Controllers\Api\UploadsProductController;
 use App\Http\Controllers\UploadsController;
@@ -80,6 +82,22 @@ Route::group(['prefix' => 'v2'], function () {
     Route::controller(PersonalInformationSupermarketController::class)->group(function () {
         Route::get('/personal_supermarket_information/get_detail/{id}', 'index')->name('personal_supermarket_information.index');
         Route::post('/personal_supermarket_information/update', 'update')->name('personal_supermarket_information.update');
+    });
+
+    Route::controller(AddressController::class)->group(function () {
+        Route::get('/country', 'index')->name('api.country');
+        Route::post('/city/filter_by_country', 'filter_by_country')->name('api.city');
+        Route::post('/district/filter_by_city', 'filter_by_city')->name('api.district');
+        Route::get('/get_data_carrier/{id}', 'get_data_carrier')->name('api.get_data_carrier');
+    });
+
+    Route::controller(ShippingOrderController::class)->group(function () {
+        Route::get('/normal_shipping', 'order_normal')->name('api.normal_shipping');
+        Route::get('/fast_shipping', 'order_fast')->name('api.fast_shipping');
+        Route::get('/normal_shipping_enterprise', 'order_normal_enterprise')->name('api.order_normal_enterprise');
+        Route::get('/fast_shipping_enterprise', 'order_fast_enterprise')->name('api.order_fast_enterprise');
+        Route::get('/order_detail/{id}', 'order_detail')->name('api.order_detail');
+        Route::post('/process_shipping_order', 'process_shipping_order')->name('api.process_shipping_order');
     });
 });
 

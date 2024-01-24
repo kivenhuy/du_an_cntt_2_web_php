@@ -110,6 +110,21 @@
 
                 <li class="aiz-side-nav-item">
                     <a href="#" class="aiz-side-nav-link">
+                        <i class="fa fa-user aiz-side-nav-icon"></i>
+                        <span class="aiz-side-nav-text">{{ translate('Shipper') }}</span>
+                        <span class="aiz-side-nav-arrow"></span>
+                    </a>
+                    <ul class="aiz-side-nav-list level-2">
+                        <li class="aiz-side-nav-item">
+                            <a href="{{ route('admin.shipper.index') }}" class="aiz-side-nav-link">
+                                <span class="aiz-side-nav-text">{{ translate('All Shipper') }}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="aiz-side-nav-item">
+                    <a href="#" class="aiz-side-nav-link">
                         <i class="fa fa-shopping-cart aiz-side-nav-icon"></i>
                         <span class="aiz-side-nav-text">{{ translate('Order') }}</span>
                         <span class="aiz-side-nav-arrow"></span>
