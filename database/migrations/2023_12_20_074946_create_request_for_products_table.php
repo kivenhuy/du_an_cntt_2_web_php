@@ -16,8 +16,10 @@ return new class extends Migration
             $table->integer('product_id');
             $table->string('code');
             $table->string('product_name');
+            $table->string('product_slug')->nullable();
             $table->integer('shop_id');
             $table->integer('buyer_id');
+            $table->string('shop_slug')->nullable();
             $table->timestamp('from_date');
             $table->timestamp('to_date');
             $table->longText('shipping_date');

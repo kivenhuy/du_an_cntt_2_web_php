@@ -13,6 +13,8 @@ class RequestForProduct extends Model
     protected $fillable = [
         'product_id',
         'product_name',
+        'product_slug',
+        'shop_slug',
         'shop_id',
         'buyer_id',
         'code',

@@ -87,11 +87,11 @@ class CheckoutController extends Controller
     {
         $user = Auth::user();
         $shipping_time = 1;
-        if($user->user_type === "enterprise")
+        if($user->user_type == "enterprise")
         {
-            if($request->type_cart === "normal_product")
+            if($request->type_cart == "normal_product")
             {
-                if($request->shipping_type === "weight_based")
+                if($request->shipping_type == "weight_based")
                 {
                     $shipping_type = 'Normal Shipping';
                 }
@@ -155,9 +155,9 @@ class CheckoutController extends Controller
         }
         else
         {
-            if($request->type_cart === "normal_product")
+            if($request->type_cart == "normal_product")
             {
-                if($request->shipping_type === "weight_based")
+                if($request->shipping_type == "weight_based")
                 {
                     $shipping_type = 'Normal Shipping';
                 }
@@ -171,6 +171,7 @@ class CheckoutController extends Controller
                     ['user_id',$user->id],
                     ['owner_id',(int)$request->data_id_seller],
                     ['is_checked',1],
+                    ['is_rfp',0]
                 ])->update(
                     ['shipping_type' => $shipping_type,
                     'shipping_cost' => $request->total_shipping,
@@ -179,12 +180,14 @@ class CheckoutController extends Controller
             }
             else
             {
+                // dd($request->total_shipping);
                 $cart_data = Cart::whereHas('product', function ($query) {
                     $query->where('short_shelf_life','=','1');
                 })->where([
                     ['user_id',$user->id],
                     ['owner_id',(int)$request->data_id_seller],
                     ['is_checked',1],
+                    ['is_rfp',0]
                 ])->update(
                     ['shipping_type' => 'Fast Shipping',
                     'shipping_cost' => $request->total_shipping,

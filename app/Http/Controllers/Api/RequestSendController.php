@@ -23,7 +23,7 @@ class RequestSendController extends Controller
      */
     public function index(Request $request)
     {
-        $all_request = RequestForProduct::where("buyer_id",(int)$request->buyer_id)->get()->append(['seller_name', 'unit_price']);
+        $all_request = RequestForProduct::orderByDesc('created_at')->where("buyer_id",(int)$request->buyer_id)->get()->append(['seller_name', 'unit_price']);
         return response()->json([
             'result' => true,
             'data'=>$all_request
@@ -42,9 +42,41 @@ class RequestSendController extends Controller
         $request_for_product = new RequestForProduct();
         foreach($request->data as $data_request)
         {
+            if($data_request['product_slug'] != "")
+            {
+                $data_product = Products::where('slug',$data_request['product_slug'])->first();
+                if($data_product)
+                {
+                    $data_request['product_id'] =$data_product->id;
+                }
+                else
+                {
+                    $data_request['status'] =99;
+                }
+            }
+            else
+            {
+                $data_request['status'] =97;
+            }
+            if($data_request['shop_slug'] != "")
+            {
+                $data_shop = Shop::where('slug',$data_request['shop_slug'])->first();
+                if($data_shop)
+                {
+                    $data_request['shop_id'] =$data_shop->id;
+                }
+                else
+                {
+                    $data_request['status'] =98;
+                }
+            }
             $success_requets = $request_for_product->create($data_request);
-            
+            if($success_requets->shop_id != 0)
+            {
+                $seller = Shop::find($success_requets->shop_id)->user;
+            }
             Notification::send($seller, new WelcomeNotification($success_requets));
+            
         }
         return response()->json([
             'result' => true,

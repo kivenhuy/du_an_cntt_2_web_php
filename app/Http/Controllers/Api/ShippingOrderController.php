@@ -27,11 +27,10 @@ class ShippingOrderController extends Controller
     }
 
     public function order_fast(){
-        // $now = Carbon::now()->addHour(7);
-        // dd($now);
+        $now = Carbon::now()->addHour(2);
         $order_details = OrderDetail::with('order')->orderByDesc('created_at')
         ->where('shipping_type','Fast Shipping')
-        // ->WhereDate('shipping_date','<',$now)
+        ->WhereDate('created_at','<=',$now)->whereTime('created_at', '<=',$now->toTimeString())
         ->where('shipping_date',null)
         ->get();
         return response()->json([
@@ -44,8 +43,11 @@ class ShippingOrderController extends Controller
     }
 
     public function order_normal_enterprise(){
-        $now = Carbon::now()->addHour(9);
-        $order_details = OrderDetail::with('order')->orderByDesc('created_at')->WhereDate('shipping_date','<',$now)->whereTime('shipping_date', '<=',$now->toTimeString())->where('shipping_type','Normal Shipping')->get();
+        $now = Carbon::now();
+        $order_details = OrderDetail::with('order')->orderByDesc('created_at')
+        ->WhereDate('shipping_date','<=',$now)
+        ->where('shipping_type','Normal Shipping')
+        ->get();
         return response()->json([
             'result' => true,
             'data'=>
@@ -74,7 +76,7 @@ class ShippingOrderController extends Controller
     }
 
     public function order_detail($id){
-        $order_details = OrderDetail::with('order')->find($id);
+        $order_details = OrderDetail::with('order')->find($id)->append(['shop_address']);
         $order_details->cus_email = User::find($order_details->order->customer_id)->email;
         $product_data = Products::find($order_details->product_id);
         $order_details->image_product = uploaded_asset($product_data->thumbnail_img);
