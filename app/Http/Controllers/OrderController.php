@@ -80,6 +80,10 @@ class OrderController extends Controller
             $order->shipping_address = $combined_order->shipping_address;
             $order->payment_type = $request->payment_option;
             $order->payment_status = "unpaid";
+            if($request->payment_option != "cash_on_delivery")
+            {
+                $order->payment_status = "waiting for checking";
+            }
             $order->delivery_viewed = 0;
             $order->viewed = 0;
             $order->code = date('Ymd-His') . rand(10, 99);

@@ -66,13 +66,7 @@
                 @endif
                 
 
-                <li class="aiz-side-nav-item">
-                    <form action="{{ route('vnpaypayment') }}" method="POST">
-                        @csrf
-                        <button type="submit"> Check</button>
-                    </form>
-                    
-                </li>
+                
                 <!-- Manage Profile -->
                 <li class="aiz-side-nav-item">
                     <a href="{{ route('profile') }}" class="aiz-side-nav-link {{ areActiveRoutes(['profile']) }}">

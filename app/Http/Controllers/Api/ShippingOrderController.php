@@ -28,9 +28,11 @@ class ShippingOrderController extends Controller
 
     public function order_fast(){
         $now = Carbon::now()->addHour(2);
+        // dd($now);
         $order_details = OrderDetail::with('order')->orderByDesc('created_at')
         ->where('shipping_type','Fast Shipping')
-        ->WhereDate('created_at','<=',$now)->whereTime('created_at', '<=',$now->toTimeString())
+        ->WhereDate('created_at','<=',$now)
+        ->whereTime('created_at', '<=',$now->toTimeString())
         ->where('shipping_date',null)
         ->get();
         return response()->json([
@@ -43,9 +45,10 @@ class ShippingOrderController extends Controller
     }
 
     public function order_normal_enterprise(){
-        $now = Carbon::now();
+        $now = Carbon::now()->addHour(7);
         $order_details = OrderDetail::with('order')->orderByDesc('created_at')
         ->WhereDate('shipping_date','<=',$now)
+        ->whereTime('shipping_date', '<=',$now->toTimeString())
         ->where('shipping_type','Normal Shipping')
         ->get();
         return response()->json([

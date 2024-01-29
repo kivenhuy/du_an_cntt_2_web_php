@@ -88,7 +88,7 @@
                                     </td>
                                     <td>
                                         @if ($order->seller_id != null)
-                                            {{ optional($order->user)->name }}
+                                            {{ optional($order->seller->shop)->name }}
                                         @endif
                                     </td>
                                     <td>

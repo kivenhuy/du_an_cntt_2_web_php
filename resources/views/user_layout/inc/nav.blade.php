@@ -178,6 +178,10 @@
                                                                             <span class="order_notification">
                                                                                 Shipper {{ $notification->data['shipper_name'] }} delivered successfully {{ translate('Order code: ') }} {{ $order->code }}
                                                                             </span>
+                                                                        @elseif($notification->data['status'] == "fail")
+                                                                            <span class="order_notification">
+                                                                                Order status has been fail because delivery time does not meet standards  {{ translate('Order code: ') }} {{ $order->code }}
+                                                                            </span>
                                                                         @endif
                                                                     </a>
                                                                 {{-- @elseif(Auth::user()->user_type == 'enterpriese') --}}

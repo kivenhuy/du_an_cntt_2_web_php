@@ -81,7 +81,7 @@
                                             onclick="show_order_details({{ $order->id }})">{{ $order->code }}</a>
                                     </td>
                                     <td>
-                                        {{ count($order->orderDetails->where('customer_id', Auth::user()->id)) }}
+                                        {{ count($order->orderDetails) }}
                                     </td>
                                     <td>
                                         @if ($order->seller_id != null)

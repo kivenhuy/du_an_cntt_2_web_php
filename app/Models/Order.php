@@ -20,6 +20,11 @@ class Order extends Model
         return $this->belongsTo(User::class,'customer_id','id');
     }
 
+    public function seller()
+    {
+        return $this->belongsTo(User::class,'seller_id','id');
+    }
+
     public function getAllShippingPriceAttribute()
     {
         return single_price($this->orderDetails->sum('shipping_cost'));

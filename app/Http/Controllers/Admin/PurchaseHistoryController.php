@@ -109,6 +109,13 @@ class PurchaseHistoryController extends Controller
        
         $order_data->payment_status = 'paid';
         $order_data->save();
+        foreach($order_data->orderDetails as $each_detail)
+        {
+            $each_detail->payment_status = 'paid';
+            $each_detail->save();
+            // $order_data->orderDetails()->update(['payment_status','paid']);
+        }
+        // flash(translate('Update Payment Status Successfully'))->success();
             // $order_data->update(['payment_status','paid']);
         
         
