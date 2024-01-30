@@ -48,7 +48,7 @@ class ShippingOrderController extends Controller
         $now = Carbon::now()->addHour(7);
         $order_details = OrderDetail::with('order')->orderByDesc('created_at')
         ->WhereDate('shipping_date','<=',$now)
-        ->whereTime('shipping_date', '<=',$now->toTimeString())
+        // ->whereTime('shipping_date', '<=',$now->toTimeString())
         ->where('shipping_type','Normal Shipping')
         ->get();
         return response()->json([
