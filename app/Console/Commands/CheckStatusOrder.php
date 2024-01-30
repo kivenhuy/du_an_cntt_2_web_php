@@ -78,7 +78,7 @@ class CheckStatusOrder extends Command
         $now_3 = Carbon::now()->addHour(7);
         $order_details_3 = OrderDetail::with('order')->orderByDesc('created_at')
         ->WhereDate('shipping_date','<=',$now_3)
-        ->whereTime('shipping_date', '<=',$now_3->toTimeString())
+        // ->whereTime('shipping_date', '<=',$now_3->toTimeString())
         ->where('shipping_type','Normal Shipping')
         ->where('delivery_status','!=','fail')
         ->get();

@@ -199,7 +199,7 @@
 
                         <div class="form-group row">
                             <label class="col-md-3 control-label"
-                                for="start_date">{{ translate('Discount Date Range') }}</label>
+                                for="start_date">{{ translate('Expired Date') }}</label>
                             <div class="col-md-9">
                                 <input type="datetime-local" class="form-control " name="expired_date"
                                     placeholder="{{ translate('Select Date') }}"  autocomplete="off">
