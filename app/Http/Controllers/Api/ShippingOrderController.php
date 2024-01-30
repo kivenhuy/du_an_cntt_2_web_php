@@ -66,7 +66,7 @@ class ShippingOrderController extends Controller
         $order_details = OrderDetail::with('order')->orderByDesc('created_at')
         ->where('shipping_type','Fast Shipping')
         ->WhereDate('shipping_date','<=',$now)
-        ->whereTime('shipping_date', '<=',$now->toTimeString())
+        // ->whereTime('shipping_date', '<=',$now->toTimeString())
         // ->where('shipping_date',null)
         ->get();
         return response()->json([
