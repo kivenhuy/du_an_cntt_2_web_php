@@ -36,6 +36,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/seller/request_for_product/seller_supermarket_dataajax', 'seller_supermarket_dataajax')->name('request_for_product.seller_supermarket_dataajax');
         Route::post('/seller/request_for_product/seller_update_price', 'seller_update_price')->name('seller.request_for_product.seller_update_price');
         Route::post('/seller/request_for_product/seller_accept_request', 'seller_accept_request')->name('seller.request_for_product.seller_accept_request');
+        Route::post('/seller/request_for_product/seller_reject_request', 'seller_reject_request')->name('seller.request_for_product.seller_reject_request');
     });
 
     Route::controller(ShopController::class)->group(function () {

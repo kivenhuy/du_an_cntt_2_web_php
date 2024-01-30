@@ -167,9 +167,21 @@
                                     </td>
                                     @else
                                     <td>
-                                        <span class="badge badge-inline badge-warning">
-                                            {{ ucfirst(str_replace('_', ' ', $orderDetail->delivery_status)) }}
-                                        </span>
+                                         @if ($orderDetail->delivery_status == 'delivered')
+                                            
+                                                    <span class="badge badge-inline badge-success">{{ucfirst(str_replace('_', ' ', $orderDetail->delivery_status))}}</span>
+                                            
+                                            @elseif ($orderDetail->delivery_status == 'fail')
+                                            
+                                                    <span class="badge badge-inline badge-danger">{{ucfirst(str_replace('_', ' ', $orderDetail->delivery_status))}}</span>
+                                          
+                                            @else
+                                            
+                                                <span class="badge badge-inline badge-warning">
+                                                    {{ ucfirst(str_replace('_', ' ', $orderDetail->delivery_status)) }}
+                                                </span>
+                                            
+                                            @endif
                                         @if(count($orderDetail->shipping_history)>0)
                                             <a href="javascript:void(0);"
                                                 onclick="shipping_history('{{ $orderDetail->id }}')"

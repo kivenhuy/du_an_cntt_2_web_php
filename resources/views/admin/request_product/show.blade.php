@@ -84,6 +84,14 @@
                                                 @elseif($data_request->status == 4)
                                                 
                                                     <span class='badge badge-inline badge-success' style='background-color:#28a745 !important'>{{translate('Added To Cart')}}</span>
+                                                @elseif($data_request->status == 97)
+                                                    <span class='badge badge-inline badge-danger' >Missing Product Slug</span>
+                                                @elseif($data_request->status == 98)
+                                                    <span class='badge badge-inline badge-danger' >Seller Not Found</span>
+                                                @elseif($data_request->status == 99)
+                                                    <span class='badge badge-inline badge-danger' >Product Not Found</span>
+                                                @elseif($data_request->status == 90)
+                                                    <span class='badge badge-inline badge-danger' >Seller Reject</span>
                                                 @endif
                                             </td>
                                         </tr>

@@ -93,6 +93,8 @@
                                             <span class='badge badge-inline badge-warning'>{{translate('Pending Price Update')}}</span>
                                         @elseif($each_request_data->status == 3)
                                             <span class='badge badge-inline badge-info' >{{translate('Waiting For Customer')}}</span>
+                                        @elseif($each_request_data->status == 90)
+                                            <span class='badge badge-inline badge-danger' >{{translate('Seller Reject')}}</span>
                                         @else
                                         <span class='badge badge-inline badge-success' style='background-color:#28a745 !important'>{{translate('Process To Checkout')}}</span>"
                                         @endif

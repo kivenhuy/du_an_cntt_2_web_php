@@ -98,6 +98,14 @@
                                             <span class='badge badge-inline badge-warning'>{{translate('Pending Price Update')}}</span>
                                         @elseif($each_request_data->status == 3)
                                             <span class='badge badge-inline badge-info' >{{translate('Waiting For Customer')}}</span>
+                                        @elseif($each_request_data->status == 97)
+                                            <span class='badge badge-inline badge-danger' >Missing Product Slug</span>
+                                        @elseif($each_request_data->status == 98)
+                                            <span class='badge badge-inline badge-danger' >Seller Not Found</span>
+                                        @elseif($each_request_data->status == 99)
+                                            <span class='badge badge-inline badge-danger' >Product Not Found</span>
+                                        @elseif($data_request->status == 90)
+                                            <span class='badge badge-inline badge-danger' >Seller Reject</span>
                                         @else
                                         <span class='badge badge-inline badge-success' style='background-color:#28a745 !important'>{{translate('Process To Checkout')}}</span>"
                                         @endif

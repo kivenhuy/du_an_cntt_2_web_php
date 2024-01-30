@@ -104,6 +104,9 @@
                                             @elseif($data_request->status == 4)
                                             
                                                 <span class='badge badge-inline badge-success' style='background-color:#28a745 !important'>{{translate('Added To Cart')}}</span>
+                                            @elseif($data_request->status == 90)
+                                                <span class='badge badge-inline badge-danger' >Seller Reject</span>
+                                            
                                             @endif
                                         </td>
                                     </tr>
@@ -178,20 +181,24 @@
     </div>
 
     <div class="card-footer">
-        @if($data_request->shop_id == 0)
+        @if($data_request->status == 1)
             @if($is_accept != 0)
                 <input type="hidden" id="product_id" value="{{$product_id}}">
                 <div class="col-3">
                     <button id={{$data_request->id}} type="button" class="btn btn-primary btn-block fw-700 fs-14 rounded-4 EdApprove">Accept Request</button>
                 </div>
             @endif
-        @else
+            <input type="hidden" id="product_id" value="{{$product_id}}">
+            <div class="col-3">
+                <button id={{$data_request->id}} type="button" class="btn btn-danger btn-block fw-700 fs-14 rounded-4 EdReject">Reject Request</button>
+            </div>
+        {{-- @else
             @if($data_request->status == 1)
                 <input type="hidden" id="product_id" value="{{$data_request->product_id}}">
                 <div class="col-3">
                     <button id={{$data_request->id}} type="button" class="btn btn-primary btn-block fw-700 fs-14 rounded-4 EdApprove">Accept Request</button>
                 </div>
-            @endif
+            @endif --}}
         @endif
         
         
@@ -309,12 +316,12 @@
     .EdReject
     {
         font-family: 'Roboto',sans-serif !important;
-        font-size: 14px !important;
+        /* font-size: 14px !important;
         font-weight: 700 !important;
         line-height: 28px;
         letter-spacing: 0.25px;
         text-align: center;
-        color: #FFFFFF;
+        color: #FFFFFF; */
     }
     .EdSubmit
     {
@@ -484,6 +491,32 @@
                 AIZ.plugins.notify('success','Aceept Request Successfully!!!!');
             }, 
             error: function(){
+                AIZ.plugins.notify('danger','Some Thing Went Wrong!!!!');
+            }
+        });
+    });
+
+    $(document).on("click", ".EdReject", function()
+    {
+        var serviceID = $(this).attr('id');
+        var product_id = $('#product_id').val();
+        $.ajax
+        ({
+            url: "{{route('seller.request_for_product.seller_reject_request')}}",
+            method:'post',
+            data:{
+                id_rfp:serviceID,
+                product_id:product_id,
+            },
+            headers: {
+                'X-CSRF-Token': '{{ csrf_token() }}',
+            },
+            success: function(data){
+                location.reload();
+                AIZ.plugins.notify('success','Reject Request Successfully!!!!');
+            }, 
+            error: function(){
+                location.reload();
                 AIZ.plugins.notify('danger','Some Thing Went Wrong!!!!');
             }
         });

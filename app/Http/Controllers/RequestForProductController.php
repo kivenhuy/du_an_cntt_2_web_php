@@ -49,7 +49,7 @@ class RequestForProductController extends Controller
         $sort_search = null;
         $request_data = RequestForProduct::orderBy('id', 'desc')
             ->orderBy('id', 'desc')
-            ->where('shop_id', Auth::user()->shop->id)
+            // ->where('shop_id', Auth::user()->shop->id)
             ->where('is_supermarket_request',1);
         if ($request->status != null) {
             $request_data = $request_data->where('status',(int) $request->status);
@@ -168,6 +168,19 @@ class RequestForProductController extends Controller
         }
     }
 
+    public function seller_reject_request(Request $request)
+    {
+        if(isset($request->id_rfp))
+        {
+            $price =$request->price; // 1,000,000
+            $Rfq_data = RequestForProduct::find($request->id_rfp);
+            if($Rfq_data)
+            {
+                $Rfq_data->update(['status' => 90]);
+            }   
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -201,6 +214,8 @@ class RequestForProductController extends Controller
             'product_id'=>$request->product_id,
             'code'=>$code_rfq,
             'product_name'=>Products::find($request->product_id)->name,
+            'product_slug'=>Products::find($request->product_id)->slug,
+            'shop_slug'=>Shop::find($request->shop_id)->slug,
             'shop_id'=>$request->shop_id,
             'buyer_id'=>Auth::user()->id,
             'from_date'=>Carbon::parse($request->from_date),
@@ -251,9 +266,9 @@ class RequestForProductController extends Controller
             {
                 $is_accept = 0;
                 $product_id = 0;
-                if($data_request->product_id == 0)
+                if($data_request->product_id != 0)
                 {
-                    $data_product = Products::where([['name', 'like', '%' .$data_request->product_name. '%'],['user_id',Auth::user()->id]])->first();
+                    $data_product = Products::where([['slug',$data_request->product_slug],['user_id',Auth::user()->id]])->first();
                     // dd($data_product);
                     if(!empty($data_product))
                     
@@ -262,6 +277,7 @@ class RequestForProductController extends Controller
                         $product_id = $data_product->id;
                     }
                 }   
+                
                 return view('seller.request_product.show',['product_id'=>$product_id,'is_accept'=>$is_accept,'product'=>$product,'buyer'=>$buyer,'seller'=>$seller,'data_request'=>$data_request]);
             }
             else

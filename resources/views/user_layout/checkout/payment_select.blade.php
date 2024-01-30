@@ -392,7 +392,20 @@
                                                     </label>
                                                 </div>
                                             @endif
-                                            
+                                            <div class="col-3 col-xl-3 col-md-3" style="max-width: 221px !important">
+                                                <label class="aiz-megabox d-block mb-3">
+                                                    <input value="vnpay" class="online_payment"
+                                                        type="radio" name="payment_option" >
+                                                    <span class="d-block aiz-megabox-elem rounded-0 p-3">
+                                                        {{-- <img src="{{ static_asset('assets/img/cards/cod.png') }}"
+                                                            class="img-fit mb-2"> --}}
+                                                        <span class="d-block text-center">
+                                                            <span
+                                                                class="d-block fw-600 fs-15 text_method">{{ translate('VNPay') }}</span>
+                                                        </span>
+                                                    </span>
+                                                </label>
+                                            </div>
                                             <div class="col-6 col-xl-3 col-md-4">
                                                 <label class="aiz-megabox d-block mb-3">
                                                     <input value="bank_payment" type="radio"
@@ -409,7 +422,7 @@
                                                     </span>
                                                 </label>
                                             </div>
-                                        
+                                            
                                             <div id="manual_payment_info_1" class="d-none">
                                                 <h5>
                                                     <span style="font-weight: bolder;">Guidline Upload Your Bank Transfer Receipt</span>
@@ -490,6 +503,8 @@
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            
                                         </div>
                                         
                                         <!-- Offline Payment Fields -->
@@ -627,6 +642,7 @@
             var final_price = $('#final_price').val();
             var data_id_seller = myRadio.name.replace('shipping_fee_','');  
             $("input[class=radio_button_checkout]:checked").each(function() {
+                total_shipping = 0;
                 type_cart = ($(this).attr("data_cart"))
                 var value = $(this).val();
                 shipping = $(this).attr("data-shipping");
@@ -667,6 +683,7 @@
             var data_id = 0 ;
             var data_id_seller = myRadio.name.replace('shipping_fee_','');  
             $("input[class=radio_button_checkout_short]:checked").each(function() {
+                total_shipping = 0;
                 type_cart = ($(this).attr("data_cart"))
                 var value = $(this).val();
                 shipping = $(this).attr("data-shipping");

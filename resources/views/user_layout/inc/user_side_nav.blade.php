@@ -65,6 +65,8 @@
                     </li>
                 @endif
                 
+
+                
                 <!-- Manage Profile -->
                 <li class="aiz-side-nav-item">
                     <a href="{{ route('profile') }}" class="aiz-side-nav-link {{ areActiveRoutes(['profile']) }}">

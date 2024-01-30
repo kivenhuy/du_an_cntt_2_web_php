@@ -13,6 +13,7 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\UploadsController;
+use App\Http\Controllers\VNPayController;
 use App\Models\RequestForProduct;
 use Illuminate\Support\Facades\Route;
 
@@ -146,6 +147,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::post('/product_review_modal', [ReviewController::class, 'product_review_modal'])->name('product_review_modal');
+    Route::post('/vnpaypayment', [VNPayController::class, 'VNPay'])->name('vnpaypayment');
     Route::post('/shipping_history', [ReviewController::class, 'shipping_history'])->name('shipping_history');
     Route::resource('/reviews', ReviewController::class);
 });
