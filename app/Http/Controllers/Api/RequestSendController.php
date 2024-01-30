@@ -23,7 +23,7 @@ class RequestSendController extends Controller
      */
     public function index(Request $request)
     {
-        $all_request = RequestForProduct::where("buyer_id",(int)$request->buyer_id)->get()->append(['seller_name', 'unit_price']);
+        $all_request = RequestForProduct::where("buyer_id",(int)$request->buyer_id)->orderBy('id', 'desc')->get()->append(['seller_name', 'unit_price']);
         return response()->json([
             'result' => true,
             'data'=>$all_request
