@@ -26,6 +26,26 @@ class ShippingOrderController extends Controller
         ]); 
     }
 
+    public function get_dashboard($id){
+        
+        $total_order = ShippingHistory::where([['status','receive_order'],['shipper_id',(int)$id]])->count();
+        $total_deliverd = ShippingHistory::where([['status','delivered'],['shipper_id',(int)$id]])->count();
+        $total_fail_deliverd = ShippingHistory::where([['status','fail'],['shipper_id',(int)$id]])->count();
+        $data_id_order_details = ShippingHistory::where([['status','delivered'],['shipper_id',(int)$id]])->get()->pluck('id');
+        $total_shipping_cost = OrderDetail::whereIn('id',$data_id_order_details)->sum('shipping_cost');
+        // $total_shipping_price = ShippingHistory::where([['status','receive_order'],['shipper_id',(int)$id]])->count();
+        return response()->json([
+            'result' => true,
+            'data'=>
+            [
+                'total_order'=>$total_order,
+                'total_deliverd'=>$total_deliverd,
+                'total_fail_deliverd'=>$total_fail_deliverd,
+                'total_shipping_cost'=>$total_shipping_cost,
+            ]
+        ]); 
+    }
+
     public function order_fast(){
         $now = Carbon::now()->addHour(2);
         // dd($now);

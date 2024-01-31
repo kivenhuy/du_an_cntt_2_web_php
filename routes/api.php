@@ -98,6 +98,7 @@ Route::group(['prefix' => 'v2'], function () {
         Route::get('/fast_shipping_enterprise', 'order_fast_enterprise')->name('api.order_fast_enterprise');
         Route::get('/order_detail/{id}', 'order_detail')->name('api.order_detail');
         Route::post('/process_shipping_order', 'process_shipping_order')->name('api.process_shipping_order');
+        Route::get('/get_dashboard/{id}', 'get_dashboard')->name('api.get_dashboard');
     });
 });
 
