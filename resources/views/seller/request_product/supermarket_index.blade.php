@@ -104,7 +104,7 @@
                                             <span class='badge badge-inline badge-danger' >Seller Not Found</span>
                                         @elseif($each_request_data->status == 99)
                                             <span class='badge badge-inline badge-danger' >Product Not Found</span>
-                                        @elseif($data_request->status == 90)
+                                        @elseif($each_request_data->status == 90)
                                             <span class='badge badge-inline badge-danger' >Seller Reject</span>
                                         @else
                                         <span class='badge badge-inline badge-success' style='background-color:#28a745 !important'>{{translate('Process To Checkout')}}</span>"

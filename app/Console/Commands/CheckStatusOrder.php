@@ -36,7 +36,7 @@ class CheckStatusOrder extends Command
         $order_details_1 = OrderDetail::with('order')->orderByDesc('created_at')
         ->where('shipping_type','Fast Shipping')
         ->WhereDate('created_at','<=',$now)
-        ->whereTime('created_at', '<=',$now->toTimeString())
+        // ->whereTime('created_at', '<=',$now->toTimeString())
         ->where('shipping_date',null)
         ->where('delivery_status','!=','fail')
         ->get();
@@ -49,6 +49,29 @@ class CheckStatusOrder extends Command
             {
                 $each_order_details_1->delivery_status = 'fail';
                 $each_order_details_1->save();
+                if($each_order_details_1)
+                {
+                    $shipping_history = new ShippingHistory();
+                    $shipping_history->order_detail_id = $each_order_details_1->id;
+                    if(count($each_order_details_1->shipping_history) == 0)
+                    {
+                        $shipping_history->shipper_id = 0;
+                        $shipping_history->shipper_name = "";
+                    }
+                    else
+                    {
+                        $shipping_history->shipper_id = $each_order_details_1->shipping_history[0]->shipper_id;
+                        $shipping_history->shipper_name = $each_order_details_1->shipping_history[0]->shipper_name;
+                    }
+                    $shipping_history->photo = "";
+                    $shipping_history->status = "fail";
+                    $shipping_history->save();
+                    if($shipping_history)
+                    {
+                        $customer = User::find($each_order_details_1->order->customer_id);
+                        Notification::send($customer, new OrderNotification($shipping_history));
+                    }
+                }
             }
             
         }
@@ -59,7 +82,7 @@ class CheckStatusOrder extends Command
         $order_details_2 = OrderDetail::with('order')->orderByDesc('created_at')
         ->where('shipping_type','Fast Shipping')
         ->WhereDate('shipping_date','<=',$now_2)
-        ->whereTime('shipping_date', '<=',$now_2->toTimeString())
+        // ->whereTime('shipping_date', '<=',$now_2->toTimeString())
         ->where('delivery_status','!=','fail')
         ->get();
 
@@ -71,6 +94,29 @@ class CheckStatusOrder extends Command
             {
                 $each_order_details_2->delivery_status = 'fail';
                 $each_order_details_2->save();
+                if($each_order_details_2)
+                {
+                    $shipping_history = new ShippingHistory();
+                    $shipping_history->order_detail_id = $each_order_details_2->id;
+                    if(count($each_order_details_2->shipping_history) == 0)
+                    {
+                        $shipping_history->shipper_id = 0;
+                        $shipping_history->shipper_name = "";
+                    }
+                    else
+                    {
+                        $shipping_history->shipper_id = $each_order_details_2->shipping_history[0]->shipper_id;
+                        $shipping_history->shipper_name = $each_order_details_2->shipping_history[0]->shipper_name;
+                    }
+                    $shipping_history->photo = "";
+                    $shipping_history->status = "fail";
+                    $shipping_history->save();
+                    if($shipping_history)
+                    {
+                        $customer = User::find($each_order_details_2->order->customer_id);
+                        Notification::send($customer, new OrderNotification($shipping_history));
+                    }
+                }
             }
             
         }
@@ -95,8 +141,16 @@ class CheckStatusOrder extends Command
                 {
                     $shipping_history = new ShippingHistory();
                     $shipping_history->order_detail_id = $each_order_details_3->id;
-                    $shipping_history->shipper_id = 0;
-                    $shipping_history->shipper_name = "";
+                    if(count($each_order_details_3->shipping_history) == 0)
+                    {
+                        $shipping_history->shipper_id = 0;
+                        $shipping_history->shipper_name = "";
+                    }
+                    else
+                    {
+                        $shipping_history->shipper_id = $each_order_details_3->shipping_history[0]->shipper_id;
+                        $shipping_history->shipper_name = $each_order_details_3->shipping_history[0]->shipper_name;
+                    }
                     $shipping_history->photo = "";
                     $shipping_history->status = "fail";
                     $shipping_history->save();

@@ -75,13 +75,18 @@
                 @elseif($each_shipping_history->status == "fail")
                     <li class="timeline-item mb-5">
                         <span class="timeline-icon">
-                            <i class="fa-solid fa-square-check"></i>
+                            <i class="fa fa-exclamation-triangle"></i>
                         </span>
                 
                         <h5 class="fw-bold">Order Status Is Failed</h5>
                         <p class="text-muted mb-2 fw-bold">{{ date('d-m-Y H:i:s', strtotime($each_shipping_history->created_at."+7hours")) }}</p>
                         <p class="text-muted">
-                            Delivery time does not meet standards
+                            @if($each_shipping_history->shipper_name != "")
+                                Shipper {{ $each_shipping_history->shipper_name }} failed delivery because the time was  not meet standards
+                            @else
+                                Delivery time was not meet standards because there is no shipper to receive orders
+                            @endif
+                            
                         </p>
                     </li>
                 @endif

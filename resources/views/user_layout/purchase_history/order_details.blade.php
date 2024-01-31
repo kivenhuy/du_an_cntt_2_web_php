@@ -4,6 +4,7 @@
     <!-- Order id -->
     <div class="aiz-titlebar mb-4">
         <div class="row align-items-center">
+            <a style="display: flex;align-items: center;margin-bottom: 0.5rem" href="{{route('purchase_history.index')}}"><i style="color:black;font-size: 1.73em;" class="fa fa-long-arrow-alt-left"></i></a>
             <div class="col-md-6">
                 <h1 class="fs-20 fw-700 text-dark">{{ translate('Order id') }}: {{ $order->code }}</h1>
             </div>

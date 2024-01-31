@@ -62,7 +62,7 @@
                         </div>
                         <div class="text-center border-top">
                             <a href="" class="text-reset d-block py-2">
-                                {{translate('View All Notifications')}}
+                                {{translate('Mark As Read')}}
                             </a>
                         </div>
                     </div>

@@ -22,25 +22,7 @@
                     </select>
                 </div>
 
-                <div class="col-md-3 ml-auto">
-                    <select class="form-control aiz-selectpicker"
-                        data-placeholder="{{ translate('Filter by Payment Status') }}" name="delivery_status"
-                        onchange="sort_orders()">
-                        <option value="">{{ translate('Filter by Deliver Status') }}</option>
-                        <option value="waiting"
-                            @isset($delivery_status) @if ($delivery_status == 'waiting') selected @endif @endisset>
-                            {{ translate('Waiting') }}</option>
-                        <option value="confirmed"
-                            @isset($delivery_status) @if ($delivery_status == 'confirmed') selected @endif @endisset>
-                            {{ translate('Confirmed') }}</option>
-                        <option value="on_delivery"
-                            @isset($delivery_status) @if ($delivery_status == 'on_delivery') selected @endif @endisset>
-                            {{ translate('On delivery') }}</option>
-                        <option value="delivered"
-                            @isset($delivery_status) @if ($delivery_status == 'delivered') selected @endif @endisset>
-                            {{ translate('Delivered') }}</option>
-                    </select>
-                </div>
+                
                 <div class="col-md-3">
                     <div class="from-group mb-0">
                         <input type="text" class="form-control" id="search" name="search"
@@ -61,7 +43,7 @@
                             <th data-breakpoints="lg">{{ translate('Num. of Products') }}</th>
                             <th data-breakpoints="lg">{{ translate('Seller') }}</th>
                             <th data-breakpoints="md">{{ translate('Amount') }}</th>
-                            <th data-breakpoints="lg">{{ translate('Delivery Status') }}</th>
+                            {{-- <th data-breakpoints="lg">{{ translate('Delivery Status') }}</th> --}}
                             <th>{{ translate('Payment Status') }}</th>
                             <th class="text-right">{{ translate('Options') }}</th>
                         </tr>
@@ -85,18 +67,18 @@
                                     </td>
                                     <td>
                                         @if ($order->seller_id != null)
-                                            {{ optional($order->user)->name }}
+                                            {{ optional($order->seller)->name }}
                                         @endif
                                     </td>
                                     <td>
                                         {{ single_price($order->grand_total) }}
                                     </td>
-                                    <td>
+                                    {{-- <td>
                                         @php
                                             $status = $order->delivery_status;
                                         @endphp
                                         {{ translate(ucfirst(str_replace('_', ' ', $status))) }}
-                                    </td>
+                                    </td> --}}
                                     <td>
                                         @if ($order->payment_status == 'paid')
                                             <span class="badge badge-inline badge-success">{{ translate('Paid') }}</span>

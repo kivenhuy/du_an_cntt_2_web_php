@@ -43,7 +43,7 @@ class CheckoutSupermarketController extends Controller
                     $product = Products::find($data_cart->product_id);
                     if((int)$request->data['active'] == 1)
                     {
-                        $total = $total + cart_product_price($data_cart, $product, false) * $data_cart->quantity;
+                        $total = $total + cart_product_price($data_cart, $product, false) * $data_cart->quantity * count($data_cart->shipping_date);
                     }
                     $data_cart->update(['is_checked'=>(int)$request->data['active'],'address_id'=>$data_address]);
                 } 
@@ -54,13 +54,13 @@ class CheckoutSupermarketController extends Controller
             $cart_data = Cart::find($request->data['cart_id']);
            
             $cart_data->update(['is_checked'=>$request->data['active'],'address_id'=>$data_address]);
-            $all_cart = Cart::where('is_checked',1)->get();
+            $all_cart = Cart::where([['is_checked',1],['user_id', (int)$request->data['ecom_id']]])->get();
             if(count($all_cart)>0)
             {
                 foreach($all_cart as $data_cart)
                 {
                     $product = Products::find($data_cart->product_id);
-                    $total = $total + cart_product_price($data_cart, $product, false) * $data_cart->quantity;
+                    $total = $total + cart_product_price($data_cart, $product, false) * $data_cart->quantity * count($data_cart->shipping_date);
                 } 
             }
         }
@@ -93,7 +93,7 @@ class CheckoutSupermarketController extends Controller
             foreach($carts as $data_cart)
             {
                 $product = Products::find($data_cart->product_id);
-                $total = $total + cart_product_price($data_cart, $product, false) * $data_cart->quantity;                
+                $total = $total + cart_product_price($data_cart, $product, false) * $data_cart->quantity * count($data_cart->shipping_date);                
             } 
         }
         if(count($carts)>0)
