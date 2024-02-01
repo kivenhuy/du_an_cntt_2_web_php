@@ -94,7 +94,7 @@
                                         </div>
                                         <div class="text-center" style="margin-top: 1rem">
                                             <p class="fs-12 text-gray mb-0">Become A Shipper</p>
-                                            <a href="http://127.0.0.1:3000/login" class="fs-14 fw-700 animate-underline-primary">Click Here</a>
+                                            <a href="http://127.0.0.1:2000/login" class="fs-14 fw-700 animate-underline-primary">Click Here</a>
                                         </div>
                                     </div>
                                 </div>
