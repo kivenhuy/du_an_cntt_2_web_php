@@ -188,10 +188,12 @@
                     <button id={{$data_request->id}} type="button" class="btn btn-primary btn-block fw-700 fs-14 rounded-4 EdApprove">Accept Request</button>
                 </div>
             @endif
-            <input type="hidden" id="product_id" value="{{$product_id}}">
-            <div class="col-3">
-                <button id={{$data_request->id}} type="button" class="btn btn-danger btn-block fw-700 fs-14 rounded-4 EdReject">Reject Request</button>
-            </div>
+            @if($data_request->shop_id == Auth::user()->shop->id)
+                <input type="hidden" id="product_id" value="{{$product_id}}">
+                <div class="col-3">
+                    <button id={{$data_request->id}} type="button" class="btn btn-danger btn-block fw-700 fs-14 rounded-4 EdReject">Reject Request</button>
+                </div>
+            @endif
         {{-- @else
             @if($data_request->status == 1)
                 <input type="hidden" id="product_id" value="{{$data_request->product_id}}">

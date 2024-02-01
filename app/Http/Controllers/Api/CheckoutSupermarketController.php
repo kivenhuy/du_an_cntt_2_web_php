@@ -43,7 +43,7 @@ class CheckoutSupermarketController extends Controller
                     $product = Products::find($data_cart->product_id);
                     if((int)$request->data['active'] == 1)
                     {
-                        $total = $total + cart_product_price($data_cart, $product, false) * $data_cart->quantity * count($data_cart->shipping_date);
+                        $total = $total + cart_product_price($data_cart, $product, false) * $data_cart->quantity ;
                     }
                     $data_cart->update(['is_checked'=>(int)$request->data['active'],'address_id'=>$data_address]);
                 } 
@@ -60,7 +60,7 @@ class CheckoutSupermarketController extends Controller
                 foreach($all_cart as $data_cart)
                 {
                     $product = Products::find($data_cart->product_id);
-                    $total = $total + cart_product_price($data_cart, $product, false) * $data_cart->quantity * count($data_cart->shipping_date);
+                    $total = $total + cart_product_price($data_cart, $product, false) * $data_cart->quantity ;
                 } 
             }
         }
@@ -93,7 +93,7 @@ class CheckoutSupermarketController extends Controller
             foreach($carts as $data_cart)
             {
                 $product = Products::find($data_cart->product_id);
-                $total = $total + cart_product_price($data_cart, $product, false) * $data_cart->quantity * count($data_cart->shipping_date);                
+                $total = $total + cart_product_price($data_cart, $product, false) * $data_cart->quantity ;                
             } 
         }
         if(count($carts)>0)
@@ -176,7 +176,7 @@ class CheckoutSupermarketController extends Controller
             {
                 $shipping_time =count(json_decode($data_rfp->shipping_date));
             }
-            $total_normal_product = $total_normal_product + cart_product_price($cartItem, $product, false) * $cartItem['quantity'] * $shipping_time;
+            $total_normal_product = $total_normal_product + cart_product_price($cartItem, $product, false) * $cartItem['quantity'] ;
             $product_ids = array();
             if(isset($seller_products[$product->user_id])){
                 $product_ids = $seller_products[$product->user_id];
@@ -194,7 +194,7 @@ class CheckoutSupermarketController extends Controller
             {
                 $shipping_time =count(json_decode($data_rfp->shipping_date));
             }
-            $total_short_product = $total_short_product + cart_product_price($carts_short_shelf_lifeItem, $product, false) * $carts_short_shelf_lifeItem['quantity'] * $shipping_time;
+            $total_short_product = $total_short_product + cart_product_price($carts_short_shelf_lifeItem, $product, false) * $carts_short_shelf_lifeItem['quantity'] ;
             if(isset($seller_products[$product->user_id])){
                 $product_ids = $seller_products[$product->user_id];
             }
@@ -460,7 +460,7 @@ class CheckoutSupermarketController extends Controller
                 // dd(Carbon::parse($reservationStartingDate));
                 $product = Products::find($cartItem['product_id']);
 
-                $subtotal += cart_product_price($cartItem, $product, false, false) * $cartItem['quantity'] * count($shipping_date);
+                $subtotal += cart_product_price($cartItem, $product, false, false) * $cartItem['quantity'];
                 $product_variation = $cartItem['variation'];
                 $product_stock = $product->product_stock;
                 foreach ($shipping_date as $each_shipping_date)

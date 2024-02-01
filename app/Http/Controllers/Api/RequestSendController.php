@@ -182,8 +182,9 @@ class RequestSendController extends Controller
        
         $price = $rfp_record->price;
         $product->unit_price = $rfp_record->price;
+        $shipping_time = json_decode($rfp_record->shipping_date);
         $data['quantity'] = $rfp_record->quantity;
-        $data['price'] = $price;
+        $data['price'] = $price * count($shipping_time);
         //$data['shipping'] = 0;
         $data['shipping_cost'] = 0;
         $data['is_rfp'] = $id;
@@ -230,5 +231,14 @@ class RequestSendController extends Controller
         //     'nav_cart_view' => view('user_layout.partials.cart')->render(),
         // );
         
+    }
+
+    public function destroy($id)
+    {
+        $data_request = RequestForProduct::find($id)->delete();
+        return response()->json([
+            'result' => true,
+            'data'=>1
+        ]);
     }
 }

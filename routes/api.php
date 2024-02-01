@@ -39,6 +39,7 @@ Route::group(['prefix' => 'v2'], function () {
         Route::post('/send_request/get_all', 'index')->name('send_request.get_all');
         Route::post('/send_request/add_product_to_cart', 'approve_price')->name('send_request.approve_price');
         Route::post('/send_request/reject_price', 'reject_price')->name('send_request.reject_price');
+        Route::get('/send_request/destroy/{id}', 'destroy')->name('send_request.destroy');
     });
 
     Route::controller(SuggestProductController::class)->group(function () {
