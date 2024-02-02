@@ -153,7 +153,14 @@
                                                             @if ($notification->type == 'App\Notifications\OrderNotification')
                                                                 {{-- @if (Auth::user()->user_type == 'enterpriese') --}}
                                                                 @php
-                                                                    $order = App\Models\OrderDetail::find($notification->data['order_detail_id'])->order;
+                                                                    $order = App\Models\OrderDetail::find($notification->data['order_detail_id']);
+                                                                    if($order)
+                                                                    {
+                                                                        $order =$order->order;
+                                                                    }
+                                                                    else {
+                                                                        break;
+                                                                    }
                                                                 @endphp
                                                                     <a href="{{ route('purchase_history.get_detail', encrypt($order->id))}}"
                                                                         class="text-secondary fs-14">

@@ -39,6 +39,7 @@ class CheckStatusOrder extends Command
         // ->whereTime('created_at', '<=',$now->toTimeString())
         ->where('shipping_date',null)
         ->where('delivery_status','!=','fail')
+        ->where('delivery_status','!=','delivered')
         ->get();
 
         foreach($order_details_1 as $each_order_details_1)
@@ -84,6 +85,7 @@ class CheckStatusOrder extends Command
         ->WhereDate('shipping_date','<=',$now_2)
         // ->whereTime('shipping_date', '<=',$now_2->toTimeString())
         ->where('delivery_status','!=','fail')
+        ->where('delivery_status','!=','delivered')
         ->get();
 
         foreach($order_details_2 as $each_order_details_2)
@@ -127,6 +129,7 @@ class CheckStatusOrder extends Command
         // ->whereTime('shipping_date', '<=',$now_3->toTimeString())
         ->where('shipping_type','Normal Shipping')
         ->where('delivery_status','!=','fail')
+        ->where('delivery_status','!=','delivered')
         ->get();
 
         foreach($order_details_3 as $each_order_details_3)

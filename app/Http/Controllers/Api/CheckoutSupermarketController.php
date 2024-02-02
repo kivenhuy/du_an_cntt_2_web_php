@@ -477,7 +477,7 @@ class CheckoutSupermarketController extends Controller
 
                     $order_detail->quantity = $cartItem['quantity'];
                 
-                    $order_detail->price = (cart_product_price($cartItem, $product, false, false) * $cartItem['quantity']);
+                    $order_detail->price = (cart_product_price($cartItem, $product, false, false) * $cartItem['quantity'])/ count($shipping_date);
                     $reservationStartingDate = $each_shipping_date ." ".$hour;
                     $order_detail->carrier_id = $cartItem['carrier_id'];
                     $order_detail->shipping_date = Carbon::parse($reservationStartingDate);
