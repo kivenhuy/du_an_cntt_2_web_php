@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Products;
 use App\Models\Review;
+use App\Models\ShippingHistory;
 use App\Models\Uploads;
 use Auth;
 use DataTables;
@@ -81,6 +82,20 @@ class PurchaseHistoryController extends Controller
             [
                 'product'=>$product,
                 'review'=>$review,
+            ]
+        ]); 
+    }
+
+    public function shipping_history(Request $request){
+        $shipping_history = ShippingHistory::orderByDesc('created_at')->where('order_detail_id',$request->order_detail_id)->get();
+        $order = OrderDetail::find($shipping_history[0]->order_detail_id)->order;
+        // return view('user_layout.partials.shipping_history', compact('shipping_history'));
+        return response()->json([
+            'result' => true,
+            'data'=>
+            [
+                'shipping_history'=>$shipping_history,
+                'order'=>$order
             ]
         ]); 
     }

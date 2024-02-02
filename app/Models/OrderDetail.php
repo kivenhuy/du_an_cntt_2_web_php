@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class OrderDetail extends Model
 {
     use HasFactory;
-    protected $appends = ['product_name','each_price','shop_name'];
+    protected $appends = ['product_name','each_price','shop_name','ship_his'];
     public function order()
     {
         return $this->belongsTo(Order::class);
@@ -22,6 +22,12 @@ class OrderDetail extends Model
     public function shipping_history()
     {
         return $this->hasMany(ShippingHistory::class,'order_detail_id','id');
+    }
+
+    public function getShipHisAttribute()
+    {
+        $data = ShippingHistory::where('order_detail_id',$this->id)->count();
+        return $data;
     }
 
     public function getEachPriceAttribute()

@@ -93,6 +93,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/request_for_product/get_detail/{id}', 'get_details_data')->name('request_for_product.get_details_data');
         Route::post('/request_for_product/reject_price', 'reject_price')->name('request_for_product.reject_price');
         Route::post('/request_for_product/approve_price', 'approve_price')->name('request_for_product.approve_price');
+        Route::get('/request_for_product/destroy/{id}', 'destroy')->name('request_for_product.destroy');
     });
     
 

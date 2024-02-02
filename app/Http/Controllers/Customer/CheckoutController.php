@@ -252,7 +252,7 @@ class CheckoutController extends Controller
     {
         $combined_order = CombineOrder::findOrFail(Session::get('combined_order_id'));
 
-        // Cart::where('user_id', $combined_order->customer_id)->delete();
+        Cart::where('user_id', $combined_order->customer_id)->delete();
 
         return view('user_layout.checkout.order_confirmed', compact('combined_order'));
     }

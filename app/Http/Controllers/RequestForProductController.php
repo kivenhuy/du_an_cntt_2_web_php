@@ -306,10 +306,6 @@ class RequestForProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(RequestForProduct $requestForProduct)
-    {
-        //
-    }
 
 
     // public function customer_dataajax(Request $request)
@@ -422,5 +418,12 @@ class RequestForProductController extends Controller
             $Rfq_data = RequestForProduct::find($request->id_rfp);
             $Rfq_data->update(['status' => 2,'price'=>0,'offer_price'=>$request->price]);
         }
+    }
+
+    public function destroy($id)
+    {
+        $data_request = RequestForProduct::find($id)->delete();
+        flash(translate('Request for Product has been deleted successfully'))->success();
+        return back();
     }
 }
