@@ -5,7 +5,7 @@
 </div>
 
 
-<div class="modal-body">
+<div class="modal-body" style="padding: 20px 40px; !important">
    
     <section class="py-5">
         <ul class="timeline-with-icons">

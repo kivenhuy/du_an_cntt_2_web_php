@@ -21,9 +21,6 @@ class HomeController extends Controller
 {
     public function index()
     {
-
-
-        
         $best_selling_products = Products::where('approved',1)->get()->take(4);
         $fresh_today_products = Products::where('approved',1)->where('short_shelf_life',1)->get()->sortByDesc('created_at')->take(3);
         $new_products = Products::where('approved',1)->latest()->limit(8)->get();

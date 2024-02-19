@@ -119,6 +119,14 @@ class ShippingOrderController extends Controller
         {
             $order_details->payment_status = "paid";
         }
+        elseif($order_details->delivery_status == "fail")
+        {
+            // $order_details->payment_status = "paid";
+            return response()->json([
+                'result' => false,
+                'status'=> 2,
+            ]); 
+        }
         $order_details->delivery_status = $request->status;
         $order_details->save();
         if($order_details)
@@ -136,20 +144,20 @@ class ShippingOrderController extends Controller
                 Notification::send($customer, new OrderNotification($shipping_history));
                 return response()->json([
                     'result' => true,
-                    'status'=> true,
+                    'status'=> 1,
                 ]); 
             }
             else
             {
                 return response()->json([
                     'result' => false,
-                    'status'=> false,
+                    'status'=> 0,
                 ]); 
             }
         }
         return response()->json([
             'result' => false,
-            'status'=> false,
+            'status'=> 0,
         ]); 
     }
 }

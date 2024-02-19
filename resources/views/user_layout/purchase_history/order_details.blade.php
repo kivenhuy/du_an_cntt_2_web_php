@@ -289,31 +289,34 @@
 
         .timeline-with-icons .timeline-icon {
         position: absolute;
-        left: -54px;
+        left: -60px;
         background-color: hsl(217, 88.2%, 90%);
         color: hsl(217, 88.8%, 35.1%);
         border-radius: 50%;
-        height: 31px;
-        width: 31px;
+        height: 40px;
+        width: 40px;
         display: flex;
         align-items: center;
         justify-content: center;
         }
-
+        .shipping_modal
+        {
+            padding-right: 70px !important;
+        }
     </style>
 @endsection
 
 @section('modal')
     <!-- Product Review Modal -->
-    <div class="modal fade" id="product-review-modal">
+    <div class="modal fade shipping_modal" id="product-review-modal">
         <div class="modal-dialog">
-            <div class="modal-content" id="product-review-modal-content">
+            <div class="modal-content" id="product-review-modal-content" style="width: 130% !important;">
 
             </div>
         </div>
     </div>
 
-    <div class="modal fade" id="shipping-history-modal">
+    <div class="modal fade" id="shipping-history-modal" >
         <div class="modal-dialog">
             <div class="modal-content" id="shipping-history-modal-content">
 
