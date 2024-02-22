@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\CommuneController;
 use App\Http\Controllers\Admin\CountryController;
+use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DistrictController;
 use App\Http\Controllers\Admin\ProductController;
@@ -77,6 +78,7 @@ Route::group(['middleware' => ['auth'],'prefix' => 'admin'], function () {
 
     Route::controller(SellerController::class)->group(function () {
         Route::get('/sellers', 'index')->name('admin.sellers.index');
+        Route::get('/sellers/{id}', 'details')->name('admin.sellers.detail');
         Route::get('/sellers/data_ajax', 'data_ajax')->name('admin.sellers.data_ajax');
         Route::post('/sellers/approved', 'approve_seller')->name('admin.sellers.approved');
     });
@@ -84,7 +86,15 @@ Route::group(['middleware' => ['auth'],'prefix' => 'admin'], function () {
     // Enterprise
     Route::controller(EnterpriseController::class)->group(function () {
         Route::get('/enterprise', 'index')->name('admin.enterprise.index');
+        Route::get('/enterprise/{id}', 'detail')->name('admin.enterprise.detail');
         Route::get('/enterprise/data_ajax', 'data_ajax')->name('admin.enterprise.data_ajax');
+    });
+
+
+    Route::controller(CustomerController::class)->group(function () {
+        Route::get('/customer', 'index')->name('admin.customer.index');
+        Route::get('/customer/{id}', 'detail')->name('admin.customer.detail');
+        Route::get('/customer/data_ajax', 'data_ajax')->name('admin.customer.data_ajax');
     });
 
     Route::controller(RequestForProductController::class)->group(function () {

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\City;
+use App\Models\Country;
+use App\Models\District;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -24,21 +27,16 @@ class EnterpriseController extends Controller
         return view('admin.enterprise.index',compact('enterprise_data','sort_search'));
     }
 
-    // public function data_ajax(Request $request)
-    // {
-    //     $enterprise = User::where('user_type','enterprise')->get();
-    //     $out =  DataTables::of($enterprise)->make(true);
-    //     $data = $out->getData();
-    //     for($i=0; $i < count($data->data); $i++) {
-    //         // dd($data->data[$i]->id);
-    //         $enterprise_data = User::find( $data->data[$i]->id);
-    //         $data->data[$i]->bussiness_name = $enterprise_data->enterprise_detail->bussiness_name;
-    //         $data->data[$i]->organization_type = $enterprise_data->enterprise_detail->organization_type;
-    //         $data->data[$i]->bussiness_type = "";
-    //         $output = '';
-    //         $data->data[$i]->action = (string)$output;
-    //     }
-    //     $out->setData($data);
-    //     return $out;
-    // }
+    public function detail($id)
+    {
+        $data_enterprise = User::find($id);
+        $city_name = City::find($data_enterprise->city)->city_name;
+        $country_name = Country::find($data_enterprise->country)->country_name;
+        $district_name = District::find($data_enterprise->district)->district_name;
+        $ward_name = $data_enterprise->ward;
+        // $user_name = User::find($data_address->user_id)->name;
+        $str = $data_enterprise->address.', '.$ward_name.', '.$district_name.', '.$city_name.', '.$country_name;
+        $data_enterprise->full_adress = $str;
+        return view('admin.enterprise.show',compact('data_enterprise'));
+    }
 }

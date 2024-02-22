@@ -202,7 +202,7 @@
                                 for="start_date">{{ translate('Expired Date') }}</label>
                             <div class="col-md-9">
                                 <input type="datetime-local" class="form-control " name="expired_date"
-                                    placeholder="{{ translate('Select Date') }}"  autocomplete="off">
+                                    placeholder="{{ translate('Select Date') }}"  autocomplete="off" required>
                             </div>
                         </div>
 
@@ -488,6 +488,12 @@
         </div>
     </div> --}}
 </div>
+<style>
+    .error
+    {
+        color: red;
+    }
+</style>
 @endsection
 
 @section('script')

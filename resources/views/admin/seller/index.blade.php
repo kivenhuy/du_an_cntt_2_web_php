@@ -136,13 +136,13 @@
         <form id="sort_orders" action="" method="GET">
             <div class="card-header row gutters-5">
                 <div class="col text-center text-md-left">
-                    <h5 class="mb-md-0 h6">{{ translate('All Request Product') }}</h5>
+                    <h5 class="mb-md-0 h6">{{ translate('All Seller') }}</h5>
                 </div>
                 <div class="col-md-3">
                     <div class="from-group mb-0">
                         <input type="text" class="form-control" id="search" name="search"
                             @isset($sort_search) value="{{ $sort_search }}" @endisset
-                            placeholder="{{ translate('Type Order code & hit Enter') }}">
+                            placeholder="{{ translate('Type Seller Name & Hit Enter') }}">
                     </div>
                 </div>
             </div>
@@ -195,8 +195,11 @@
                                     
                                     
                                     
-                                    <td class="text-right">
-                                        
+                                    <td>
+                                        <a href="{{ route('admin.sellers.detail', $each_shop_data->id) }}"
+                                            class="btn btn-soft-info btn-icon btn-circle btn-sm"
+                                            title="{{ translate('Seller Details') }}">
+                                            <i class="fa fa-eye"></i>
                                     
                                     </td>
                                        

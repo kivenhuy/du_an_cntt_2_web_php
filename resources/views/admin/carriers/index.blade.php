@@ -15,7 +15,7 @@
                     <div class="mar-all mb-2" style=" text-align: end;">
                         <a href="{{route('carriers.create')}}">
                             <button type="submit" name="button" value="publish"
-                                class="btn btn-primary">Create</button>
+                                class="btn btn-primary">Create Carriers</button>
                         </a>
                     </div>
                 </div>

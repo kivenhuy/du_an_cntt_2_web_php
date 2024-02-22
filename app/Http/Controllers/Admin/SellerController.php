@@ -3,6 +3,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Categories;
+use App\Models\City;
+use App\Models\Country;
+use App\Models\District;
 use App\Models\Products;
 use App\Models\ProductStock;
 use App\Models\Shop;
@@ -27,6 +30,19 @@ class SellerController extends Controller
         // dd($request_data->get()->appends(['seller_name']));
         $shop_data = $shop_data->paginate(10);
         return view('admin.seller.index',compact('shop_data','sort_search'));
+    }
+
+    public function details($id)
+    {
+        $data_seller = Shop::find($id);
+        $city_name = City::find($data_seller->user->city)->city_name;
+        $country_name = Country::find($data_seller->user->country)->country_name;
+        $district_name = District::find($data_seller->user->district)->district_name;
+        $ward_name = $data_seller->user->ward;
+        // $user_name = User::find($data_address->user_id)->name;
+        $str = $data_seller->address.', '.$ward_name.', '.$district_name.', '.$city_name.', '.$country_name;
+        $data_seller->full_adress = $str;
+        return view('admin.seller.show',compact('data_seller'));
     }
 
     // public function data_ajax(Request $request)

@@ -104,7 +104,7 @@
                             {{translate('This request has new price update from seller and waiting for your approval')}}
                         </div>
                         <div style="margin-right: 10px">
-                            <button id={{$data_request->id}} class="btn EdApprove btn-success btn-xs" style="width:100%;height:100%;display:inline;padding:2px 5px 3px 5px;">{{translate('Approval')}}</button>
+                            <button id={{$data_request->id}} class="btn EdApprove btn-success btn-xs" style="width:100%;height:100%;display:inline;padding:2px 5px 3px 5px;">{{translate('Approve')}}</button>
                            
                         </div>
                         <div>
@@ -307,6 +307,7 @@ $(document).ready(function()
                         // AIZ.extra.plusMinus();
                         // AIZ.plugins.slickCarousel();
                         updateNavCart(data.nav_cart_view,data.cart_count);
+                        location.reload();
                         }
                     });
                     AIZ.plugins.notify('success','You Was Accept The Price');
@@ -318,33 +319,31 @@ $(document).ready(function()
         }
     });
 
-    $(document).on("click", ".EdReject ", function()
+    $(document).on("click", ".EdOpenReject ", function()
     {
-        var price = $('#price').val();
-        var serviceID = $('#id_rfp').val();
-            if(serviceID != null )
-            {
-                $.ajax
-                ({
-                    url: "{{route('request_for_product.reject_price')}}",
-                    method:'post',
-                    data:{
-                        id_rfp:serviceID,
-                        price:price,
-                    },
-                    headers: {
-                        'X-CSRF-Token': '{{ csrf_token() }}',
-                    },
-                    success: function(data){
-                        $('#myModal').modal('toggle');
-                        location.reload();
-                        AIZ.plugins.notify('success','You Was Reject The Price');
-                    },
-                    error: function(){
-                        AIZ.plugins.notify('danger','Some Thing Went Wrong!!!!');
-                    }
-                });
-            }
+        var serviceID = $(this).attr('id');
+        if(serviceID != null )
+        {
+            $.ajax
+            ({
+                url: "{{route('request_for_product.reject_price')}}",
+                method:'post',
+                data:{
+                    id_rfp:serviceID,
+                },
+                headers: {
+                    'X-CSRF-Token': '{{ csrf_token() }}',
+                },
+                success: function(data){
+                    $('#myModal').modal('toggle');
+                    location.reload();
+                    AIZ.plugins.notify('success','You Was Reject The Price');
+                },
+                error: function(){
+                    AIZ.plugins.notify('danger','Some Thing Went Wrong!!!!');
+                }
+            });
+        }
     });
 
 

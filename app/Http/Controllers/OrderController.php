@@ -132,6 +132,7 @@ class OrderController extends Controller
                 $order_detail->save();
 
                 $product->num_of_sale += $cartItem['quantity'];
+                $product->current_stock -= $cartItem['quantity'];
                 $product->save();
 
                 $order->seller_id = $product->user_id;

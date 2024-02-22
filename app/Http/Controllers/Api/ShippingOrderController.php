@@ -31,8 +31,10 @@ class ShippingOrderController extends Controller
         $total_order = ShippingHistory::where([['status','receive_order'],['shipper_id',(int)$id]])->count();
         $total_deliverd = ShippingHistory::where([['status','delivered'],['shipper_id',(int)$id]])->count();
         $total_fail_deliverd = ShippingHistory::where([['status','fail'],['shipper_id',(int)$id]])->count();
-        $data_id_order_details = ShippingHistory::where([['status','delivered'],['shipper_id',(int)$id]])->get()->pluck('id');
+        $data_id_order_details = ShippingHistory::where([['status','delivered'],['shipper_id',(int)$id]])->get()->pluck('order_detail_id');
+        
         $total_shipping_cost = OrderDetail::whereIn('id',$data_id_order_details)->sum('shipping_cost');
+        // dd($total_shipping_cost);
         // $total_shipping_price = ShippingHistory::where([['status','receive_order'],['shipper_id',(int)$id]])->count();
         return response()->json([
             'result' => true,

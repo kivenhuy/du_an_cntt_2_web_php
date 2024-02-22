@@ -1808,6 +1808,40 @@
             }
         }
 
+        function buyNow(){
+            @if(Auth::check() && Auth::user()->user_type != 'customer')
+                AIZ.plugins.notify('warning', "{{ translate('Please Login as a customer to add products to the Cart.') }}");
+                return false;
+            @endif
+            
+            if(checkAddToCartValidity()) {
+                $('#addToCart-modal-body').html(null);
+                $('#addToCart').modal();
+                $('.c-preloader').show();
+                $.ajax({
+                    type:"POST",
+                    url: '{{ route('cart.addToCart') }}',
+                    data: $('#option-choice-form').serializeArray(),
+                    success: function(data){
+                        if(data.status == 1){
+                            $('#addToCart-modal-body').html(data.modal_view);
+                            updateNavCart(data.nav_cart_view,data.cart_count);
+                            window.location.replace("{{ route('cart') }}");
+                        }
+                        else{
+                            $('#addToCart-modal-body').html(null);
+                            $('.c-preloader').hide();
+                            $('#modal-size').removeClass('modal-lg');
+                            $('#addToCart-modal-body').html(data.modal_view);
+                        }
+                    }
+               });
+            }
+            else{
+                AIZ.plugins.notify('warning', "{{ translate('Please choose all the options') }}");
+            }
+        }
+
         function checkAddToCartValidity(){
             var names = {};
             $('#option-choice-form input:radio').each(function() { // find unique names

@@ -156,8 +156,11 @@
                                     
                                     
                                     
-                                    <td class="text-right">
-                                        
+                                    <td>
+                                        <a href="{{ route('admin.enterprise.detail', $each_enterprise_data->id) }}"
+                                            class="btn btn-soft-info btn-icon btn-circle btn-sm"
+                                            title="{{ translate('Enterprise Details') }}">
+                                            <i class="fa fa-eye"></i>
                                     
                                     </td>
                                        
