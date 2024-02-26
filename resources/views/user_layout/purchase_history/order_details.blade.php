@@ -198,6 +198,14 @@
                                             <a href="javascript:void(0);"
                                                 onclick="product_review('{{ $orderDetail->product_id }}')"
                                                 class="btn btn-primary btn-sm rounded-0"> {{ translate('Review') }} </a>
+                                        @elseif ($orderDetail->delivery_status === 'fail')
+                                            <a href="javascript:void(0);"
+                                                onclick="refund('{{ $orderDetail->id }}')"
+                                                class="btn btn-primary btn-sm rounded-0"> {{ translate('Request a refund') }} </a>
+                                        {{-- @elseif ($orderDetail->delivery_status === 'refund')
+                                            <a href="javascript:void(0);"
+                                                onclick="refund('{{ $orderDetail->id }}')"
+                                                class="btn btn-primary btn-sm rounded-0"> {{ translate('Refund History') }} </a> --}}
                                         @else
                                             <span class="text-danger">{{ translate('Not Delivered Yet') }}</span>
                                         @endif
@@ -344,6 +352,19 @@
                     backdrop: 'static'
                 });
                 AIZ.extra.inputRating();
+            });
+        }
+
+        function refund(order_details_id) {
+            $.post('{{ route('purchase_history.refund_order') }}', {
+                _token:'{{ csrf_token() }}',
+                order_details_id: order_details_id
+            }, function(data) {
+                $('#product-review-modal-content').html(data);
+                $('#product-review-modal').modal('show', {
+                    backdrop: 'static'
+                });
+                // AIZ.extra.inputRating();
             });
         }
 

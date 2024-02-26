@@ -109,4 +109,10 @@ class PurchaseHistoryController extends Controller
         // dd($order);
 	    return view('user_layout.purchase_history.order_details', compact('order'));
     }
+
+    public function refund_order(Request $request)
+    {
+        $order_detail = OrderDetail::find($request->order_details_id);
+        return view('user_layout.partials.order_refund', compact('order_detail'));
+    }
 }

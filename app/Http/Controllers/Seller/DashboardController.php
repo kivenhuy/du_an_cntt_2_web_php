@@ -13,4 +13,6 @@ class DashboardController extends Controller
         $shop = Auth::user()->shop;
         return view('seller.dashboard', compact('shop'));
     }
+
+   
 }

@@ -62,6 +62,11 @@ class CheckoutController extends Controller
         $discount = 0;
         foreach ($carts_normal as $key => $cartItem){
             $product = Products::find($cartItem['product_id']);
+            if(($cartItem['quantity'] > $product->product_stock->qty) && Auth::user()->user_type != 'enterprise')
+            {
+                flash(translate("Product " .$product->name ." not enough quantity please try again!"))->error();
+                return back();
+            }
             $product_ids = array();
             if(isset($seller_products[$product->user_id])){
                 $product_ids = $seller_products[$product->user_id];
@@ -71,6 +76,11 @@ class CheckoutController extends Controller
         }
         foreach ($carts_short_shelf_life as $key => $carts_short_shelf_lifeItem){
             $product = Products::find($carts_short_shelf_lifeItem['product_id']);
+            if(($cartItem['quantity'] > $product->product_stock->qty) && Auth::user()->user_type != 'enterprise')
+            {
+                flash(translate("Product " .$product->name ." not enough quantity please try again!"))->error();
+                return back();
+            }
             $product_ids = array();
             if(isset($seller_products[$product->user_id])){
                 $product_ids = $seller_products[$product->user_id];

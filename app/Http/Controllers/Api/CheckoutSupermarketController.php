@@ -19,6 +19,7 @@ use App\Models\RequestForProduct;
 use App\Models\User;
 use Auth;
 use Carbon\Carbon;
+use Http;
 use Illuminate\Http\Request;
 use Session;
 
@@ -482,6 +483,22 @@ class CheckoutSupermarketController extends Controller
                     $order_detail->carrier_id = $cartItem['carrier_id'];
                     $order_detail->shipping_date = Carbon::parse($reservationStartingDate);
                     $order_detail->save();
+                    try
+                    {
+                        $upsteamUrl = env('SHIPPING_URL');
+                        $signupApiUrl = $upsteamUrl . '/shipper/notification';
+                        $response = Http::post($signupApiUrl,[
+                            'order_detail_id'=>$order_detail->id,
+                            'customer_name'=>User::find($request->data['ecom_id'])->name,
+                            'carrier_id'=>$order_detail->carrier_id,
+                            'customer_type'=>User::find($request->data['ecom_id'])->user_type,
+                        ]);
+                        // dd(json_decode($response));
+                    
+                    }
+                    catch(\Exception $exception) {
+                        
+                    }
                 }
                 
 

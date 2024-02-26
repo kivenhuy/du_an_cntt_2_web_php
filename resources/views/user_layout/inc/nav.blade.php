@@ -162,7 +162,7 @@
                                                                         break;
                                                                     }
                                                                 @endphp
-                                                                    <a href="{{ route('purchase_history.get_detail', encrypt($order->id))}}"
+                                                                    <a href="{{ route('purchase_history.get_detail', encrypt($order->id))}}" 
                                                                         class="text-secondary fs-14">
                                                                         @if($notification->data['status'] == "receive_order")
                                                                             <span class="order_notification">
@@ -202,6 +202,21 @@
                                                                         </span>
                                                                     </a>
                                                                 @endif --}}
+                                                            @elseif ($notification->type == 'App\Notifications\RefundNotification')
+                                                                <a href="{{ route('refund.detail', ($notification->data['request_id']))}}" class="text-secondary fs-14">
+                                                                    <span class="order_notification">
+                                                                        {{ translate('Your refund request for order have code: ') }}
+                                                                        {{ $notification->data['request_code'] }}
+                                                                        @if($notification->data['status'] == 1)
+                                                                            {{ translate('has been approved by admin')}}
+                                                                        @elseif($notification->data['status'] == 2)
+                                                                            {{ translate('has been refunded by admin')}}
+                                                                        @else
+                                                                            {{ translate('has been rejected by admin')}}
+                                                                        @endif
+                                                                        
+                                                                    </span>
+                                                                </a>
                                                             @else
                                                                 <a href=""
                                                                     class="text-secondary fs-12">

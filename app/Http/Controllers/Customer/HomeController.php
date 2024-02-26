@@ -34,18 +34,7 @@ class HomeController extends Controller
         ->get()->append(['percent_date'])->sortBy('percent_date')->filter(function ($item) {
             return  $item->percent_date <= 60 && $item->percent_date > 0;
         })->values()->take(8);
-        // dd($fresh_fruit_high_quantity);
-        // dd(($fresh_fruit_high_quantity->expired_date)->diffInDays($now_4));
-
-
-        // $fresh_sea_food_high_quantity = Products::where('approved',1) 
-        //     ->orderBy('current_stock', 'desc')
-        //     ->where('short_shelf_life',1)
-        //     ->whereHas('category', function ($query) {
-        //         $query->whereIn('id',['3']);
-        //     })
-        //     ->whereBetween('created_at', [Session::get('start_time_for_sea_food'),Session::get('end_time_for_sea_food')])
-        //     ->get()->take(8);
+        
 
 
         return view('user_layout.index',

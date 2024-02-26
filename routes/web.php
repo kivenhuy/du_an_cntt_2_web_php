@@ -8,6 +8,8 @@ use App\Http\Controllers\Customer\CheckoutController;
 use App\Http\Controllers\Customer\HomeController;
 use App\Http\Controllers\EnterpriseController;
 use App\Http\Controllers\PurchaseHistoryController;
+use App\Http\Controllers\RecomendationController;
+use App\Http\Controllers\RefundController;
 use App\Http\Controllers\RequestForProductController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SearchController;
@@ -71,6 +73,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/purchase_history', 'index')->name('purchase_history.index');
         Route::get('/purchase_history/data_ajax', 'data_ajax')->name('purchase_history.data_ajax');
         Route::get('/purchase_history/get_detail/{id}', 'get_detail')->name('purchase_history.get_detail');
+        Route::post('/refund_order', 'refund_order')->name('purchase_history.refund_order');
     });
 
     // Cart
@@ -125,6 +128,21 @@ Route::group(['middleware' => ['auth']], function () {
         // Route::get('/brand/{brand_slug}', 'listingByBrand')->name('products.brand');
     });
 
+     // Search
+    Route::controller(RefundController::class)->group(function () {
+        Route::get('/refund_request', 'index')->name('refund.index');
+        Route::post('/refund_request/store', 'store')->name('refund.store');
+        Route::get('/refund_request/detail/{id}', 'show')->name('refund.detail');
+        Route::post('/refund_request/approve', 'approve')->name('refund.approve');
+        Route::post('/refund_request/reject', 'reject')->name('refund.reject');
+        Route::post('/refund_request/refund_success', 'refund_success')->name('refund.refund_success');
+    });
+
+    Route::controller(RecomendationController::class)->group(function () {
+        Route::get('/recommend_reqeuest', 'index')->name('recommend_reqeuest.index');
+        Route::post('/recommend_reqeuest/create', 'create')->name('recommend_reqeuest.create');
+    });
+
 
     
 
@@ -148,6 +166,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::post('/product_review_modal', [ReviewController::class, 'product_review_modal'])->name('product_review_modal');
+    // Route::post('/product_review_modal', [ReviewController::class, 'product_review_modal'])->name('product_review_modal');
     Route::post('/vnpaypayment', [VNPayController::class, 'VNPay'])->name('vnpaypayment');
     Route::post('/shipping_history', [ReviewController::class, 'shipping_history'])->name('shipping_history');
     Route::resource('/reviews', ReviewController::class);

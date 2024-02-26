@@ -10,6 +10,7 @@ use App\Models\OrderDetail;
 use App\Models\Products;
 use Auth;
 use Carbon\Carbon;
+use Http;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -130,7 +131,22 @@ class OrderController extends Controller
                 $order_detail->quantity = $cartItem['quantity'];
                 $order_detail->carrier_id = $cartItem['carrier_id'];
                 $order_detail->save();
-
+                try
+                {
+                    $upsteamUrl = env('SHIPPING_URL');
+                    $signupApiUrl = $upsteamUrl . '/shipper/notification';
+                    $response = Http::post($signupApiUrl,[
+                        'order_detail_id'=>$order_detail->id,
+                        'customer_name'=>Auth::user()->name,
+                        'carrier_id'=>$order_detail->carrier_id,
+                        'customer_type'=>Auth::user()->user_type,
+                    ]);
+                    // dd(json_decode($response));
+                
+                }
+                catch(\Exception $exception) {
+                    
+                }
                 $product->num_of_sale += $cartItem['quantity'];
                 $product->current_stock -= $cartItem['quantity'];
                 $product->save();
@@ -275,6 +291,22 @@ class OrderController extends Controller
                     $reservationStartingDate = $each_shipping_date ." ".$hour;
                     $order_detail->shipping_date = Carbon::parse($reservationStartingDate);
                     $order_detail->save();
+                    try
+                    {
+                        $upsteamUrl = env('SHIPPING_URL');
+                        $signupApiUrl = $upsteamUrl . '/shipper/notification';
+                        $response = Http::post($signupApiUrl,[
+                            'order_detail_id'=>$order_detail->id,
+                            'customer_name'=>Auth::user()->name,
+                            'carrier_id'=>$order_detail->carrier_id,
+                            'customer_type'=>Auth::user()->user_type,
+                        ]);
+                        // dd(json_decode($response));
+                    
+                    }
+                    catch(\Exception $exception) {
+                        
+                    }
                 }
                 
 

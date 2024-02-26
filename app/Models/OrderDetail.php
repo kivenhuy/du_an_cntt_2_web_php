@@ -24,6 +24,11 @@ class OrderDetail extends Model
         return $this->hasMany(ShippingHistory::class,'order_detail_id','id');
     }
 
+    public function refund_requets()
+    {
+        return $this->hasOne(RefundRequest::class,'order_detail_id','id');
+    }
+
     public function getShipHisAttribute()
     {
         $data = ShippingHistory::where('order_detail_id',$this->id)->count();

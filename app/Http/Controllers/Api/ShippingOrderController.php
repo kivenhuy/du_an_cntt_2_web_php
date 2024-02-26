@@ -129,8 +129,21 @@ class ShippingOrderController extends Controller
                 'status'=> 2,
             ]); 
         }
+        if(count($order_details->shipping_history)>0)
+        {
+            if($order_details->shipping_history[0]->shipper_id != $request->shipper_id)
+            {
+                return response()->json([
+                    'result' => false,
+                    'status'=> 3,
+                    'shipper_name'=> $request->shipper_name,
+                ]); 
+            }
+            
+        }
         $order_details->delivery_status = $request->status;
         $order_details->save();
+        
         if($order_details)
         {
             $shipping_history = new ShippingHistory();

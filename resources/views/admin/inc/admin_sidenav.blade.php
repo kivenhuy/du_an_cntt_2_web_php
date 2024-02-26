@@ -151,6 +151,13 @@
                             </a>
                         </li>
                     </ul>
+                    <ul class="aiz-side-nav-list level-2">
+                        <li class="aiz-side-nav-item">
+                            <a href="{{ route('refund.index') }}" class="aiz-side-nav-link">
+                                <span class="aiz-side-nav-text">{{ translate('Refund Request') }}</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="aiz-side-nav-item">
                     <a href="#" class="aiz-side-nav-link">

@@ -54,12 +54,31 @@
                     </a>
                 </li>
 
+                <!-- Refund Request -->
+                <li class="aiz-side-nav-item">
+                    <a href="{{ route('refund.index') }}"
+                        class="aiz-side-nav-link {{ areActiveRoutes(['refund.index', 'refund.detail']) }}">
+                        
+                        <i class="fa fa-history" aria-hidden="true"></i>
+                        <span class="aiz-side-nav-text ml-3">{{ translate('Refund History') }}</span>
+                        
+                    </a>
+                </li>
+
                <!-- Request For Product -->
                @if(Auth::user()->user_type === "enterprise")
-                <li class="aiz-side-nav-item">
+                    <li class="aiz-side-nav-item">
                         <a href="{{ route('request_for_product.index') }}" class="aiz-side-nav-link {{ areActiveRoutes(['request_for_product.index', 'purchase_history.details']) }}">
                             <i class="fa fa-list" aria-hidden="true"></i>
                             <span class="aiz-side-nav-text ml-3">{{ translate('Request For Product') }}</span>
+                            
+                        </a>
+                    </li>
+
+                    <li class="aiz-side-nav-item">
+                        <a href="{{ route('recommend_reqeuest.index') }}" class="aiz-side-nav-link {{ areActiveRoutes(['recommend_reqeuest.index']) }}">
+                            <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                            <span class="aiz-side-nav-text ml-3">{{ translate('Recommend Request For Product') }}</span>
                             
                         </a>
                     </li>

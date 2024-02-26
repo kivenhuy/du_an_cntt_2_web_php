@@ -127,6 +127,12 @@ Route::group(['middleware' => ['auth'],'prefix' => 'admin'], function () {
         Route::get('/shipper/shipper_detail/{id}', 'shipper_detail')->name('admin.shipper_detail');
     });
 
+    // Route::controller(ShipperController::class)->group(function () {
+    //     Route::get('/shipper/index', 'index')->name('admin.shipper.index');
+    //     Route::post('/shipper/approved', 'approve_shipper')->name('admin.shipper.approved');
+    //     Route::get('/shipper/shipper_detail/{id}', 'shipper_detail')->name('admin.shipper_detail');
+    // });
+
 });
 
 Route::controller(CityController::class)->group(function () {
