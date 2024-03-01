@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Notifications\RefundNotification;
 use App\Notifications\WelcomeNotification;
 use Auth;
+use Http;
 use Illuminate\Http\Request;
 use Notification;
 
@@ -88,9 +89,30 @@ class RefundController extends Controller
         $refund_request = RefundRequest::find($request->id_request);
         $refund_request->status = 1;
         $user = User::find($refund_request->buyer_id);
+        $refund_request->save();
+        if($user->user_type == "enterprise")
+        {
+            try
+                {
+                    $upsteamUrl = env('SUPERMARKET_URL');
+                    $signupApiUrl = $upsteamUrl . '/supermarket_notification';
+                    $response = Http::post($signupApiUrl,[
+                        'request_code'=>$refund_request->code,
+                        'request_id'=>$request->id_request,
+                        'status'=>1,
+                        'type'=>"refund",
+                        'user_id'=>$user->id,
+                    ]);
+                    // dd(json_decode($response));
+                
+                }
+                catch(\Exception $exception) {
+                    
+                }
+        }
         Notification::send($user, new RefundNotification($refund_request));
         // $refund_request->photos = implode(',', $request->photos);
-        $refund_request->save();
+        
     }
 
     public function reject(Request $request)
@@ -100,6 +122,26 @@ class RefundController extends Controller
         $user = User::find($refund_request->buyer_id);
         $refund_request->status = 99;
         $refund_request->save();
+        if($user->user_type == "enterprise")
+        {
+            try
+                {
+                    $upsteamUrl = env('SUPERMARKET_URL');
+                    $signupApiUrl = $upsteamUrl . '/supermarket_notification';
+                    $response = Http::post($signupApiUrl,[
+                        'request_code'=>$refund_request->code,
+                        'request_id'=>$request->id_request,
+                        'status'=>2,
+                        'type'=>"refund",
+                        'user_id'=>$user->id,
+                    ]);
+                    // dd(json_decode($response));
+                
+                }
+                catch(\Exception $exception) {
+                    
+                }
+        }
         Notification::send($user, new RefundNotification($refund_request));
         
     }
@@ -112,6 +154,26 @@ class RefundController extends Controller
         $refund_request->img_proof = $request->proof_image;
         $refund_request->status = 2;
         $refund_request->save();
+        if($user->user_type == "enterprise")
+        {
+            try
+                {
+                    $upsteamUrl = env('SUPERMARKET_URL');
+                    $signupApiUrl = $upsteamUrl . '/supermarket_notification';
+                    $response = Http::post($signupApiUrl,[
+                        'request_code'=>$refund_request->code,
+                        'request_id'=>$request->id_request,
+                        'status'=>2,
+                        'type'=>"refund",
+                        'user_id'=>$user->id,
+                    ]);
+                    // dd(json_decode($response));
+                
+                }
+                catch(\Exception $exception) {
+                    
+                }
+        }
         Notification::send($user, new RefundNotification($refund_request));
         flash(translate('Request has been refunded successfully'))->success();
         return back();

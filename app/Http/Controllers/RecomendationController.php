@@ -12,6 +12,9 @@ class RecomendationController extends Controller
     {
         $fresh_fruit_high_quantity = Products::where('approved',1)
         ->withCount('order_detail')
+        ->whereHas('product_stock', function($q){
+            $q->where('qty', '>', 0);
+        })
         ->orderBy('order_detail_count', 'asc')
         ->get()->append(['percent_date'])->sortBy('percent_date')->filter(function ($item) {
             return  $item->percent_date <= 60 && $item->percent_date > 0;

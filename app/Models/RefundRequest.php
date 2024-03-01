@@ -18,4 +18,10 @@ class RefundRequest extends Model
     {
         return $this->belongsTo(OrderDetail::class,'order_detail_id','id');
     }
+
+    public function getImgRefundAttribute()
+    {
+        $data =uploaded_asset($this->img_proof);
+        return $data;
+    }
 }

@@ -10,6 +10,7 @@ use App\Models\ShippingHistory;
 use App\Models\User;
 use App\Notifications\OrderNotification;
 use Carbon\Carbon;
+use Http;
 use Illuminate\Http\Request;
 use Notification;
 
@@ -156,7 +157,25 @@ class ShippingOrderController extends Controller
             if($shipping_history)
             {
                 $customer = User::find($order_details->order->customer_id);
+                
                 Notification::send($customer, new OrderNotification($shipping_history));
+                // try
+                // {
+                //     $upsteamUrl = env('SUPERMARKET_URL');
+                //     $signupApiUrl = $upsteamUrl . '/supermarket_notification';
+                //     $response = Http::post($signupApiUrl,[
+                //         'order_detail_id'=>$shipping_history->order_detail_id,
+                //         'shipper_name'=>$shipping_history->shipper_name,
+                //         'status'=>$shipping_history->status,
+                //         'type'=>"shipping",
+                //         'user_id'=>$customer->id,
+                //     ]);
+                //     // dd(json_decode($response));
+                
+                // }
+                // catch(\Exception $exception) {
+                    
+                // }
                 return response()->json([
                     'result' => true,
                     'status'=> 1,

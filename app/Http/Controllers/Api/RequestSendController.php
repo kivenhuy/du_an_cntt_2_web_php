@@ -31,7 +31,40 @@ class RequestSendController extends Controller
     }
 
 
+    public function recommendation()
+    {
+        $fresh_fruit_high_quantity = Products::where('approved',1)
+        ->withCount('order_detail')
+        ->whereHas('product_stock', function($q){
+            $q->where('qty', '>', 0);
+        })
+        ->orderBy('order_detail_count', 'asc')
+        ->get()->append(['percent_date','seller_name','qty'])->sortBy('percent_date')->filter(function ($item) {
+            return  $item->percent_date <= 60 && $item->percent_date > 0;
+        })->values()->take(8);
 
+        $count_enteprise = User::where('user_type','enterprise')->count();
+        // dd($count_enteprise);
+        return response()->json([
+            'result' => true,
+            'data'=>[
+                'recommend_request'=>$fresh_fruit_high_quantity,
+                'count_enteprise'=>(int)$count_enteprise
+            ]
+        ]);
+    }
+
+
+    public function recommendation_get_product($id)
+    {
+        $product = Products::find((int)$id)->append(['seller_name','qty','shop_slug']);
+        return response()->json([
+            'result' => true,
+            'data'=>[
+                'product'=>$product
+            ]
+        ]);
+    }
     
     /**
      * Store a newly created resource in storage.

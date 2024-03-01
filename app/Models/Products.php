@@ -80,6 +80,18 @@ class Products extends Model
         return $data->qty;
     }
 
+    public function getSellerNameAttribute()
+    {
+        $data =User::find($this->user_id);
+        return $data->name;
+    }
+
+    public function getShopSlugAttribute()
+    {
+        $data =User::find($this->user_id);
+        return $data->shop->slug;
+    }
+
     public function getPercentDateAttribute()
     {
         $date = Carbon::parse($this->expired_date);

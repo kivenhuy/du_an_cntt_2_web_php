@@ -48,24 +48,7 @@ class PurchaseHistoryController extends Controller
         return view('user_layout.purchase_history.index',compact('orders', 'payment_status', 'delivery_status', 'sort_search'));
     }
 
-    // public function data_ajax(Request $request)
-    // {
-    //     $data_request = Order::with('orderDetails')->where('customer_id', Auth::user()->id)->orderBy('code', 'desc')->get();
-    //     $out =  DataTables::of($data_request)->make(true);
-    //     $data = $out->getData();
-    //     for($i=0; $i < count($data->data); $i++) {
-    //         // dd($data->data[$i]->id);
-    //         $output = '';
-    //         $output .= ' <a href="'.url(route('purchase_history.get_detail',['id'=>$data->data[$i]->id])).'" class="btn btn-info btn-xs" data-toggle="tooltip" title="Order Details" style="display:inline;padding:2px 5px 3px 5px;"><i class="fa fa-eye"></i></a>';
-    //         $data->data[$i]->action = (string)$output;
-    //         $data->data[$i]->grand_total = single_price($data->data[$i]->grand_total);
-    //         $data->data[$i]->delivery_status = (ucfirst($data->data[$i]->delivery_status));
-    //         $data->data[$i]->payment_status = (ucfirst($data->data[$i]->payment_status));
-    //     }
-    //     $out->setData($data);
-       
-    //     return $out;
-    // }
+   
 
     public function get_detail($id)
     {

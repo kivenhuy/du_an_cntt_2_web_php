@@ -218,12 +218,20 @@
                                                                     </span>
                                                                 </a>
                                                             @else
-                                                                <a href=""
-                                                                    class="text-secondary fs-12">
-                                                                    <span class="ml-2">
-                                                                        {{ translate('Order code: ') }}
+                                                                <a href="{{ route('request_for_product.get_details_data', ($notification->data['request_id']))}}" class="text-secondary fs-14">
+                                                                    <span class="order_notification">
+                                                                        {{ translate('Your request for product have code: ') }}
                                                                         {{ $notification->data['request_code'] }}
-                                                                        {{ translate('has been ' . ucfirst(str_replace('_', ' ', $notification->data['status']))) }}
+                                                                        @if($notification->data['status'] == 1)
+                                                                            {{ translate('has been approved by admin')}}
+                                                                        @elseif($notification->data['status'] == 2)
+                                                                            {{ translate('has been approved by seller')}}
+                                                                        @elseif($notification->data['status'] == 90)
+                                                                            {{ translate('has been rejected by seller')}}
+                                                                        @else
+                                                                            {{ translate('seller has been update price')}}
+                                                                        @endif
+                                                                        
                                                                     </span>
                                                                 </a>
                                                             @endif

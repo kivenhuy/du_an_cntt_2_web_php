@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\CheckoutSupermarketController;
 use App\Http\Controllers\Api\PersonalInformationShopController;
 use App\Http\Controllers\Api\PersonalInformationSupermarketController;
 use App\Http\Controllers\Api\PurchaseHistoryController;
+use App\Http\Controllers\Api\RefundController;
 use App\Http\Controllers\Api\RequestForProductController;
 use App\Http\Controllers\Api\RequestSendController;
 use App\Http\Controllers\Api\ShippingOrderController;
@@ -37,6 +38,8 @@ Route::group(['prefix' => 'v2'], function () {
         Route::post('/send_request/store', 'store')->name('send_request.store');
         Route::get('/send_request/get_detail/{id}', 'show')->name('send_request.get_detail');
         Route::post('/send_request/get_all', 'index')->name('send_request.get_all');
+        Route::get('/recommendation_request', 'recommendation')->name('recommendation_request.recommendation');
+        Route::get('/recommendation_request/get_product/{id}', 'recommendation_get_product')->name('recommendation_request.recommendation_get_product');
         Route::post('/send_request/add_product_to_cart', 'approve_price')->name('send_request.approve_price');
         Route::post('/send_request/reject_price', 'reject_price')->name('send_request.reject_price');
         Route::get('/send_request/destroy/{id}', 'destroy')->name('send_request.destroy');
@@ -71,6 +74,8 @@ Route::group(['prefix' => 'v2'], function () {
         Route::post('/purchase_history/get_all', 'index')->name('purchase_history_supermarket.get_all');
         Route::get('/purchase_history/get_detail/{id}', 'get_detail')->name('purchase_history_supermarket.get_detail');
         Route::post('/purchase_history/product_review_modal', 'product_review_modal')->name('purchase_history_supermarket.product_review_modal');
+        Route::post('/purchase_history/refund_request', 'refund_request')->name('purchase_history_supermarket.refund_request');
+        Route::post('/purchase_history/store_refund_order', 'store_refund_order')->name('purchase_history_supermarket.store_refund_order');
         Route::post('/purchase_history/shipping_history', 'shipping_history')->name('purchase_history_supermarket.shipping_history');
         Route::post('/purchase_history/product_review_modal/store', 'store_review')->name('purchase_history_supermarket.store_review');
     });
@@ -102,5 +107,11 @@ Route::group(['prefix' => 'v2'], function () {
         Route::post('/process_shipping_order', 'process_shipping_order')->name('api.process_shipping_order');
         Route::get('/get_dashboard/{id}', 'get_dashboard')->name('api.get_dashboard');
     });
+
+    Route::controller(RefundController::class)->group(function () {
+        Route::post('/all_refund', 'index')->name('api.all_refund');
+        Route::get('/refund/detail/{id}', 'show')->name('api.all_refund.show');
+    });
+
 });
 

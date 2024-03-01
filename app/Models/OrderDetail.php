@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class OrderDetail extends Model
 {
     use HasFactory;
-    protected $appends = ['product_name','each_price','shop_name','ship_his'];
+    protected $appends = ['product_name','each_price','shop_name','ship_his','refund_id'];
     public function order()
     {
         return $this->belongsTo(Order::class);
@@ -60,6 +60,18 @@ class OrderDetail extends Model
         if($user_data)
         {
             $data = $user_data->shop->name;
+        }
+        
+        return $data;
+    }
+
+    public function getRefundIdAttribute()
+    {
+        $data = 0;
+        $refund_requets = $this->refund_requets;
+        if($refund_requets)
+        {
+            $data = $refund_requets->id;
         }
         
         return $data;

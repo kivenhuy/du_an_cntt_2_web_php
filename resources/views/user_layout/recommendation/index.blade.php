@@ -48,7 +48,7 @@
                                         </td>
                                     <td class="text-right">
                                         @if($each_fresh_fruit_high_quantity->id != 0)
-                                            <button type="button" class="btn btn-primary" onclick="rowClicked(this)">Request Now</button>
+                                            <button type="submit" class="btn btn-primary" onclick="rowClicked(this)">Request Now</button>
                                         @endif 
                                         {{-- @if(in_array($each_request_data->status,[90,97,98,99]))
                                             <a href="{{ route('request_for_product.destroy', $each_request_data->id) }}" class="btn btn-soft-danger btn-icon btn-circle btn-sm " title="Delete">

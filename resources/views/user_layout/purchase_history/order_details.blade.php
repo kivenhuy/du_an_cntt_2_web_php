@@ -199,9 +199,15 @@
                                                 onclick="product_review('{{ $orderDetail->product_id }}')"
                                                 class="btn btn-primary btn-sm rounded-0"> {{ translate('Review') }} </a>
                                         @elseif ($orderDetail->delivery_status === 'fail')
-                                            <a href="javascript:void(0);"
+
+                                            @if($orderDetail->refund_id == 0)
+                                                <a href="javascript:void(0);"
                                                 onclick="refund('{{ $orderDetail->id }}')"
                                                 class="btn btn-primary btn-sm rounded-0"> {{ translate('Request a refund') }} </a>
+                                            @else
+                                                <a href="{{ route('refund.detail',$orderDetail->refund_id) }}" class="btn btn-primary btn-sm rounded-0"> Refund Detail </a>
+                                            @endif
+                                            
                                         {{-- @elseif ($orderDetail->delivery_status === 'refund')
                                             <a href="javascript:void(0);"
                                                 onclick="refund('{{ $orderDetail->id }}')"

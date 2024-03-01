@@ -91,7 +91,7 @@
                             <td class="w-50 fw-600">{{ translate('Refund Status') }}:</td>
                             <td> 
                                 @if($refund_request->status == 0 )
-                                    <span class='badge badge-inline badge-danger'>Waiting For Appore </span> 
+                                    <span class='badge badge-inline badge-danger'>Waiting For Approval </span> 
                                 @elseif($refund_request->status == 1 )
                                     <span class='badge badge-inline badge-warning'>Waiting For Refund</span> 
                                 @elseif($refund_request->status == 2 )
@@ -192,7 +192,7 @@
                         <strong class="text-muted">{{ translate('Sub Total') }} :</strong>
                     </td>
                     <td>
-                        {{ single_price($order->orderDetails->sum('price')) }}
+                        {{ single_price($order_detail->price) }}
                     </td>
                 </tr>
                 <tr>
@@ -208,7 +208,7 @@
                         <strong class="text-muted">{{ translate('Shipping') }} :</strong>
                     </td>
                     <td>
-                        {{ single_price($order->orderDetails->sum('shipping_cost')) }}
+                        {{ single_price($order_detail->shipping_cost) }}
                     </td>
                 </tr>
                 <tr>
@@ -224,7 +224,7 @@
                         <strong class="text-muted">{{ translate('TOTAL') }} :</strong>
                     </td>
                     <td class="text-muted h5">
-                        {{ single_price($order->grand_total) }}
+                        {{ single_price($order_detail->price + $order_detail->shipping_cost) }}
                     </td>
                 </tr>
             </tbody>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Products;
+use App\Models\RefundRequest;
 use App\Models\Review;
 use App\Models\ShippingHistory;
 use App\Models\Uploads;
@@ -84,6 +85,57 @@ class PurchaseHistoryController extends Controller
                 'review'=>$review,
             ]
         ]); 
+    }
+
+
+    public function refund_request(Request $request)
+    {
+        $is_refund  = 0;
+        $order_detail = OrderDetail::find($request->order_details_id);
+        $refund_request = $order_detail->refund_requets;
+        $order = $order_detail->order;
+        if($refund_request != null)
+        {
+            $is_refund  = $order_detail->refund_requets->id;
+        }
+        return response()->json([
+            'result' => true,
+            'data'=>
+            [
+                'order_detail'=>$order_detail,
+                'is_refund'=>$is_refund,
+                'order'=>$order,
+            ]
+        ]); 
+    }
+
+    public function store_refund_order(Request $request)
+    {
+        // dd($request->all());
+        $refund_request = new RefundRequest();
+        $refund_request->code = date('Ymd-His') . rand(10, 99);
+        $refund_request->order_detail_id = $request->order_detail_id;
+        $refund_request->buyer_id = $request->buyer_id;
+        $refund_request->price = $request->price;
+        $refund_request->shipping_price = $request->shipping_price;
+        $refund_request->reason = $request->reason;
+        $refund_request->status = 0;
+        // $refund_request->photos = implode(',', $request->photos);
+        $refund_request->save();
+        if($refund_request)
+        {
+            return response()->json([
+                'result' => true,
+                'status'=>true
+            ]); 
+        }
+        else
+        {
+            return response()->json([
+                'result' => false,
+                'status'=> false
+            ]); 
+        }
     }
 
     public function shipping_history(Request $request){

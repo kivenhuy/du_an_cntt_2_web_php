@@ -92,7 +92,8 @@
                                     </td>
                                     
                                     <td>
-                                        {{ single_price($each_refund_request->order_detail->order->grand_total) }}
+                                        {{ single_price($each_refund_request->order_detail->price + $each_refund_request->order_detail->shipping_costg) }}
+
                                     </td>
                                     <td>
                                         @php

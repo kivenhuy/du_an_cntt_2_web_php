@@ -13,6 +13,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Redis;
 use Yajra\DataTables\DataTables;
 use App\Notifications\WelcomeNotification;
+use Http;
 use Illuminate\Support\Facades\DB;
 
 class RequestForProductController extends Controller
@@ -140,7 +141,28 @@ class RequestForProductController extends Controller
         $request_product = RequestForProduct::findOrFail($request->id);
         $request_product->status = 1;
         if ($request_product->save()) {
+            if(User::find($request_product->buyer_id)->user_type == "enterprise")
+            {
+                try
+                {
+                    $upsteamUrl = env('SUPERMARKET_URL');
+                    $signupApiUrl = $upsteamUrl . '/supermarket_notification';
+                    $response = Http::post($signupApiUrl,[
+                        'request_code'=>$request_product->code,
+                        'request_id'=>$request_product->id,
+                        'status'=>1,
+                        'type'=>"request_for_product",
+                        'user_id'=>$request_product->buyer_id,
+                    ]);
+                    // dd(json_decode($response));
+                
+                }
+                catch(\Exception $exception) {
+                    
+                }
+            }
             Notification::send($seller, new WelcomeNotification($request_product));
+            Notification::send(User::find($request_product->buyer_id), new WelcomeNotification($request_product));
             return 1;
         }
     }
@@ -152,7 +174,28 @@ class RequestForProductController extends Controller
             $price =$request->price; // 1,000,000
             $Rfq_data = RequestForProduct::find($request->id_rfp);
             $Rfq_data->update(['price' => $price,'status' => 3]);
+            if(User::find($Rfq_data->buyer_id)->user_type == "enterprise")
+            {
+                try
+                {
+                    $upsteamUrl = env('SUPERMARKET_URL');
+                    $signupApiUrl = $upsteamUrl . '/supermarket_notification';
+                    $response = Http::post($signupApiUrl,[
+                        'request_code'=>$Rfq_data->code,
+                        'request_id'=>$Rfq_data->id,
+                        'status'=>3,
+                        'type'=>"request_for_product",
+                        'user_id'=>$Rfq_data->buyer_id,
+                    ]);
+                    // dd(json_decode($response));
+                
+                }
+                catch(\Exception $exception) {
+                    
+                }
+            }
         }
+        Notification::send(User::find($Rfq_data->buyer_id), new WelcomeNotification($Rfq_data));
     }
 
     public function seller_accept_request(Request $request)
@@ -164,7 +207,28 @@ class RequestForProductController extends Controller
             if($Rfq_data)
             {
                 $Rfq_data->update(['product_id' => $request->product_id,'shop_id'=>Auth::user()->shop->id,'status' => 2]);
+                if(User::find($Rfq_data->buyer_id)->user_type == "enterprise")
+                {
+                    try
+                    {
+                        $upsteamUrl = env('SUPERMARKET_URL');
+                        $signupApiUrl = $upsteamUrl . '/supermarket_notification';
+                        $response = Http::post($signupApiUrl,[
+                            'request_code'=>$Rfq_data->code,
+                            'request_id'=>$Rfq_data->id,
+                            'status'=>2,
+                            'type'=>"request_for_product",
+                            'user_id'=>$Rfq_data->buyer_id,
+                        ]);
+                        // dd(json_decode($response));
+                    
+                    }
+                    catch(\Exception $exception) {
+                        
+                    }
+                }
             }   
+            Notification::send(User::find($Rfq_data->buyer_id), new WelcomeNotification($Rfq_data));
         }
     }
 
@@ -177,6 +241,26 @@ class RequestForProductController extends Controller
             if($Rfq_data)
             {
                 $Rfq_data->update(['status' => 90]);
+                if(User::find($Rfq_data->buyer_id)->user_type == "enterprise")
+                {
+                    try
+                    {
+                        $upsteamUrl = env('SUPERMARKET_URL');
+                        $signupApiUrl = $upsteamUrl . '/supermarket_notification';
+                        $response = Http::post($signupApiUrl,[
+                            'request_code'=>$Rfq_data->code,
+                            'request_id'=>$Rfq_data->id,
+                            'status'=>90,
+                            'type'=>"request_for_product",
+                            'user_id'=>$Rfq_data->buyer_id,
+                        ]);
+                        // dd(json_decode($response));
+                    
+                    }
+                    catch(\Exception $exception) {
+                        
+                    }
+                }
             }   
         }
     }

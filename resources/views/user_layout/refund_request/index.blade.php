@@ -64,6 +64,7 @@
                             <th data-breakpoints="lg">{{ translate('Delivery Status') }}</th>
                             <th data-breakpoints="lg">{{ translate('Payment Type') }}</th>
                             <th>{{ translate('Payment Status') }}</th>
+                            <th>{{ translate('Refund Status') }}</th>
                             <th class="text-right">{{ translate('Action') }}</th>
                         </tr>
                     </thead>
@@ -87,7 +88,7 @@
                                     </td>
                                     
                                     <td>
-                                        {{ single_price($each_refund_request->order_detail->order->grand_total) }}
+                                        {{ single_price($each_refund_request->order_detail->price + $each_refund_request->order_detail->shipping_cost) }}
                                     </td>
                                     <td>
                                         @php
@@ -103,6 +104,15 @@
                                             <span class="badge badge-inline badge-success">{{ translate('Paid') }}</span>
                                         @else
                                             <span class="badge badge-inline badge-danger">{{ translate('Unpaid') }}</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($each_refund_request->status == 0)
+                                            <span class="badge badge-inline badge-danger">{{ ('Waiting For Approval') }}</span>
+                                        @elseif ($each_refund_request->status == 1)
+                                            <span class="badge badge-inline badge-warning">{{ ('Waiting For Refund') }}</span>
+                                        @else
+                                            <span class="badge badge-inline badge-success">{{ ('Refunded') }}</span>
                                         @endif
                                     </td>
                                     <td class="text-right">
