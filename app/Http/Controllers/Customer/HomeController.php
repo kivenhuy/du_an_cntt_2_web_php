@@ -59,13 +59,13 @@ class HomeController extends Controller
             $arr_attr = [];
            
             $review_status = 0;
-           
+            $reviews = $detailedProduct->reviews()->paginate(3);
             return view('user_layout.products.product_detail',
                 [
                 'detailedProduct' => $detailedProduct,
                 // 'product_queries' => $product_queries,
                 // 'total_query' => $total_query,
-                // 'reviews' => $reviews,
+                'reviews' => $reviews,
                 'review_status' => $review_status,
                 'arr_attr' => $arr_attr,
                 'categories_data'=>$categories_data,
