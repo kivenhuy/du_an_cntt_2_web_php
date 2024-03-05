@@ -44,7 +44,7 @@
                                             {{ $each_fresh_fruit_high_quantity->user->name }}
                                         </td>
                                         <td class="quantity">
-                                            {{ $each_fresh_fruit_high_quantity->product_stock->qty/$count_enteprise }} KG
+                                            {{ round($each_fresh_fruit_high_quantity->product_stock->qty/$count_enteprise) }} KG
                                         </td>
                                     <td class="text-right">
                                         @if($each_fresh_fruit_high_quantity->id != 0)

@@ -71,6 +71,8 @@
                                                         <div class="col col-md-1 fw-600 text_cart_details">{{ translate('Unit')}}</div>
                                                         @if(Auth::user()->user_type === 'enterprise')
                                                         <div class="col col-md-2 fw-600 text_cart_details">{{ translate('Order Date')}}</div>
+                                                        @else
+                                                        
                                                         @endif
                                                        
                                                         <div class="col  col-md-4 fw-600 text_cart_details" >{{ translate('Total')}}</div>
@@ -252,7 +254,7 @@
                                                                 
                                                                 if(Auth::user()->user_type == "enterprise")
                                                                 {
-                                                                    $total_short_product =  $total_short_product + (cart_product_price($carts_short_shelf_lifeItem, $product, false) * $cartItem['quantity']);
+                                                                    $total_short_product =  $total_short_product + (cart_product_price($carts_short_shelf_lifeItem, $product, false) * $carts_short_shelf_lifeItem['quantity']);
                                                                 }
                                                                 else {
                                                                     $total_short_product = $total_short_product + (cart_product_price($carts_short_shelf_lifeItem, $product, false) * $carts_short_shelf_lifeItem['quantity']);
@@ -534,6 +536,7 @@
                             <div class="border bg-white p-3 p-lg-4 text-left">
                                 <div class="mb-4">
                                     @php
+                                        
                                         $total_all = $total_normal_product + $total_short_product;
                                         $final_all = $final_total_normal + $final_total_short;
                                     @endphp

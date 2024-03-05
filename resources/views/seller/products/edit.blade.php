@@ -6,6 +6,10 @@
         <div class="col-md-6">
             <h1 class="h3">{{ translate('Update your product') }}</h1>
         </div>
+        <div class="text-right col-md-6">
+            <a href="{{route('seller.products')}}" class="btn btn-secondary"><i style="margin-right:8px" class="fa fa-arrow-left"></i>Back</a>
+            {{-- <a href="{{ url()->previous() }}" ><i style="color:black;font-size: 1.73em;" class="las la-arrow-left"></i></a> --}}
+        </div>
     </div>
 </div>
 

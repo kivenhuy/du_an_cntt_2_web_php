@@ -181,7 +181,7 @@
                                                                                 Shipper {{ $notification->data['shipper_name'] }} is on the way to deliver
                                                                                 {{ translate('order code: ') }} {{ $order->code }}
                                                                             </span>
-                                                                        @elseif($notification->data['status'] == "receive_order")
+                                                                        @elseif($notification->data['status'] == "delivered")
                                                                             <span class="order_notification">
                                                                                 Shipper {{ $notification->data['shipper_name'] }} delivered successfully {{ translate('Order code: ') }} {{ $order->code }}
                                                                             </span>

@@ -76,7 +76,7 @@ class CheckoutController extends Controller
         }
         foreach ($carts_short_shelf_life as $key => $carts_short_shelf_lifeItem){
             $product = Products::find($carts_short_shelf_lifeItem['product_id']);
-            if(($cartItem['quantity'] > $product->product_stock->qty) && Auth::user()->user_type != 'enterprise')
+            if(($carts_short_shelf_lifeItem['quantity'] > $product->product_stock->qty) && Auth::user()->user_type != 'enterprise')
             {
                 flash(translate("Product " .$product->name ." not enough quantity please try again!"))->error();
                 return back();

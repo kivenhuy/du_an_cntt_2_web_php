@@ -260,16 +260,6 @@ class OrderController extends Controller
                 $subtotal += cart_product_price($cartItem, $product, false, false) * $cartItem['quantity'] *  count($shipping_date);
                 $product_variation = $cartItem['variation'];
                 $product_stock = $product->product_stock;
-                // if ($cartItem['quantity'] > $product_stock->qty) {
-                //     flash(translate('The requested quantity is not available for ') . $product->name)->warning();
-                //     $order->delete();
-                //     return redirect()->route('cart')->send();
-                // } 
-                // else 
-                //  {
-                //     $product_stock->qty -= $cartItem['quantity'];
-                //     $product_stock->save();
-                // }
                 foreach ($shipping_date as $each_shipping_date)
                 {
                     $order_detail = new OrderDetail();
@@ -290,6 +280,7 @@ class OrderController extends Controller
                     $order_detail->price = (cart_product_price($cartItem, $product, false, false) * $cartItem['quantity'])/count($shipping_date);
                     $reservationStartingDate = $each_shipping_date ." ".$hour;
                     $order_detail->shipping_date = Carbon::parse($reservationStartingDate);
+                    $order_detail->carrier_id = $cartItem['carrier_id'];
                     $order_detail->save();
                     try
                     {
