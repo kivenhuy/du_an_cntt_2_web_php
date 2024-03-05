@@ -1,5 +1,7 @@
 <?php
+/* @noinspection ALL */
 // @formatter:off
+// phpcs:ignoreFile
 
 namespace PHPSTORM_META {
 
@@ -103,6 +105,7 @@ namespace PHPSTORM_META {
             'Illuminate\Foundation\Console\ScopeMakeCommand' => \Illuminate\Foundation\Console\ScopeMakeCommand::class,
             'Illuminate\Foundation\Console\ServeCommand' => \Illuminate\Foundation\Console\ServeCommand::class,
             'Illuminate\Foundation\Console\StorageLinkCommand' => \Illuminate\Foundation\Console\StorageLinkCommand::class,
+            'Illuminate\Foundation\Console\StorageUnlinkCommand' => \Illuminate\Foundation\Console\StorageUnlinkCommand::class,
             'Illuminate\Foundation\Console\StubPublishCommand' => \Illuminate\Foundation\Console\StubPublishCommand::class,
             'Illuminate\Foundation\Console\TestMakeCommand' => \Illuminate\Foundation\Console\TestMakeCommand::class,
             'Illuminate\Foundation\Console\UpCommand' => \Illuminate\Foundation\Console\UpCommand::class,
@@ -310,6 +313,7 @@ namespace PHPSTORM_META {
             'Illuminate\Foundation\Console\ScopeMakeCommand' => \Illuminate\Foundation\Console\ScopeMakeCommand::class,
             'Illuminate\Foundation\Console\ServeCommand' => \Illuminate\Foundation\Console\ServeCommand::class,
             'Illuminate\Foundation\Console\StorageLinkCommand' => \Illuminate\Foundation\Console\StorageLinkCommand::class,
+            'Illuminate\Foundation\Console\StorageUnlinkCommand' => \Illuminate\Foundation\Console\StorageUnlinkCommand::class,
             'Illuminate\Foundation\Console\StubPublishCommand' => \Illuminate\Foundation\Console\StubPublishCommand::class,
             'Illuminate\Foundation\Console\TestMakeCommand' => \Illuminate\Foundation\Console\TestMakeCommand::class,
             'Illuminate\Foundation\Console\UpCommand' => \Illuminate\Foundation\Console\UpCommand::class,
@@ -517,6 +521,7 @@ namespace PHPSTORM_META {
             'Illuminate\Foundation\Console\ScopeMakeCommand' => \Illuminate\Foundation\Console\ScopeMakeCommand::class,
             'Illuminate\Foundation\Console\ServeCommand' => \Illuminate\Foundation\Console\ServeCommand::class,
             'Illuminate\Foundation\Console\StorageLinkCommand' => \Illuminate\Foundation\Console\StorageLinkCommand::class,
+            'Illuminate\Foundation\Console\StorageUnlinkCommand' => \Illuminate\Foundation\Console\StorageUnlinkCommand::class,
             'Illuminate\Foundation\Console\StubPublishCommand' => \Illuminate\Foundation\Console\StubPublishCommand::class,
             'Illuminate\Foundation\Console\TestMakeCommand' => \Illuminate\Foundation\Console\TestMakeCommand::class,
             'Illuminate\Foundation\Console\UpCommand' => \Illuminate\Foundation\Console\UpCommand::class,
@@ -724,6 +729,7 @@ namespace PHPSTORM_META {
             'Illuminate\Foundation\Console\ScopeMakeCommand' => \Illuminate\Foundation\Console\ScopeMakeCommand::class,
             'Illuminate\Foundation\Console\ServeCommand' => \Illuminate\Foundation\Console\ServeCommand::class,
             'Illuminate\Foundation\Console\StorageLinkCommand' => \Illuminate\Foundation\Console\StorageLinkCommand::class,
+            'Illuminate\Foundation\Console\StorageUnlinkCommand' => \Illuminate\Foundation\Console\StorageUnlinkCommand::class,
             'Illuminate\Foundation\Console\StubPublishCommand' => \Illuminate\Foundation\Console\StubPublishCommand::class,
             'Illuminate\Foundation\Console\TestMakeCommand' => \Illuminate\Foundation\Console\TestMakeCommand::class,
             'Illuminate\Foundation\Console\UpCommand' => \Illuminate\Foundation\Console\UpCommand::class,
@@ -931,6 +937,7 @@ namespace PHPSTORM_META {
             'Illuminate\Foundation\Console\ScopeMakeCommand' => \Illuminate\Foundation\Console\ScopeMakeCommand::class,
             'Illuminate\Foundation\Console\ServeCommand' => \Illuminate\Foundation\Console\ServeCommand::class,
             'Illuminate\Foundation\Console\StorageLinkCommand' => \Illuminate\Foundation\Console\StorageLinkCommand::class,
+            'Illuminate\Foundation\Console\StorageUnlinkCommand' => \Illuminate\Foundation\Console\StorageUnlinkCommand::class,
             'Illuminate\Foundation\Console\StubPublishCommand' => \Illuminate\Foundation\Console\StubPublishCommand::class,
             'Illuminate\Foundation\Console\TestMakeCommand' => \Illuminate\Foundation\Console\TestMakeCommand::class,
             'Illuminate\Foundation\Console\UpCommand' => \Illuminate\Foundation\Console\UpCommand::class,
@@ -1138,6 +1145,7 @@ namespace PHPSTORM_META {
             'Illuminate\Foundation\Console\ScopeMakeCommand' => \Illuminate\Foundation\Console\ScopeMakeCommand::class,
             'Illuminate\Foundation\Console\ServeCommand' => \Illuminate\Foundation\Console\ServeCommand::class,
             'Illuminate\Foundation\Console\StorageLinkCommand' => \Illuminate\Foundation\Console\StorageLinkCommand::class,
+            'Illuminate\Foundation\Console\StorageUnlinkCommand' => \Illuminate\Foundation\Console\StorageUnlinkCommand::class,
             'Illuminate\Foundation\Console\StubPublishCommand' => \Illuminate\Foundation\Console\StubPublishCommand::class,
             'Illuminate\Foundation\Console\TestMakeCommand' => \Illuminate\Foundation\Console\TestMakeCommand::class,
             'Illuminate\Foundation\Console\UpCommand' => \Illuminate\Foundation\Console\UpCommand::class,
@@ -1345,6 +1353,7 @@ namespace PHPSTORM_META {
             'Illuminate\Foundation\Console\ScopeMakeCommand' => \Illuminate\Foundation\Console\ScopeMakeCommand::class,
             'Illuminate\Foundation\Console\ServeCommand' => \Illuminate\Foundation\Console\ServeCommand::class,
             'Illuminate\Foundation\Console\StorageLinkCommand' => \Illuminate\Foundation\Console\StorageLinkCommand::class,
+            'Illuminate\Foundation\Console\StorageUnlinkCommand' => \Illuminate\Foundation\Console\StorageUnlinkCommand::class,
             'Illuminate\Foundation\Console\StubPublishCommand' => \Illuminate\Foundation\Console\StubPublishCommand::class,
             'Illuminate\Foundation\Console\TestMakeCommand' => \Illuminate\Foundation\Console\TestMakeCommand::class,
             'Illuminate\Foundation\Console\UpCommand' => \Illuminate\Foundation\Console\UpCommand::class,
@@ -1552,6 +1561,7 @@ namespace PHPSTORM_META {
             'Illuminate\Foundation\Console\ScopeMakeCommand' => \Illuminate\Foundation\Console\ScopeMakeCommand::class,
             'Illuminate\Foundation\Console\ServeCommand' => \Illuminate\Foundation\Console\ServeCommand::class,
             'Illuminate\Foundation\Console\StorageLinkCommand' => \Illuminate\Foundation\Console\StorageLinkCommand::class,
+            'Illuminate\Foundation\Console\StorageUnlinkCommand' => \Illuminate\Foundation\Console\StorageUnlinkCommand::class,
             'Illuminate\Foundation\Console\StubPublishCommand' => \Illuminate\Foundation\Console\StubPublishCommand::class,
             'Illuminate\Foundation\Console\TestMakeCommand' => \Illuminate\Foundation\Console\TestMakeCommand::class,
             'Illuminate\Foundation\Console\UpCommand' => \Illuminate\Foundation\Console\UpCommand::class,
@@ -1759,6 +1769,7 @@ namespace PHPSTORM_META {
             'Illuminate\Foundation\Console\ScopeMakeCommand' => \Illuminate\Foundation\Console\ScopeMakeCommand::class,
             'Illuminate\Foundation\Console\ServeCommand' => \Illuminate\Foundation\Console\ServeCommand::class,
             'Illuminate\Foundation\Console\StorageLinkCommand' => \Illuminate\Foundation\Console\StorageLinkCommand::class,
+            'Illuminate\Foundation\Console\StorageUnlinkCommand' => \Illuminate\Foundation\Console\StorageUnlinkCommand::class,
             'Illuminate\Foundation\Console\StubPublishCommand' => \Illuminate\Foundation\Console\StubPublishCommand::class,
             'Illuminate\Foundation\Console\TestMakeCommand' => \Illuminate\Foundation\Console\TestMakeCommand::class,
             'Illuminate\Foundation\Console\UpCommand' => \Illuminate\Foundation\Console\UpCommand::class,
@@ -1966,6 +1977,7 @@ namespace PHPSTORM_META {
             'Illuminate\Foundation\Console\ScopeMakeCommand' => \Illuminate\Foundation\Console\ScopeMakeCommand::class,
             'Illuminate\Foundation\Console\ServeCommand' => \Illuminate\Foundation\Console\ServeCommand::class,
             'Illuminate\Foundation\Console\StorageLinkCommand' => \Illuminate\Foundation\Console\StorageLinkCommand::class,
+            'Illuminate\Foundation\Console\StorageUnlinkCommand' => \Illuminate\Foundation\Console\StorageUnlinkCommand::class,
             'Illuminate\Foundation\Console\StubPublishCommand' => \Illuminate\Foundation\Console\StubPublishCommand::class,
             'Illuminate\Foundation\Console\TestMakeCommand' => \Illuminate\Foundation\Console\TestMakeCommand::class,
             'Illuminate\Foundation\Console\UpCommand' => \Illuminate\Foundation\Console\UpCommand::class,
@@ -2173,6 +2185,7 @@ namespace PHPSTORM_META {
             'Illuminate\Foundation\Console\ScopeMakeCommand' => \Illuminate\Foundation\Console\ScopeMakeCommand::class,
             'Illuminate\Foundation\Console\ServeCommand' => \Illuminate\Foundation\Console\ServeCommand::class,
             'Illuminate\Foundation\Console\StorageLinkCommand' => \Illuminate\Foundation\Console\StorageLinkCommand::class,
+            'Illuminate\Foundation\Console\StorageUnlinkCommand' => \Illuminate\Foundation\Console\StorageUnlinkCommand::class,
             'Illuminate\Foundation\Console\StubPublishCommand' => \Illuminate\Foundation\Console\StubPublishCommand::class,
             'Illuminate\Foundation\Console\TestMakeCommand' => \Illuminate\Foundation\Console\TestMakeCommand::class,
             'Illuminate\Foundation\Console\UpCommand' => \Illuminate\Foundation\Console\UpCommand::class,
