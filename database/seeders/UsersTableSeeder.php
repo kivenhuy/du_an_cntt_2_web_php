@@ -20,7 +20,6 @@ class UsersTableSeeder extends Seeder
             'password'=>"Kivenhuy123@", 
             'country'=>1, 
             'city'=>1, 
-            'district'=>1, 
             'ward'=>1, 
             'phone'=>"0931657765", 
             'address'=>"639 Nguyễn Trãi"

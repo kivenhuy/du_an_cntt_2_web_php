@@ -82,8 +82,9 @@
                     <a class="dropdown-toggle no-arrow text-dark" data-toggle="dropdown" href="javascript:void(0);" role="button" aria-haspopup="false" aria-expanded="false">
                         <span class="d-flex align-items-center">
                             <span class="avatar avatar-sm mr-md-2">
+                                @php $shopLogo = optional(Auth::user()->shop)->logo; @endphp
                                 <img
-                                    src="{{ uploaded_asset(Auth::user()->shop->logo) }}"
+                                    src="{{ $shopLogo ? uploaded_asset($shopLogo) : static_asset('assets/img/avatar-place.png') }}"
                                     onerror="this.onerror=null;this.src='{{ static_asset('assets/img/avatar-place.png') }}';"
                                 >
                             </span>

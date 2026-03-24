@@ -32,7 +32,7 @@ class EnterpriseController extends Controller
         $data_enterprise = User::find($id);
         $city_name = City::find($data_enterprise->city)->city_name;
         $country_name = Country::find($data_enterprise->country)->country_name;
-        $district_name = District::find($data_enterprise->district)->district_name;
+        $district_name = optional(District::find($data_enterprise->district))->district_name ?? '';
         $ward_name = $data_enterprise->ward;
         // $user_name = User::find($data_address->user_id)->name;
         $str = $data_enterprise->address.', '.$ward_name.', '.$district_name.', '.$city_name.', '.$country_name;

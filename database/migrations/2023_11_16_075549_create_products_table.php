@@ -37,6 +37,7 @@ return new class extends Migration
             $table->string('discount_type')->nullable();
             $table->string('discount_start_date')->nullable();
             $table->string('discount_end_date')->nullable();
+            $table->dateTime('expired_date')->nullable();
             $table->string('shipping_type')->nullable();
             $table->integer('est_shipping_days')->nullable();
             $table->integer('num_of_sale')->default(0);

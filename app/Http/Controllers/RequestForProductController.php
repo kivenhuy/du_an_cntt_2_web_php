@@ -278,7 +278,16 @@ class RequestForProductController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $product = Products::find($request->product_id);
+        if (!$product) {
+            flash(translate('Product not found'))->error();
+            return back();
+        }
+
+        $shopId = (int) ($request->shop_id ?? 0);
+        $shop = $shopId > 0 ? Shop::find($shopId) : null;
+        $shopSlug = $shop ? $shop->slug : '';
+
         $request_for_product = new RequestForProduct();
         $ldate = date('Ymd');
         $current_timestamp = mt_rand(1000000000, 9999999999);
@@ -298,10 +307,10 @@ class RequestForProductController extends Controller
         $data_request = [
             'product_id'=>$request->product_id,
             'code'=>$code_rfq,
-            'product_name'=>Products::find($request->product_id)->name,
-            'product_slug'=>Products::find($request->product_id)->slug,
-            'shop_slug'=>Shop::find($request->shop_id)->slug,
-            'shop_id'=>$request->shop_id,
+            'product_name'=>$product->name,
+            'product_slug'=>$product->slug,
+            'shop_slug'=>$shopSlug,
+            'shop_id'=>$shop ? $shopId : 0,
             'buyer_id'=>Auth::user()->id,
             'from_date'=>Carbon::parse($request->from_date),
             'to_date'=>$end,
@@ -312,9 +321,12 @@ class RequestForProductController extends Controller
             'price'=>0,
             'status'=>0,
         ];
-        $seller = Shop::find($request->shop_id)->user;
         $success_requets = $request_for_product->create($data_request);
-        Notification::send($seller, new WelcomeNotification($success_requets));
+
+        $notifiable = $shop ? $shop->user : User::find($product->user_id);
+        if ($notifiable) {
+            Notification::send($notifiable, new WelcomeNotification($success_requets));
+        }
         
         if($request_for_product)
         {

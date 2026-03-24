@@ -37,7 +37,7 @@ class SellerController extends Controller
         $data_seller = Shop::find($id);
         $city_name = City::find($data_seller->user->city)->city_name;
         $country_name = Country::find($data_seller->user->country)->country_name;
-        $district_name = District::find($data_seller->user->district)->district_name;
+        $district_name = optional(District::find($data_seller->user->district))->district_name ?? '';
         $ward_name = $data_seller->user->ward;
         // $user_name = User::find($data_address->user_id)->name;
         $str = $data_seller->address.', '.$ward_name.', '.$district_name.', '.$city_name.', '.$country_name;
