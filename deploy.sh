@@ -25,6 +25,7 @@ docker compose --env-file "$ENV_FILE" -f "$COMPOSE_FILE" exec -T app php artisan
 echo "[5/5] Cache optimize..."
 docker compose --env-file "$ENV_FILE" -f "$COMPOSE_FILE" exec -T app php artisan config:cache
 docker compose --env-file "$ENV_FILE" -f "$COMPOSE_FILE" exec -T app php artisan route:cache
-docker compose --env-file "$ENV_FILE" -f "$COMPOSE_FILE" exec -T app php artisan view:cache
+docker compose --env-file "$ENV_FILE" -f "$COMPOSE_FILE" exec -T app php artisan view:clear || true
+docker compose --env-file "$ENV_FILE" -f "$COMPOSE_FILE" exec -T app php artisan view:cache || true
 
 echo "Deploy completed."
