@@ -104,9 +104,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('addresses', AddressController::class);
     Route::controller(AddressController::class)->group(function () {
         Route::get('/addresses/set_default/{id}', 'set_default')->name('addresses.set_default');
-        Route::post('/addresses/update/{id}', 'update')->name('addresses.update');
-        Route::get('/addresses/destroy/{id}', 'destroy')->name('addresses.destroy');
-        Route::get('/addresses/set_default/{id}', 'set_default')->name('addresses.set_default');
+        Route::post('/addresses/update/{id}', 'update')->name('addresses.update_custom');
+        Route::get('/addresses/destroy/{id}', 'destroy')->name('addresses.destroy_custom');
     });
 
     // Checkout
@@ -141,28 +140,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::controller(RecomendationController::class)->group(function () {
         Route::get('/recommend_reqeuest', 'index')->name('recommend_reqeuest.index');
         Route::post('/recommend_reqeuest/create', 'create')->name('recommend_reqeuest.create');
-    });
-
-
-    
-
-    // Address 
-    Route::resource('addresses', AddressController::class);
-    Route::controller(AddressController::class)->group(function () {
-        Route::post('/addresses/update/{id}', 'update')->name('addresses.update');
-        Route::get('/addresses/destroy/{id}', 'destroy')->name('addresses.destroy');
-        Route::get('/addresses/set_default/{id}', 'set_default')->name('addresses.set_default');
-    });
-
-    // Checkout
-    Route::group(['prefix' => 'checkout'], function () {
-        Route::controller(CheckoutController::class)->group(function () {
-            Route::get('/final', 'final_checkout')->name('checkout.final_checkout');
-            Route::post('/update_shipping_fee', 'update_shipping_fee')->name('checkout.update_shipping_fee');
-            Route::post('/update_total_shipping_fee', 'update_total_shipping_fee')->name('checkout.update_total_shipping_fee');
-            Route::post('/checkout', 'checkout')->name('checkout');
-            Route::get('/order_confirmed', 'order_confirmed')->name('order_confirmed');
-        });
     });
 
     Route::post('/product_review_modal', [ReviewController::class, 'product_review_modal'])->name('product_review_modal');
