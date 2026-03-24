@@ -42,7 +42,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::controller(ShopController::class)->group(function () {
         Route::get('/shop', 'index')->name('seller.shop.index');
         Route::post('/shop/update', 'update')->name('seller.shop.update');
-        Route::get('/shop/apply_for_verification', 'verify_form')->name('seller.shop.verify');
+        Route::get('/shop/apply_for_verification', 'verify_form')->name('seller.shop.verify_form');
         Route::post('/shop/verification_info_store', 'verify_form_store')->name('seller.shop.verify.store');
     });
 

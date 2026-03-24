@@ -381,7 +381,7 @@
                     <div class="my-n4 py-1 text-center">
                         <img src="{{ static_asset('assets/img/non_verified.png') }}" alt=""
                             class="w-xxl-130px w-90px d-block">
-                        <a href="{{ route('seller.shop.verify') }}"
+                        <a href="{{ route('seller.shop.verify_form') }}"
                             class="btn btn-sm btn-primary">{{ translate('Verify Now') }}</a>
                     </div>
                 @else
