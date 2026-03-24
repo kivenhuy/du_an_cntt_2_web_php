@@ -8,20 +8,45 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 if (!function_exists('uploaded_asset')) {
+    /**
+     * Resolve public URL for an uploads table id.
+     * file_name is stored relative to public/ (e.g. assets/uploads/xxx.jpg).
+     * Uses root-relative URLs when no CDN base is set so images work even if
+     * APP_URL does not match the host/port you open in the browser.
+     */
     function uploaded_asset($id)
     {
-        if (($asset = \App\Models\Uploads::find($id)) != null) {
-            if($asset->is_farm_photo == 1)
-            {
-                return $asset->external_link == null ? env('FARM_URL_PHOTO').$asset->file_name: $asset->external_link;
-            }
-            elseif($asset->is_farm_photo == 2)
-            {
-                return $asset->external_link == null ? env('SUPERMARKET_URL_PHOTO').$asset->file_name: $asset->external_link;
-            }
-            return $asset->external_link == null ? env('ECOM_URL_PHOTO').$asset->file_name : $asset->external_link;
+        if ($id === null || $id === '') {
+            return static_asset('assets/img/placeholder.jpg');
         }
-        return env('ECOM_URL_PHOTO').'assets/img/placeholder.jpg';
+
+        if (($asset = \App\Models\Uploads::find($id)) === null) {
+            return static_asset('assets/img/placeholder.jpg');
+        }
+
+        if ($asset->external_link) {
+            return $asset->external_link;
+        }
+
+        $path = ltrim((string) $asset->file_name, '/');
+
+        $withBase = static function (?string $base, string $path): string {
+            if ($base !== null && $base !== '') {
+                return rtrim($base, '/') . '/' . $path;
+            }
+
+            return '/' . $path;
+        };
+
+        if ((int) $asset->is_farm_photo === 1) {
+            return $withBase(env('FARM_URL_PHOTO'), $path);
+        }
+
+        if ((int) $asset->is_farm_photo === 2) {
+            return $withBase(env('SUPERMARKET_URL_PHOTO'), $path);
+        }
+
+        return $withBase(env('ECOM_URL_PHOTO'), $path);
     }
 }
 

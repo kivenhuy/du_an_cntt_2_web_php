@@ -1,12 +1,13 @@
 <div class=" z-3 row gutters-10">
     @php
         $photos = [];
+        if ($detailedProduct->photos != null && $detailedProduct->photos !== '') {
+            $photos = array_values(array_filter(array_map('trim', explode(',', $detailedProduct->photos))));
+        }
+        if (count($photos) === 0 && ! empty($detailedProduct->thumbnail_img)) {
+            $photos = [(string) $detailedProduct->thumbnail_img];
+        }
     @endphp
-    @if ($detailedProduct->photos != null)
-        @php
-            $photos = explode(',', $detailedProduct->photos);
-        @endphp
-    @endif
     <!-- Gallery Images -->
     <div class="col-12">
         <div class="aiz-carousel product-gallery arrow-inactive-transparent arrow-lg-none"

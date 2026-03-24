@@ -7,6 +7,11 @@
                 <div class="col text-center text-md-left">
                     <h5 class="mb-md-0 h6">{{ translate('All Product') }}</h5>
                 </div>
+                <div class="col-md-auto text-md-right mb-2 mb-md-0">
+                    <a href="{{ route('admin.products.create') }}" class="btn btn-primary">
+                        <i class="fa fa-plus"></i> {{ translate('Add New Product') }}
+                    </a>
+                </div>
                 <div class="col-md-3">
                     <div class="from-group mb-0">
                         <input type="text" class="form-control" id="search" name="search"

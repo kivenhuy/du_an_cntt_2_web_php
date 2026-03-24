@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('password');
             $table->string('country');
             $table->string('city');
-            $table->string('district');
             $table->string('avatar_original')->nullable();
             $table->string('ward');
             $table->string('phone');

@@ -83,7 +83,7 @@ class OrderDetail extends Model
         $user_data = User::find($this->seller_id);
         $city_name = City::find($user_data->city)->city_name;
         $country_name = Country::find($user_data->country)->country_name;
-        $district_name = District::find($user_data->district)->district_name;
+        $district_name = optional(District::find($user_data->district))->district_name ?? '';
         // $user_name = User::find($user_data->user_id)->name;
         $str = $user_data->name.', '.$user_data->phone.', '.$user_data->address.', '.$user_data->ward.', '.$district_name.', '.$city_name.', '.$country_name;
         $data = $str;        

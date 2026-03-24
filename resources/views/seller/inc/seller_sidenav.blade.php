@@ -2,11 +2,12 @@
     <div class="aiz-sidebar left c-scrollbar">
         <div class="aiz-side-nav-logo-wrap">
             <div class="d-block text-center my-3">
-                @if ((Auth::user()->shop)->logo != null)
-                    <img class="mw-100 mb-3" src="{{ uploaded_asset((Auth::user()->shop)->logo) }}"
+                @php $shopLogo = optional(Auth::user()->shop)->logo; @endphp
+                @if ($shopLogo != null)
+                    <img class="mw-100 mb-3" src="{{ uploaded_asset($shopLogo) }}"
                         class="brand-icon" >
                 @else
-                    <img class="mw-100 mb-3" src="{{ uploaded_asset(0) }}" class="brand-icon"
+                    <img class="mw-100 mb-3" src="{{ static_asset('assets/img/avatar-place.png') }}" class="brand-icon"
                         alt="">
                 @endif
                 <h3 class="fs-16  m-0 text-primary">{{ optional(Auth::user()->shop)->name }}</h3>

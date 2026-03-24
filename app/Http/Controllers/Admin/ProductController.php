@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Seller\ProductController as SellerProductController;
 use App\Models\Categories;
 use App\Models\Category;
 use App\Models\Products;
@@ -11,6 +12,7 @@ use App\Models\User;
 use App\Utility\ProductUtility;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 
 class ProductController extends Controller
@@ -30,6 +32,36 @@ class ProductController extends Controller
         return view('admin.products.index',compact('product_data','sort_search'));
     }
 
+    public function create()
+    {
+        $category = Categories::all();
+
+        return view('admin.products.create', compact('category'));
+    }
+
+    public function store(Request $request)
+    {
+        $sellerProduct = app(SellerProductController::class);
+
+        $product = $sellerProduct->store_product($request->except([
+            '_token', 'sku',
+        ]));
+
+        if (Auth::check() && Auth::user()->user_type === 'admin') {
+            $product->user_id = Auth::id();
+            $product->save();
+        }
+
+        $request->merge(['product_id' => $product->id]);
+
+        $sellerProduct->store_product_stock($request->only([
+            'colors_active', 'colors', 'choice_no', 'unit_price', 'sku', 'current_stock', 'product_id',
+        ]), $product);
+
+        flash(translate('Product has been inserted successfully'))->success();
+
+        return redirect()->route('admin.products.index');
+    }
 
     public function approve(Request $request)
     {

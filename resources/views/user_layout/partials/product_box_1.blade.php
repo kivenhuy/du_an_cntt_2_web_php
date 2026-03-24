@@ -130,9 +130,16 @@
                 </span>
             </div>
             <div class="name_store_top_selling" style="margin-bottom: 12px;">
-                {{translate('Sold By')}}  <a href="{{route('shop.visit', $product->user?->shop?->slug) }}" style="font-weight:700">
-                    {{$product->user?->shop?->name}}
-                </a>
+                @php
+                    $__shopSlug = $product->user?->shop?->slug;
+                    $__soldByName = $product->user?->shop?->name ?? $product->user?->name ?? translate('Official Store');
+                @endphp
+                {{ translate('Sold By') }}
+                @if ($__shopSlug)
+                    <a href="{{ route('shop.visit', $__shopSlug) }}" style="font-weight:700">{{ $__soldByName }}</a>
+                @else
+                    <span style="font-weight:700">{{ $__soldByName }}</span>
+                @endif
             </div>
             <div class="price_product_top_selling">
                 {{home_discounted_base_price($product)}}

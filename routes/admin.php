@@ -71,6 +71,8 @@ Route::group(['middleware' => ['auth'],'prefix' => 'admin'], function () {
 
     Route::controller(ProductController::class)->group(function () {
         Route::get('/products/all', 'index')->name('admin.products.index');
+        Route::get('/products/create', 'create')->name('admin.products.create');
+        Route::post('/products/store', 'store')->name('admin.products.store');
         Route::get('/products/edit/{id}', 'edit')->name('admin.products.edit');
         Route::get('/products/data_ajax', 'data_ajax')->name('admin.products.data_ajax');
         Route::post('/products/approved', 'approve')->name('admin.products.approved');

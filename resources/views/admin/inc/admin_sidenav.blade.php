@@ -91,6 +91,12 @@
                                 <span class="aiz-side-nav-text">All Products</span>
                             </a>
                         </li>
+                        <li class="aiz-side-nav-item">
+                            <a href="{{ route('admin.products.create') }}"
+                                class="aiz-side-nav-link ">
+                                <span class="aiz-side-nav-text">{{ translate('Add New Product') }}</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li class="aiz-side-nav-item">

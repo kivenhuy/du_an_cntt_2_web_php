@@ -34,7 +34,6 @@ class ShopController extends Controller
             'city' => $request->city_2,
             'ward' => $request->ward    ,
             'user_type' => $request->user_type,
-            'district' => $request->district,
             'address' => $request->address,
         ];
         $upsteamUrl = env('FARM_URL');
