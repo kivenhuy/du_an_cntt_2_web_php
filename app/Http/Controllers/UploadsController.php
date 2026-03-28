@@ -4,10 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Uploads;
 use Illuminate\Http\Request;
-use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 
 class UploadsController extends Controller
 {
@@ -154,18 +152,14 @@ class UploadsController extends Controller
             }
         }
 
-        $uploadDir = public_path('assets/uploads');
-        if (! is_dir($uploadDir) && ! @mkdir($uploadDir, 0755, true) && ! is_dir($uploadDir)) {
-            Log::error('file-uploader: cannot create upload directory', ['path' => $uploadDir]);
-
-            return response()->json(['error' => 'Server cannot create upload folder'], 500);
-        }
-
         try {
-            $path = $file->store('assets/uploads', 'local');
+            // Use the "public" disk (storage/app/public) so uploads work on Docker prod where
+            // ./public/assets is bind-mounted and may not be writable by www-data. Served via
+            // public/storage symlink (php artisan storage:link).
+            $storedPath = $file->store('assets/uploads', 'public');
             $size = $file->getSize();
             $upload->extension = $extension;
-            $upload->file_name = $path;
+            $upload->file_name = 'storage/'.$storedPath;
             $upload->user_id = Auth::user()->id;
             $upload->type = $type[$upload->extension];
             $upload->file_size = $size;
