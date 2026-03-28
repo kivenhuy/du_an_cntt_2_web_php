@@ -16,6 +16,17 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
         farmUrl: 'http://127.0.0.1:4000/',
         fileBaseUrl: $('meta[name="file-base-url"]').attr("content"),
     };
+    /** Root-relative URL so image previews work when APP_URL / app-url meta ≠ browser host (e.g. access by IP). */
+    AIZ.data.uploadPublicSrc = function (file_name) {
+        if (!file_name) {
+            return "";
+        }
+        var s = String(file_name);
+        if (/^https?:\/\//i.test(s)) {
+            return s;
+        }
+        return "/" + s.replace(/^\/+/, "");
+    };
     AIZ.uploader = {
         data: {
             selectedFiles: [],
@@ -330,8 +341,7 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
                             if (data[i].is_farm_photo == 0) {
                                 thumb =
                                     '<img src="' +
-                                    AIZ.data.appUrl +
-                                    data[i].file_name +
+                                    AIZ.data.uploadPublicSrc(data[i].file_name) +
                                     '" class="img-fit 1">';
                             } else {
                                 thumb =
@@ -413,8 +423,7 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
                                     if (data[i].is_farm_photo == 0) {
                                         thumb =
                                             '<img src="' +
-                                            AIZ.data.appUrl +
-                                            data[i].file_name +
+                                            AIZ.data.uploadPublicSrc(data[i].file_name) +
                                             '" class="img-fit 2">';
                                     } else {
                                         thumb =
@@ -481,8 +490,7 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
                     if (AIZ.uploader.data.allFiles[index].type === "image") {
                         thumb =
                             '<img src="' +
-                            AIZ.data.fileBaseUrl +
-                            AIZ.uploader.data.allFiles[index].file_name +
+                            AIZ.data.uploadPublicSrc(AIZ.uploader.data.allFiles[index].file_name) +
                             '">';
                         elem[0].insertHTML(thumb);
                         // console.log(elem);
@@ -643,8 +651,7 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
                                         if (data[i].is_farm_photo == 0) {
                                             thumb =
                                                 '<img src="' +
-                                                AIZ.data.appUrl +
-                                                data[i].file_name +
+                                                AIZ.data.uploadPublicSrc(data[i].file_name) +
                                                 '" class="img-fit">';
                                         } else {
                                             thumb =
