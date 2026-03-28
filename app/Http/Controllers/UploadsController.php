@@ -153,13 +153,18 @@ class UploadsController extends Controller
         }
 
         try {
-            // Use the "public" disk (storage/app/public) so uploads work on Docker prod where
-            // ./public/assets is bind-mounted and may not be writable by www-data. Served via
-            // public/storage symlink (php artisan storage:link).
-            $storedPath = $file->store('assets/uploads', 'public');
+            // Store under public/assets/uploads (disk "local" => public_path). URL is /assets/uploads/...
+            // so previews work without public/storage symlink (Windows + Docker friendly).
+            $uploadDir = public_path('assets/uploads');
+            if (! is_dir($uploadDir) && ! @mkdir($uploadDir, 0755, true) && ! is_dir($uploadDir)) {
+                Log::error('file-uploader: cannot create public/assets/uploads', ['path' => $uploadDir]);
+
+                return response()->json(['error' => 'Server cannot create upload folder'], 500);
+            }
+            $storedPath = $file->store('assets/uploads', 'local');
             $size = $file->getSize();
             $upload->extension = $extension;
-            $upload->file_name = 'storage/'.$storedPath;
+            $upload->file_name = $storedPath;
             $upload->user_id = Auth::user()->id;
             $upload->type = $type[$upload->extension];
             $upload->file_size = $size;

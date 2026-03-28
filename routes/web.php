@@ -18,6 +18,7 @@ use App\Http\Controllers\UploadsController;
 use App\Http\Controllers\VNPayController;
 use App\Models\RequestForProduct;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -149,5 +150,19 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/shipping_history', [ReviewController::class, 'shipping_history'])->name('shipping_history');
     Route::resource('/reviews', ReviewController::class);
 });
+
+/*
+| Fallback when `public/storage` → `storage/app/public` is missing (e.g. Windows dev without
+| `php artisan storage:link`). Must allow slashes in {path} (one URI segment default is [^/]+).
+*/
+Route::get('/storage/{path}', function (string $path) {
+    $path = str_replace(['..', "\0"], '', $path);
+    $path = ltrim(str_replace('\\', '/', $path), '/');
+    if ($path === '' || ! Storage::disk('public')->exists($path)) {
+        abort(404);
+    }
+
+    return response()->file(Storage::disk('public')->path($path));
+})->where('path', '.*');
 
 
