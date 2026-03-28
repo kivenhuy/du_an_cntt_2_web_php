@@ -48,12 +48,12 @@ class CityController extends Controller
         $final_data = $city->create($data_city);
         if($final_data)
         {
-            flash(translate('City has been inserted successfully'))->success();
+            flash('Thành phố đã được tạo thành công')->success();
             return redirect()->route('city.index');
         }
         else
         {
-            flash(translate('City has been inserted Fail'))->error();
+            flash('Thành phố đã được tạo thất bại')->error();
             return redirect()->route('city.index');
         }
     }

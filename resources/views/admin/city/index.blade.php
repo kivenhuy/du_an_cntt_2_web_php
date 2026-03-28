@@ -8,13 +8,13 @@
         <div class="card">
             <div class="card-header row gutters-5">
                 <div class="col">
-                    <h5 class="mb-md-0 h6">{{translate('All City')}}</h5>
+                    <h5 class="mb-md-0 h6">Tất cả thành phố</h5>
                 </div>
                 <div class="col">
                     <div class="mar-all mb-2" style=" text-align: end;">
                         <a href="{{route('city.create')}}">
                             <button type="submit" name="button" value="publish"
-                                class="btn btn-primary">Create</button>
+                                class="btn btn-primary">Tạo thành phố</button>
                         </a>
                     </div>
                 </div>
@@ -23,11 +23,11 @@
             <table id="example1" class="table table-bordered table-striped">
               <thead>
                   <tr>
-                    <th>{{translate('Country Name')}}</th>
-                    <th>{{translate('City Name')}}</th>
-                      <th>{{translate('City Code')}}</th>
+                    <th>Tên quốc gia</th>
+                    <th>Tên thành phố</th>
+                      <th>Mã thành phố</th>
                       
-                      <th>{{translate('Action')}}</th>
+                      <th>Hành động</th>
                   </tr>
               </thead>
               <tbody>

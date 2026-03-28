@@ -3,10 +3,10 @@
 <div class="aiz-titlebar text-left mt-2 mb-3">
     <div class="row" style="margin-bottom: 0.5rem;display: flex !important;align-items: center;">
         <div class="col-md-10">
-            <h1 class="h3">Add Country</h1>
+            <h1 class="h3">Thêm quốc gia</h1>
         </div>
         <div class="text-center col-md-2">
-            <a href="{{route('country.index')}}" class="btn btn-secondary"><i class="las la-arrow-left"></i>Back</a>
+            <a href="{{route('country.index')}}" class="btn btn-secondary"><i class="las la-arrow-left"></i>Quay lại</a>
             {{-- <a href="{{ url()->previous() }}" ><i style="color:black;font-size: 1.73em;" class="las la-arrow-left"></i></a> --}}
         </div>
          
@@ -21,22 +21,22 @@
             <input type="hidden" name="added_by" value="seller">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="mb-0 h6">{{ translate('Country Information') }}</h5>
+                    <h5 class="mb-0 h6">Thông tin quốc gia</h5>
                 </div>
                 <div class="card-body">
                     <div class="form-group row">
-                        <label class="col-md-3 col-from-label">{{ translate('Country Name') }} <span class="text-danger">*</span></label>
+                        <label class="col-md-3 col-from-label">Tên quốc gia <span class="text-danger">*</span></label>
                         <div class="col-md-8">
                             <input type="text" class="form-control" name="country_name"
-                                placeholder="{{ translate('Country Name') }}"  required>
+                                placeholder="Tên quốc gia"  required>
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label class="col-md-3 col-from-label">{{ translate('Country Code') }} <span class="text-danger">*</span></label>
+                        <label class="col-md-3 col-from-label">Mã quốc gia <span class="text-danger">*</span></label>
                         <div class="col-md-8">
                             <input type="text" class="form-control" name="country_code"
-                                placeholder="{{ translate('Country Code') }}" onchange="" required>
+                                placeholder="Mã quốc gia" onchange="" required>
                         </div>
                     </div>
                     
@@ -50,7 +50,7 @@
         <div class="col-12">
             <div class="mar-all text-right mb-2">
                 <button type="submit" name="button" value="publish"
-                    class="btn btn-primary">{{ translate('Create Country') }}</button>
+                    class="btn btn-primary">Tạo quốc gia</button>
             </div>
         </div>
     </div>

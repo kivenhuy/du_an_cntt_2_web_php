@@ -53,9 +53,9 @@ class CategoryController extends Controller
     {
         $category = new Category;
         $category->name = $request->name;
-        $category->banner = $request->banner;
-        $category->icon = $request->icon;
-        $category->cover_image = $request->cover_image;
+        $category->banner = $this->firstUploadId($request->banner);
+        $category->icon = $this->firstUploadId($request->icon);
+        $category->cover_image = $this->firstUploadId($request->cover_image);
         $category->meta_title = $request->meta_title;
         $category->meta_description = $request->meta_description;
         if ($request->slug != null) {
@@ -99,6 +99,16 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         //
+    }
+
+    private function firstUploadId(?string $value): ?string
+    {
+        if ($value === null || $value === '') {
+            return null;
+        }
+        $parts = array_values(array_filter(array_map('trim', explode(',', $value))));
+
+        return $parts[0] ?? null;
     }
 
     // public function data_ajax(Request $request)

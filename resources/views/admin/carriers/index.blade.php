@@ -9,13 +9,13 @@
         <div class="card">
             <div class="card-header row gutters-5">
                 <div class="col">
-                    <h5 class="mb-md-0 h6">{{translate('All Carriers')}}</h5>
+                    <h5 class="mb-md-0 h6">Tất cả đơn vị vận chuyển</h5>
                 </div>
                 <div class="col">
                     <div class="mar-all mb-2" style=" text-align: end;">
                         <a href="{{route('carriers.create')}}">
                             <button type="submit" name="button" value="publish"
-                                class="btn btn-primary">Create Carriers</button>
+                                class="btn btn-primary">Tạo đơn vị vận chuyển</button>
                         </a>
                     </div>
                 </div>
@@ -25,9 +25,9 @@
               <thead>
                   <tr>
                     <th>{{translate('Logo')}}</th>
-                    <th>{{translate('Carrier Name')}}</th>
-                    <th>{{translate('Shipping Times')}}</th>
-                    <th>{{translate('Status')}}</th>
+                    <th>Tên đơn vị vận chuyển</th>
+                    <th>Thời gian vận chuyển</th>
+                    <th>Trạng thái</th>
                     <th>{{translate('Action')}}</th>
                   </tr>
               </thead>

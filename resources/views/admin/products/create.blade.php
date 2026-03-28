@@ -15,10 +15,10 @@
     <div class="aiz-titlebar text-left mt-2 mb-3">
         <div class="row" style="margin-bottom: 0.5rem;display: flex !important;align-items: center;">
             <div class="col-md-10">
-                <h1 class="h3">{{ translate('Add New Product') }}</h1>
+                <h1 class="h3">Tạo sản phẩm</h1>
             </div>
             <div class="text-center col-md-2">
-                <a href="{{ route('admin.products.index') }}" class="btn btn-secondary"><i style="margin-right:8px" class="fa fa-arrow-left"></i>Back</a>
+                <a href="{{ route('admin.products.index') }}" class="btn btn-secondary"><i style="margin-right:8px" class="fa fa-arrow-left"></i>Quay lại</a>
                 {{-- <a href="{{ url()->previous() }}" ><i style="color:black;font-size: 1.73em;" class="las la-arrow-left"></i></a> --}}
             </div>
              
@@ -33,21 +33,21 @@
                 <input type="hidden" name="added_by" value="admin">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="mb-0 h6">{{ translate('Product Information') }}</h5>
+                        <h5 class="mb-0 h6">Thông tin sản phẩm</h5>
                     </div>
                     <div class="card-body">
                         <div class="form-group row">
-                            <label class="col-md-3 col-from-label">{{ translate('Product Name') }} <span class="text-danger">*</span></label>
+                            <label class="col-md-3 col-from-label">Tên sản phẩm <span class="text-danger">*</span></label>
                             <div class="col-md-8">
                                 <input type="text" class="form-control" name="name"
-                                    placeholder="{{ translate('Product Name') }}" onchange="update_sku()" required>
+                                    placeholder="Tên sản phẩm" onchange="update_sku()" required>
                             </div>
                         </div>
                         <div class="form-group row" id="category">
-                            <label class="col-md-3 col-from-label">{{ translate('Category') }}</label>
+                            <label class="col-md-3 col-from-label">Danh mục</label>
                             <div class="col-md-8">
                                 <select class="form-control aiz-selectpicker" name="category_id" id="category_id"data-live-search="true" required>
-                                    <option value="" selected hidden>Select Category</option>
+                                    <option value="" selected hidden>Chọn danh mục</option>
                                     @foreach ($category as $data_category)
                                         <option value="{{ $data_category->id }}">{{ $data_category->name }}</option>
                                     @endforeach
@@ -55,41 +55,43 @@
                             </div>
                         </div>
                         <div class="form-group row" id="brand">
-                            <label class="col-md-3 col-from-label">{{ translate('Brand') }}</label>
+                            <label class="col-md-3 col-from-label">Thương hiệu</label>
                             <div class="col-md-8">
                                 <select class="form-control aiz-selectpicker" name="brand_id" id="brand_id"
                                     data-live-search="true">
-                                    <option value="" selected hidden>{{ translate('Select Brand') }}</option>
+                                    <option value="" selected hidden>Chọn thương hiệu</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 col-from-label">{{ translate('Unit') }} <span class="text-danger">*</span></label>
+                            <label class="col-md-3 col-from-label">Đơn vị <span class="text-danger">*</span></label>
                             <div class="col-md-8">
                                 <input type="text" class="form-control" name="unit"
-                                    placeholder="{{ translate('Unit (e.g. KG, Pc etc)') }}" required>
+                                    placeholder="Đơn vị (ví dụ: sản phẩm, )" required>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 col-from-label">{{ translate('Weight') }}
-                                <small>({{ translate('In Kg') }})</small> <span class="text-danger">*</span></label>
+                            <label class="col-md-3 col-from-label">Dung tích <span class="text-danger">*</span></label>
+                                
                             <div class="col-md-8">
-                                <input type="number" class="form-control" name="weight" step="0.01" value="" required
-                                    placeholder="0.00">
+                                <input type="number" class="form-control" name="weight"  value="" required
+                                    placeholder="1ml">
+                                    <small>(ví dụ: 100ml, 500ml, 1000ml)</small> 
                             </div>
+                            
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 col-from-label">{{ translate('Minimum Purchase Qty') }} <span class="text-danger">*</span></label>
+                            <label class="col-md-3 col-from-label">Số lượng tối thiểu <span class="text-danger">*</span></label>
                             <div class="col-md-8">
                                 <input type="number" lang="en" class="form-control" name="min_qty" value="1"
                                     min="1" required>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 col-from-label">{{ translate('Tags') }}</label>
+                            <label class="col-md-3 col-from-label">Tags</label>
                             <div class="col-md-8">
                                 <input  type="text" class="form-control aiz-tag-input" name="tags[]"
-                                    placeholder="{{ translate('Type and hit enter to add a tag') }}" >
+                                    placeholder="Nhập tên thẻ & nhấn Enter" >
                                     <small class="text-muted">{{translate('This is used for search. Input those words by which cutomer can find this product.')}}</small>
                             </div>
                         </div>
@@ -99,42 +101,42 @@
                 </div>
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="mb-0 h6">{{ translate('Product Images') }}</h5>
+                        <h5 class="mb-0 h6">Hình ảnh sản phẩm</h5>
                     </div>
                     <div class="card-body">
                         <div class="form-group row">
                             <label class="col-md-3 col-form-label"
-                                for="signinSrEmail">{{ translate('Gallery Images') }} (600x600)</label>
+                                for="signinSrEmail">Hình ảnh chi tiết sản phẩm (600x600)</label>
                             <div class="col-md-8">
                                 <div class="input-group" data-toggle="aizuploader" data-type="image"
                                     data-multiple="true">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text bg-soft-secondary font-weight-medium">
-                                            {{ translate('Browse') }}</div>
+                                            Duyệt</div>
                                     </div>
-                                    <div class="form-control file-amount">{{ translate('Choose File') }}</div>
+                                    <div class="form-control file-amount">Chọn file</div>
                                     <input type="hidden" name="photos" class="selected-files">
                                 </div>
                                 <div class="file-preview box sm">
                                 </div>
-                                <small class="text-muted">{{translate('These images are visible in product details page gallery. Use 600x600 sizes images.')}}</small>
+                                <small class="text-muted">Các hình ảnh này sẽ hiển thị trong trang chi tiết sản phẩm. Sử dụng kích thước 600x600.</small>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="signinSrEmail">{{ translate('Thumbnail Image') }}
+                            <label class="col-md-3 col-form-label" for="signinSrEmail">Hình ảnh sản phẩm
                                 <small>(290x300)</small></label>
                             <div class="col-md-8">
                                 <div class="input-group" data-toggle="aizuploader" data-type="image">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text bg-soft-secondary font-weight-medium">
-                                            {{ translate('Browse') }}</div>
+                                            Duyệt</div>
                                     </div>
-                                    <div class="form-control file-amount">{{ translate('Choose File') }}</div>
+                                    <div class="form-control file-amount">Chọn file</div>
                                     <input type="hidden" name="thumbnail_img" class="selected-files">
                                 </div>
                                 <div class="file-preview box sm">
                                 </div>
-                                <small class="text-muted">{{translate('This image is visible in all product box. Use 300x300 sizes image. Keep some blank space around main object of your image as we had to crop some edge in different devices to make it responsive.')}}</small>
+                                <small class="text-muted">Các hình ảnh này sẽ hiển thị trong trang chủ. Sử dụng kích thước 300x300.</small>
                             </div>
                         </div>
                     </div>
@@ -142,7 +144,7 @@
                 
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="mb-0 h6">{{ translate('Product Variation') }}</h5>
+                        <h5 class="mb-0 h6">Biến thể sản phẩm</h5>
                         <div class="col-md-1">
                             <label class="aiz-switch aiz-switch-success mb-0">
                                 <input value="1" type="checkbox" name="colors_active_show">
@@ -153,7 +155,7 @@
                     <div class="card-body" id="variation_show" hidden=true>
                         <div class="form-group row">
                             <div class="col-md-3">
-                                <input type="text" class="form-control" value="{{ translate('Colors') }}" disabled>
+                                <input type="text" class="form-control" value="Màu sắc" disabled>
                             </div>
                             <div class="col-md-8">
                                 <select class="form-control aiz-selectpicker" data-live-search="true" name="colors[]"
@@ -178,13 +180,13 @@
                                 <select name="choice_attributes[]" id="choice_attributes"
                                     class="form-control aiz-selectpicker" data-live-search="true"
                                     data-selected-text-format="count" multiple
-                                    data-placeholder="{{ translate('Choose Attributes') }}">
+                                    data-placeholder="Chọn thuộc tính">
                                    
                                 </select>
                             </div>
                         </div>
                         <div>
-                            <p>{{ translate('Choose the attributes of this product and then input values of each attribute') }}
+                            <p>Chọn các thuộc tính của sản phẩm và sau đó nhập giá trị cho mỗi thuộc tính
                             </p>
                             <br>
                         </div>
@@ -196,80 +198,80 @@
                 </div>
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="mb-0 h6">{{ translate('Product price + stock') }}</h5>
+                        <h5 class="mb-0 h6">Giá sản phẩm + tồn kho</h5>
                     </div>
                     <div class="card-body">
                         <div class="form-group row">
-                            <label class="col-md-3 col-from-label">{{ translate('Unit price') }} <span class="text-danger">*</span></label>
+                            <label class="col-md-3 col-from-label">Giá đơn vị <span class="text-danger">*</span></label>
                             <div class="col-md-6">
                                 <input type="number" lang="en" min="0" value="0" step="0.01"
-                                    placeholder="{{ translate('Unit price') }}" name="unit_price" class="unit_price form-control"
+                                    placeholder="Giá đơn vị" name="unit_price" class="unit_price form-control"
                                     required>
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label class="col-md-3 control-label"
-                                for="start_date">{{ translate('Expired Date') }}</label>
+                                for="start_date">Ngày hết hạn</label>
                             <div class="col-md-9">
                                 <input type="datetime-local" class="form-control " name="expired_date"
-                                    placeholder="{{ translate('Select Date') }}"  autocomplete="off" required>
+                                    placeholder="Chọn ngày"  autocomplete="off" required>
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-md-3 col-from-label">{{ translate('Discount') }} </label>
+                            <label class="col-md-3 col-from-label">Giảm giá </label>
                             <div class="col-md-6">
                                 <input type="number" lang="en" min="0" value="0" step="0.01"
-                                    placeholder="{{ translate('Discount') }}" name="discount" class="form-control"
+                                    placeholder="Giảm giá" name="discount" class="form-control"
                                     required>
                             </div>
                             <div class="col-md-3">
                                 <select class="form-control aiz-selectpicker" name="discount_type">
-                                    <option value="amount">{{ translate('Flat') }}</option>
-                                    <option value="percent">{{ translate('Percent') }}</option>
+                                    <option value="amount">Flat</option>
+                                    <option value="percent">Percent</option>
                                 </select>
                             </div>
                         </div>
 
                         <div id="show-hide-div">
                             <div class="form-group row">
-                                <label class="col-md-3 col-from-label">{{ translate('Quantity') }} <span class="text-danger">*</span></label>
+                                <label class="col-md-3 col-from-label">Số lượng <span class="text-danger">*</span></label>
                                 <div class="col-md-6">
                                     <input type="number" lang="en" min="0" value="0" step="1"
-                                        placeholder="{{ translate('Quantity') }}" name="current_stock"
+                                        placeholder="Số lượng" name="current_stock"
                                         class="form-control" required>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-md-3 col-from-label">
-                                    {{ translate('SKU') }}
+                                    Mã kho
                                 </label>
                                 <div class="col-md-6">
-                                    <input type="text" placeholder="{{ translate('SKU') }}" name="sku"
+                                    <input type="text" placeholder="Mã kho" name="sku"
                                         class="form-control">
                                 </div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-3 col-from-label">
-                                {{ translate('External link') }}
+                                Liên kết ngoài
                             </label>
                             <div class="col-md-9">
-                                <input type="text" placeholder="{{ translate('External link') }}"
+                                <input type="text" placeholder="Liên kết ngoài"
                                     name="external_link" class="form-control">
-                                <small class="text-muted">{{ translate('Leave it blank if you do not use external site link') }}</small>
+                                <small class="text-muted">Bỏ trống nếu bạn không sử dụng liên kết ngoài</small>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-3 col-from-label">
-                                {{ translate('External link button text') }}
+                                Văn bản nút liên kết ngoài
                             </label>
                             <div class="col-md-9">
-                                <input type="text" placeholder="{{ translate('External link button text') }}"
+                                <input type="text" placeholder="Văn bản nút liên kết ngoài"
                                     name="external_link_btn" class="form-control">
                                 <small
-                                    class="text-muted">{{ translate('Leave it blank if you do not use external site link') }}</small>
+                                    class="text-muted">Bỏ trống nếu bạn không sử dụng liên kết ngoài</small>
                             </div>
                         </div>
                         <br>
@@ -280,11 +282,11 @@
                 </div>
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="mb-0 h6">{{ translate('Product Description') }}</h5>
+                        <h5 class="mb-0 h6">Mô tả sản phẩm</h5>
                     </div>
                     <div class="card-body">
                         <div class="form-group row">
-                            <label class="col-md-3 col-from-label">{{ translate('Description') }}</label>
+                            <label class="col-md-3 col-from-label">Mô tả</label>
                             <div class="col-md-8">
                                 <textarea class="aiz-text-editor" name="description"></textarea>
                             </div>
@@ -294,19 +296,19 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="mb-0 h6">{{ translate('PDF Specification') }}</h5>
+                        <h5 class="mb-0 h6">PDF Specification</h5>
                     </div>
                     <div class="card-body">
                         <div class="form-group row">
                             <label class="col-md-3 col-form-label"
-                                for="signinSrEmail">{{ translate('PDF Specification') }}</label>
+                                for="signinSrEmail">PDF Specification</label>
                             <div class="col-md-8">
                                 <div class="input-group" data-toggle="aizuploader" data-type="document">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text bg-soft-secondary font-weight-medium">
-                                            {{ translate('Browse') }}</div>
+                                            Duyệt</div>
                                     </div>
-                                    <div class="form-control file-amount">{{ translate('Choose File') }}</div>
+                                    <div class="form-control file-amount">Chọn file</div>
                                     <input type="hidden" name="pdf" class="selected-files">
                                 </div>
                                 <div class="file-preview box sm">
@@ -317,32 +319,32 @@
                 </div>
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="mb-0 h6">{{ translate('SEO Meta Tags') }}</h5>
+                        <h5 class="mb-0 h6">SEO Meta Tags</h5>
                     </div>
                     <div class="card-body">
                         <div class="form-group row">
-                            <label class="col-md-3 col-from-label">{{ translate('Meta Title') }}</label>
+                            <label class="col-md-3 col-from-label">Meta Title</label>
                             <div class="col-md-8">
                                 <input type="text" class="form-control" name="meta_title"
-                                    placeholder="{{ translate('Meta Title') }}">
+                                    placeholder="Meta Title">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 col-from-label">{{ translate('Description') }}</label>
+                            <label class="col-md-3 col-from-label">Mô tả</label>
                             <div class="col-md-8">
                                 <textarea name="meta_description" rows="8" class="form-control"></textarea>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-3 col-form-label"
-                                for="signinSrEmail">{{ translate('Meta Image') }} (600x600)</label>
+                                for="signinSrEmail">Meta Image (600x600)</label>
                             <div class="col-md-8">
                                 <div class="input-group" data-toggle="aizuploader" data-type="image">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text bg-soft-secondary font-weight-medium">
-                                            {{ translate('Browse') }}</div>
+                                            Duyệt</div>
                                     </div>
-                                    <div class="form-control file-amount">{{ translate('Choose File') }}</div>
+                                    <div class="form-control file-amount">Chọn file</div>
                                     <input type="hidden" name="meta_img" class="selected-files">
                                 </div>
                                 <div class="file-preview box sm">
@@ -355,50 +357,19 @@
 
             <div class="col-lg-4">
 
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="mb-0 h6">
-                            {{ translate('Food with short shelf life') }}
-                        </h5>
-                    </div>
+                
 
-                    <div class="card-body">
-                        <div class="form-group row">
-                            <label class="col-md-6 col-from-label">{{ translate('Short Shelf Life') }}</label>
-                            <div class="col-md-6">
-                                <label class="aiz-switch aiz-switch-success mb-0">
-                                    <input value="null" type="checkbox" name="short_shelf_life" id="short_shelf_life">
-                                    <span></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="mb-0 h6">
-                            {{ translate('Shipping Configuration') }}
-                        </h5>
-                    </div>
-
-                    <div class="card-body">
-                       
-                            <p>
-                                {{ translate('Shipping configuration is maintained by Admin.') }}
-                            </p>
-                    </div>
-                </div>
+                
 
 
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="mb-0 h6">{{ translate('Low Stock Quantity Warning') }}</h5>
+                        <h5 class="mb-0 h6">Cảnh báo số lượng tồn kho thấp</h5>
                     </div>
                     <div class="card-body">
                         <div class="form-group mb-3">
                             <label for="name">
-                                {{ translate('Quantity') }}
+                                Số lượng
                             </label>
                             <input type="number" name="low_stock_quantity" value="1" min="0"
                                 step="1" class="form-control">
@@ -410,14 +381,14 @@
                 <div class="card">
                     <div class="card-header">
                         <h5 class="mb-0 h6">
-                            {{ translate('Stock Visibility State') }}
+                            Trạng thái hiển thị số lượng tồn kho
                         </h5>
                     </div>
 
                     <div class="card-body">
 
                         <div class="form-group row">
-                            <label class="col-md-6 col-from-label">{{ translate('Show Stock Quantity') }}</label>
+                            <label class="col-md-6 col-from-label">Hiển thị số lượng tồn kho</label>
                             <div class="col-md-6">
                                 <label class="aiz-switch aiz-switch-success mb-0">
                                     <input type="radio" name="stock_visibility_state" value="quantity" checked>
@@ -426,59 +397,12 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label class="col-md-6 col-from-label">{{ translate('Show Stock With Text Only') }}</label>
-                            <div class="col-md-6">
-                                <label class="aiz-switch aiz-switch-success mb-0">
-                                    <input type="radio" name="stock_visibility_state" value="text">
-                                    <span></span>
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-md-6 col-from-label">{{ translate('Hide Stock') }}</label>
-                            <div class="col-md-6">
-                                <label class="aiz-switch aiz-switch-success mb-0">
-                                    <input type="radio" name="stock_visibility_state" value="hide">
-                                    <span></span>
-                                </label>
-                            </div>
-                        </div>
+                        
 
                     </div>
                 </div>
 
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="mb-0 h6">{{ translate('Cash On Delivery') }}</h5>
-                    </div>
-                    <div class="card-body">
-                            <p>
-                                {{ translate('Cash On Delivery activation is maintained by Admin.') }}
-                            </p>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="mb-0 h6">{{ translate('Estimate Shipping Time') }}</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-group mb-3">
-                            <label for="name">
-                                {{ translate('Shipping Days') }}
-                            </label>
-                            <div class="input-group">
-                                <input type="number" class="form-control" name="est_shipping_days" min="1"
-                                    step="1" placeholder="{{ translate('Shipping Days') }}">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="inputGroupPrepend">{{ translate('Days') }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
 
                 
 
@@ -486,7 +410,7 @@
             <div class="col-12">
                 <div class="mar-all text-right mb-2">
                     <button type="submit" name="button" value="publish"
-                        class="btn btn-primary">{{ translate('Upload Product') }}</button>
+                        class="btn btn-primary">Tải lên sản phẩm</button>
                 </div>
             </div>
         </div>

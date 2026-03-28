@@ -26,7 +26,7 @@
                 <li class="aiz-side-nav-item">
                     <a href="#" class="aiz-side-nav-link">
                         <i class="fa-solid fa-box aiz-side-nav-icon"></i>
-                        <span class="aiz-side-nav-text">Address</span>
+                        <span class="aiz-side-nav-text">Địa chỉ</span>
                         <span class="aiz-side-nav-arrow"></span>
                     </a>
                     <!--Submenu-->
@@ -34,7 +34,7 @@
                         <li class="aiz-side-nav-item">
                             <a href="{{ route('country.index') }}"
                                 class="aiz-side-nav-link ">
-                                <span class="aiz-side-nav-text">Country</span>
+                                <span class="aiz-side-nav-text">Quốc gia</span>
                             </a>
                         </li>
                     </ul>
@@ -42,15 +42,15 @@
                         <li class="aiz-side-nav-item">
                             <a href="{{ route('city.index') }}"
                                 class="aiz-side-nav-link ">
-                                <span class="aiz-side-nav-text">City</span>
+                                <span class="aiz-side-nav-text">Thành phố</span>
                             </a>
                         </li>
                     </ul>
-                    <ul class="aiz-side-nav-list level-2">
+                    <!-- <ul class="aiz-side-nav-list level-2">
                         <li class="aiz-side-nav-item">
                             <a href="{{ route('province.index') }}"
                                 class="aiz-side-nav-link ">
-                                <span class="aiz-side-nav-text">Province</span>
+                                <span class="aiz-side-nav-text">Tỉnh</span>
                             </a>
                         </li>
                     </ul>
@@ -58,7 +58,7 @@
                         <li class="aiz-side-nav-item">
                             <a href="{{ route('district.index') }}"
                                 class="aiz-side-nav-link ">
-                                <span class="aiz-side-nav-text">District</span>
+                                <span class="aiz-side-nav-text">Quận</span>
                             </a>
                         </li>
                     </ul>
@@ -66,21 +66,35 @@
                         <li class="aiz-side-nav-item">
                             <a href="{{ route('commune.index') }}"
                                 class="aiz-side-nav-link ">
-                                <span class="aiz-side-nav-text">Commune</span>
+                                <span class="aiz-side-nav-text">Phường/Xã</span>
+                            </a>
+                        </li>
+                    </ul> -->
+                </li>
+                <li class="aiz-side-nav-item">
+                    <a href="{{route('categories.index')}}" class="aiz-side-nav-link">
+                        <i class="fa fa-mortar-pestle aiz-side-nav-icon"></i>
+                        <span class="aiz-side-nav-text">Danh mục</span>
+                    </a>
+                </li>
+                <li class="aiz-side-nav-item">
+                    <a href="#" class="aiz-side-nav-link">
+                        <i class="fa fa-image aiz-side-nav-icon"></i>
+                        <span class="aiz-side-nav-text">Trang chủ</span>
+                        <span class="aiz-side-nav-arrow"></span>
+                    </a>
+                    <ul class="aiz-side-nav-list level-2">
+                        <li class="aiz-side-nav-item">
+                            <a href="{{ route('admin.home_slides.index') }}" class="aiz-side-nav-link">
+                                <span class="aiz-side-nav-text">Slide trang chủ</span>
                             </a>
                         </li>
                     </ul>
                 </li>
                 <li class="aiz-side-nav-item">
-                    <a href="{{route('categories.index')}}" class="aiz-side-nav-link">
-                        <i class="fa fa-mortar-pestle aiz-side-nav-icon"></i>
-                        <span class="aiz-side-nav-text">{{translate('Category')}}</span>
-                    </a>
-                </li>
-                <li class="aiz-side-nav-item">
                     <a href="#" class="aiz-side-nav-link">
                         <i class="fa-solid fa-box aiz-side-nav-icon"></i>
-                        <span class="aiz-side-nav-text">Products</span>
+                        <span class="aiz-side-nav-text">Sản phẩm</span>
                         <span class="aiz-side-nav-arrow"></span>
                     </a>
                     <!--Submenu-->
@@ -88,27 +102,13 @@
                         <li class="aiz-side-nav-item">
                             <a href="{{ route('admin.products.index') }}"
                                 class="aiz-side-nav-link ">
-                                <span class="aiz-side-nav-text">All Products</span>
+                                <span class="aiz-side-nav-text">Tất cả sản phẩm</span>
                             </a>
                         </li>
                         <li class="aiz-side-nav-item">
                             <a href="{{ route('admin.products.create') }}"
                                 class="aiz-side-nav-link ">
-                                <span class="aiz-side-nav-text">{{ translate('Add New Product') }}</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="aiz-side-nav-item">
-                    <a href="#" class="aiz-side-nav-link">
-                        <i class="fa fa-user aiz-side-nav-icon"></i>
-                        <span class="aiz-side-nav-text">{{ translate('Sellers') }}</span>
-                        <span class="aiz-side-nav-arrow"></span>
-                    </a>
-                    <ul class="aiz-side-nav-list level-2">
-                        <li class="aiz-side-nav-item">
-                            <a href="{{ route('admin.sellers.index') }}" class="aiz-side-nav-link">
-                                <span class="aiz-side-nav-text">{{ translate('All Seller') }}</span>
+                                <span class="aiz-side-nav-text">Thêm sản phẩm</span>
                             </a>
                         </li>
                     </ul>
@@ -117,97 +117,49 @@
                 <li class="aiz-side-nav-item">
                     <a href="#" class="aiz-side-nav-link">
                         <i class="fa fa-users aiz-side-nav-icon"></i>
-                        <span class="aiz-side-nav-text">{{ translate('Customer') }}</span>
+                        <span class="aiz-side-nav-text">Khách hàng</span>
                         <span class="aiz-side-nav-arrow"></span>
                     </a>
                     <ul class="aiz-side-nav-list level-2">
                         <li class="aiz-side-nav-item">
                             <a href="{{ route('admin.customer.index') }}" class="aiz-side-nav-link">
-                                <span class="aiz-side-nav-text">{{ translate('All Customer') }}</span>
+                                <span class="aiz-side-nav-text">Tất cả khách hàng</span>
                             </a>
                         </li>
                     </ul>
                 </li>
 
-                <li class="aiz-side-nav-item">
-                    <a href="#" class="aiz-side-nav-link">
-                        <i class="fa fa-motorcycle aiz-side-nav-icon"></i>
-                        <span class="aiz-side-nav-text">{{ translate('Shipper') }}</span>
-                        <span class="aiz-side-nav-arrow"></span>
-                    </a>
-                    <ul class="aiz-side-nav-list level-2">
-                        <li class="aiz-side-nav-item">
-                            <a href="{{ route('admin.shipper.index') }}" class="aiz-side-nav-link">
-                                <span class="aiz-side-nav-text">{{ translate('All Shipper') }}</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                
 
                 <li class="aiz-side-nav-item">
                     <a href="#" class="aiz-side-nav-link">
                         <i class="fa fa-shopping-cart aiz-side-nav-icon"></i>
-                        <span class="aiz-side-nav-text">{{ translate('Order') }}</span>
+                        <span class="aiz-side-nav-text">Đơn hàng</span>
                         <span class="aiz-side-nav-arrow"></span>
                     </a>
                     <ul class="aiz-side-nav-list level-2">
                         <li class="aiz-side-nav-item">
                             <a href="{{ route('admin.purchase_history.all_orders') }}" class="aiz-side-nav-link">
-                                <span class="aiz-side-nav-text">{{ translate('All Order') }}</span>
+                                <span class="aiz-side-nav-text">Tất cả đơn hàng</span>
                             </a>
                         </li>
                     </ul>
                     <ul class="aiz-side-nav-list level-2">
                         <li class="aiz-side-nav-item">
                             <a href="{{ route('refund.index') }}" class="aiz-side-nav-link">
-                                <span class="aiz-side-nav-text">{{ translate('Refund Request') }}</span>
+                                <span class="aiz-side-nav-text">Yêu cầu hoàn trả</span>
                             </a>
                         </li>
                     </ul>
                 </li>
-                <li class="aiz-side-nav-item">
-                    <a href="#" class="aiz-side-nav-link">
-                        <i class="fa fa-industry aiz-side-nav-icon"></i>
-                        <span class="aiz-side-nav-text">{{ translate('Enterprise') }}</span>
-                        <span class="aiz-side-nav-arrow"></span>
-                    </a>
-                    <ul class="aiz-side-nav-list level-2">
-                        <li class="aiz-side-nav-item">
-                            <a href="{{ route('admin.enterprise.index') }}" class="aiz-side-nav-link">
-                                <span class="aiz-side-nav-text">{{ translate('All Enterprise') }}</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                
 
-                <li class="aiz-side-nav-item">
-                    <a href="#" class="aiz-side-nav-link">
-                        <i class="fa fa-industry aiz-side-nav-icon"></i>
-                        <span class="aiz-side-nav-text">{{ translate('Request For Product') }}</span>
-                        <span class="aiz-side-nav-arrow"></span>
-                    </a>
-                    <ul class="aiz-side-nav-list level-2">
-                        <li class="aiz-side-nav-item">
-                            <a href="{{route('request_for_product.admin_index')}}" class="aiz-side-nav-link">
-                                <i class="fa fa-list aiz-side-nav-icon"></i>
-                                <span class="aiz-side-nav-text">{{translate('Ecom Request')}}</span>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="aiz-side-nav-list level-2">
-                        <li class="aiz-side-nav-item">
-                            <a href="{{route('request_for_product.admin_supermarket_index')}}" class="aiz-side-nav-link">
-                                <i class="fa fa-list aiz-side-nav-icon"></i>
-                                <span class="aiz-side-nav-text">{{translate('Supermarket Request')}}</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+               
                
                 <li class="aiz-side-nav-item">
                     <a href="{{route('carriers.index')}}" class="aiz-side-nav-link">
                         <i class="fa fa-list aiz-side-nav-icon"></i>
-                        <span class="aiz-side-nav-text">{{translate('Shipping Carrier')}}</span>
+                        <span class="aiz-side-nav-text">Nhà vận chuyển</span>
                     </a>
                 </li>
 

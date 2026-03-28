@@ -3,10 +3,10 @@
 <div class="aiz-titlebar text-left mt-2 mb-3">
     <div class="row" style="margin-bottom: 0.5rem;display: flex !important;align-items: center;">
         <div class="col-md-10">
-            <h1 class="h3">Add City</h1>
+            <h1 class="h3">Thêm thành phố</h1>
         </div>
         <div class="text-center col-md-2">
-            <a href="{{route('city.index')}}" class="btn btn-secondary"><i class="las la-arrow-left"></i>Back</a>
+            <a href="{{route('city.index')}}" class="btn btn-secondary"><i class="las la-arrow-left"></i>Quay lại</a>
             {{-- <a href="{{ url()->previous() }}" ><i style="color:black;font-size: 1.73em;" class="las la-arrow-left"></i></a> --}}
         </div>
          
@@ -21,12 +21,12 @@
             <input type="hidden" name="added_by" value="seller">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="mb-0 h6">{{ translate('City Information') }}</h5>
+                    <h5 class="mb-0 h6">Thông tin thành phố</h5>
                 </div>
                 <div class="card-body">
                     
                     <div class="form-group row" id="category">
-                        <label class="col-md-3 col-from-label">{{ translate('Country Name') }}</label>
+                        <label class="col-md-3 col-from-label">Tên quốc gia</label>
                         <div class="col-md-8">
                             <select class="form-control aiz-selectpicker" name="country_id" id="country_id"
                                 data-live-search="true" required>
@@ -38,18 +38,18 @@
                     </div>
 
                     <div class="form-group row">
-                        <label class="col-md-3 col-from-label">{{ translate('City Name') }} <span class="text-danger">*</span></label>
+                        <label class="col-md-3 col-from-label">Tên thành phố <span class="text-danger">*</span></label>
                         <div class="col-md-8">
                             <input type="text" class="form-control" name="city_name"
-                                placeholder="{{ translate('City Name') }}"  required>
+                                placeholder="Tên thành phố"  required>
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label class="col-md-3 col-from-label">{{ translate('City Code') }} <span class="text-danger">*</span></label>
+                        <label class="col-md-3 col-from-label">Mã thành phố <span class="text-danger">*</span></label>
                         <div class="col-md-8">
                             <input type="text" class="form-control" name="city_code"
-                                placeholder="{{ translate('City Code') }}" onchange="" required>
+                                placeholder="Mã thành phố" onchange="" required>
                         </div>
                     </div>
                     
@@ -63,7 +63,7 @@
         <div class="col-12">
             <div class="mar-all text-right mb-2">
                 <button type="submit" name="button" value="publish"
-                    class="btn btn-primary">{{ translate('Create City') }}</button>
+                    class="btn btn-primary">Tạo thành phố</button>
             </div>
         </div>
     </div>

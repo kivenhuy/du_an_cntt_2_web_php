@@ -52,7 +52,6 @@ class OrderController extends Controller
             $shippingAddress['address']     = $address->address;
             $shippingAddress['country']     = $address->country->country_name;
             $shippingAddress['city']        = $address->city->city_name;
-            $shippingAddress['district']    = $address->district->district_name;
             $shippingAddress['postal_code'] = $address->postal_code;
             $shippingAddress['phone']       = $address->phone;
         }
@@ -129,6 +128,10 @@ class OrderController extends Controller
                 //End of storing shipping cost
 
                 $order_detail->quantity = $cartItem['quantity'];
+                if(!$cartItem['carrier_id'])
+                {
+                    $cartItem['carrier_id'] = 1;
+                }
                 $order_detail->carrier_id = $cartItem['carrier_id'];
                 $order_detail->save();
                 try
@@ -203,7 +206,6 @@ class OrderController extends Controller
             $shippingAddress['address']     = $address->address;
             $shippingAddress['country']     = $address->country->country_name;
             $shippingAddress['city']        = $address->city->city_name;
-            $shippingAddress['district']    = $address->district->district_name;
             $shippingAddress['postal_code'] = $address->postal_code;
             $shippingAddress['phone']       = $address->phone;
         }
@@ -276,7 +278,10 @@ class OrderController extends Controller
                     //End of storing shipping cost
 
                     $order_detail->quantity = $cartItem['quantity'];
-                
+                    if(!$cartItem['carrier_id'])
+                    {
+                        $cartItem['carrier_id'] = 1;
+                    }
                     $order_detail->price = (cart_product_price($cartItem, $product, false, false) * $cartItem['quantity'])/count($shipping_date);
                     $reservationStartingDate = $each_shipping_date ." ".$hour;
                     $order_detail->shipping_date = Carbon::parse($reservationStartingDate);

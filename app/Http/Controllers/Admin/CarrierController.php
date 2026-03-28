@@ -59,8 +59,8 @@ class CarrierController extends Controller
                 $carrier_range_price->save();
             }
         }
-        flash(translate('New carrier has been added successfully'))->success();
-        return 1;
+        flash('Nhà vận chuyển đã được tạo thành công')->success();
+        return redirect()->route('carriers.index');
     }
 
     /**

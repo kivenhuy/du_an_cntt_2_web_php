@@ -102,7 +102,6 @@
                         @foreach ($address as $data_address)
                         <ul class="list-unstyled mb-5">
                             <li class="fs-14 fw-400 text-derk pb-1"><span> <i class="fa fa-home" aria-hidden="true" style="margin-right: 8px"></i> {{ $data_address->address }},</span></li>
-                            <li class="fs-14 fw-400 text-derk pb-1"><span>{{ $data_address->district->district_name }},</span></li>
                             <li class="fs-14 fw-400 text-derk pb-1"><span>{{ $data_address->postal_code }} - {{ $data_address->city->city_name }},</span></li>
                             <li class="fs-14 fw-400 text-derk pb-1"><span>{{ $data_address->country->country_name }}.</span></li>
                             <li class="fs-14 fw-400 text-derk pb-1"><span>{{ $data_address->phone }}</span></li>
@@ -157,36 +156,6 @@
                         $('#city_2').append('<option value="' + element.id+ '">' + element.city_name+ '</option>');
                     });
                     $('#city_2').selectpicker('refresh');
-                }
-            });
-        }
-    });
-
-    $('#city_2').on('change',function()
-    {
-        var city = $('#city_2').val();
-        // alert(country);
-        if(city != "")
-        {
-            $.ajax
-            ({
-                url: "{{ route('district.filter_by_city') }}", 
-                method:'post',
-                data:{
-                    id:city
-                },
-                headers: {
-                    'X-CSRF-Token': '{{ csrf_token() }}',
-                },
-                async:false,
-                success: function(result){
-                    $('#district_2').html('');
-                    $('#district_2').append('<option value="" selected hidden>Select District</option>');
-                    result.forEach(element => {
-                        console.log(element.id);
-                        $('#district_2').append('<option value="' + element.id+ '">' + element.district_name+ '</option>');
-                    });
-                    $('#district_2').selectpicker('refresh');
                 }
             });
         }

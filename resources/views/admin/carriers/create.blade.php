@@ -4,11 +4,11 @@
     <div class="aiz-titlebar text-left mt-2 mb-3">
         <div class="row align-items-center">
             <div class="col-md-6">
-                <h1 class="h3">{{ translate('Add New Carrier') }}</h1>
+                <h1 class="h3">Tạo đơn vị vận chuyển</h1>
             </div>
             <div class="col-md-6 text-md-right">
                 <a href="{{ route('carriers.index') }}" class="btn btn-primary">
-                    <span>{{ translate('Back') }}</span>
+                    <span>Quay lại</span>
                 </a>
             </div>
         </div>
@@ -18,7 +18,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="mb-0 h6">{{ translate('Carrier Information') }}</h5>
+                    <h5 class="mb-0 h6">Thông tin đơn vị vận chuyển</h5>
                 </div>
                 <div class="card-body">
                     <form id="carrier-form">
@@ -29,30 +29,30 @@
 
                         @csrf
                         <div class="form-group row">
-                            <label class="col-md-2 col-from-label">{{ translate('Carrier Name') }} <span
+                            <label class="col-md-2 col-from-label">Tên đơn vị vận chuyển <span
                                     class="text-danger">*</span></label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" name="carrier_name"
-                                    placeholder="{{ translate('Carrier Name') }}" required>
+                                    placeholder="Tên đơn vị vận chuyển" required>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-2 col-from-label">{{ translate('Transit Time') }} <span
+                            <label class="col-md-2 col-from-label">Thời gian vận chuyển <span
                                     class="text-danger">*</span></label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" name="transit_time"
-                                    placeholder="{{ translate('Transit Time') }}" required>
+                                    placeholder="Thời gian vận chuyển" required>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-2 col-from-label">{{ translate('Logo') }} </label>
+                            <label class="col-md-2 col-from-label">Logo </label>
                             <div class="col-md-9">
                                 <div class="input-group" data-toggle="aizuploader" data-type="image">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text bg-soft-secondary font-weight-medium">
-                                            {{ translate('Browse') }}</div>
+                                            Duyệt</div>
                                     </div>
-                                    <div class="form-control file-amount">{{ translate('Choose File') }}</div>
+                                    <div class="form-control file-amount">Chọn file</div>
                                     <input type="hidden" name="logo" class="selected-files" value="">
                                 </div>
                                 <div class="file-preview box sm">
@@ -60,7 +60,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-2 col-from-label">{{ translate('Free Shipping') }} ? </label>
+                            <label class="col-md-2 col-from-label">Miễn phí vận chuyển ? </label>
                             <div class="col-md-9">
                                 <label class="aiz-switch aiz-switch-success mb-0">
                                     <input type="checkbox" name="shipping_type" onchange="freeShipping(this)">
@@ -69,13 +69,13 @@
                             </div>
                         </div>
                         <div class="form-group row" id="billing_type_section">
-                            <label class="col-md-2 col-from-label">{{ translate('Billing Type') }} <span
+                            <label class="col-md-2 col-from-label">Loại thanh toán <span
                                     class="text-danger">*</span></label>
                             <div class="col-md-9">
                                 <select class="form-control aiz-selectpicker" name="billing_type"
                                     onchange="update_price_range_form()" id="billing_type" data-live-search="true">
-                                    <option value="weight_based">{{ translate('According to Weight') }}</option>
-                                    <option value="fast_shipping">{{ translate('Fast Shipping 2 Hours') }}</option>
+                                    <option value="weight_based">Theo trọng lượng</option>
+                                    <option value="fast_shipping">Vận chuyển nhanh 2 giờ</option>
                                 </select>
                             </div>
                         </div>

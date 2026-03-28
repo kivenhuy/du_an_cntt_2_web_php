@@ -46,12 +46,12 @@ class DistrictController extends Controller
         $final_data = $district->create($data_district);
         if($final_data)
         {
-            flash(translate('District has been inserted Successfully'))->success();
+            flash('Quận đã được tạo thành công')->success();
             return redirect()->route('district.index');
         }
         else
         {
-            flash(translate('District has been inserted Fail'))->error();
+            flash('Quận đã được tạo thất bại')->error();
             return redirect()->route('district.index');
         }
     }

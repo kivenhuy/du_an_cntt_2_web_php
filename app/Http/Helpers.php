@@ -95,7 +95,23 @@ if (!function_exists('areActiveRoutes')) {
 
 function translate($key, $lang = null, $addslashes = false)
 {
-    return $key; 
+    if (! is_string($key)) {
+        $key = (string) $key;
+    }
+
+    if ($lang !== null && $lang !== '') {
+        $previous = app()->getLocale();
+        app()->setLocale($lang);
+        try {
+            $out = __($key);
+        } finally {
+            app()->setLocale($previous);
+        }
+    } else {
+        $out = __($key);
+    }
+
+    return $addslashes ? addslashes($out) : $out;
 }
 
 

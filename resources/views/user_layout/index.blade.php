@@ -12,42 +12,34 @@
             <!-- Sliders -->
             <div class="home-slider wow animate__animated animate__fadeInUp" data-wow-delay=".2s">
                     <div class="aiz-carousel dots-inside-bottom mobile-img-auto-height" data-autoplay="true">
+                            @forelse($home_slides ?? [] as $slide)
                             <div class="carousel-box">
-                                <a href="">
-                                    <!-- Image -->
+                                <a href="{{ $slide->link ?: '#' }}">
                                     <img class="d-block mw-100 img-fit overflow-hidden h-sm-auto h-md-320px h-lg-460px overflow-hidden b-radius-10 "
-                                        alt="{{ env('APP_NAME')}}"
+                                        alt="{{ config('app.name') }}"
+                                        src="{{ uploaded_asset($slide->photo) }}"
+                                        style="height: auto;"
+                                        onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
+                                </a>
+                            </div>
+                            @empty
+                            <div class="carousel-box">
+                                <a href="#">
+                                    <img class="d-block mw-100 img-fit overflow-hidden h-sm-auto h-md-320px h-lg-460px overflow-hidden b-radius-10 "
+                                        alt="{{ config('app.name') }}"
                                         src="{{ static_asset('assets/img/ivSNgQP3jxEHTHTOQXNAaGWlHOO3a1PQIw3w9EPJ.jpg')}}"
                                         style="height: auto;">
                                 </a>
                             </div>
                             <div class="carousel-box">
-                                <a href="">
-                                    <!-- Image -->
+                                <a href="#">
                                     <img class="d-block mw-100 img-fit overflow-hidden h-sm-auto h-md-320px h-lg-460px overflow-hidden b-radius-10 "
-                                        alt="{{ env('APP_NAME')}}"
+                                        alt="{{ config('app.name') }}"
                                         src="{{ static_asset('assets/img/mrAmhwgz6ra35VyilLmTTvbYPZygvz5DpHz3rkWO.jpg')}}"
                                         style="height: auto;">
                                 </a>
                             </div>
-                            <div class="carousel-box">
-                                <a href="">
-                                    <!-- Image -->
-                                    <img class="d-block mw-100 img-fit overflow-hidden h-sm-auto h-md-320px h-lg-460px overflow-hidden b-radius-10 "
-                                        alt="{{ env('APP_NAME')}}"
-                                        src="{{ static_asset('assets/img/5eqxZWoCFvy34jUzGiv31uDlrurvkQguk2Rij9PH.jpg')}}"
-                                        style="height: auto;">
-                                </a>
-                            </div>
-                            <div class="carousel-box">
-                                <a href="">
-                                    <!-- Image -->
-                                    <img class="d-block mw-100 img-fit overflow-hidden h-sm-auto h-md-320px h-lg-460px overflow-hidden b-radius-10 "
-                                        alt="{{ env('APP_NAME')}}"
-                                        src="{{ static_asset('assets/img/tSOUv04QuIRGBNgCKL2wXDri9VwX1C46yYGWDTIR.png')}}"
-                                        style="height: auto;">
-                                </a>
-                            </div>
+                            @endforelse
                     </div>
             </div>
         </div>

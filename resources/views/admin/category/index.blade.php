@@ -6,7 +6,7 @@
             <div class="mar-all mb-2" style=" text-align: end;">
                 <a href="{{route('categories.create')}}">
                     <button type="submit" name="button" value="publish"
-                        class="btn btn-primary">Create Cateogry</button>
+                        class="btn btn-primary">Tạo danh mục</button>
                 </a>
             </div>
         </div>
@@ -16,13 +16,13 @@
         <form id="sort_orders" action="" method="GET">
             <div class="card-header row gutters-5">
                 <div class="col text-center text-md-left">
-                    <h5 class="mb-md-0 h6">{{ translate('Category') }}</h5>
+                    <h5 class="mb-md-0 h6">Danh mục</h5>
                 </div>
                 <div class="col-md-3">
                     <div class="from-group mb-0">
                         <input type="text" class="form-control" id="search" name="search"
                             @isset($sort_search) value="{{ $sort_search }}" @endisset
-                            placeholder="{{ translate('Type Name  & hit Enter') }}">
+                            placeholder="Nhập tên danh mục & nhấn Enter">
                     </div>
                 </div>
             </div>
@@ -34,10 +34,10 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>{{ translate('Cateogry Icon') }}</th>
-                            <th>{{ translate('Cateogry Name') }}</th>
-                            <th data-breakpoints="lg">{{ translate('Category Slug') }}</th>
-                            <th class="text-right">{{ translate('Action') }}</th>
+                            <th>Biểu tượng</th>
+                            <th>Tên danh mục</th>
+                            <th data-breakpoints="lg">Mã danh mục</th>
+                            <th class="text-right">Thao tác</th>
                         </tr>
                     </thead>
                     <tbody>

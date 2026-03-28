@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Customer;
 use App\Http\Controllers\Controller;
 use App\Models\Categories;
 use App\Models\Category;
+use App\Models\HomeSlide;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Products;
@@ -37,13 +38,19 @@ class HomeController extends Controller
         
 
 
+        $home_slides = HomeSlide::where('is_active', true)
+            ->orderBy('sort_order')
+            ->orderBy('id')
+            ->get();
+
         return view('user_layout.index',
         [
             'best_selling_products'=>$best_selling_products,
             'fresh_today_products'=>$fresh_today_products,
             'new_products'=>$new_products,
             // 'fresh_sea_food_high_quantity'=>$fresh_sea_food_high_quantity,
-            'fresh_fruit_high_quantity'=>$fresh_fruit_high_quantity
+            'fresh_fruit_high_quantity'=>$fresh_fruit_high_quantity,
+            'home_slides'=>$home_slides,
         ]);
     }
 

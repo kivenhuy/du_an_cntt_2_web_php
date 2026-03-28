@@ -5,7 +5,7 @@
         <div class="row align-items-center">
             <div class="col-md-6" style="display: flex">
                 <a style="display: flex;align-items: center;margin-right: 10px;margin-bottom: 0.5rem" href="{{route('admin.purchase_history.all_orders')}}" ><i style="color:black;font-size: 1.73em;" class="fa fa-long-arrow-alt-left"></i></a>
-                <h1 class="fs-20 fw-700 text-dark">{{ translate('Order id') }}: {{ $order->code }}</h1>
+                <h1 class="fs-20 fw-700 text-dark">Mã đơn hàng: {{ $order->code }}</h1>
             </div>
         </div>
     </div>
@@ -13,7 +13,7 @@
     <!-- Order Summary -->
     <div class="card rounded-0 shadow-none border mb-4">
         <div class="card-header border-bottom-0">
-            <h5 class="fs-16 fw-700 text-dark mb-0">{{ translate('Order Summary') }}</h5>
+            <h5 class="fs-16 fw-700 text-dark mb-0">Tổng quan đơn hàng</h5>
         </div>
         <div class="card-body">
             <div class="row">
@@ -21,21 +21,21 @@
                 <div class="col-lg-6">
                     <table class="table-borderless table">
                         <tr>
-                            <td class="w-50 fw-600">{{ translate('Order Code') }}:</td>
+                            <td class="w-50 fw-600">Mã đơn hàng:</td>
                             <td>{{ $order->code }}</td>
                         </tr>
                         <tr>
-                            <td class="w-50 fw-600">{{ translate('Customer') }}:</td>
+                            <td class="w-50 fw-600">Tên khách hàng:</td>
                             <td>{{ json_decode($order->shipping_address)->name }}</td>
                         </tr>
                         <tr>
-                            <td class="w-50 fw-600">{{ translate('Email') }}:</td>
+                            <td class="w-50 fw-600">Email:</td>
                             @if ($order->customer_id != null)
                                 <td>{{ $order->user->email }}</td>
                             @endif
                         </tr>
                         <tr>
-                            <td class="w-50 fw-600">{{ translate('Shipping address') }}:</td>
+                            <td class="w-50 fw-600">Địa chỉ giao hàng:</td>
                             <td>{{ json_decode($order->shipping_address)->address }},
                                 {{ json_decode($order->shipping_address)->city }},
                                 @if(isset(json_decode($order->shipping_address)->state)) {{ json_decode($order->shipping_address)->state }} - @endif
@@ -48,36 +48,36 @@
                 <div class="col-lg-6">
                     <table class="table-borderless table">
                         <tr>
-                            <td class="w-50 fw-600">{{ translate('Order date') }}:</td>
+                            <td class="w-50 fw-600">Ngày đặt hàng:</td>
                             <td>{{ date('d-m-Y H:i A', $order->date) }}</td>
                         </tr>
                         <tr>
-                            <td class="w-50 fw-600">{{ translate('Order status') }}:</td>
+                            <td class="w-50 fw-600">Trạng thái đơn hàng:</td>
                             <td>{{ translate(ucfirst(str_replace('_', ' ', $order->delivery_status))) }}</td>
                         </tr>
                         <tr>
-                            <td class="w-50 fw-600">{{ translate('Total order amount') }}:</td>
+                            <td class="w-50 fw-600">Tổng tiền đơn hàng:</td>
                             <td>{{ single_price($order->orderDetails->sum('price') + $order->orderDetails->sum('tax')) }}
                             </td>
                         </tr>
                         <tr>
-                            <td class="w-50 fw-600">{{ translate('Shipping method') }}:</td>
+                            <td class="w-50 fw-600">Phương thức giao hàng:</td>
                             <td> {{ $order->shipping_type }}</td>
                         </tr>
                         <tr>
-                            <td class="w-50 fw-600">{{ translate('Payment method') }}:</td>
+                            <td class="w-50 fw-600">Phương thức thanh toán:</td>
                             <td>{{ translate(ucfirst(str_replace('_', ' ', $order->payment_type))) }}</td>
                         </tr>
                        
                         <tr>
-                            <td class="w-50 fw-600">{{ translate('Payment Status') }}:</td>
+                            <td class="w-50 fw-600">Trạng thái thanh toán:</td>
                             <td> 
                                 @if($order->payment_status != 'paid' )
                                     <span class='badge badge-inline badge-warning'>{{ ucfirst($order->payment_status) }}</span> 
                                     @if($order->payment_status === 'waiting for checking' )
                                         <button  id="verify_payment">
                                             <input type="hidden" value="{{$order->id}}" id="order_id">
-                                            <i class="fa fa-check"></i> Verify
+                                            <i class="fa fa-check"></i> Xác nhận
                                         </button>
                                     @endif
                                 @else
@@ -97,22 +97,22 @@
                                 <div class="form-group text-left">
                                     <button type="button" 
                                     id="btn_image"
-                                    class="btn btn-primary">Showing Receipt</button>
+                                    class="btn btn-primary">Hiển thị hóa đơn</button>
                                 </div>
                             
                                 <div id="hide_image" hidden="true">
                                     <div>
                                         <table class="table-borderless table">
                                             <tr>
-                                                <td class="w-50 fw-600">{{ translate('Transaction ID') }}:</td>
+                                                <td class="w-50 fw-600">Mã giao dịch:</td>
                                                 <td> {{ $order->trx_id }}</td>
                                             </tr>
                                             <tr>
-                                                <td class="w-50 fw-600">{{ translate('Amound') }}:</td>
+                                                <td class="w-50 fw-600">Số tiền:</td>
                                                 <td> {{ single_price($order->amount_payment) }}</td>
                                             </tr>
                                             <tr>
-                                                <td class="w-50 fw-600">{{ translate('Image Verify') }}:</td>
+                                                <td class="w-50 fw-600">Ảnh xác nhận:</td>
                                                 <td>  
                                                     @foreach($order->img_url as $data_image)
                                                         <input type="hidden" value="{{$data_image}}">
@@ -143,16 +143,16 @@
                     <thead>
                         <tr class="bg-trans-dark">
                             <th data-breakpoints="lg" class="min-col">#</th>
-                            <th width="10%">{{ translate('Photo') }}</th>
-                            <th class="text-uppercase">{{ translate('Description') }}</th>
-                            <th data-breakpoints="lg" class="text-uppercase">{{ translate('Delivery Type') }}</th>
+                            <th width="10%">Ảnh</th>
+                            <th class="text-uppercase">Mô tả</th>
+                            <th data-breakpoints="lg" class="text-uppercase">Phương thức giao hàng</th>
                             <th data-breakpoints="lg" class="min-col text-uppercase text-center">
-                                {{ translate('Qty') }}
+                                Số lượng
                             </th>
                             <th data-breakpoints="lg" class="min-col text-uppercase text-center">
-                                {{ translate('Price') }}</th>
+                                Giá</th>
                             <th data-breakpoints="lg" class="min-col text-uppercase text-center">
-                                {{ translate('Total') }}</th>
+                                Tổng tiền</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -226,7 +226,7 @@
             <tbody>
                 <tr>
                     <td>
-                        <strong class="text-muted">{{ translate('Sub Total') }} :</strong>
+                        <strong class="text-muted">Tạm tính:</strong>
                     </td>
                     <td>
                         {{ single_price($order->orderDetails->sum('price')) }}
@@ -234,7 +234,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <strong class="text-muted">{{ translate('Tax') }} :</strong>
+                        <strong class="text-muted">Thuế:</strong>
                     </td>
                     <td>
                         {{ single_price($order->orderDetails->sum('tax')) }}
@@ -242,7 +242,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <strong class="text-muted">{{ translate('Shipping') }} :</strong>
+                        <strong class="text-muted">Phương thức giao hàng:</strong>
                     </td>
                     <td>
                         {{ single_price($order->orderDetails->sum('shipping_cost')) }}
@@ -250,7 +250,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <strong class="text-muted">{{ translate('Coupon') }} :</strong>
+                        <strong class="text-muted">Giảm giá:</strong>
                     </td>
                     <td>
                         {{ single_price($order->coupon_discount) }}
@@ -258,7 +258,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <strong class="text-muted">{{ translate('TOTAL') }} :</strong>
+                        <strong class="text-muted">Tổng tiền:</strong>
                     </td>
                     <td class="text-muted h5">
                         {{ single_price($order->grand_total) }}

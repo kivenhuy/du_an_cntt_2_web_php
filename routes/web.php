@@ -114,7 +114,8 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/final', 'final_checkout')->name('checkout.final_checkout');
             Route::post('/update_shipping_fee', 'update_shipping_fee')->name('checkout.update_shipping_fee');
             Route::post('/update_total_shipping_fee', 'update_total_shipping_fee')->name('checkout.update_total_shipping_fee');
-           
+            Route::post('/checkout', 'checkout')->name('checkout');
+            Route::get('/order_confirmed', 'order_confirmed')->name('order_confirmed');
         });
     });
 
