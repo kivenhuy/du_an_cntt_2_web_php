@@ -18,6 +18,10 @@ docker compose --env-file "$ENV_FILE" -f "$COMPOSE_FILE" up -d --build
 echo "[3/5] Install PHP dependencies..."
 docker compose --env-file "$ENV_FILE" -f "$COMPOSE_FILE" exec -T app composer install --no-dev --optimize-autoloader
 
+echo "[3b/5] Upload directory (php-fpm runs as www-data)..."
+docker compose --env-file "$ENV_FILE" -f "$COMPOSE_FILE" exec -T app sh -c \
+  'mkdir -p public/assets/uploads && chown -R www-data:www-data public/assets/uploads && chmod -R 775 public/assets/uploads'
+
 echo "[4/5] Run migrations and create storage link..."
 docker compose --env-file "$ENV_FILE" -f "$COMPOSE_FILE" exec -T app php artisan migrate --force
 docker compose --env-file "$ENV_FILE" -f "$COMPOSE_FILE" exec -T app php artisan storage:link || true
