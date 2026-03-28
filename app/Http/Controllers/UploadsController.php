@@ -6,6 +6,7 @@ use App\Models\Uploads;
 use Illuminate\Http\Request;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class UploadsController extends Controller
@@ -104,64 +105,81 @@ class UploadsController extends Controller
             "xls" => "document",
             "xlsx" => "document"
         );
-        if ($request->hasFile('aiz_file')) {
-            $upload = new Uploads;
-            $extension = strtolower($request->file('aiz_file')->getClientOriginalExtension());
 
-            if (
-                env('DEMO_MODE') == 'On' &&
-                isset($type[$extension]) &&
-                $type[$extension] == 'archive'
-            ) {
-                return '{}';
-            }
+        if (! $request->hasFile('aiz_file')) {
+            Log::warning('file-uploader: no aiz_file in request', [
+                'has_input' => $request->has('aiz_file'),
+                'content_length' => $request->header('Content-Length'),
+            ]);
 
-            if (isset($type[$extension])) {
-                $upload->file_original_name = null;
-                $arr = explode('.', $request->file('aiz_file')->getClientOriginalName());
-                for ($i = 0; $i < count($arr) - 1; $i++) {
-                    if ($i == 0) {
-                        $upload->file_original_name .= $arr[$i];
-                    } else {
-                        $upload->file_original_name .= "." . $arr[$i];
-                    }
-                }
-
-
-
-                $path = $request->file('aiz_file')->store('assets/uploads', 'local');
-                $size = $request->file('aiz_file')->getSize();
-
-                // if ($type[$extension] == 'image' ) {
-                //     try {
-                //         $img = Image::make($request->file('aiz_file')->getRealPath())->encode();
-                //         $height = $img->height();
-                //         $width = $img->width();
-                //         if ($width > $height && $width > 1500) {
-                //             $img->resize(1500, null, function ($constraint) {
-                //                 $constraint->aspectRatio();
-                //             });
-                //         } elseif ($height > 1500) {
-                //             $img->resize(null, 800, function ($constraint) {
-                //                 $constraint->aspectRatio();
-                //             });
-                //         }
-                //         $img->save(base_path('public/') . $path);
-                //         clearstatcache();
-                //         $size = $img->filesize();
-                //     } catch (\Exception $e) {
-                //         //dd($e);
-                //     }
-                // }
-                $upload->extension = $extension;
-                $upload->file_name = $path;
-                $upload->user_id = Auth::user()->id;
-                $upload->type = $type[$upload->extension];
-                $upload->file_size = $size;
-                $upload->save();
-            }
-            return '{}';
+            return response()->json([
+                'error' => 'No file received',
+                'hint' => 'Check PHP upload_max_filesize and post_max_size; ensure CSRF header is sent.',
+            ], 422);
         }
+
+        $file = $request->file('aiz_file');
+        if (! $file->isValid()) {
+            return response()->json([
+                'error' => 'Invalid upload',
+                'message' => $file->getErrorMessage(),
+            ], 422);
+        }
+
+        $extension = strtolower($file->getClientOriginalExtension());
+
+        if (
+            env('DEMO_MODE') == 'On' &&
+            isset($type[$extension]) &&
+            $type[$extension] == 'archive'
+        ) {
+            return response('{}', 200, ['Content-Type' => 'application/json']);
+        }
+
+        if (! isset($type[$extension])) {
+            return response()->json([
+                'error' => 'File type not allowed',
+                'extension' => $extension,
+            ], 422);
+        }
+
+        $upload = new Uploads;
+        $upload->file_original_name = null;
+        $arr = explode('.', $file->getClientOriginalName());
+        for ($i = 0; $i < count($arr) - 1; $i++) {
+            if ($i == 0) {
+                $upload->file_original_name .= $arr[$i];
+            } else {
+                $upload->file_original_name .= '.' . $arr[$i];
+            }
+        }
+
+        $uploadDir = public_path('assets/uploads');
+        if (! is_dir($uploadDir) && ! @mkdir($uploadDir, 0755, true) && ! is_dir($uploadDir)) {
+            Log::error('file-uploader: cannot create upload directory', ['path' => $uploadDir]);
+
+            return response()->json(['error' => 'Server cannot create upload folder'], 500);
+        }
+
+        try {
+            $path = $file->store('assets/uploads', 'local');
+            $size = $file->getSize();
+            $upload->extension = $extension;
+            $upload->file_name = $path;
+            $upload->user_id = Auth::user()->id;
+            $upload->type = $type[$upload->extension];
+            $upload->file_size = $size;
+            $upload->save();
+        } catch (\Throwable $e) {
+            Log::error('file-uploader: save failed', ['exception' => $e->getMessage()]);
+
+            return response()->json([
+                'error' => 'Upload failed',
+                'message' => config('app.debug') ? $e->getMessage() : 'Server error',
+            ], 500);
+        }
+
+        return response('{}', 200, ['Content-Type' => 'application/json']);
     }
 
     public function show_uploader(Request $request)
