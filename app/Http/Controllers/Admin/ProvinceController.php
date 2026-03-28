@@ -45,12 +45,12 @@ class ProvinceController extends Controller
         $final_data = $province->create($data_province);
         if($final_data)
         {
-            flash(translate('province has been inserted successfully'))->success();
+            flash('Tỉnh đã được tạo thành công')->success();
             return redirect()->route('province.index');
         }
         else
         {
-            flash(translate('province has been inserted Fail'))->error();
+            flash('Tỉnh đã được tạo thất bại')->error();
             return redirect()->route('province.index');
         }
     }

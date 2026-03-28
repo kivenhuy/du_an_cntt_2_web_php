@@ -32,9 +32,8 @@ class CartController extends Controller
             {
                 $city_name = City::find($data_address->city_id)->city_name;
                 $country_name = Country::find($data_address->country_id)->country_name;
-                $district_name = District::find($data_address->district_id)->district_name;
                 $user_name = User::find($data_address->user_id)->name;
-                $str = $user_name.', '.$data_address->phone.', '.$data_address->address.', '.$district_name.', '.$city_name.', '.$country_name;
+                $str = $user_name.', '.$data_address->phone.', '.$data_address->address.', '.$city_name.', '.$country_name;
                 $data_address->full_adress = $str;
             }
         }
@@ -322,9 +321,8 @@ class CartController extends Controller
             {
                 $city_name = City::find($data_address->city_id)->city_name;
                 $country_name = Country::find($data_address->country_id)->country_name;
-                $district_name = District::find($data_address->district_id)->district_name;
                 $user_name = User::find($data_address->user_id)->name;
-                $str = $user_name.', '.$data_address->phone.', '.$data_address->address.', '.$city_name.', '.$district_name.', '.$country_name;
+                $str = $user_name.', '.$data_address->phone.', '.$data_address->address.', '.$city_name.', '.$country_name;
                 $data_address->full_adress = $str;
             }
         }

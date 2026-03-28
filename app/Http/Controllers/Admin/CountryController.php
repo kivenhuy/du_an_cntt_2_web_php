@@ -39,12 +39,12 @@ class CountryController extends Controller
         $final_data = $country->create($data_country);
         if($final_data)
         {
-            flash(translate('Country has been inserted successfully'))->success();
+            flash('Quốc gia đã được tạo thành công')->success();
             return view('admin.country.index');
         }
         else
         {
-            flash(translate('Country has been inserted Fail'))->error();
+            flash('Quốc gia đã được tạo thất bại')->error();
             return view('admin.country.index');
         }
     }

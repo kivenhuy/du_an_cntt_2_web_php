@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\CommuneController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\HomeSlideController;
 use App\Http\Controllers\Admin\DistrictController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProvinceController;
@@ -67,6 +68,13 @@ Route::group(['middleware' => ['auth'],'prefix' => 'admin'], function () {
         Route::get('/category/create', 'create')->name('categories.create');
         Route::get('/category/data_ajax', 'data_ajax')->name('categories.data_ajax');
         Route::post("/category/store",'store')->name('categories.store'); 
+    });
+
+    Route::controller(HomeSlideController::class)->group(function () {
+        Route::get('/home-slides', 'index')->name('admin.home_slides.index');
+        Route::get('/home-slides/create', 'create')->name('admin.home_slides.create');
+        Route::post('/home-slides/store', 'store')->name('admin.home_slides.store');
+        Route::delete('/home-slides/{home_slide}', 'destroy')->name('admin.home_slides.destroy');
     });
 
     Route::controller(ProductController::class)->group(function () {

@@ -58,7 +58,7 @@ class ProductController extends Controller
             'colors_active', 'colors', 'choice_no', 'unit_price', 'sku', 'current_stock', 'product_id',
         ]), $product);
 
-        flash(translate('Product has been inserted successfully'))->success();
+        flash('Sản phẩm đã được tạo thành công')->success();
 
         return redirect()->route('admin.products.index');
     }

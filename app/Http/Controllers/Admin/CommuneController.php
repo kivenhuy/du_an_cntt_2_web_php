@@ -40,12 +40,12 @@ class CommuneController extends Controller
         $final_data = $commune->create($data_commune);
         if($final_data)
         {
-            flash(translate('commune has been inserted successfully'))->success();
+            flash('Phường/Xã đã được tạo thành công')->success();
             return redirect()->route('commune.index');
         }
         else
         {
-            flash(translate('commune has been inserted Fail'))->error();
+            flash('Phường/Xã đã được tạo thất bại')->error();
             return redirect()->route('commune.index');
         }
     }

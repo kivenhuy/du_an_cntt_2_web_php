@@ -5,46 +5,46 @@
         <form id="sort_orders" action="" method="GET">
             <div class="card-header row gutters-5">
                 <div class="col text-center text-md-left">
-                    <h5 class="mb-md-0 h6">{{ translate('Orders') }}</h5>
+                    <h5 class="mb-md-0 h6">Đơn hàng</h5>
                 </div>
                 <div class="col-md-3 ml-auto">
                     <select class="form-control aiz-selectpicker"
-                        data-placeholder="{{ translate('Filter by Payment Status') }}" name="payment_status"
+                        data-placeholder="Lọc theo trạng thái thanh toán" name="payment_status"
                         onchange="sort_orders()">
-                        <option value="">{{ translate('Filter by Payment Status') }}</option>
+                        <option value="">Lọc theo trạng thái thanh toán</option>
                         <option value="paid"
                             @isset($payment_status) @if ($payment_status == 'paid') selected @endif @endisset>
-                            {{ translate('Paid') }}</option>
+                            Đã thanh toán</option>
                         <option value="unpaid"
                             @isset($payment_status) @if ($payment_status == 'unpaid') selected @endif @endisset>
-                            {{ translate('Unpaid') }}</option>
+                            Chưa thanh toán</option>
                     </select>
                 </div>
 
                 <div class="col-md-3 ml-auto">
                     <select class="form-control aiz-selectpicker"
-                        data-placeholder="{{ translate('Filter by Payment Status') }}" name="delivery_status"
+                        data-placeholder="Lọc theo trạng thái giao hàng" name="delivery_status"
                         onchange="sort_orders()">
-                        <option value="">{{ translate('Filter by Deliver Status') }}</option>
+                        <option value="">Lọc theo trạng thái giao hàng</option>
                         <option value="waiting"
                             @isset($delivery_status) @if ($delivery_status == 'waiting') selected @endif @endisset>
-                            {{ translate('Waiting') }}</option>
+                            Chờ xác nhận</option>
                         <option value="confirmed"
                             @isset($delivery_status) @if ($delivery_status == 'confirmed') selected @endif @endisset>
-                            {{ translate('Confirmed') }}</option>
+                            Đã xác nhận</option>
                         <option value="on_delivery"
                             @isset($delivery_status) @if ($delivery_status == 'on_delivery') selected @endif @endisset>
-                            {{ translate('On delivery') }}</option>
+                            Đang giao hàng</option>
                         <option value="delivered"
                             @isset($delivery_status) @if ($delivery_status == 'delivered') selected @endif @endisset>
-                            {{ translate('Delivered') }}</option>
+                            Đã giao hàng</option>
                     </select>
                 </div>
                 <div class="col-md-3">
                     <div class="from-group mb-0">
                         <input type="text" class="form-control" id="search" name="search"
                             @isset($sort_search) value="{{ $sort_search }}" @endisset
-                            placeholder="{{ translate('Type Order code & hit Enter') }}">
+                            placeholder="Nhập mã đơn hàng & nhấn Enter">
                     </div>
                 </div>
             </div>
@@ -56,16 +56,16 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>{{ translate('Order Code') }}</th>
-                            <th data-breakpoints="lg">{{ translate('Num. of Products') }}</th>
-                            <th data-breakpoints="lg">{{ translate('Customer Name') }}</th>
-                            <th data-breakpoints="lg">{{ translate('Seller Name') }}</th>
-                            <th data-breakpoints="lg">{{ translate('Order Date') }}</th>
-                            <th data-breakpoints="md">{{ translate('Amount') }}</th>
-                            <th data-breakpoints="lg">{{ translate('Delivery Status') }}</th>
-                            <th data-breakpoints="lg">{{ translate('Payment Type') }}</th>
-                            <th>{{ translate('Payment Status') }}</th>
-                            <th class="text-right">{{ translate('Action') }}</th>
+                            <th>Mã đơn hàng</th>
+                            <th data-breakpoints="lg">Số lượng sản phẩm</th>
+                            <th data-breakpoints="lg">Tên khách hàng</th>
+                            <th data-breakpoints="lg">Tên người bán</th>
+                            <th data-breakpoints="lg">Ngày đặt hàng</th>
+                            <th data-breakpoints="md">Tổng tiền</th>
+                            <th data-breakpoints="lg">Trạng thái giao hàng</th>
+                            <th data-breakpoints="lg">Phương thức thanh toán</th>
+                            <th>Trạng thái thanh toán</th>
+                            <th class="text-right">Hành động</th>
                         </tr>
                     </thead>
                     <tbody>

@@ -149,7 +149,9 @@
                             </div>
                         @endforeach
                     @endempty
-                    {{-- <button class="btn add_new_address" onclick="add_new_address()"><i class="fa fa-plus" aria-hidden="true"></i> New Address</button> --}}
+                    <button class="btn add_new_address" onclick="add_new_address()" style="margin-top:10px; border:2px solid #2E7F25; border-radius:25px; padding:8px 20px; font-weight:600; color:#2E7F25;">
+                        <i class="fa fa-plus" aria-hidden="true"></i> Add New Address
+                    </button>
                 </div>
             </div>
             <div class="col-xxl-3 col-xl-10 mx-auto">

@@ -190,21 +190,7 @@
         width: 18px;
         height: 18px;
     }
-    .add_new_address
-    {
-        width: 162px;
-        height: 50px;
-        border-radius: 4px;
-        color: #2E7F25;
-        border: 1px solid #2E7F25;
-        font-family: 'Quicksand' ,sans-serif !important;
-        font-size: 16px !important;
-        font-weight: 700 !important;
-        line-height: 20px;
-        letter-spacing: -0.0004em;
-        text-align: center;
-
-    }
+    
     .select_payment_option
     {
         font-family: 'Quicksand' ,sans-serif !important;

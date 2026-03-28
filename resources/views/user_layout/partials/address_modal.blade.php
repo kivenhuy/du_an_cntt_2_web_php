@@ -50,20 +50,6 @@
                                 </select>
                             </div>
                         </div>
-
-                        <!-- District -->
-                        <div class="row">
-                            <div class="col-md-2">
-                                <label>{{ translate('District')}}</label>
-                            </div>
-                            <div class="col-md-10">
-                                <select class="form-control mb-3 aiz-selectpicker rounded-0" data-live-search="true" name="district_id" id="district_2" required>
-
-                                </select>
-                            </div>
-                        </div>
-
-
                         
                         <!-- Postal code -->
                         <div class="row">

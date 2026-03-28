@@ -66,7 +66,7 @@
                                                 <div class="mb-4">
                                                     <!-- Headers -->
                                                     <div class="row gutters-5 d-none d-lg-flex border-bottom mb-3 text-secondary fs-12 header_table" >
-                                                        <div class="col-md-3 fw-600 text_cart_details" style="position: relative;left:32px">{{ translate('Product - ')}} {{ \App\Models\Shop::where('user_id', $key_user)->first()->name }}</div>
+                                                        <div class="col-md-3 fw-600 text_cart_details" style="position: relative;left:32px">{{ translate('Product - ')}} {{ optional(\App\Models\Shop::where('user_id', $key_user)->first())->name ?? optional(\App\Models\User::find($key_user))->name ?? translate('Official Store') }}</div>
                                                         <div class="col col-md-2 fw-600 text_cart_details">{{ translate('Qty')}}</div>
                                                         <div class="col col-md-1 fw-600 text_cart_details">{{ translate('Unit')}}</div>
                                                         @if(Auth::user()->user_type === 'enterprise')
@@ -199,19 +199,7 @@
                                     @endif
 
 
-                                    <div style=" margin-top:1rem;">
-                                        <span style="
-                                            font-family: 'Quicksand',sans-serif !important;
-                                            font-size: 24px !important;
-                                            font-weight: 700 !important;
-                                            line-height: 32px;
-                                            letter-spacing: -0.0004em;
-                                            text-align: left;
-                                            margin-left: 10px ;
-                                           
-                                            ">Short Shelf Life Products
-                                        </span>
-                                    </div>
+                                    
                                     @php
                                         $total_short_product = 0;
                                         $shipping_fee = 0;
@@ -229,7 +217,7 @@
                                                 <div class="mb-4">
                                                     <!-- Headers -->
                                                     <div class="row gutters-5 d-none d-lg-flex border-bottom mb-3 text-secondary fs-12 header_table" >
-                                                        <div class="col-md-3 fw-600 text_cart_details" style="position: relative;left:32px">{{ translate('Product - ')}} {{ \App\Models\Shop::where('user_id', $key_user)->first()->name }}</div>
+                                                        <div class="col-md-3 fw-600 text_cart_details" style="position: relative;left:32px">{{ translate('Product - ')}} {{ optional(\App\Models\Shop::where('user_id', $key_user)->first())->name ?? optional(\App\Models\User::find($key_user))->name ?? translate('Official Store') }}</div>
                                                         <div class="col col-md-2 fw-600 text_cart_details">{{ translate('Qty')}}</div>
                                                         <div class="col-md-1  fw-600 text_cart_details">{{ translate('Unit')}}</div>
                                                         @if(Auth::user()->user_type === 'enterprise')
