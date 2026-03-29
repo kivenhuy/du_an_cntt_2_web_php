@@ -1618,7 +1618,7 @@
    
 
 </head>
-<body>
+<body class="site-storefront">
     <!-- aiz-main-wrapper -->
     <div class="aiz-main-wrapper d-flex flex-column bg-white">
 
@@ -1856,6 +1856,27 @@
                 $('#Rfq_request').modal('show');
             }
         }
+    </script>
+
+    {{-- Giảm tải ảnh kiểu Save as / kéo thả. Không thể chặn tuyệt đối (URL, DevTools, cache, screenshot...). --}}
+    <script>
+        (function () {
+            function isImageContext(el) {
+                if (!el || !el.tagName) return false;
+                var tag = el.tagName;
+                if (tag === 'IMG' || tag === 'PICTURE') return true;
+                if (tag === 'image' && el.namespaceURI === 'http://www.w3.org/2000/svg') return true;
+                return el.closest && (el.closest('picture') || el.closest('svg'));
+            }
+            document.addEventListener('contextmenu', function (e) {
+                if (isImageContext(e.target)) e.preventDefault();
+            }, false);
+            document.addEventListener('dragstart', function (e) {
+                if (e.target && (e.target.tagName === 'IMG' || (e.target.closest && e.target.closest('picture')))) {
+                    e.preventDefault();
+                }
+            }, false);
+        })();
     </script>
     
     @yield('script')

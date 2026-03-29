@@ -202,7 +202,11 @@ class CheckoutSupermarketController extends Controller
             array_push($product_ids, $carts_short_shelf_lifeItem['product_id']);
             $seller_products_short[$product->user_id] = $product_ids;
         }
-        $carrier_list = Carrier::all()->append(['max_quantity','name_billing','shipping_price','shipping_price_normal']);
+        $carrier_list = Carrier::query()
+            ->with(['carrier_ranges', 'carrier_range_prices'])
+            ->orderBy('id')
+            ->get()
+            ->append(['max_quantity', 'name_billing', 'shipping_price', 'shipping_price_normal']);
         // foreach($carrier_list as $each_carrier_list)
         // {
 
@@ -233,12 +237,9 @@ class CheckoutSupermarketController extends Controller
         
         if($request->data['type_cart'] === "normal_product")
         {
-            if($request->data['shipping_type'] === "weight_based")
-            {
+            if ($request->data['shipping_type'] === 'weight_based' || $request->data['shipping_type'] === 'free_shipping') {
                 $shipping_type = 'Normal Shipping';
-            }
-            else
-            {
+            } else {
                 $shipping_type = 'Fast Shipping';
             }
             $cart_data = Cart::whereHas('product', function ($query) {
@@ -282,8 +283,9 @@ class CheckoutSupermarketController extends Controller
                 {
                     $shipping_time =count(json_decode(RequestForProduct::find($each_cart_data->is_rfp)->shipping_date));
                 }
+                $shipTypeShort = ($request->data['shipping_type'] ?? '') === 'free_shipping' ? 'Normal Shipping' : 'Fast Shipping';
                 $each_cart_data->update(
-                    ['shipping_type' => 'Fast Shipping',
+                    ['shipping_type' => $shipTypeShort,
                     'shipping_cost' => $request->data['total_shipping'] * $shipping_time,
                     'carrier_id'=>(int)$request->data['data_id']]
                 );

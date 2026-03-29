@@ -176,6 +176,85 @@ class HomeController extends Controller
         abort(404);
     }
 
+    /**
+     * Danh sách toàn bộ sản phẩm: view riêng, lọc theo nhiều danh mục (selected_categories[]).
+     */
+    public function listingAllProducts(Request $request)
+    {
+        return $this->index_all_products($request);
+    }
+
+    public function index_all_products(Request $request)
+    {
+        $query = $request->keyword;
+        $sort_by = $request->sort_by;
+        $min_price_req = $request->min_price;
+        $max_price_req = $request->max_price;
+        $min_price_choose = $request->min_price;
+        $max_price_choose = $request->max_price;
+        $seller_id = $request->seller_id;
+
+        $selected_categories = array_values(array_unique(array_filter(
+            array_map('intval', (array) $request->input('selected_categories', [])),
+            fn ($id) => $id > 0
+        )));
+
+        $conditions = ['published' => 1, 'approved' => 1];
+        $products = Products::where($conditions);
+
+        if ($selected_categories !== []) {
+            $products->whereIn('category_id', $selected_categories);
+        }
+
+        if ($min_price_req != null && $max_price_req != null) {
+            $products->where('unit_price', '>=', $min_price_req)->where('unit_price', '<=', $max_price_req);
+        }
+
+        switch ($sort_by) {
+            case 'newest':
+                $products->orderBy('created_at', 'desc');
+                break;
+            case 'oldest':
+                $products->orderBy('created_at', 'asc');
+                break;
+            case 'price-asc':
+                $products->orderBy('unit_price', 'asc');
+                break;
+            case 'price-desc':
+                $products->orderBy('unit_price', 'desc');
+                break;
+            default:
+                $products->orderBy('id', 'desc');
+                break;
+        }
+
+        $total_product = $products->count();
+        $products = $products->paginate(24)->appends(request()->query());
+        foreach ($products as $sub_products) {
+            $sub_products->name_seller = User::find($sub_products->user_id)->name;
+        }
+
+        $min_price = Products::where('published', 1)->where('approved', 1)->min('unit_price');
+        $max_price = Products::where('published', 1)->where('approved', 1)->max('unit_price');
+
+        // Sidebar lọc: hiển thị toàn bộ danh mục (không chỉ danh mục đang có sản phẩm).
+        $filter_categories = Category::query()->orderBy('name')->get();
+
+        return view('user_layout.products.product_listing_all', compact(
+            'total_product',
+            'min_price_choose',
+            'max_price_choose',
+            'min_price',
+            'max_price',
+            'products',
+            'query',
+            'sort_by',
+            'seller_id',
+            'selected_categories',
+            'filter_categories'
+        ));
+    }
+
     public function listingByCategory(Request $request, $category_slug)
     {
         $category = Category::where('slug', $category_slug)->first();
@@ -203,13 +282,7 @@ class HomeController extends Controller
         
 
         if ($category_id != null) {
-            
-
             $products->where('category_id', $category_id);
-
-            
-        } else {
-           
         }
 
         if ($min_price != null && $max_price != null) {

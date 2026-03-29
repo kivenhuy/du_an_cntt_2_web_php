@@ -32,6 +32,7 @@ use Illuminate\Support\Facades\Storage;
 */
 Route::controller(HomeController::class)->group(function () {
     Route::get('/', 'index')->name('homepage');
+    Route::get('/products', 'listingAllProducts')->name('products.all');
     Route::get('/product/{slug}', 'product')->name('product');
     Route::get('/comming-soon', 'comming_soon')->name('comming-soon');
     Route::get('/shop/{slug}', 'shop')->name('shop.visit');
@@ -120,15 +121,7 @@ Route::group(['middleware' => ['auth']], function () {
         });
     });
 
-    // Search
-    Route::controller(SearchController::class)->group(function () {
-        Route::get('/search', 'index')->name('search');
-        Route::get('/search?keyword={search}', 'index')->name('suggestion.search');
-        Route::post('/ajax-search', 'ajax_search')->name('search.ajax');
-        // Route::get('/category/{category_slug}', 'listingByCategory')->name('products.category');
-        // Route::get('/brand/{brand_slug}', 'listingByBrand')->name('products.brand');
-    });
-
+    
      // Search
     Route::controller(RefundController::class)->group(function () {
         Route::get('/refund_request', 'index')->name('refund.index');
@@ -164,5 +157,14 @@ Route::get('/storage/{path}', function (string $path) {
 
     return response()->file(Storage::disk('public')->path($path));
 })->where('path', '.*');
+
+// Search
+Route::controller(SearchController::class)->group(function () {
+    Route::get('/search', 'index')->name('search');
+    Route::get('/search?keyword={search}', 'index')->name('suggestion.search');
+    Route::post('/ajax-search', 'ajax_search')->name('search.ajax');
+    // Route::get('/category/{category_slug}', 'listingByCategory')->name('products.category');
+    // Route::get('/brand/{brand_slug}', 'listingByBrand')->name('products.brand');
+});
 
 
