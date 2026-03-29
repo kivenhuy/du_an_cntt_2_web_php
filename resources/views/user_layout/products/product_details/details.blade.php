@@ -172,9 +172,12 @@
                             <strong class="fs-16 fw-700 text-primary price_product">
                                 {{ home_discounted_price($detailedProduct) }}
                             </strong>
+                            @if ($detailedProduct->weight != null)
+                                <span class="opacity-70 price_product" style="color: unset !important">/{{ $detailedProduct->weight}}</span>
+                            @endif
                             <!-- Unit -->
                             @if ($detailedProduct->unit != null)
-                                <span class="opacity-70 price_product" style="color: unset !important">/{{ $detailedProduct->unit}}</span>
+                                <span class="opacity-70 price_product" style="color: unset !important">{{ $detailedProduct->unit}}</span>
                             @endif
                             <!-- Club Point -->
                             
@@ -280,7 +283,7 @@
                         <!-- Quantity + Add to cart -->
                         <div class="row no-gutters mb-3" style="margin-bottom: 32px !important;">
                             <div class="col-sm-2">
-                                <div class="text-secondary fs-14 fw-400 mt-2 text_brand">{{ translate('Quantity') }}</div>
+                                <div class="text-secondary fs-14 fw-400 mt-2 text_brand">Số lượng</div>
                             </div>
                             <div class="col-sm-10">
                                 <input type="hidden" name="" id="stock_qty" value="{{$detailedProduct->product_stock->qty}}">
@@ -306,10 +309,8 @@
                                         // }product_stock
                                     @endphp
                                     <div class="avialable-amount opacity-60">
-                                        
+                                    còn lại
                                             <span id="available-quantity">{{ $qty }}</span>
-                                            {{ translate('available') }}
-                                        
                                     </div>
                                 </div>
                             </div>

@@ -74,10 +74,6 @@
                             <a class="nav-link active" id="custom-content-below-product-description-tab" data-toggle="pill" href="#product_description" role="tab" aria-controls="custom-content-below-product-description" aria-selected="true"><span class="text_details_product_desc font-size-mobile">{{ translate('Description') }}</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="custom-content-below-product-query-tab" data-toggle="pill" href="#product_query" role="tab" aria-controls="custom-content-below-product-query" aria-selected="false"><span class="text_details_product_desc font-size-mobile">{{ translate('Product Queries') }}</span></a>
-                        </li>
-                        
-                        <li class="nav-item">
                             <a class="nav-link" id="custom-content-below-product-reviews-tab" data-toggle="pill" href="#product_riviews" role="tab" aria-controls="custom-content-below-product-reviews" aria-selected="false"> <span class="text_details_product_desc font-size-mobile">{{ translate('Reviews') }}</span></a>
                         </li>
 
@@ -95,10 +91,6 @@
                     <div class="tab-content shop_info_tab entry-main-content" id="custom-content-below-tabContent">
                         <div class="tab-pane fade show active" id="product_description" role="tabpanel">    
                                 <div class=""> {!! $detailedProduct->description !!}</div>  
-                        </div>
-                        <div class="tab-pane fade" id="product_query" role="tabpanel">
-                            <!-- Product Query -->
-                            @include('user_layout.products.product_details.product_queries')
                         </div>
                         
                         <div class="tab-pane fade" id="product_riviews" role="tabpanel" aria-labelledby="Reviews-tab">

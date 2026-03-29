@@ -88,7 +88,10 @@ class CheckoutController extends Controller
             array_push($product_ids, $carts_short_shelf_lifeItem['product_id']);
             $seller_products_short[$product->user_id] = $product_ids;
         }
-        $carrier_list = Carrier::all();
+        $carrier_list = Carrier::query()
+            ->with('carrier_ranges')
+            ->orderBy('id')
+            ->get();
         // dd(gettype($carts_short_shelf_life));
         return view('user_layout.checkout.payment_select', compact('discount','carts_normal','carts_short_shelf_life','seller_products_normal','seller_products_short','carrier_list'));
     }
@@ -101,12 +104,9 @@ class CheckoutController extends Controller
         {
             if($request->type_cart == "normal_product")
             {
-                if($request->shipping_type == "weight_based")
-                {
+                if ($request->shipping_type == 'weight_based' || $request->shipping_type == 'free_shipping') {
                     $shipping_type = 'Normal Shipping';
-                }
-                else
-                {
+                } else {
                     $shipping_type = 'Fast Shipping';
                 }
                 $cart_data = Cart::whereHas('product', function ($query) {
@@ -150,8 +150,9 @@ class CheckoutController extends Controller
                     {
                         $shipping_time =count(json_decode(RequestForProduct::find($each_cart_data->is_rfp)->shipping_date));
                     }
+                    $shipTypeShort = $request->shipping_type == 'free_shipping' ? 'Normal Shipping' : 'Fast Shipping';
                     $each_cart_data->update(
-                        ['shipping_type' => 'Fast Shipping',
+                        ['shipping_type' => $shipTypeShort,
                         'shipping_cost' => $request->total_shipping * $shipping_time,
                         'carrier_id'=>(int)$request->data_id]
                     );
@@ -167,12 +168,9 @@ class CheckoutController extends Controller
         {
             if($request->type_cart == "normal_product")
             {
-                if($request->shipping_type == "weight_based")
-                {
+                if ($request->shipping_type == 'weight_based' || $request->shipping_type == 'free_shipping') {
                     $shipping_type = 'Normal Shipping';
-                }
-                else
-                {
+                } else {
                     $shipping_type = 'Fast Shipping';
                 }
                 $cart_data = Cart::whereHas('product', function ($query) {
@@ -198,10 +196,12 @@ class CheckoutController extends Controller
                     ['owner_id',(int)$request->data_id_seller],
                     ['is_checked',1],
                     ['is_rfp',0]
-                ])->update(
-                    ['shipping_type' => 'Fast Shipping',
-                    'shipping_cost' => $request->total_shipping,
-                    'carrier_id'=>(int)$request->data_id]
+                ]                )->update(
+                    [
+                        'shipping_type' => $request->shipping_type == 'free_shipping' ? 'Normal Shipping' : 'Fast Shipping',
+                        'shipping_cost' => $request->total_shipping,
+                        'carrier_id' => (int) $request->data_id,
+                    ]
                 );
             }
             $cart_shipping = Cart::where([

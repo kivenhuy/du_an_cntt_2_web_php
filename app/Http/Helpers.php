@@ -268,7 +268,7 @@ if (!function_exists('format_price')) {
     function format_price($price, $isMinimize = false)
     {
        
-        $fomated_price = number_format($price, 2, ',', '.');
+        $fomated_price = number_format((float) $price, 0, ',', '.');
 
 
         // Minimize the price 
@@ -405,6 +405,12 @@ function getShippingCost($carts, $index, $carrier = '')
    
 
     $carrier = Carrier::find($carrier);
+    if (! $carrier) {
+        return 0;
+    }
+    if ((int) ($carrier->free_shipping ?? 0) === 1) {
+        return 0;
+    }
     if ($carrier->carrier_ranges->first()) {
         $carrier_billing_type   = $carrier->carrier_ranges->first()->billing_type;
         $itemsWeightOrPrice =  $seller_product_total_weight[$product->user_id];

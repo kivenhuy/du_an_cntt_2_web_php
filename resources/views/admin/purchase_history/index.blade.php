@@ -109,9 +109,9 @@
                                     </td>
                                     <td>
                                         @if ($order->payment_status == 'paid')
-                                            <span class="badge badge-inline badge-success">{{ translate('Paid') }}</span>
+                                            <span class="badge badge-inline badge-success">Đã thanh toán</span>
                                         @else
-                                            <span class="badge badge-inline badge-danger">{{ translate('Unpaid') }}</span>
+                                            <span class="badge badge-inline badge-danger">Chưa thanh toán</span>
                                         @endif
                                     </td>
                                     <td class="text-right">

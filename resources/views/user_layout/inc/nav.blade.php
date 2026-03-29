@@ -11,8 +11,12 @@
             <div class="container">
                 <div class="d-flex align-items-center">
                     <!-- top menu sidebar button -->
-                    <button type="button" class="btn d-lg-none mr-3 mr-sm-4 p-0 active" data-toggle="class-toggle"
-                        data-target=".aiz-top-menu-sidebar">
+                    <button type="button" class="btn d-lg-none mr-3 mr-sm-4 p-0 aiz-top-menu-sidebar-toggler" data-toggle="class-toggle"
+                        data-target=".aiz-top-menu-sidebar"
+                        data-same=".aiz-top-menu-sidebar-toggler"
+                        data-backdrop="static"
+                        aria-expanded="false"
+                        aria-label="{{ translate('Menu') }}">
                         <svg id="Component_43_1" data-name="Component 43 – 1" xmlns="http://www.w3.org/2000/svg"
                             width="16" height="16" viewBox="0 0 16 16">
                             <rect id="Rectangle_19062" data-name="Rectangle 19062" width="16" height="2"
@@ -34,7 +38,7 @@
                     <div class="d-lg-none ml-auto mr-0">
                         <a class="p-2 d-block text-reset" href="javascript:void(0);" data-toggle="class-toggle"
                             data-target=".front-header-search">
-                            <i class="las la-search la-flip-horizontal la-2x"></i>
+                            <i class="fa-solid fa-magnifying-glass fa-flip-horizontal fa-2x" aria-hidden="true"></i>
                         </a>
                     </div>
                     <!-- Search field -->
@@ -45,7 +49,7 @@
                                     <div class="d-lg-none" data-toggle="class-toggle"
                                         data-target=".front-header-search">
                                         <button class="btn px-2" type="button"><i
-                                                class="la la-2x la-long-arrow-left"></i></button>
+                                                class="fa-solid fa-arrow-left fa-2x" aria-hidden="true"></i></button>
                                     </div>
                                     <div class="search-input-box">
                                         <input type="text"
@@ -91,7 +95,7 @@
                     <div class="d-none d-lg-none ml-3 mr-0">
                         <div class="nav-search-box">
                             <a href="#" class="nav-box-link">
-                                <i class="la la-search la-flip-horizontal d-inline-block nav-box-icon"></i>
+                                <i class="fa-solid fa-magnifying-glass fa-flip-horizontal d-inline-block nav-box-icon" aria-hidden="true"></i>
                             </a>
                         </div>
                     </div>
@@ -423,5 +427,38 @@
             
         </div>
         {{-- @endif --}}
+
+        {{-- Menu trượt mobile: bắt buộc có để nút hamburger (class-toggle → .aiz-top-menu-sidebar) hoạt động --}}
+        <div class="aiz-top-menu-sidebar collapse-sidebar-wrap">
+            <div class="overlay overlay-fixed dark c-pointer" style="z-index: 1;"
+                data-toggle="class-toggle"
+                data-target=".aiz-top-menu-sidebar"
+                data-same=".aiz-top-menu-sidebar-toggler"></div>
+            <div class="collapse-sidebar bg-white">
+                <div class="d-flex align-items-center justify-content-between px-3 py-3 border-bottom">
+                    <span class="fs-16 fw-700">{{ translate('Menu') }}</span>
+                    <button type="button" class="btn p-0 lh-1 aiz-top-menu-sidebar-toggler"
+                        data-toggle="class-toggle"
+                        data-target=".aiz-top-menu-sidebar"
+                        data-same=".aiz-top-menu-sidebar-toggler"
+                        data-backdrop="static"
+                        aria-label="{{ translate('Close') }}">
+                        <i class="fa-solid fa-xmark fa-2x" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <nav class="px-3 py-3 c-scrollbar-light" style="max-height: calc(100vh - 64px); overflow-y: auto;">
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-3"><a href="{{ route('homepage') }}" class="text-reset fs-15 fw-600 d-block">{{ translate('Home') }}</a></li>
+                        <li class="mb-3"><a href="{{ route('products.all') }}" class="text-reset fs-15 fw-600 d-block">{{ translate('All Category') }}</a></li>
+                        <li class="mb-3"><a href="{{ route('homepage') }}" class="text-reset fs-15 fw-600 d-block">{{ translate('All Seller') }}</a></li>
+                        <li class="mb-3"><a href="{{ route('comming-soon') }}" class="text-reset fs-15 d-block">{{ translate('News') }}</a></li>
+                        <li class="mb-3"><a href="{{ route('comming-soon') }}" class="text-reset fs-15 d-block">{{ translate('About Us') }}</a></li>
+                        <li class="mb-3"><a href="{{ route('comming-soon') }}" class="text-reset fs-15 d-block">{{ translate('Discount') }}</a></li>
+                        <li class="mb-3"><a href="{{ route('comming-soon') }}" class="text-reset fs-15 d-block">{{ translate('Support') }}</a></li>
+                        <li class="mb-3"><a href="{{ route('comming-soon') }}" class="text-reset fs-15 d-block">{{ translate('Resources') }}</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
     </header>
 

@@ -86,10 +86,7 @@
                             <span class="col-md-2 text-secondary">{{ translate('Postal Code') }}:</span>
                             <span class="col-md-10 text-dark">{{ $address->postal_code }}</span>
                         </div>
-                        <div class="row fs-14 mb-2 mb-md-0">
-                            <span class="col-md-2 text-secondary">{{ translate('District') }}:</span>
-                            <span class="col-md-10 text-dark">{{ ($address->district)->district_name }}</span>
-                        </div>
+                        
                         <div class="row fs-14 mb-2 mb-md-0">
                             <span class="col-md-2 text-secondary">{{ translate('City') }}:</span>
                             <span class="col-md-10 text-dark">{{ ($address->city)->city_name }}</span>

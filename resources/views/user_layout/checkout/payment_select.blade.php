@@ -3,7 +3,7 @@
 @section('content')
 
     <!-- Payment Info -->
-    <section class="mb-4">
+    <section class="mb-4 checkout-page">
         <div class="container" style="max-width:1200px !important;width: 100%">
             <form action="{{route('checkout')}}" id="final_checkout_form" class="form-default" role="form" method="POST"  id="checkout-form">
             @csrf
@@ -19,7 +19,7 @@
                                 <input type="hidden" id="total_shipping_price" name="total_shipping_price" value="0">
                                 <div class="header_checkout_div">
                                     <div style="margin-bottom:48px ">
-                                        <span class="header_checkout">Checkout</span>
+                                        <span class="header_checkout">Thanh Toán</span>
                                     </div>
                                 </div>
                                 <div class="col-xxl-12 col-xl-12 mx-auto" style="padding-left: unset;padding-right: unset;margin-bottom: 2rem">
@@ -34,7 +34,7 @@
                                             text-align: left;
                                             margin-left: 10px ;
                                             
-                                            ">Products & Delivery</span>
+                                            ">Sản Phẩm & Dịch Vụ Giao Hàng</span>
                                         </i>
                                     </div>
                                     <!-- Seller Products -->
@@ -47,7 +47,7 @@
                                             letter-spacing: -0.0004em;
                                             text-align: left;
                                             margin-left: 10px ;
-                                            ">Normal Products
+                                            ">Thông tin sản phẩm
                                         </span>
                                     </div>
                                     @php
@@ -62,20 +62,14 @@
                                                 $shipping_fee = 0;
                                                 $final_total_normal = 0;
                                             @endphp
-                                            <div class=" bg-white p-3 p-lg-4 text-left">
+                                            <div class="checkout-product-card bg-white p-3 p-lg-4 text-left rounded">
                                                 <div class="mb-4">
                                                     <!-- Headers -->
-                                                    <div class="row gutters-5 d-none d-lg-flex border-bottom mb-3 text-secondary fs-12 header_table" >
-                                                        <div class="col-md-3 fw-600 text_cart_details" style="position: relative;left:32px">{{ translate('Product - ')}} {{ optional(\App\Models\Shop::where('user_id', $key_user)->first())->name ?? optional(\App\Models\User::find($key_user))->name ?? translate('Official Store') }}</div>
-                                                        <div class="col col-md-2 fw-600 text_cart_details">{{ translate('Qty')}}</div>
-                                                        <div class="col col-md-1 fw-600 text_cart_details">{{ translate('Unit')}}</div>
-                                                        @if(Auth::user()->user_type === 'enterprise')
-                                                        <div class="col col-md-2 fw-600 text_cart_details">{{ translate('Order Date')}}</div>
-                                                        @else
-                                                        
-                                                        @endif
-                                                       
-                                                        <div class="col  col-md-4 fw-600 text_cart_details" >{{ translate('Total')}}</div>
+                                                    <div class="row gutters-5 d-none d-lg-flex border-bottom mb-3 text-secondary fs-12 header_table checkout-cart-header" >
+                                                        <div class="col-md-3 fw-600 text_cart_details pl-lg-3">Sản phẩm</div>
+                                                        <div class="col-md-2 fw-600 text_cart_details text-lg-center">Số lượng</div>
+                                                        <div class="col-md-1 fw-600 text_cart_details text-lg-center">Đơn vị</div>
+                                                        <div class="col-md-4 fw-600 text_cart_details text-lg-right pr-lg-3">Tổng tiền</div>
                                                         
                                                     </div>
                                                     <!-- Cart Items -->
@@ -107,26 +101,27 @@
                                                                 }
                                                             @endphp
                                                             @if($product->user_id ==  $key_user)
-                                                                <li class="list-group-item px-0">
-                                                                    <div class="row gutters-5 align-items-center">
+                                                                <li class="list-group-item px-0 checkout-cart-line">
+                                                                    <div class="row gutters-5 checkout-cart-line__row align-items-lg-start">
                                                                         
                                                                         <!-- Product Image & name -->
-                                                                        <div class="col-md-3 d-flex align-items-center mb-2 mb-md-0">
-                                                                            <span class="mr-2 ml-0">
+                                                                        <div class="col-md-3 col-12 d-flex align-items-start checkout-col-product mb-3 mb-lg-0">
+                                                                            <span class="mr-2 ml-0 flex-shrink-0">
                                                                                 <img src="{{ uploaded_asset($product->thumbnail_img) }}"
-                                                                                    class="img-fit size-70px"
+                                                                                    class="img-fit size-70px checkout-cart-thumb"
                                                                                     alt="{{ $product->name  }}"
                                                                                     onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
                                                                             </span>
-                                                                            <span class="fs-14 text_name_product">{{ $product_name_with_choice }}</span>
+                                                                            <span class="fs-14 text_name_product checkout-cart-product-name">{{ $product_name_with_choice }}</span>
                                                                         </div>
                                                                         <!-- Quantity -->
-                                                                        <div class="col-md-2 col order-1 order-md-0">
+                                                                        <div class="col-md-2 col-6 order-1 order-lg-0 checkout-col-qty">
+                                                                            <span class="checkout-cart-mob-label d-lg-none">{{ translate('Qty') }}</span>
                                                                             @if ($cartItem['digital'] != 1 && $product->auction_product == 0)
-                                                                                <div class="d-flex flex-column align-items-start aiz-plus-minus mr-2 ml-0">
+                                                                                <div class="d-flex flex-column align-items-start align-items-lg-center aiz-plus-minus mr-2 ml-0 w-100">
                                                                                    
                                                                                     <input type="number" name="quantity[{{ $cartItem['id'] }}]"
-                                                                                        class="col border-0 text-left px-0 flex-grow-1 fs-14 input-number quantity_product"
+                                                                                        class="col border-0 text-left text-lg-center px-0 flex-grow-1 fs-14 input-number quantity_product checkout-qty-input"
                                                                                         placeholder="1" value="{{ $cartItem['quantity'] }}"
                                                                                         min="{{ $product->min_qty }}"
                                                                                         max="{{ $product_stock->qty }}"
@@ -136,14 +131,15 @@
                                                                             @endif
                                                                         </div>
                                                                         <!-- Price -->
-                                                                        <div class="col-md-1 col-4 order-2 order-md-0 my-3 my-md-0" style="max-width:130px !important">
-                                                                            <span class="unit_product">{{$product->unit}}</span>
+                                                                        <div class="col-md-1 col-6 order-2 order-lg-0 checkout-col-unit my-3 my-lg-0">
+                                                                            <span class="checkout-cart-mob-label d-lg-none">{{ translate('Unit') }}</span>
+                                                                            <span class="unit_product d-block text-lg-center">{{$product->unit}}</span>
                                                                         </div>
                                                                         
                                                                         <!-- Tax -->
                                                                        
                                                                         @if(Auth::user()->user_type === "enterprise")
-                                                                            <div class="col-md-2 col-4 order-5 order-md-0 my-3 my-md-0">
+                                                                            <div class="col-md-2 col-12 order-5 order-lg-0 checkout-col-date my-2 my-lg-0">
                                                                                 @if(count($cartItem->shipping_date)>0)
                                                                                     @foreach ($cartItem->shipping_date as $date)
                                                                                         <span class="fw-700 fs-14">{{$date}}</span>
@@ -152,8 +148,8 @@
                                                                             </div>
                                                                         @endif
                                                                         <!-- Total -->
-                                                                        <div class="col-md-4 col-5 order-4 order-md-0 my-3 my-md-0">
-                                                                            <span class="opacity-60 fs-12 d-block d-md-none">{{ translate('Total')}}</span>
+                                                                        <div class="col-md-4 col-12 order-4 order-lg-0 checkout-col-total my-3 my-lg-0">
+                                                                            <span class="opacity-60 fs-12 d-block d-lg-none">{{ translate('Total')}}</span>
                                                                             @if(Auth::user()->user_type === "enterprise")
                                                                                 <span class="fw-700 fs-16 text-primary total_product" style="">{{ single_price(cart_product_price($cartItem, $product, false) * $cartItem['quantity']) }}</span><br>
                                                                                 <small style="color: red;font-weight: 900">This Price Is Total Price For All Order Date</small>
@@ -169,32 +165,31 @@
                                                     </ul>
                                                 </div>
                                             </div>
-                                            <div style="margin-bottom: 16px;" class="delivery_type">
-                                                Select Delivery Type:
+                                            <div class="delivery_type checkout-delivery-section mb-3">
+                                                <div class="checkout-delivery-heading">{{ translate('Select delivery type') }}</div>
                                                 @foreach($carrier_list as $carrier_key => $carrier)
-                                                    <div style="margin-bottom: 1rem;display: flex;align-items: center">
+                                                    @php
+                                                        $carrier_range_first = $carrier->carrier_ranges->first();
+                                                        $is_carrier_free = (int) ($carrier->free_shipping ?? 0) === 1;
+                                                        $data_shipping_type = $is_carrier_free ? 'free_shipping' : optional($carrier_range_first)->billing_type;
+                                                    @endphp
+                                                    @if($carrier_range_first || $is_carrier_free)
+                                                    <div class="checkout-delivery-option">
                                                        
-                                                        <input onclick="handleClick(this);" class="radio_button_checkout" type="radio" id="shipping_fee_{{ $key_user }}" data_cart="normal_product" data_id="{{$carrier->id}}" name="shipping_fee_{{ $key_user }}" value="{{carrier_base_price($carts_normal, $carrier->id, $key_user)}}" data-shipping="{{$carrier->carrier_ranges->first()->billing_type}}"/>
-                                                        @if($carrier->carrier_ranges->first()->billing_type == 'weight_based')
-                                                            <span for="shipping_fee" class="delivery_type">{{ $carrier->name }}</span>
+                                                        <input onclick="handleClick(this);" class="radio_button_checkout checkout-delivery-radio" type="radio" id="shipping_fee_{{ $key_user }}" data_cart="normal_product" data_id="{{$carrier->id}}" name="shipping_fee_{{ $key_user }}" value="{{ carrier_base_price($carts_normal, $carrier->id, $key_user) }}" data-shipping="{{ $data_shipping_type }}"/>
+                                                        @if($is_carrier_free)
+                                                            <span class="delivery_type checkout-delivery-label mb-0">{{ $carrier->name }} — {{ translate('Free shipping') }}</span>
+                                                        @elseif($carrier_range_first->billing_type == 'weight_based')
+                                                            <span class="delivery_type checkout-delivery-label mb-0">{{ $carrier->name }}</span>
                                                         @else
-                                                            <span for="shipping_fee" class="delivery_type">{{ $carrier->name }} (2 hour)</span>
+                                                            <span class="delivery_type checkout-delivery-label mb-0">{{ $carrier->name }} (2 hour)</span>
                                                         @endif
-                                                        <div style="position: relative;left: 16px;">
-                                                            <span class="price_shipping">{{ single_price(carrier_base_price($carts_normal, $carrier->id, $key_user)) }}</span>
-                                                        </div>
+                                                        <span class="price_shipping checkout-delivery-price">{{ single_price(carrier_base_price($carts_normal, $carrier->id, $key_user)) }}</span>
                                                         <input type="radio" name="carrier_id_{{ $key_user }}" value="{{$carrier->id}}" checked="" style="display: none">
                                                     </div>
-                                                    
+                                                    @endif
                                                 @endforeach
                                             </div>
-                                            @if(Auth::user()->user_type == "enterprise")
-                                            <i class="fa fa-exclamation" style="font-size: 12px;color: red;margin-left:13px" aria-hidden="true">
-                                                <span style="">That Shipping Price Apply For Each Of Order Date You Send In Request
-                                                </span>
-                                            </i>
-                                                
-                                            @endif
                                         @endforeach
                                     @endif
 
@@ -213,18 +208,18 @@
                                                 $shipping_fee = 0;
                                                 $final_total_short = 0;
                                             @endphp
-                                            <div class=" bg-white p-3 p-lg-4 text-left">
+                                            <div class="checkout-product-card bg-white p-3 p-lg-4 text-left rounded">
                                                 <div class="mb-4">
                                                     <!-- Headers -->
-                                                    <div class="row gutters-5 d-none d-lg-flex border-bottom mb-3 text-secondary fs-12 header_table" >
-                                                        <div class="col-md-3 fw-600 text_cart_details" style="position: relative;left:32px">{{ translate('Product - ')}} {{ optional(\App\Models\Shop::where('user_id', $key_user)->first())->name ?? optional(\App\Models\User::find($key_user))->name ?? translate('Official Store') }}</div>
-                                                        <div class="col col-md-2 fw-600 text_cart_details">{{ translate('Qty')}}</div>
-                                                        <div class="col-md-1  fw-600 text_cart_details">{{ translate('Unit')}}</div>
+                                                    <div class="row gutters-5 d-none d-lg-flex border-bottom mb-3 text-secondary fs-12 header_table checkout-cart-header" >
+                                                        <div class="col-md-3 fw-600 text_cart_details pl-lg-3">{{ translate('Product - ')}} {{ optional(\App\Models\Shop::where('user_id', $key_user)->first())->name ?? optional(\App\Models\User::find($key_user))->name ?? translate('Official Store') }}</div>
+                                                        <div class="col-md-2 fw-600 text_cart_details text-lg-center">{{ translate('Qty')}}</div>
+                                                        <div class="col-md-1 fw-600 text_cart_details text-lg-center">{{ translate('Unit')}}</div>
                                                         @if(Auth::user()->user_type === 'enterprise')
-                                                        <div class="col col-md-2 fw-600 text_cart_details">{{ translate('Order Date')}}</div>
+                                                        <div class="col-md-2 fw-600 text_cart_details text-lg-center">{{ translate('Order Date')}}</div>
                                                         @endif
                                                         
-                                                        <div class="col-md-4 fw-600 text_cart_details" >{{ translate('Total')}}</div>
+                                                        <div class="col-md-4 fw-600 text_cart_details text-lg-right pr-lg-3">{{ translate('Total')}}</div>
                                                         
                                                     </div>
                                                     <!-- Cart Items -->
@@ -256,26 +251,27 @@
                                                                 }
                                                             @endphp
                                                             @if($product->user_id ==  $key_user)
-                                                                <li class="list-group-item px-0">
-                                                                    <div class="row gutters-5 align-items-center">
+                                                                <li class="list-group-item px-0 checkout-cart-line">
+                                                                    <div class="row gutters-5 checkout-cart-line__row align-items-lg-start">
                                                                         
                                                                         <!-- Product Image & name -->
-                                                                        <div class="col-md-3 d-flex align-items-center mb-2 mb-md-0">
-                                                                            <span class="mr-2 ml-0">
+                                                                        <div class="col-md-3 col-12 d-flex align-items-start checkout-col-product mb-3 mb-lg-0">
+                                                                            <span class="mr-2 ml-0 flex-shrink-0">
                                                                                 <img src="{{ uploaded_asset($product->thumbnail_img) }}"
-                                                                                    class="img-fit size-70px"
+                                                                                    class="img-fit size-70px checkout-cart-thumb"
                                                                                     alt="{{ $product->name  }}"
                                                                                     onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
                                                                             </span>
-                                                                            <span class="fs-14 text_name_product">{{ $product_name_with_choice }}</span>
+                                                                            <span class="fs-14 text_name_product checkout-cart-product-name">{{ $product_name_with_choice }}</span>
                                                                         </div>
                                                                         <!-- Quantity -->
-                                                                        <div class="col-md-2 col order-1 order-md-0">
+                                                                        <div class="col-md-2 col-6 order-1 order-lg-0 checkout-col-qty">
+                                                                            <span class="checkout-cart-mob-label d-lg-none">{{ translate('Qty') }}</span>
                                                                             @if ($carts_short_shelf_lifeItem['digital'] != 1 && $product->auction_product == 0)
-                                                                                <div class="d-flex flex-column align-items-start aiz-plus-minus mr-2 ml-0">
+                                                                                <div class="d-flex flex-column align-items-start align-items-lg-center aiz-plus-minus mr-2 ml-0 w-100">
                                                                                    
                                                                                     <input type="number" name="quantity[{{ $carts_short_shelf_lifeItem['id'] }}]"
-                                                                                        class="col border-0 text-left px-0 flex-grow-1 fs-14 input-number quantity_product"
+                                                                                        class="col border-0 text-left text-lg-center px-0 flex-grow-1 fs-14 input-number quantity_product checkout-qty-input"
                                                                                         placeholder="1" value="{{ $carts_short_shelf_lifeItem['quantity'] }}"
                                                                                         min="{{ $product->min_qty }}"
                                                                                         max="{{ $product_stock->qty }}"
@@ -285,12 +281,13 @@
                                                                             @endif
                                                                         </div>
                                                                         <!-- Price -->
-                                                                        <div class="col-md-1 col-4 order-2 order-md-0 my-3 my-md-0" style="max-width:130px !important">
-                                                                            <span class="unit_product">{{$product->unit}}</span>
+                                                                        <div class="col-md-1 col-6 order-2 order-lg-0 checkout-col-unit my-3 my-lg-0">
+                                                                            <span class="checkout-cart-mob-label d-lg-none">{{ translate('Unit') }}</span>
+                                                                            <span class="unit_product d-block text-lg-center">{{$product->unit}}</span>
                                                                         </div>
 
                                                                         @if(Auth::user()->user_type === "enterprise")
-                                                                            <div class="col-md-2 col-4 order-5 order-md-0 my-3 my-md-0">
+                                                                            <div class="col-md-2 col-12 order-5 order-lg-0 checkout-col-date my-2 my-lg-0">
                                                                                 @if(count($carts_short_shelf_lifeItem->shipping_date)>0)
                                                                                     @foreach ($carts_short_shelf_lifeItem->shipping_date as $date)
                                                                                         <span class="fw-700 fs-14">{{$date}}</span>
@@ -299,8 +296,8 @@
                                                                             </div>
                                                                         @endif
                                                                         <!-- Total -->
-                                                                        <div class="col-md-4 col-5 order-4 order-md-0 my-3 my-md-0">
-                                                                            <span class="opacity-60 fs-12 d-block d-md-none">{{ translate('Total')}}</span>
+                                                                        <div class="col-md-4 col-12 order-4 order-lg-0 checkout-col-total my-3 my-lg-0">
+                                                                            <span class="opacity-60 fs-12 d-block d-lg-none">{{ translate('Total')}}</span>
                                                                             @if(Auth::user()->user_type === "enterprise")
                                                                                 <span class="fw-700 fs-16 text-primary total_product" style="">{{ single_price(cart_product_price($carts_short_shelf_lifeItem, $product, false) * $carts_short_shelf_lifeItem['quantity'] ) }}</span><br>
                                                                                 <small style="color: red;font-weight: 900">This Price Is Total Price For All Order Date</small>
@@ -317,19 +314,24 @@
                                                     </ul>
                                                 </div>
                                             </div>
-                                            <div style="margin-bottom: 34px;" class="delivery_type">
-                                                Select Delivery Type:
+                                            <div class="delivery_type checkout-delivery-section mb-4">
+                                                <div class="checkout-delivery-heading">{{ translate('Select delivery type') }}</div>
                                                 @foreach($carrier_list as $carrier_key => $carrier)
-                                                    @if($carrier->carrier_ranges->first()->billing_type == 'fast_shipping')
-                                                        <div style="margin-bottom: 1rem;display: flex;align-items: center">
+                                                    @php
+                                                        $carrier_range_first_short = $carrier->carrier_ranges->first();
+                                                        $is_carrier_free_short = (int) ($carrier->free_shipping ?? 0) === 1;
+                                                        $data_shipping_short = $is_carrier_free_short ? 'free_shipping' : optional($carrier_range_first_short)->billing_type;
+                                                    @endphp
+                                                    @if(optional($carrier_range_first_short)->billing_type == 'fast_shipping' || $is_carrier_free_short)
+                                                        <div class="checkout-delivery-option">
                                                         
-                                                            <input onclick="handleClick_short(this);" class="radio_button_checkout_short" type="radio" id="shipping_fee_short_{{ $key_user }}" data_cart="short_product" data_id="{{$carrier->id}}" name="shipping_fee_short_{{ $key_user }}" value="{{carrier_base_price($carts_short_shelf_life, $carrier->id, $key_user)}}" data-shipping="{{$carrier->carrier_ranges->first()->billing_type}}"/>
-                                                            
-                                                                <span for="shipping_fee" class="delivery_type">{{ $carrier->name }} (2 hour)</span>
-                                                            
-                                                            <div style="position: relative;left: 16px;">
-                                                                <span class="price_shipping">{{ single_price(carrier_base_price($carts_short_shelf_life, $carrier->id, $key_user)) }}</span>
-                                                            </div>
+                                                            <input onclick="handleClick_short(this);" class="radio_button_checkout_short checkout-delivery-radio" type="radio" id="shipping_fee_short_{{ $key_user }}" data_cart="short_product" data_id="{{$carrier->id}}" name="shipping_fee_short_{{ $key_user }}" value="{{ carrier_base_price($carts_short_shelf_life, $carrier->id, $key_user) }}" data-shipping="{{ $data_shipping_short }}"/>
+                                                            @if($is_carrier_free_short)
+                                                                <span class="delivery_type checkout-delivery-label mb-0">{{ $carrier->name }} — {{ translate('Free shipping') }}</span>
+                                                            @else
+                                                                <span class="delivery_type checkout-delivery-label mb-0">{{ $carrier->name }} (2 hour)</span>
+                                                            @endif
+                                                            <span class="price_shipping checkout-delivery-price">{{ single_price(carrier_base_price($carts_short_shelf_life, $carrier->id, $key_user)) }}</span>
                                                             <input type="radio" name="carrier_id_{{ $key_user }}" value="{{$carrier->id}}" checked="" style="display: none">
                                                         </div>
                                                     @endif
@@ -353,7 +355,7 @@
                                     <div class="card-header p-4 border-bottom-0">
                                         <i class="fa fa-credit-card" aria-hidden="true" style="font-size: 24px">
                                             <span class="select_payment_option" style="margin-left: 8px;">
-                                                {{ translate('Payment Method') }}
+                                                Phương thức thanh toán
                                             </span>
                                         </i>
                                     </div>
@@ -367,36 +369,36 @@
                                                 $cod_on = 1;
                                             @endphp
                                             @if ($digital != 1 && $cod_on == 1)
-                                                <div class="col-6 col-xl-4 col-md-4" style="max-width: 221px !important">
+                                                <div class="col-12 col-sm-6 col-md-4 checkout-payment-tile">
                                                     <label class="aiz-megabox d-block mb-3">
                                                         <input value="cash_on_delivery" class="online_payment"
                                                             type="radio" name="payment_option" checked>
                                                         <span class="d-block aiz-megabox-elem rounded-0 p-3">
-                                                            {{-- <img src="{{ static_asset('assets/img/cards/cod.png') }}"
-                                                                class="img-fit mb-2"> --}}
+                                                            <!-- <img src="{{ static_asset('assets/img/cards/cod.png') }}"
+                                                                class="img-fit mb-2">  -->
                                                             <span class="d-block text-center">
                                                                 <span
-                                                                    class="d-block fw-600 fs-15 text_method">{{ translate('Cash on Delivery') }}</span>
+                                                                    class="d-block fw-600 fs-15 text_method">Thanh toán khi nhận hàng</span>
                                                             </span>
                                                         </span>
                                                     </label>
                                                 </div>
                                             @endif
-                                            <div class="col-3 col-xl-3 col-md-3" style="max-width: 221px !important">
+                                            <!-- <div class="col-12 col-sm-6 col-md-4 checkout-payment-tile">
                                                 <label class="aiz-megabox d-block mb-3">
                                                     <input value="vnpay" class="online_payment"
                                                         type="radio" name="payment_option" >
                                                     <span class="d-block aiz-megabox-elem rounded-0 p-3">
-                                                        {{-- <img src="{{ static_asset('assets/img/cards/cod.png') }}"
-                                                            class="img-fit mb-2"> --}}
+                                                        <img src="{{ static_asset('assets/img/cards/cod.png') }}"
+                                                            class="img-fit mb-2">
                                                         <span class="d-block text-center">
                                                             <span
                                                                 class="d-block fw-600 fs-15 text_method">{{ translate('VNPay') }}</span>
                                                         </span>
                                                     </span>
                                                 </label>
-                                            </div>
-                                            <div class="col-6 col-xl-3 col-md-4">
+                                            </div> -->
+                                            <div class="col-12 col-sm-6 col-md-4 checkout-payment-tile">
                                                 <label class="aiz-megabox d-block mb-3">
                                                     <input value="bank_payment" type="radio"
                                                         name="payment_option" class="offline_payment_option"
@@ -406,7 +408,7 @@
                                                         
                                                         <span class="d-block text-center">
                                                             <span
-                                                                class="d-block fw-600 fs-15 text_method">Bank transfer
+                                                                class="d-block fw-600 fs-15 text_method">Chuyển khoản ngân hàng
                                                             </span>
                                                         </span>
                                                     </span>
@@ -415,41 +417,41 @@
                                             
                                             <div id="manual_payment_info_1" class="d-none">
                                                 <h5>
-                                                    <span style="font-weight: bolder;">Guidline Upload Your Bank Transfer Receipt</span>
+                                                    <span style="font-weight: bolder;">Hướng dẫn tải hình ảnh chứng từ chuyển khoản</span>
                                                 </h5>
                                                 <div>
                                                     <br>
                                                 </div>
                                                 <div>
-                                                    To ensure your order setup is shared, please follow these steps:
+                                                    Để đảm bảo đơn hàng của bạn được xử lý, vui lòng làm theo các bước sau:
+                                                </div>
+                                                <div>
+                                                    <br>    
+                                                </div>
+                                                <div>
+                                                    <span style="font-weight: bolder;">Tải lên chứng từ chuyển khoản:</span>&nbsp;
+                                                    Tải lên hình ảnh chứng từ chuyển khoản rõ ràng, hiển thị chi tiết giao dịch của đơn hàng.
                                                 </div>
                                                 <div>
                                                     <br>
                                                 </div>
                                                 <div>
-                                                    <span style="font-weight: bolder;">Upload relevant receipts:</span>&nbsp;
-                                                    Upload a clear bank receipt showing the exact transaction details for your order.
-                                                </div>
-                                                <div>
-                                                    <br>
-                                                </div>
-                                                <div>
-                                                    <span style="font-weight: bolder;">Verification process:&nbsp;</span>
-                                                    Our team will verify receipts before processing your order.
+                                                    <span style="font-weight: bolder;">Quá trình xác thực:&nbsp;</span>
+                                                    Đội ngũ của chúng tôi sẽ xác thực chứng từ trước khi xử lý đơn hàng.
                                                 </div>
                                                 <div><br></div>
                                                 <div>
-                                                    <span style="font-weight: bolder;">Exact problem:&nbsp;</span>
-                                                    Make sure the uploaded receipt matches the order amount; Inaccuracies may cause delays.
+                                                    <span style="font-weight: bolder;">Vấn đề chính xác:&nbsp;</span>
+                                                    Đảm bảo hình ảnh chứng từ trùng khớp với số tiền đơn hàng; Sai số có thể dẫn đến đơn hàng bị trì hoãn.
                                                 </div>
                                                 <div><br></div>
                                                 <div>
-                                                    <span style="font-weight: bolder;">Avoid rejection:&nbsp;</span>
-                                                    Uploading irrelevant files will result in automatic order rejection..
+                                                    <span style="font-weight: bolder;">Tránh từ chối:&nbsp;</span>
+                                                    Tải lên hình ảnh không liên quan sẽ dẫn đến tự động từ chối đơn hàng.
                                                 </div>
                                                 <div><br></div>
                                                 <div>
-                                                    Need help? Please contact our support for assistance.
+                                                    Cần hỗ trợ? Vui lòng liên hệ với chúng tôi để được hỗ trợ.
                                                 </div>
                                                 <div>
                                                     <br style="color: rgb(121, 121, 121); font-family: Roboto, sans-serif; font-size: 14px; letter-spacing: -0.0056px;">
@@ -632,7 +634,7 @@
             var type_cart = "";
             var final_price = $('#final_price').val();
             var data_id_seller = myRadio.name.replace('shipping_fee_','');  
-            $("input[class=radio_button_checkout]:checked").each(function() {
+            $("input.radio_button_checkout:checked").each(function() {
                 total_shipping = 0;
                 type_cart = ($(this).attr("data_cart"))
                 var value = $(this).val();
@@ -681,7 +683,7 @@
                 var data_id_seller = myRadio.name.replace('shipping_fee_','');  
             }
             
-            $("input[class=radio_button_checkout_short]:checked").each(function() {
+            $("input.radio_button_checkout_short:checked").each(function() {
                 total_shipping = 0;
                 type_cart = ($(this).attr("data_cart"))
                 var value = $(this).val();
