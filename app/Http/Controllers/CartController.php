@@ -15,6 +15,16 @@ use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
+    private function customerCartAccessDeniedResponse()
+    {
+        return [
+            'status' => 0,
+            'cart_count' => 0,
+            'message' => translate('Please login as a customer to continue.'),
+            'nav_cart_view' => view('user_layout.partials.cart')->render(),
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -93,25 +103,16 @@ class CartController extends Controller
 
     public function addToCart(Request $request)
     {
+        if (!Auth::check() || Auth::user()->user_type !== 'customer') {
+            return $this->customerCartAccessDeniedResponse();
+        }
+
         $product = Products::find($request->id);
         $carts = array();
         $data = array();
-        if(auth()->user() != null) {
-            $user_id = Auth::user()->id;
-            $data['user_id'] = $user_id;
-            $carts = Cart::where('user_id', $user_id)->get();
-        } 
-        else 
-        {
-            if($request->session()->get('temp_user_id')) {
-                $temp_user_id = $request->session()->get('temp_user_id');
-            } else {
-                $temp_user_id = bin2hex(random_bytes(10));
-                $request->session()->put('temp_user_id', $temp_user_id);
-            }
-            $data['temp_user_id'] = $temp_user_id;
-            $carts = Cart::where('temp_user_id', $temp_user_id)->get();
-        }
+        $user_id = Auth::user()->id;
+        $data['user_id'] = $user_id;
+        $carts = Cart::where('user_id', $user_id)->get();
         $data['product_id'] = $product->id;
         $data['owner_id'] = $product->user_id;
 
@@ -187,13 +188,7 @@ class CartController extends Controller
             Cart::create($data);
         }
 
-        if(auth()->user() != null) {
-            $user_id = Auth::user()->id;
-            $carts = Cart::where('user_id', $user_id)->get();
-        } else {
-            $temp_user_id = $request->session()->get('temp_user_id');
-            $carts = Cart::where('temp_user_id', $temp_user_id)->get();
-        }
+        $carts = Cart::where('user_id', Auth::id())->get();
         
         return array(
             'status' => 1,
@@ -338,16 +333,18 @@ class CartController extends Controller
 
     public function addToCart_RFP_request(Request $request)
     {
+        if (!Auth::check() || Auth::user()->user_type !== 'customer') {
+            return $this->customerCartAccessDeniedResponse();
+        }
+
         $rfp_record = RequestForProduct::find($request->id_rfp);
         $product = Products::find($rfp_record->product_id);
         $carts = array();
         $data = array();
 
-        if(auth()->user() != null) {
-            $user_id = Auth::user()->id;
-            $data['user_id'] = $user_id;
-            $carts = Cart::where('user_id', $user_id)->get();
-        } 
+        $user_id = Auth::user()->id;
+        $data['user_id'] = $user_id;
+        $carts = Cart::where('user_id', $user_id)->get();
 
         $data['product_id'] = $product->id;
         $data['owner_id'] = $product->user_id;
@@ -391,13 +388,7 @@ class CartController extends Controller
             Cart::create($data);
         }
 
-        if(auth()->user() != null) {
-            $user_id = Auth::user()->id;
-            $carts = Cart::where('user_id', $user_id)->get();
-        } else {
-            $temp_user_id = $request->session()->get('temp_user_id');
-            $carts = Cart::where('temp_user_id', $temp_user_id)->get();
-        }
+        $carts = Cart::where('user_id', Auth::id())->get();
         
         return array(
             'status' => 1,

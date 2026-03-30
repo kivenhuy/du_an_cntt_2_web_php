@@ -17,7 +17,7 @@
                                             <a href="{{url()->previous()}}" ><i style="color:black;font-size: 1.73em;" class="fa fa-arrow-left"></i></a>
                                         </div>
                                         <div class="text-center px-3">
-                                            <h1 class="fw-700 register-mobile-header">{{ translate('Create an account')}}</h1>
+                                            <h1 class="fw-700 register-mobile-header">Tạo tài khoản</h1>
                                         </div>
                                     </div>
                                     <!-- Register form -->
@@ -26,12 +26,10 @@
                                             
                                                 <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist" style="margin-bottom: 2%">
                                                     <li class="nav-item mb-2" style="">
-                                                        <a class="nav-link {{ (old('user_type') == null || old('user_type') == 'customer') ? 'active' : '' }}" id="custom-content-below-home-tab" data-toggle="pill" href="#information" role="tab" aria-controls="custom-content-below-home" aria-selected="true"><span class="text_head_register">{{ translate('Buyer') }}</span></a>
+                                                        <a class="nav-link {{ (old('user_type') == null || old('user_type') == 'customer') ? 'active' : '' }}" id="custom-content-below-home-tab" data-toggle="pill" href="#information" role="tab" aria-controls="custom-content-below-home" aria-selected="true"><span class="text_head_register">Khách hàng</span></a>
                                                     </li>
                 
-                                                    <li class="nav-item" style="">
-                                                        <a class="nav-link {{ (old('user_type') == 'seller') ? 'active' : '' }}" id="custom-content-below-messages-tab" data-toggle="pill" href="#refundhistorytab" role="tab" aria-controls="custom-content-below-messages" aria-selected="false" ><span class="text_head_register">{{ translate('Seller') }}</span></a>
-                                                    </li>
+                                                    
 
                                                                                                   
                                                 </ul>
@@ -45,8 +43,8 @@
                                                                     <div class="col-md-6">
                                                                         <!-- Name -->
                                                                         <div class="form-group">
-                                                                            <label for="name" class="fs-12 fw-700 text-soft-dark ">{{  translate('Full Name') }}</label>
-                                                                            <input type="text" required class="form-control rounded-0{{ $errors->has('name') ? ' is-invalid' : '' }}" value="{{ old('name') }}" placeholder="{{  translate('Full Name') }}" name="name">
+                                                                            <label for="name" class="fs-12 fw-700 text-soft-dark ">Họ và tên</label>
+                                                                            <input type="text" required class="form-control rounded-0{{ $errors->has('name') ? ' is-invalid' : '' }}" value="{{ old('name') }}" placeholder="Nhập họ và tên" name="name">
                                                                             @if ($errors->has('name'))
                                                                                 <span class="invalid-feedback" role="alert">
                                                                                     <strong>{{ $errors->first('name') }}</strong>
@@ -58,7 +56,7 @@
                                                                     <div class="col-md-6">
                                                                         <!-- Name -->
                                                                         <div class="form-group phone-form-group">
-                                                                            <label for="phone" class="fs-12 fw-700 text-soft-dark">{{  translate('Mobile Phone') }}</label>
+                                                                            <label for="phone" class="fs-12 fw-700 text-soft-dark">Số điện thoại</label>
                                                                             <input required type="tel" id="phone-code" class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }} rounded-0" onkeypress="return isNumber(event)" value="{{ old('phone') }}" placeholder="" name="phone" autocomplete="off">
                                                                             <input type="hidden" name="country_code" value="">
                                                                         </div>
@@ -71,8 +69,8 @@
                                                                     <div class="col-md-6">
                                                                         <!-- Email or Phone -->
                                                                         <div class="form-group">
-                                                                            <label for="js-customer-check-email-exist" class="fs-12 fw-700 text-soft-dark">{{  translate('Email') }}</label>
-                                                                            <input type="email" id="js-customer-check-email-exist" class="form-control rounded-0{{ $errors->has('email') ? ' is-invalid' : '' }}" value="{{ old('email') }}" placeholder="{{  translate('Email') }}" name="email" autocomplete="off">
+                                                                            <label for="js-customer-check-email-exist" class="fs-12 fw-700 text-soft-dark">Email</label>
+                                                                            <input type="email" id="js-customer-check-email-exist" class="form-control rounded-0{{ $errors->has('email') ? ' is-invalid' : '' }}" value="{{ old('email') }}" placeholder="Nhập email" name="email" autocomplete="off">
                                                                             <span class="js-customer-email-error invalid-feedback" style="display:block;color:#EB000A; font-size: 14px;"></span>
                                                                         </div>
                                                                     </div>
@@ -83,8 +81,8 @@
                                                                     <div class="col-md-6">
                                                                         <!-- password -->
                                                                         <div class="form-group">
-                                                                            <label for="password" class="fs-12 fw-700 text-soft-dark">{{  translate('Password') }}</label>
-                                                                            <input type="password" required class="form-control rounded-0{{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="{{  translate('Password must contain at least 6 digits') }}" name="password" autocomplete="off">
+                                                                            <label for="password" class="fs-12 fw-700 text-soft-dark">Mật khẩu</label>
+                                                                            <input type="password" required class="form-control rounded-0{{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="Nhập mật khẩu" name="password" autocomplete="off">
                                                                             @if ($errors->has('password'))
                                                                                 <span class="invalid-feedback" role="alert">
                                                                                     <strong>{{ $errors->first('password') }}</strong>
@@ -95,8 +93,8 @@
                                                                     <div class="col-md-6">
                                                                         <!-- password Confirm -->
                                                                         <div class="form-group">
-                                                                            <label for="password_confirmation" class="fs-12 fw-700 text-soft-dark">{{  translate('Confirm Password') }}</label>
-                                                                            <input type="password" required class="form-control rounded-0" placeholder="{{  translate('Confirm Password') }}" name="password_confirmation" autocomplete="off">
+                                                                            <label for="password_confirmation" class="fs-12 fw-700 text-soft-dark">Nhập lại mật khẩu</label>
+                                                                            <input type="password" required class="form-control rounded-0" placeholder="Nhập lại mật khẩu" name="password_confirmation" autocomplete="off">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -107,156 +105,18 @@
                                                             <div class="mb-3">
                                                                 <label class="aiz-checkbox d-block">
                                                                     <input type="checkbox" name="checkbox_example_1" required>
-                                                                    <span class="">{{ translate('By signing up you agree to our ')}} <a href="{{ route('terms') }}" class="fw-500">{{ translate('terms and conditions.') }}</a></span>
+                                                                        <span class="">Bằng cách đăng ký, bạn đồng ý với <a href="{{ route('terms') }}" class="fw-500">điều khoản và điều kiện</a></span>
                                                                     <span class="aiz-square-check"></span>
                                                                 </label>
                                                             </div>
 
                                                             <!-- Submit Button -->
                                                             <div class="mb-4 mt-4">
-                                                                <button type="btn" id="btnSubmit" class="btn btn-primary btn-block fw-600 rounded-4">{{  translate('Create Account') }}</button>
+                                                                <button type="btn" id="btnSubmit" class="btn btn-primary btn-block fw-600 rounded-4">Tạo tài khoản</button>
                                                             </div>
                                                         </form>
                                                     </div>
-                                                    <div class="tab-pane fade  {{ (old('user_type') == 'seller') ? 'active show' : '' }}" id="refundhistorytab" role="tabpanel" aria-labelledby="custom-content-below-info-tab">
-                                                        <form id="reg-form-seller" class="form-default" role="form" action="{{ route('shops.store') }}" method="POST" enctype="multipart/form-data">
-                                                        @csrf
-                                                            <input type="hidden" name="user_type" value="seller">
-
-                                                            <div class="form-group row">
-                                                                <div class="col-md-6">
-                                                                    <!-- Name -->
-                                                                    <div class="form-group">
-                                                                        <label for="name" class="fs-12 fw-700 text-soft-dark">{{  translate('Shop Name') }}</label>
-                                                                        <input type="text" required class="form-control rounded-0{{ $errors->has('name') ? ' is-invalid' : '' }}" value="{{ old('name') }}" placeholder="{{  translate('Full Name') }}" name="name">
-                                                                        @if ($errors->has('name'))
-                                                                            <span class="invalid-feedback" role="alert">
-                                                                                <strong>{{ $errors->first('name') }}</strong>
-                                                                            </span>
-                                                                        @endif
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <!-- Legal Name -->
-                                                                    <div class="form-group">
-                                                                        <label for="legal_name" class="fs-12 fw-700 text-soft-dark">{{  translate('Legal Name') }}</label>
-                                                                        <input type="text" class="form-control rounded-0{{ $errors->has('legal_name') ? ' is-invalid' : '' }}" value="{{ old('legal_name') }}" placeholder="{{  translate('Legal Name') }}" name="legal_name">
-                                                                        @if ($errors->has('legal_name'))
-                                                                            <span class="invalid-feedback" role="alert">
-                                                                                <strong>{{ $errors->first('legal_name') }}</strong>
-                                                                            </span>
-                                                                        @endif
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            
-                                                            <div class="form-group row">
-                                                                <div class="col-md-6">
-                                                                    <!-- Country -->
-                                                                    <div class="form-group">
-                                                                        <label for="password" class="fs-12 fw-700 text-soft-dark">{{  translate('Country') }}</label>
-                                                                        <select required class="form-control aiz-selectpicker" id="country_2" name="country_2" data-live-search="true">
-                                                                            <option value="" hidden>Select Country</option>
-                                                                            @foreach($country as $data_country)
-                                                                                <option value="{{$data_country->id}}">{{$data_country->country_name}}</option>
-                                                                            @endforeach
-                                                                        </select>
-                                                                        {{-- <input type="text" class="form-control rounded-0{{ $errors->has('country') ? ' is-invalid' : '' }}" placeholder="{{  translate('Country') }}" name="country"> --}}
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    {{-- City --}}
-                                                                    <div class="form-group">
-                                                                        <label for="password_confirmation" class="fs-12 fw-700 text-soft-dark">{{  translate('City') }}</label>
-                                                                        <select required class="form-control aiz-selectpicker" id="city_2" name="city_2" data-live-search="true">
-                                                                            <option value="" selected hidden>Select City</option>
-                                                                           
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="form-group row">
-                                                                
-                                                                <div class="col-md-6">
-                                                                     <!-- District -->
-                                                                     <div class="form-group">
-                                                                        <label for="ward_code" class="fs-12 fw-700 text-soft-dark">{{  translate('District') }}</label>
-                                                                        <select required class="form-control aiz-selectpicker" id="district" name="district" data-live-search="true">
-                                                                            <option value="" selected hidden>Select District</option>
-                                                                           
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="col-md-6">
-                                                                    <div class="form-group">
-                                                                        <label for="ward_code" class="fs-12 fw-700 text-soft-dark">{{  translate('Ward') }}</label>
-                                                                        <input type="text" class="form-control rounded-0" placeholder="{{  translate('Ward') }}" name="ward" value="{{ old('ward')}}">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="form-group row">
-                                                               
-                                                                <div class="col-md-6">
-                                                                    <!-- Address -->
-                                                                    <div class="form-group">
-                                                                        <label for="ward_code" class="fs-12 fw-700 text-soft-dark">{{  translate('Address') }}</label>
-                                                                        <input type="text" class="form-control rounded-0" placeholder="{{  translate('Address') }}" name="address" value="{{ old('address')}}">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="form-group row">
-                                                                <div class="col-md-6">
-                                                                    <!-- Email or Phone -->
-                                                                    <div class="form-group">
-                                                                        <label for="email" class="fs-12 fw-700 text-soft-dark">{{  translate('Email') }}</label>
-                                                                        <input type="email" id="js-seller-check-email-exist" class="form-control rounded-0{{ $errors->has('email') ? ' is-invalid' : '' }}" value="{{ old('email') }}" placeholder="{{  translate('Email') }}" name="email" autocomplete="off">
-                                                                        @if ($errors->has('email'))
-                                                                            <span class="invalid-feedback" role="alert">
-                                                                                    <strong>{{ $errors->first('email') }}</strong>
-                                                                            </span>
-                                                                         @endif
-                                                                        <span class="js-seller-email-error invalid-feedback" style="display:block;color:#EB000A; font-size: 14px;"></span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    {{-- Phone Number --}}
-                                                                    <div class="form-group phone-form-group">
-                                                                        <label for="phone" class="fs-12 fw-700 text-soft-dark">{{  translate('Mobile Phone') }}</label>
-                                                                        <input required type="tel" id="phone-code_1" class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }} rounded-0" onkeypress="return isNumber(event)" value="{{ old('phone') }}" placeholder="" name="phone" autocomplete="off">
-                                                                    </div>
-                                                                    <input type="hidden" name="country_code" value="{{ old('country_code') }}">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-md-6">
-                                                                    <!-- password -->
-                                                                    <div class="form-group">
-                                                                        <label for="password" class="fs-12 fw-700 text-soft-dark">{{  translate('Password') }}</label>
-                                                                        <input required type="password" class="form-control rounded-0{{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="{{  translate('Password must contain at least 6 digits') }}" name="password" autocomplete="off">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <!-- password Confirm -->
-                                                                    <div class="form-group">
-                                                                        <label for="password_confirmation" class="fs-12 fw-700 text-soft-dark">{{  translate('Confirm Password') }}</label>
-                                                                        <input required type="password" class="form-control rounded-0" placeholder="{{  translate('Confirm Password') }}" name="password_confirmation">
-                                                                    </div>
-                                                                    <!-- Terms and Conditions -->
-                                                                    
-                                                                </div>
-                                                            </div>
-                                                            
-
-                                                            <!-- Submit Button -->
-                                                            <div class="mb-4 mt-4">
-                                                                <button type="btn" id="btnSeller" class="btn btn-primary btn-block fw-600 rounded-4">{{  translate('Create Account') }}</button>
-                                                            </div>
-                                                        </form>
-                                                    </div>  
+                                                    
 
                                                     
                                                 </div>
@@ -264,8 +124,8 @@
 
                                         <!-- Log In -->
                                         <div class="text-center">
-                                            <p class="fs-12 text-gray mb-0">{{ translate('Already have an account?')}}</p>
-                                            <a href="{{ route('user.login') }}" class="fs-14 fw-700 animate-underline-primary">{{ translate('Log In')}}</a>
+                                            <p class="fs-12 text-gray mb-0">Đã có tài khoản?</p>
+                                            <a href="{{ route('user.login') }}" class="fs-14 fw-700 animate-underline-primary">Đăng nhập</a>
                                         </div>
                                     </div>
                                 </div>

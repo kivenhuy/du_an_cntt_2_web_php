@@ -72,9 +72,7 @@
             </div>
         </div>
 
-        <div class="card-footer" style="justify-content: flex-end !important">
-            <button type="submit" class="btn btn-primary text-right">{{translate('Send Request')}}</button>
-        </div>
+        
         </form>
     </div>
 

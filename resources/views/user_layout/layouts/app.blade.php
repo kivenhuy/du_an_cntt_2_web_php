@@ -4,9 +4,7 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="app-url" content="{{ getBaseURL() }}">
-
-   
-
+    <title>Chăm sóc sức khỏe</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="index, follow">
@@ -1694,7 +1692,7 @@
         function showLoginModal() {
             @if (!Auth::check())
             {
-                AIZ.plugins.notify('danger', "{{ translate('Please Login To Trigger Action') }}");
+                window.location.href = "{{ route('login.form') }}";
             }
             @endif
                 // $('#login_modal').modal();
@@ -1766,8 +1764,13 @@
         function addToCart(){
             var shop_id = $('#id_shop').val();
             
+            @if(!Auth::check())
+                showLoginModal();
+                return false;
+            @endif
+
             @if(Auth::check() && Auth::user()->user_type != 'customer')
-                AIZ.plugins.notify('warning', "{{ translate('Please Login as a customer to add products to the Cart.') }}");
+                AIZ.plugins.notify('warning', "{{ translate('Please login as a customer to continue.') }}");
                 return false;
             @endif
 
@@ -1779,6 +1782,13 @@
                     url: '{{ route('cart.addToCart') }}',
                     data: $('#option-choice-form').serializeArray(),
                     success: function(data){
+                       if (parseInt(data.status) !== 1) {
+                           $('.c-preloader').hide();
+                           if (data.message) {
+                               AIZ.plugins.notify('warning', data.message);
+                           }
+                           return;
+                       }
                        $('#addToCart-modal-body').html(null);
                        $('.c-preloader').hide();
                        $('#modal-size').removeClass('modal-lg');
@@ -1795,8 +1805,13 @@
         }
 
         function buyNow(){
+            @if(!Auth::check())
+                showLoginModal();
+                return false;
+            @endif
+
             @if(Auth::check() && Auth::user()->user_type != 'customer')
-                AIZ.plugins.notify('warning', "{{ translate('Please Login as a customer to add products to the Cart.') }}");
+                AIZ.plugins.notify('warning', "{{ translate('Please login as a customer to continue.') }}");
                 return false;
             @endif
             
