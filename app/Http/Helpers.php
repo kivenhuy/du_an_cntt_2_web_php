@@ -286,7 +286,7 @@ if (!function_exists('format_price')) {
         }
 
         
-            return 'đ ' . $fomated_price;
+            return $fomated_price . " VNĐ";
         
         // return $fomated_price . currency_symbol();
     }

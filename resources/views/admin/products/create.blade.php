@@ -59,7 +59,10 @@
                             <div class="col-md-8">
                                 <select class="form-control aiz-selectpicker" name="brand_id" id="brand_id"
                                     data-live-search="true">
-                                    <option value="" selected hidden>Chọn thương hiệu</option>
+                                    <option value="">-- Không có thương hiệu --</option>
+                                    @foreach($brands ?? [] as $brand)
+                                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>

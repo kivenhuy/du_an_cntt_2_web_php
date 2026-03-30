@@ -78,6 +78,12 @@
                     </a>
                 </li>
                 <li class="aiz-side-nav-item">
+                    <a href="{{ route('admin.brands.index') }}" class="aiz-side-nav-link">
+                        <i class="fa fa-tag aiz-side-nav-icon"></i>
+                        <span class="aiz-side-nav-text">Thương hiệu</span>
+                    </a>
+                </li>
+                <li class="aiz-side-nav-item">
                     <a href="#" class="aiz-side-nav-link">
                         <i class="fa fa-image aiz-side-nav-icon"></i>
                         <span class="aiz-side-nav-text">Trang chủ</span>

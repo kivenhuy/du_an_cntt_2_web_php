@@ -21,7 +21,7 @@
 </div>
 @endif
 
-<form class="" action="" method="POST" enctype="multipart/form-data"
+<form class="" action="{{ route('admin.products.update', ['id' => $product->id]) }}" method="POST" enctype="multipart/form-data"
     id="choice_form">
     <div class="row gutters-5">
         <div class="col-lg-8">
@@ -34,18 +34,33 @@
                     <div class="form-group row">
                         <label class="col-lg-3 col-from-label">Tên sản phẩm</label>
                         <div class="col-lg-8">
-                            <input type="text" class="form-control" name="name"
+            <input type="text" class="form-control" name="name"
                                 placeholder="{{translate('Product Name')}}" value="{{$product->name}}"
-                                disabled>
+                                >
                         </div>
                     </div>
                     <div class="form-group row" id="category">
                         <label class="col-lg-3 col-from-label">Danh mục</label>
                         <div class="col-lg-8">
                             <select class="form-control aiz-selectpicker" name="category_id" id="category_id"
-                                data-selected="{{ $product->category_id }}" data-live-search="true" disabled>
+                                data-selected="{{ $product->category_id }}" data-live-search="true">
                                 @foreach ($categories as $data_category)
                                     <option value="{{ $data_category->id }}" @if($product->category_id == $data_category->id) selected @endif>{{ $data_category->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row" id="brand_row">
+                        <label class="col-lg-3 col-from-label">Thương hiệu</label>
+                        <div class="col-lg-8">
+                            <select class="form-control aiz-selectpicker" name="brand_id" id="brand_id"
+                                data-live-search="true">
+                                <option value="">-- Không có thương hiệu --</option>
+                                @foreach($brands ?? [] as $brand)
+                                    <option value="{{ $brand->id }}" @if($product->brand_id == $brand->id) selected @endif>
+                                        {{ $brand->name }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -56,13 +71,13 @@
                         <div class="col-lg-8">
                             <input type="text" class="form-control" name="unit"
                                 placeholder="{{ translate('Unit (e.g. KG, Pc etc)') }}"
-                                value="{{$product->unit}}" disabled>
+                                value="{{$product->unit}}">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-md-3 col-from-label">Dung tích <small>(ví dụ: 100ml, 500ml, 1000ml)</small></label>
                         <div class="col-md-8">
-                            <input disabled type="number" class="form-control" name="weight" value="{{ $product->weight }}" step="0.01" placeholder="0.00">
+                            <input type="number" class="form-control" name="weight" value="{{ $product->weight }}" step="0.01" placeholder="0.00">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -70,13 +85,13 @@
                         <div class="col-lg-8">
                             <input type="number" lang="en" class="form-control" name="min_qty"
                                 value="@if($product->min_qty <= 1){{1}}@else{{$product->min_qty}}@endif" min="1"
-                                disabled>
+                                >
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-lg-3 col-from-label">Tags</label>
                         <div class="col-lg-8">
-                            <input type="text" disabled class="form-control aiz-tag-input" name="tags[]" id="tags"
+                            <input type="text" class="form-control aiz-tag-input" name="tags[]" id="tags"
                                 value="{{ $product->tags }}" placeholder="{{ translate('Type to add a tag') }}"
                                 data-role="tagsinput" >
                         </div>
@@ -329,6 +344,11 @@
         
     </div>
     
+    </div>
+    <div class="text-right mt-3 mb-4">
+        <button type="submit" class="btn btn-primary">
+            <i class="fa fa-save mr-1"></i> Lưu thay đổi
+        </button>
     </div>
 </form>
 

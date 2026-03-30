@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\BrandController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\Controller;
@@ -37,6 +38,11 @@ Route::controller(HomeController::class)->group(function () {
     Route::get('/comming-soon', 'comming_soon')->name('comming-soon');
     Route::get('/shop/{slug}', 'shop')->name('shop.visit');
     Route::get('/category/{category_slug}', 'listingByCategory')->name('products.category');
+});
+
+Route::controller(BrandController::class)->group(function () {
+    Route::get('/thuong-hieu', 'index')->name('brands.index');
+    Route::get('/thuong-hieu/{slug}', 'show')->name('brands.show');
 });
 Route::get("/login", [LoginController::class, 'showLoginForm'])->name('login.form');
 Route::post("/login", [LoginController::class, 'login'])->name('user.login');

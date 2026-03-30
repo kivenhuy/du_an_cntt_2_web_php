@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use App\Models\Categories;
 use App\Models\Category;
 use App\Models\Products;
@@ -37,7 +38,8 @@ class ProductController extends Controller
     public function create()
     {
         $category = Categories::all();
-        return view('seller.products.create',compact('category'));
+        $brands = Brand::orderBy('name')->get();
+        return view('seller.products.create', compact('category', 'brands'));
     }
 
 
@@ -272,7 +274,8 @@ class ProductController extends Controller
 
         $tags = json_decode($product->tags);
         $categories = Category::all();
-        return view('seller.products.edit', compact('product', 'categories', 'tags'));
+        $brands = Brand::orderBy('name')->get();
+        return view('seller.products.edit', compact('product', 'categories', 'tags', 'brands'));
     }
 
     public function update(Request $request,Products $product)

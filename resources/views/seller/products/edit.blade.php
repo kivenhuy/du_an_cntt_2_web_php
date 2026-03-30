@@ -56,9 +56,14 @@
                     <div class="form-group row" id="brand">
                         <label class="col-lg-3 col-from-label">{{translate('Brand')}}</label>
                         <div class="col-lg-8">
-                            <select class="form-control aiz-selectpicker" name="brand_id" id="brand_id">
-                                <option value="">{{ translate('Select Brand') }}</option>
-                                
+                            <select class="form-control aiz-selectpicker" name="brand_id" id="brand_id"
+                                data-live-search="true">
+                                <option value="">-- {{ translate('Select Brand') }} --</option>
+                                @foreach($brands ?? [] as $brand)
+                                    <option value="{{ $brand->id }}" @if($product->brand_id == $brand->id) selected @endif>
+                                        {{ $brand->name }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
