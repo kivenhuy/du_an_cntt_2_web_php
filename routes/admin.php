@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CarrierController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CityController;
@@ -82,6 +83,7 @@ Route::group(['middleware' => ['auth'],'prefix' => 'admin'], function () {
         Route::get('/products/create', 'create')->name('admin.products.create');
         Route::post('/products/store', 'store')->name('admin.products.store');
         Route::get('/products/edit/{id}', 'edit')->name('admin.products.edit');
+        Route::post('/products/update/{id}', 'update')->name('admin.products.update');
         Route::get('/products/data_ajax', 'data_ajax')->name('admin.products.data_ajax');
         Route::post('/products/approved', 'approve')->name('admin.products.approved');
     });
@@ -113,6 +115,16 @@ Route::group(['middleware' => ['auth'],'prefix' => 'admin'], function () {
         Route::post('/request_for_product/approved', 'admin_approved')->name('request_for_product.admin_approved');
         Route::get('/request_for_product/admin_dataajax', 'admin_dataajax')->name('request_for_product.admin_dataajax');
         Route::get('/request_for_product/admin_supermarket_dataajax', 'admin_supermarket_dataajax')->name('request_for_product.admin_supermarket_dataajax');
+    });
+
+    // Brands
+    Route::controller(BrandController::class)->group(function () {
+        Route::get('/brands', 'index')->name('admin.brands.index');
+        Route::get('/brands/create', 'create')->name('admin.brands.create');
+        Route::post('/brands', 'store')->name('admin.brands.store');
+        Route::get('/brands/{brand}/edit', 'edit')->name('admin.brands.edit');
+        Route::put('/brands/{brand}', 'update')->name('admin.brands.update');
+        Route::delete('/brands/{brand}', 'destroy')->name('admin.brands.destroy');
     });
 
     // Carrier

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Seller\ProductController as SellerProductController;
+use App\Models\Brand;
 use App\Models\Categories;
 use App\Models\Category;
 use App\Models\Products;
@@ -35,8 +36,9 @@ class ProductController extends Controller
     public function create()
     {
         $category = Categories::all();
+        $brands = Brand::orderBy('name')->get();
 
-        return view('admin.products.create', compact('category'));
+        return view('admin.products.create', compact('category', 'brands'));
     }
 
     public function store(Request $request)
@@ -93,7 +95,31 @@ class ProductController extends Controller
         $product = Products::findOrFail($id);
         $tags = json_decode($product->tags);
         $categories = Category::all();
-        return view('admin.products.edit', compact('product', 'categories', 'tags'));
+        $brands = Brand::orderBy('name')->get();
+        return view('admin.products.edit', compact('product', 'categories', 'tags', 'brands'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $product = Products::findOrFail($id);
+        $sellerProduct = app(SellerProductController::class);
+
+        $product = $sellerProduct->update_product($request->except([
+            '_token', 'sku', 'choice', 'tax_id', 'tax', 'tax_type', 'flash_deal_id', 'flash_discount', 'flash_discount_type',
+        ]), $product);
+
+        if ($product->product_stock) {
+            $product->product_stock->delete();
+        }
+
+        $request->merge(['product_id' => $product->id]);
+        $sellerProduct->update_product_stock($request->only([
+            'colors_active', 'colors', 'choice_no', 'unit_price', 'sku', 'current_stock', 'product_id',
+        ]), $product);
+
+        flash('Sản phẩm đã được cập nhật thành công')->success();
+
+        return redirect()->route('admin.products.edit', ['id' => $product->id]);
     }
 
 }

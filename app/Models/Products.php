@@ -14,6 +14,7 @@ class Products extends Model
         'name',
         'user_id',
         'category_id',
+        'brand_id',
         'photos',
         'thumbnail_img',
         'tags',
@@ -51,6 +52,11 @@ class Products extends Model
     public function category()
     {
         return $this->belongsTo(Categories::class);
+    }
+
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
     }
 
     public function user()

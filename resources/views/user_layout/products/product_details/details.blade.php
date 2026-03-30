@@ -191,7 +191,7 @@
      @if ($detailedProduct->brand != null)
      <div class="d-flex flex-wrap align-items-center mb-3">
          <span class="text-secondary fs-14 fw-400 mr-4 w-70px text_brand">{{ translate('Brand') }}</span><br>
-         <a href="{{ route('products.brand', $detailedProduct->brand->slug) }}"
+         <a href="{{ route('brands.show', $detailedProduct->brand->slug) }}"
              class="text-reset hov-text-primary fs-14 fw-700 text_brand" style="color: #2E7F25 !important">{{ $detailedProduct->brand->name }}</a>
      </div>
  @endif

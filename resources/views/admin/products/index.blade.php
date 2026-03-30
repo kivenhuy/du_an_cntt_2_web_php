@@ -77,8 +77,8 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <a class="btn btn-soft-info btn-icon btn-circle btn-sm" href="{{route('admin.products.edit', ['id'=>$each_product_data->id])}}" title="{{ translate('Details') }}">
-                                            <i class="fa fa-eye"></i>
+                                        <a class="btn btn-soft-info btn-icon btn-circle btn-sm" href="{{route('admin.products.edit', ['id'=>$each_product_data->id])}}" title="{{ translate('Edit') }}">
+                                            <i class="fa fa-edit"></i>
                                         </a>
                                     </td>
                                 </tr>
