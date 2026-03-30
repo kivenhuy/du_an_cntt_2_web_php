@@ -12,7 +12,6 @@
     "Refund Request": "Yêu cầu hoàn tiền",
     "Shipping Carrier": "Đơn vị vận chuyển",
     "Add carousel slide": "Thêm ảnh carousel",
-    "Back": "Quay lại",
     "Slide": "Ảnh slide",
     "Image": "Hình ảnh",
     "Browse": "Chọn file",
@@ -96,6 +95,7 @@
     "Your Postal Code": "Mã bưu điện",
     "Verify Now": "Xác minh ngay",
     "Create Category": "Tạo danh mục",
-    "Back":"Quay lại"
+    "Please login as a customer to continue.": "Vui lòng đăng nhập bằng tài khoản khách hàng để tiếp tục.",
+    "to buy": "để mua hàng"
 }
 

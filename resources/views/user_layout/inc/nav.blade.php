@@ -58,7 +58,7 @@
                                             {{-- @isset($query)
                                                 value="{{ $query }}"
                                             @endisset --}}
-                                            placeholder="I am shopping for..." autocomplete="off">
+                                            placeholder="Bạn cần tìm gì..." autocomplete="off">
 
                                         <svg id="Group_723" data-name="Group 723" xmlns="http://www.w3.org/2000/svg"
                                             width="20.001" height="20" viewBox="0 0 20.001 20">
@@ -373,45 +373,35 @@
                                     </a>
                                 </li>
                                 <li class="list-inline-item mr-0 animate-underline-white">
-                                    <a href="{{route('homepage')}}"
+                                    <a href="{{route('products.all')}}"
                                         class="fs-13 px-3 py-3 d-inline-block fw-700 text-white header_menu_links hov-bg-black-10">
-                                        {{ translate('All Seller') }}
+                                        Sản phẩm
                                     </a>
                                 </li>
+                               
                                 <li class="list-inline-item mr-0 animate-underline-white">
-                                    <a href="{{route('homepage')}}"
+                                    <a href="{{route('comming-soon')}}"
                                         class="fs-13 px-3 py-3 d-inline-block fw-700 text-white header_menu_links hov-bg-black-10">
-                                        {{ translate('All Category') }}
+                                        Tin tức
                                     </a>
                                 </li>
                                 <li class="list-inline-item mr-0 animate-underline-white">
                                     <a href="{{route('comming-soon')}}"
                                         class="fs-13 px-3 py-3 d-inline-block fw-700 text-white header_menu_links hov-bg-black-10">
-                                        {{ translate('News') }}
+                                        Về chúng tôi
+                                    </a>
+                                </li>
+                                
+                                <li class="list-inline-item mr-0 animate-underline-white">
+                                    <a href="{{route('comming-soon')}}"
+                                        class="fs-13 px-3 py-3 d-inline-block fw-700 text-white header_menu_links hov-bg-black-10">
+                                        Hỗ trợ
                                     </a>
                                 </li>
                                 <li class="list-inline-item mr-0 animate-underline-white">
                                     <a href="{{route('comming-soon')}}"
                                         class="fs-13 px-3 py-3 d-inline-block fw-700 text-white header_menu_links hov-bg-black-10">
-                                        {{ translate('About Us') }}
-                                    </a>
-                                </li>
-                                <li class="list-inline-item mr-0 animate-underline-white">
-                                    <a href="{{route('comming-soon')}}"
-                                        class="fs-13 px-3 py-3 d-inline-block fw-700 text-white header_menu_links hov-bg-black-10">
-                                        {{ translate('Discount') }}
-                                    </a>
-                                </li>
-                                <li class="list-inline-item mr-0 animate-underline-white">
-                                    <a href="{{route('comming-soon')}}"
-                                        class="fs-13 px-3 py-3 d-inline-block fw-700 text-white header_menu_links hov-bg-black-10">
-                                        {{ translate('Support') }}
-                                    </a>
-                                </li>
-                                <li class="list-inline-item mr-0 animate-underline-white">
-                                    <a href="{{route('comming-soon')}}"
-                                        class="fs-13 px-3 py-3 d-inline-block fw-700 text-white header_menu_links hov-bg-black-10">
-                                        {{ translate('Resources') }}
+                                        Tài nguyên
                                     </a>
                                 </li>
                                

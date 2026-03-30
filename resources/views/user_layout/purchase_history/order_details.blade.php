@@ -115,15 +115,15 @@
                         <thead class="text-gray fs-12">
                             <tr>
                                 <th class="pl-0">#</th>
-                                <th width="20%">{{ translate('Product') }}</th>
-                                <th>{{ translate('Quantity') }}</th>
+                                <th width="20%">Sản phẩm</th>
+                                <th>Số lượng</th>
                                 @if(Auth::user()->user_type === 'enterprise')
-                                    <th>{{ translate('Shipping Date') }}</th>
+                                    <th>Ngày giao hàng</th>
                                 @endif
-                                <th data-breakpoints="md">{{ translate('Delivery Type') }}</th>
-                                <th>{{ translate('Price') }}</th>
-                                <th>{{ translate('Shipping Status') }}</th>
-                                <th data-breakpoints="md" class="text-right pr-0">{{ translate('Review') }}</th>
+                                <th data-breakpoints="md">Phương thức giao hàng</th>
+                                <th>Giá</th>
+                                <th>Trạng thái</th>
+                                <th data-breakpoints="md" class="text-right pr-0">Ghi Chú</th>
                             </tr>
                         </thead>
                         <tbody class="fs-14">
@@ -198,6 +198,8 @@
                                             <a href="javascript:void(0);"
                                                 onclick="product_review('{{ $orderDetail->product_id }}')"
                                                 class="btn btn-primary btn-sm rounded-0"> {{ translate('Review') }} </a>
+                                        @elseif ($orderDetail->delivery_status === 'on_delivery')
+                                            <span class="text-info">Đang giao hàng</span>
                                         @elseif ($orderDetail->delivery_status === 'fail')
 
                                             @if($orderDetail->refund_id == 0)
@@ -208,12 +210,12 @@
                                                 <a href="{{ route('refund.detail',$orderDetail->refund_id) }}" class="btn btn-primary btn-sm rounded-0"> Refund Detail </a>
                                             @endif
                                             
-                                        {{-- @elseif ($orderDetail->delivery_status === 'refund')
+                                        <!-- @elseif ($orderDetail->delivery_status === 'refund')
                                             <a href="javascript:void(0);"
                                                 onclick="refund('{{ $orderDetail->id }}')"
-                                                class="btn btn-primary btn-sm rounded-0"> {{ translate('Refund History') }} </a> --}}
+                                                class="btn btn-primary btn-sm rounded-0"> {{ translate('Refund History') }} </a> -->
                                         @else
-                                            <span class="text-danger">{{ translate('Not Delivered Yet') }}</span>
+                                            <span class="text-danger">Chưa giao hàng</span>
                                         @endif
                                     </td>
                                 </tr>

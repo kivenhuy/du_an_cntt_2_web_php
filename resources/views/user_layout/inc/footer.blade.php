@@ -6,7 +6,7 @@
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="text-center text-sm-left mt-4">
                     <h4 class="fs-14 text-secondary text-uppercase fw-700 mb-3" style="color:#212129 !important">
-                        Farm Agri Co., Ltd.
+                    CÔNG TY TNHH THẠCH KHIẾT MINH
                     </h4>
                     <span class="text_footer" style="font-family: 'Quicksand', sans-serif !important;display: block;max-width: 320px; word-wrap: break-word"></span>
                 </div>
@@ -15,24 +15,24 @@
             <!-- Contacts -->
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="text-center text-sm-left mt-4">
-                    <h4 class="fs-14 text-secondary text-uppercase fw-700 mb-3" style="color:#212129 !important">{{ translate('Contacts Information') }}</h4>
+                    <h4 class="fs-14 text-secondary text-uppercase fw-700 mb-3" style="color:#212129 !important">Thông tin liên hệ</h4>
                     <div class="footer-content footer-contact">
                         <ul style="display: flex;flex-direction: column;padding-left: unset">
                             <div style="display: flex">
                                 <li class="fa fa-map-marker icon_text_footer" style="font-size: 21px"></li>
-                                <span class="text_footer" style="font-family: 'Quicksand', sans-serif !important;">19 Đ. Nguyễn Hữu Thọ, Tân Hưng, Quận 7, Thành phố Hồ Chí Minh</span>
+                                <span class="text_footer" style="font-family: 'Quicksand', sans-serif !important;">212B/60 Nguyễn Trãi, Phường Cầu Ông Lãnh, Thành phố Hồ Chí Minh, Việt Nam<span>
                             </div>
                             <div style="display: flex">
                                 <li class="fa fa-phone icon_text_footer"> </li>
-                                <span class="text_footer" style="font-family: 'Quicksand', sans-serif !important;">0937464218</span>
+                                <span class="text_footer" style="font-family: 'Quicksand', sans-serif !important;">0913316855</span>
                                 </div>
                             <div style="display: flex">
                                 <li class="fa fa-fax icon_text_footer"></li>
-                                <span class="text_footer" style="font-family: 'Quicksand', sans-serif !important;"> 0937464218</span>
+                                <span class="text_footer" style="font-family: 'Quicksand', sans-serif !important;">0312081798</span>
                                 </div>
                             <div style="display: flex">
                                 <li class="fa fa-envelope icon_text_footer"> </li>
-                                <span class="text_footer" style="font-family: 'Quicksand', sans-serif !important;">lebuuanhhuyle@gmail.com </span>
+                                <span class="text_footer" style="font-family: 'Quicksand', sans-serif !important;">ctythachkhietminh@gmail.com </span>
                             </div>
                         </ul>	
                     </div>
@@ -48,31 +48,31 @@
                             
                             <li class="mb-2">
                                 <p class="fs-13 text-soft-light mb-0">
-                                    <a class="text_footer" target="_blank" rel="noopener noreferrer" herf="" title="Chính sách thanh toán">{{ translate('Services Policy')}}</a>
+                                    <a class="text_footer" target="_blank" rel="noopener noreferrer" herf="" title="Chính sách thanh toán">Chính sách thanh toán</a>
                                 </p>
                             </li>
                             
                             <li class="mb-2">
                                 <p class="fs-13 text-soft-light mb-0">
-                                    <a class="text_footer" target="_blank" rel="noopener noreferrer" herf="" title="Chính sách xử lý khiếu nại">{{ translate('Privacy Policy')}}</a>
+                                    <a class="text_footer" target="_blank" rel="noopener noreferrer" herf="" title="Chính sách xử lý khiếu nại">Chính sách xử lý khiếu nại</a>
                                 </p>
                             </li>
                             
                             <li class="mb-2">
                                 <p class="fs-13 text-soft-light mb-0">
-                                    <a class="text_footer" target="_blank" rel="noopener noreferrer" herf="" title="Chính sách vận chuyển">{{ translate('Return Policy')}}</a>
+                                    <a class="text_footer" target="_blank" rel="noopener noreferrer" herf="" title="Chính sách vận chuyển">Chính sách vận chuyển</a>
                                 </p>
                             </li>
                             
                             <li class="mb-2">
                                 <p class="fs-13 text-soft-light mb-0">
-                                    <a class="text_footer" target="_blank" rel="noopener noreferrer" herf="" title="Chính sách đổi trả hoàn tiền">{{ translate('Fast-Checking Policy')}}</a>
+                                    <a class="text_footer" target="_blank" rel="noopener noreferrer" herf="" title="Chính sách đổi trả hoàn tiền">Chính sách đổi trả hoàn tiền</a>
                                 </p>
                             </li>
                             
                             <li class="mb-2">
                                 <p class="fs-13 text-soft-light mb-0">
-                                    <a class="text_footer" target="_blank" rel="noopener noreferrer" herf="" title="Chính sách bảo hành">{{ translate('Refund Policy')}}</a>
+                                    <a class="text_footer" target="_blank" rel="noopener noreferrer" herf="" title="Chính sách bảo hành">Chính sách bảo hành</a>
                                 </p>
                             </li>
                                 
@@ -84,32 +84,26 @@
             <div class="col-lg-3 col-md-4 col-sm-6">
                 <div class="text-center text-sm-left mt-4">
                    
-                        <h4 class="fs-14 text-secondary text-uppercase fw-700 mb-3" style="color:#212129 !important">{{ translate('Support') }}</h4>
+                        <h4 class="fs-14 text-secondary text-uppercase fw-700 mb-3" style="color:#212129 !important">Hỗ trợ</h4>
                         <ul class="list-unstyled">
                             <li class="mb-2">
                                 <p class="fs-13 text-soft-light mb-0 text_footer" ><span class="text_footer" style="font-family: 'Quicksand', sans-serif !important;">
-                                    {{ translate('Search') }} </span>
+                                    Tìm kiếm </span>
                                 </p>
                             </li>
                             <li class="mb-2">
                                 <a href="">
                                     <p class="fs-13 text-soft-light mb-0 text_footer"><span class="text_footer" style="font-family: 'Quicksand', sans-serif !important;">
-                                        {{ translate('About Us') }} </span>
+                                        Về chúng tôi </span>
                                     </p>
                                 </a>
                             </li>
                             <li class="mb-2">
                                 <p class="fs-13 text-soft-light mb-0 text_footer"><span class="text_footer" style="font-family: 'Quicksand', sans-serif !important;">
-                                    {{ translate('Contact Us') }} </span>
+                                    Liên hệ </span>
                                 </p>
                             </li>
-                            <li class="mb-2">
-                                <a href="http://localhost:3000/login">
-                                    <p class="fs-13 text-soft-light mb-0 text_footer"><span class="text_footer" style="font-family: 'Quicksand', sans-serif !important;">
-                                        {{ translate('Become a shipper') }} </span>
-                                    </p>
-                                </a>
-                            </li>
+                            
                         </ul>
                  
 
