@@ -439,13 +439,18 @@
                 <nav class="px-3 py-3 c-scrollbar-light" style="max-height: calc(100vh - 64px); overflow-y: auto;">
                     <ul class="list-unstyled mb-0">
                         <li class="mb-3"><a href="{{ route('homepage') }}" class="text-reset fs-15 fw-600 d-block">{{ translate('Home') }}</a></li>
-                        <li class="mb-3"><a href="{{ route('products.all') }}" class="text-reset fs-15 fw-600 d-block">{{ translate('All Category') }}</a></li>
-                        <li class="mb-3"><a href="{{ route('homepage') }}" class="text-reset fs-15 fw-600 d-block">{{ translate('All Seller') }}</a></li>
+                        <li class="mb-3"><a href="{{ route('products.all') }}" class="text-reset fs-15 fw-600 d-block">{{ translate('All Products') }}</a></li>
+                        <li class="mb-3"><a href="{{ route('brands.index') }}" class="text-reset fs-15 fw-600 d-block">{{ translate('All Brands') }}</a></li>
                         <li class="mb-3"><a href="{{ route('comming-soon') }}" class="text-reset fs-15 d-block">{{ translate('News') }}</a></li>
                         <li class="mb-3"><a href="{{ route('comming-soon') }}" class="text-reset fs-15 d-block">{{ translate('About Us') }}</a></li>
                         <li class="mb-3"><a href="{{ route('comming-soon') }}" class="text-reset fs-15 d-block">{{ translate('Discount') }}</a></li>
                         <li class="mb-3"><a href="{{ route('comming-soon') }}" class="text-reset fs-15 d-block">{{ translate('Support') }}</a></li>
                         <li class="mb-3"><a href="{{ route('comming-soon') }}" class="text-reset fs-15 d-block">{{ translate('Resources') }}</a></li>
+                        @if(Auth::check())
+                            <li class="mb-3"><a href="{{ route('user.logout') }}" class="text-reset fs-15 d-block">{{ translate('Logout') }}</a></li>
+                        @else
+                            <li class="mb-3"><a href="{{ route('user.login') }}" class="text-reset fs-15 d-block">{{ translate('Login') }}</a></li>
+                        @endif
                     </ul>
                 </nav>
             </div>

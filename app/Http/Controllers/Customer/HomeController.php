@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use App\Models\Categories;
 use App\Models\Category;
 use App\Models\HomeSlide;
@@ -199,11 +200,20 @@ class HomeController extends Controller
             fn ($id) => $id > 0
         )));
 
+        $selected_brands = array_values(array_unique(array_filter(
+            array_map('intval', (array) $request->input('selected_brands', [])),
+            fn ($id) => $id > 0
+        )));
+
         $conditions = ['published' => 1, 'approved' => 1];
         $products = Products::where($conditions);
 
         if ($selected_categories !== []) {
             $products->whereIn('category_id', $selected_categories);
+        }
+
+        if ($selected_brands !== []) {
+            $products->whereIn('brand_id', $selected_brands);
         }
 
         if ($min_price_req != null && $max_price_req != null) {
@@ -237,8 +247,11 @@ class HomeController extends Controller
         $min_price = Products::where('published', 1)->where('approved', 1)->min('unit_price');
         $max_price = Products::where('published', 1)->where('approved', 1)->max('unit_price');
 
-        // Sidebar lọc: hiển thị toàn bộ danh mục (không chỉ danh mục đang có sản phẩm).
+        // Sidebar: toàn bộ danh mục + thương hiệu có sản phẩm đăng bán.
         $filter_categories = Category::query()->orderBy('name')->get();
+        $filter_brands = Brand::whereHas('products', function ($q) use ($conditions) {
+            $q->where($conditions);
+        })->orderBy('name')->get();
 
         return view('user_layout.products.product_listing_all', compact(
             'total_product',
@@ -251,7 +264,9 @@ class HomeController extends Controller
             'sort_by',
             'seller_id',
             'selected_categories',
-            'filter_categories'
+            'selected_brands',
+            'filter_categories',
+            'filter_brands'
         ));
     }
 
@@ -276,13 +291,24 @@ class HomeController extends Controller
         $seller_id = $request->seller_id;
         $conditions = [ 'published' => 1, 'approved' => 1];
 
+        $selected_brands = array_values(array_unique(array_filter(
+            array_map('intval', (array) $request->input('selected_brands', [])),
+            fn ($id) => $id > 0
+        )));
+
+        $category_slug = $category_id !== null
+            ? Category::where('id', $category_id)->value('slug')
+            : null;
+
         $products = Products::where($conditions);
-  
 
-        
-
+        // Trang danh mục: luôn theo đúng category trong URL; chỉ lọc thêm theo thương hiệu.
         if ($category_id != null) {
             $products->where('category_id', $category_id);
+        }
+
+        if ($selected_brands !== []) {
+            $products->whereIn('brand_id', $selected_brands);
         }
 
         if ($min_price != null && $max_price != null) {
@@ -315,7 +341,36 @@ class HomeController extends Controller
         }
         $min_price = Products::where('published', 1)->min('unit_price');
         $max_price = Products::where('published', 1)->max('unit_price');
-        return view('user_layout.products.product_listing', compact('total_product','min_price_choose','max_price_choose','min_price','max_price','products', 'query', 'category_id', 'brand_id', 'sort_by', 'seller_id', 'min_price', 'max_price'));
+
+        // Bộ lọc danh mục: chỉ hiển thị đúng danh mục đang xem (một chip).
+        $filter_categories = $category_id !== null
+            ? Category::where('id', $category_id)->orderBy('name')->get()
+            : collect();
+
+        // Thương hiệu có ít nhất một sản phẩm thuộc đúng danh mục này.
+        $filter_brands = $category_id !== null
+            ? Brand::whereHas('products', function ($q) use ($conditions, $category_id) {
+                $q->where($conditions)->where('category_id', $category_id);
+            })->orderBy('name')->get()
+            : collect();
+
+        return view('user_layout.products.product_listing', compact(
+            'total_product',
+            'min_price_choose',
+            'max_price_choose',
+            'min_price',
+            'max_price',
+            'products',
+            'query',
+            'category_id',
+            'brand_id',
+            'sort_by',
+            'seller_id',
+            'filter_categories',
+            'filter_brands',
+            'selected_brands',
+            'category_slug'
+        ));
     }
 
     public function profile(Request $request)

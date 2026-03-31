@@ -36,14 +36,17 @@ class BrandController extends Controller
 
         $perPage = in_array((int) $request->per_page, [16, 32, 50]) ? (int) $request->per_page : 16;
         $sort_by = $request->sort_by ?? 'newest';
-        $selected_categories = array_filter(array_map('intval', (array) $request->input('selected_categories', [])));
+        $selected_categories = array_values(array_unique(array_filter(
+            array_map('intval', (array) $request->input('selected_categories', [])),
+            fn ($id) => $id > 0
+        )));
 
-        // Tất cả danh mục có sản phẩm thuộc brand này
+        // Danh mục có sản phẩm thuộc thương hiệu (đăng bán).
         $filter_categories = \App\Models\Category::whereHas('products', function ($q) use ($brand) {
-            $q->where('brand_id', $brand->id)->where('approved', 1);
+            $q->where('brand_id', $brand->id)->where('approved', 1)->where('published', 1);
         })->orderBy('name')->get();
 
-        $query = Products::where('brand_id', $brand->id)->where('approved', 1);
+        $query = Products::where('brand_id', $brand->id)->where('approved', 1)->where('published', 1);
 
         if (!empty($selected_categories)) {
             $query->whereIn('category_id', $selected_categories);

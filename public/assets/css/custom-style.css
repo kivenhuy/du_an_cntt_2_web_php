@@ -13520,3 +13520,94 @@ body.site-storefront img {
         flex-wrap: wrap;
     }
 }
+
+/* Drawer lọc sản phẩm (màn hình < xl): phần danh sách cuộn, footer luôn thấy */
+@media (max-width: 1199.98px) {
+    .product-filter-sidebar-inner {
+        display: flex;
+        flex-direction: column;
+        max-height: 100vh;
+        height: 100%;
+    }
+
+    .product-filter-sidebar-inner .product-filter-sidebar-body {
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .product-filter-sidebar-inner .product-filter-actions {
+        flex-shrink: 0;
+    }
+}
+
+/* Chip / pill filter (Category + Brand), mobile & desktop */
+.product-filter-chips {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.product-filter-chip {
+    position: relative;
+    margin-bottom: 0.35rem;
+    margin-right: 0.35rem;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.product-filter-chip-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.product-filter-chip-face {
+    display: inline-block;
+    padding: 0.55rem 1rem;
+    min-height: 44px;
+    line-height: 1.35;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #333;
+    background: #f3f3f3;
+    border: 1px solid #e2e2e2;
+    border-radius: 999px;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.product-filter-chip-input:focus + .product-filter-chip-face {
+    box-shadow: 0 0 0 2px rgba(46, 127, 37, 0.35);
+}
+
+.product-filter-chip-input:checked + .product-filter-chip-face {
+    background: #2e7f25;
+    color: #fff;
+    border-color: #2e7f25;
+}
+
+.product-filter-chip-locked {
+    cursor: default;
+}
+
+.product-filter-chip-locked .product-filter-chip-input:disabled + .product-filter-chip-face {
+    opacity: 0.92;
+    cursor: default;
+}
+
+.product-filter-drawer-closeico {
+    font-size: 1.35rem;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2rem;
+    min-height: 2rem;
+}
