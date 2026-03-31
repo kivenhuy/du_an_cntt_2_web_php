@@ -7,7 +7,9 @@
             <span class="text-muted">{{ translate('Images shown in the main slider on the storefront.') }}</span>
         </div>
         <div class="col-md-6 text-md-right">
-            <a href="{{ route('admin.home_slides.create') }}" class="btn btn-primary">{{ translate('Add slide') }}</a>
+            <a href="{{ route('admin.home_slides.create') }}" class="btn btn-primary">
+                <i class="fa fa-plus mr-1"></i>{{ translate('Add slide') }}
+            </a>
         </div>
     </div>
 </div>
@@ -15,7 +17,10 @@
 <div class="card">
     <div class="card-body">
         @if ($slides->isEmpty())
-            <p class="text-muted mb-0">{{ translate('No slides yet. The homepage will use default static images until you add slides.') }}</p>
+            <div class="text-center text-muted py-5">
+                <i class="fa fa-images fa-3x mb-3 d-block"></i>
+                <p class="mb-0">{{ translate('No slides yet. The homepage will use default static images until you add slides.') }}</p>
+            </div>
         @else
             <table class="table aiz-table mb-0">
                 <thead>
@@ -40,10 +45,13 @@
                             <td>{{ $slide->sort_order }}</td>
                             <td>{{ $slide->is_active ? translate('Yes') : translate('No') }}</td>
                             <td class="text-right">
-                                <form action="{{ route('admin.home_slides.destroy', $slide) }}" method="post" class="d-inline" onsubmit="return confirm('{{ translate('Delete this slide?') }}');">
+                                <form action="{{ route('admin.home_slides.destroy', $slide) }}" method="post" class="d-inline"
+                                      onsubmit="return confirm('{{ translate('Delete this slide?') }}');">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-soft-danger">{{ translate('Delete') }}</button>
+                                    <button type="submit" class="btn btn-soft-danger btn-icon btn-circle btn-sm" title="{{ translate('Delete') }}">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
                                 </form>
                             </td>
                         </tr>

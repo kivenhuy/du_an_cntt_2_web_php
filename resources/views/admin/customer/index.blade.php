@@ -26,7 +26,7 @@
                             <th>{{translate('Customer Name')}}</th>
                             <th>{{translate('Phone')}}</th>
                             <th>{{translate('Email Address')}}</th>
-                            <th>{{translate('Action')}}</th>
+                            <th class="text-right">{{translate('Action')}}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -49,14 +49,13 @@
                                     
                                     
                                     
-                                    <td>
+                                    <td class="text-right">
                                         <a href="{{ route('admin.customer.detail', $each_customer_data->id) }}"
-                                            class="btn btn-soft-info btn-icon btn-circle btn-sm"
+                                            class="btn btn-soft-primary btn-icon btn-circle btn-sm"
                                             title="{{ translate('Customer Details') }}">
                                             <i class="fa fa-eye"></i>
-                                    
+                                        </a>
                                     </td>
-                                       
                                 </tr>
                             @endif
                         @endforeach

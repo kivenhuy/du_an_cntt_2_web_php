@@ -40,7 +40,6 @@ class DistrictController extends Controller
         $district = new District();
         $data_district = [
             'city_id'=>$request->city_id,
-            'district_name'=>$request->district_name,
             'district_code'=>$request->district_code,
         ];
         $final_data = $district->create($data_district);

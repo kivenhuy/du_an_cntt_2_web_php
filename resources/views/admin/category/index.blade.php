@@ -5,8 +5,9 @@
         <div class="col">
             <div class="mar-all mb-2" style=" text-align: end;">
                 <a href="{{route('categories.create')}}">
-                    <button type="submit" name="button" value="publish"
-                        class="btn btn-primary">Tạo danh mục</button>
+                    <button type="button" class="btn btn-primary">
+                        <i class="fa fa-plus mr-1"></i>Tạo danh mục
+                    </button>
                 </a>
             </div>
         </div>
@@ -64,6 +65,11 @@
                 <div class="aiz-pagination">
                     {{ $cate_data->links() }}
                 </div>
+            </div>
+        @else
+            <div class="card-body p-3 text-center text-muted py-5">
+                <i class="fa fa-mortar-pestle fa-3x mb-3 d-block"></i>
+                Chưa có danh mục nào.
             </div>
         @endif
     </div>

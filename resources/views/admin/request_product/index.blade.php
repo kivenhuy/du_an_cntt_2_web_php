@@ -53,7 +53,7 @@
                             <th>{{translate('Unit Price')}}</th>
                             <th>{{translate('Status')}}</th>
                             <th>{{translate('Apprrove')}}</th>
-                            <th>{{translate('Action')}}</th>
+                            <th class="text-right">{{translate('Action')}}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -115,7 +115,7 @@
                                     </td>
                                     <td class="text-right">
                                         <a href="{{ route('request_for_product.get_details_data', $each_request_data->id) }}"
-                                            class="btn btn-soft-info btn-icon btn-circle btn-sm"
+                                            class="btn btn-soft-primary btn-icon btn-circle btn-sm"
                                             title="{{ translate('Request Details') }}">
                                             <i class="fa fa-eye"></i>
                                         </a>

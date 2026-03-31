@@ -60,7 +60,7 @@
                 </div>
             </div>
             <!-- Product Section -->
-            <div class="px-sm-3 wow animate__animated animate__fadeInUp" data-wow-delay=".6s" id="top_selling_filter" style="display: flex;justify-content: flex-start;padding-left: unset !important;padding-right: unset !important; flex-wrap: wrap;">
+            <div class="px-sm-3 wow animate__animated animate__fadeInUp home-product-row-scroll" data-wow-delay=".6s" id="top_selling_filter" style="display: flex;justify-content: flex-start;padding-left: unset !important;padding-right: unset !important;">
                 @foreach($best_selling_products as $data_selling_product)
                 <div class="top_selling">
                     <div class="sub_top_selling position-relative has-transition border-right border-top border-bottom  hov-animate-outline" >
@@ -132,7 +132,7 @@
 
                 </div>
                 <!-- Products Section -->
-                <div class="px-sm-3 new_product_section wow animate__animated animate__fadeInUp" data-wow-delay=".2s" id="new_product_filter">
+                <div class="px-sm-3 new_product_section home-product-row-scroll wow animate__animated animate__fadeInUp" data-wow-delay=".2s" id="new_product_filter">
                     @foreach($new_products as $new_product)
                         <div class="top_selling_news_product">
                             <div class="sub_top_selling_news_product position-relative has-transition border-right border-top border-bottom border-left hov-animate-outline" >
@@ -155,11 +155,9 @@
                                 
                                 <div class="content_top_selling ">
                                     <a href="{{ route('products.category', $new_product->category->slug) }}" class="mb-1">{{ $new_product->category->name }}</a>
-                                    {{-- <a href="{{$product_url}}"> --}}
                                         <div class="name_product_top_selling">
                                             {{$new_product->name}}
                                         </div>
-                                    </a>
                                     <div class="name_product_top_selling" style="margin-bottom: 6px">
                                         <span class="rating rating-mr-1">
                                             {{ renderStarRating($new_product->rating) }}

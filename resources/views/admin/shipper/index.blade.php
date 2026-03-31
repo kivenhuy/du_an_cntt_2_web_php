@@ -30,7 +30,7 @@
                             <th>{{translate('Type Vehicle')}}</th>
                             <th>{{translate('Carrier')}}</th>
                             <th>{{translate('Approved')}}</th>
-                            <th>{{translate('Action')}}</th>
+                            <th class="text-right">{{translate('Action')}}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -72,12 +72,11 @@
                                     
                                     
                                     <td class="text-right">
-                                      <a href="{{ route('admin.shipper_detail', $each_shipper->id) }}"
-                                        class="btn btn-soft-info btn-icon btn-circle btn-sm"
-                                        title="{{ translate('Shipper Details') }}">
-                                        <i class="fa fa-eye"></i>
-                                    </a>
-                                    
+                                        <a href="{{ route('admin.shipper_detail', $each_shipper->id) }}"
+                                            class="btn btn-soft-primary btn-icon btn-circle btn-sm"
+                                            title="{{ translate('Shipper Details') }}">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
                                     </td>
                                        
                                 </tr>

@@ -117,7 +117,7 @@
                                     <td class="text-right">
                                        
                                         <a href="{{ route('admin.purchase_history.get_detail', ($order->id)) }}"
-                                            class="btn btn-soft-info btn-icon btn-circle btn-sm"
+                                            class="btn btn-soft-primary btn-icon btn-circle btn-sm"
                                             title="{{ translate('Order Details') }}">
                                             <i class="fa fa-eye"></i>
                                         </a>

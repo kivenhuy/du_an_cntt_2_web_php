@@ -47,7 +47,7 @@ class PurchaseHistoryController extends Controller
         for($i=0; $i < count($data->data); $i++) {
             // dd($data->data[$i]->id);
             $output = '';
-            $output .= ' <a href="'.url(route('admin.purchase_history.get_detail',['id'=>$data->data[$i]->id])).'" class="btn btn-info btn-xs" data-toggle="tooltip" title="Order Details" style="display:inline;padding:2px 5px 3px 5px;"><i class="fa fa-eye"></i></a>';
+            $output .= ' <a href="'.url(route('admin.purchase_history.get_detail',['id'=>$data->data[$i]->id])).'" class="btn btn-soft-primary btn-icon btn-circle btn-sm" data-toggle="tooltip" title="Chi tiết đơn"><i class="fa fa-eye"></i></a>';
             $data->data[$i]->action = (string)$output;
             $data->data[$i]->customer_name = User::find($data->data[$i]->customer_id)->name;
             $data->data[$i]->seller_name = User::find($data->data[$i]->seller_id)->name;

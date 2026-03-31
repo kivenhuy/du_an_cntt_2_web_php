@@ -39,10 +39,9 @@ class CustomerController extends Controller
         $data_customer = User::find($id);
         $city_name = City::find($data_customer->addresses[0]->city_id)->city_name;
         $country_name = Country::find($data_customer->addresses[0]->country_id)->country_name;
-        $district_name = District::find($data_customer->addresses[0]->district_id)->district_name;
         // $ward_name = $data_customer->ward;
         // $user_name = User::find($data_address->user_id)->name;
-        $str = $data_customer->addresses[0]->address.', '.$district_name.', '.$city_name.', '.$country_name;
+        $str = $data_customer->addresses[0]->address.', '.$city_name.', '.$country_name;
         $data_customer->full_adress = $str;
         return view('admin.customer.show',compact('data_customer'));
     }
