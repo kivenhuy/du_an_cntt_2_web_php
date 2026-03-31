@@ -12,23 +12,31 @@
                     </div>
                 </div>
 
+                <div class="d-xl-none px-2 mb-3">
+                    <button type="button" class="btn btn-outline-secondary btn-block rounded-pill py-2 product-filter-open-drawer" data-toggle="class-toggle" data-target=".aiz-filter-sidebar" data-same=".filter-sidebar-thumb">
+                        <i class="fa-solid fa-sliders align-middle" aria-hidden="true"></i>
+                        <span class="align-middle ml-1">{{ translate('Filter products') }}</span>
+                    </button>
+                </div>
+
                 <div class="row">
 
                     <div class="col-xl-3">
                         <div class="aiz-filter-sidebar collapse-sidebar-wrap sidebar-xl sidebar-right z-1035">
                             <div class="overlay overlay-fixed dark c-pointer" data-toggle="class-toggle" data-target=".aiz-filter-sidebar" data-same=".filter-sidebar-thumb"></div>
-                            <div class="collapse-sidebar c-scrollbar-light text-left">
-                                <div class="d-flex d-xl-none justify-content-between align-items-center pl-3 border-bottom">
-                                    <h3 class="h6 mb-0 fw-600">{{ translate('Filters') }}</h3>
-                                    <button type="button" class="btn btn-sm p-2 filter-sidebar-thumb" data-toggle="class-toggle" data-target=".aiz-filter-sidebar" >
-                                        <i class="las la-times la-2x"></i>
+                            <div class="collapse-sidebar c-scrollbar-light text-left product-filter-sidebar-inner">
+                                <div class="d-flex d-xl-none justify-content-between align-items-center pl-3 pr-2 border-bottom py-2">
+                                    <h3 class="h6 mb-0 fw-600">{{ translate('Filter products') }}</h3>
+                                    <button type="button" class="btn btn-sm p-2 filter-sidebar-thumb" data-toggle="class-toggle" data-target=".aiz-filter-sidebar" aria-label="Close">
+                                        <span class="product-filter-drawer-closeico" aria-hidden="true"><i class="fa-solid fa-xmark"></i></span>
                                     </button>
                                 </div>
 
-                                <div class="bg-white border mb-3">
+                                <div class="product-filter-sidebar-body">
+                                <div class="bg-white border mb-0">
                                     <div class="fs-16 fw-700 p-3">
                                         <a href="#collapse_price_all" class="dropdown-toggle filter-section text-dark d-flex align-items-center justify-content-between text_filter" data-toggle="collapse">
-                                            {{ translate('Fiter')}}
+                                            {{ translate('Filter panel') }}
                                         </a>
                                     </div>
 
@@ -99,32 +107,40 @@
 
                                     <div class="collapse show" id="collapse_price_all">
                                         <div class="fs-16 fw-700 px-3 pt-0 pb-2 border-top-0">
-                                            <span class="text-dark">{{ translate('Categories') }}</span>
+                                            <span class="text-dark">{{ translate('Category') }}</span>
                                         </div>
-                                        <ul class="p-3 mb-0 list-unstyled">
-                                            @forelse ($filter_categories as $category)
-                                                <li class="mb-2">
-                                                    <label class="aiz-checkbox mb-0 d-flex align-items-start">
-                                                        <input
-                                                            type="checkbox"
-                                                            name="selected_categories[]"
-                                                            value="{{ $category->id }}"
-                                                            @if (in_array($category->id, $selected_categories, true)) checked @endif
-                                                            onchange="filter()"
-                                                        >
-                                                        <span class="aiz-square-check"></span>
-                                                        <span class="fs-14 fw-400 text-dark">{{ $category->name }}</span>
-                                                    </label>
-                                                </li>
-                                            @empty
-                                                <li class="text-muted fs-14">{{ translate('No categories') }}</li>
-                                            @endforelse
-                                        </ul>
+                                        @include('user_layout.products.partials.filter_category_checkboxes', [
+                                            'filter_categories' => $filter_categories,
+                                            'selected_categories' => $selected_categories,
+                                            'category_id' => null,
+                                        ])
                                     </div>
 
-                                    <div class="button_filter" style="margin-bottom: 1rem;display:flex;justify-content: space-evenly">
-                                        <button onclick="handleClick(this);" style="width:40%" type="button" class="btn btn-success btn-block fw-700 fs-14 rounded-4 EdSubmitFinal">{{ translate('Filter') }}</button>
+                                    <div class="border-top" id="collapse_brands_all">
+                                        <div class="fs-16 fw-700 px-3 pt-3 pb-2">
+                                            <span class="text-dark">{{ translate('Brands') }}</span>
+                                        </div>
+                                        @include('user_layout.products.partials.filter_brand_chips', [
+                                            'filter_brands' => $filter_brands,
+                                            'selected_brands' => $selected_brands ?? [],
+                                        ])
                                     </div>
+
+                                    <div class="product-filter-actions border-top p-3 bg-white">
+                                        <div class="row no-gutters">
+                                            <div class="col-6 pr-1">
+                                                <button type="button" class="btn btn-block btn-outline-secondary rounded-pill fs-14 py-2 js-product-filter-clear">
+                                                    {{ translate('Clear all') }}
+                                                </button>
+                                            </div>
+                                            <div class="col-6 pl-1">
+                                                <button type="button" class="btn btn-block btn-success rounded-pill fw-700 fs-14 py-2 js-product-filter-apply">
+                                                    {{ translate('Apply') }}<span class="js-product-filter-apply-count"></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 </div>
                             </div>
                         </div>
@@ -151,4 +167,5 @@
             filter();
         }
     </script>
+    @include('user_layout.products.partials.filter_deferred_apply_script', ['formId' => 'search-form'])
 @endsection

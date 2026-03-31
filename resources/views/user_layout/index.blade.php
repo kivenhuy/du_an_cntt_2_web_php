@@ -68,21 +68,21 @@
                                 
                                 
                         <div class="top_selling_img">
-                            <a href="{{ route('product', $data_selling_product->slug) }}" class="d-block h-100">
+                            
                                 <img class="lazyload mx-auto img-fit has-transition img_product_top_selling" width="180px" height="180px" src="{{ static_asset('assets/img/placeholder.jpg') }}"
                                         data-src="{{ uploaded_asset($data_selling_product->thumbnail_img) }}" alt="{{ $data_selling_product->name}}"
                                         title="{{ $data_selling_product->name }}"
                                         onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
-                            </a>
+                            
                         </div>
                         
                         <div class="content_top_selling ">
                             <a href="{{ route('products.category', $data_selling_product->category->slug) }}" class="mb-1">{{ $data_selling_product->category->name }}</a>
-                            {{-- <a href="{{ $product_url }}"> --}}
+                            <a href="{{ route('product', $data_selling_product->slug) }}" class="d-block h-100">
                                 <div class="name_product_top_selling">
                                     {{$data_selling_product->name}}
                                 </div>
-                            {{-- </a> --}}
+                            </a>
                             <div class="name_product_top_selling" style="margin-bottom: 6px">
                                 
                                         <span class="rating rating-mr-1">
@@ -144,20 +144,21 @@
                                
                                
                                 <div class="top_selling_img">
-                                    <a href="{{ route('product', $new_product->slug) }}" class="d-block h-100">
+                                    
                                         <img class="lazyload mx-auto img-fit has-transition img_product_top_selling" width="180px" height="180px" src="{{ static_asset('assets/img/placeholder.jpg') }}"
                                             data-src="{{ uploaded_asset($new_product->thumbnail_img) }}" alt=""
                                             title=""
                                             onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
-                                    </a>
-                                    
+                                  
                                 </div>
                                 
                                 <div class="content_top_selling ">
                                     <a href="{{ route('products.category', $new_product->category->slug) }}" class="mb-1">{{ $new_product->category->name }}</a>
-                                        <div class="name_product_top_selling">
+                                    <a href="{{ route('product', $new_product->slug) }}" class="d-block h-100">
+                                        <div class="name_product_top_selling"> 
                                             {{$new_product->name}}
                                         </div>
+                                    </a>
                                     <div class="name_product_top_selling" style="margin-bottom: 6px">
                                         <span class="rating rating-mr-1">
                                             {{ renderStarRating($new_product->rating) }}
