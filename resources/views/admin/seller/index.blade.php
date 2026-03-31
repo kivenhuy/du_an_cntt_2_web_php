@@ -160,7 +160,7 @@
                             <th>{{translate('Verification Info')}}</th>
                             <th>{{translate('Approved')}}</th>
                             <th>{{translate('Num.of Products')}}</th>
-                            <th>{{translate('Action')}}</th>
+                            <th class="text-right">{{translate('Action')}}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -195,14 +195,13 @@
                                     
                                     
                                     
-                                    <td>
+                                    <td class="text-right">
                                         <a href="{{ route('admin.sellers.detail', $each_shop_data->id) }}"
-                                            class="btn btn-soft-info btn-icon btn-circle btn-sm"
+                                            class="btn btn-soft-primary btn-icon btn-circle btn-sm"
                                             title="{{ translate('Seller Details') }}">
                                             <i class="fa fa-eye"></i>
-                                    
+                                        </a>
                                     </td>
-                                       
                                 </tr>
                             @endif
                         @endforeach

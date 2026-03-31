@@ -13,8 +13,8 @@
                 <div class="col">
                     <div class="mar-all mb-2" style=" text-align: end;">
                         <a href="{{route('district.create')}}">
-                            <button type="submit" name="button" value="publish"
-                                class="btn btn-primary">Create</button>
+                            <button type="button" class="btn btn-primary">
+                                <i class="fa fa-plus mr-1"></i>{{ translate('Create') }}</button>
                         </a>
                     </div>
                 </div>
@@ -61,9 +61,6 @@
                   ajax: "{{ route('district.data_ajax') }}",
                   columns: [
                             {data: 'city_name', name: 'city_name', render: function(data){
-                              return (data=="")?"":data;
-                          }},
-                          {data: 'district_name', name: 'district_name', render: function(data){
                               return (data=="")?"":data;
                           }},
                           {data: 'district_code', name: 'district_code',render: function (data) {

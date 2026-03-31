@@ -114,8 +114,8 @@
                                     <td class="text-right">
                                        
                                         <a href="{{ route('refund.detail', ($each_refund_request->id)) }}"
-                                            class="btn btn-soft-info btn-icon btn-circle btn-sm"
-                                            title="{{ translate('Order Details') }}">
+                                            class="btn btn-soft-primary btn-icon btn-circle btn-sm"
+                                            title="{{ translate('Refund details') }}">
                                             <i class="fa fa-eye"></i>
                                         </a>
                                        

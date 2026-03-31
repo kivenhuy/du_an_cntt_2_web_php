@@ -34,29 +34,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-6 col-md-6 col-xxl-3">
-            <div class="card shadow-none mb-4 bg-primary py-4">
-                <div class="card-body">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <p class="small text-muted mb-0">
-                                <span class="fe fe-arrow-down fe-12"></span>
-                                <span class="fs-14 text-light">{{ translate('All Seller') }}</span>
-                            </p>
-                            <h3 class="mb-0 text-white fs-30">
-                                {{ $seller }}
-                            </h3>
-
-                        </div>
-                        <div class="col-auto text-right">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="white" class="bi bi-shop" viewBox="0 0 16 16">
-                                <path d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.37 2.37 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0M1.5 8.5A.5.5 0 0 1 2 9v6h1v-5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v5h6V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1V9a.5.5 0 0 1 .5-.5M4 15h3v-5H4zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1zm3 0h-2v3h2z"/>
-                              </svg>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
         
         <div class="col-sm-6 col-md-6 col-xxl-3">
             <div class="card shadow-none mb-4 bg-primary py-4">
@@ -80,70 +58,77 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-6 col-md-6 col-xxl-3">
-            <div class="card shadow-none mb-4 bg-primary py-4">
-                <div class="card-body">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <p class="small text-muted mb-0">
-                                <span class="fe fe-arrow-down fe-12"></span>
-                                <span class="fs-14 text-light">{{ translate('All Shipper') }}</span>
-                            </p>
-                            <h3 class="mb-0 text-white fs-30">
-                                {{ $shipper_data }}
-                            </h3>
-
-                        </div>
-                        <div class="col-auto text-right">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="white" class="bi bi-file-person" viewBox="0 0 16 16">
-                                <path d="M12 1a1 1 0 0 1 1 1v10.755S12 11 8 11s-5 1.755-5 1.755V2a1 1 0 0 1 1-1zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
-                                <path d="M8 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
-                              </svg>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+       
 
     </div>
 
+    {{-- Doanh thu + biểu đồ trạng thái đơn hàng --}}
     <div class="row">
-        <div class="col-sm-6 col-md-6 col-xxl-3">
-            <div class="card shadow-none mb-4 bg-primary py-4">
+        <div class="col-12 mb-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white border-bottom">
+                    <h5 class="mb-0 h6">Doanh thu &amp; trạng thái đơn hàng</h5>
+                    <small class="text-muted">Doanh thu: tổng <code>grand_total</code> các đơn có <strong>Đã thanh toán</strong>. Biểu đồ: số đơn theo trạng thái giao hàng.</small>
+                </div>
                 <div class="card-body">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <p class="small text-muted mb-0">
-                                <span class="fe fe-arrow-down fe-12"></span>
-                                <span class="fs-14 text-light">{{ translate('All Enterprise') }}</span>
+                    <div class="row align-items-stretch">
+                        <div class="col-lg-4 mb-4 mb-lg-0">
+                            <div class="rounded p-4 mb-3 admin-dash-revenue-total">
+                                <p class="text-muted small mb-1">Tổng doanh thu (đã thanh toán)</p>
+                                <h3 class="mb-0 font-weight-bold text-success">{{ single_price($revenue_paid_total) }}</h3>
+                            </div>
+                            <div class="border rounded p-4 mb-3">
+                                <p class="text-muted small mb-1">Doanh thu tháng {{ now()->format('m/Y') }}</p>
+                                <h4 class="mb-0 font-weight-bold text-primary">{{ single_price($revenue_month) }}</h4>
+                            </div>
+                            <p class="mb-0 text-muted">
+                                <i class="fa fa-shopping-bag mr-1"></i>
+                                Tổng số đơn: <strong>{{ $orders_count }}</strong>
                             </p>
-                            <h3 class="mb-0 text-white fs-30">
-                                {{ $enterprise }}
-                            </h3>
-
                         </div>
-                        <div class="col-auto text-right">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="white" class="bi bi-building-fill" viewBox="0 0 16 16">
-                                <path d="M3 0a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h3v-3.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5V16h3a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1zm1 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3.5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5M4 5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zM7.5 5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5m2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zM4.5 8h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5m2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3.5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5"/>
-                              </svg>
+                        <div class="col-8">
+                            <div id="container_3" class="w-100"></div>
                         </div>
+                        
                     </div>
                 </div>
             </div>
         </div>
-       
     </div>
 
     <div class="card">
         <div class="card-body">
             <div class="row">
-                <div id="container_1"></div>
+                <div class="col-12">
+                    <div id="container_1"></div>
+                </div>
             </div>
 
             <div class="row">
-                <div id="container_3" style="width: 50%"></div>
-
-                <div id="container_4" style="width: 50%"></div>
+                <div class="col-6">
+                    <div id="chart_order_status" class="w-100 admin-dash-chart-pie"></div>
+                    @if(!empty($shipping_status))
+                        <div class="table-responsive mt-3">
+                            <table class="table table-sm table-bordered mb-0 bg-white">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Trạng thái giao hàng</th>
+                                        <th class="text-right" style="width:120px">Số đơn</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($shipping_status as $row)
+                                        <tr>
+                                            <td>{{ $row[0] }}</td>
+                                            <td class="text-right font-weight-bold">{{ $row[1] }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    @endif
+                </div>
+                
             </div>
         </div>
     </div>
@@ -153,87 +138,116 @@
         {
             background-color: #181827 !important;
         }
+        .admin-dash-revenue-total {
+            background: rgba(46, 127, 37, 0.08);
+            border: 1px solid rgba(46, 127, 37, 0.2);
+        }
+        .admin-dash-chart-pie {
+            min-height: 380px;
+            height: 380px;
+            width: 100%;
+        }
     </style>
 @endsection
 
 @section('script')
-<script src="https://code.highcharts.com/highcharts.js"></script>
+{{-- Phiên bản cố định (UMD), tránh lỗi bundle mới của CDN --}}
+<script src="https://cdn.jsdelivr.net/npm/highcharts@10.3.3/highcharts.js"></script>
 <script>
-    var data_revenue =  {{ Js::from($data_revenue) }};
-    var shipping_status =  {{ Js::from($shipping_status) }};
-    var quantity_product =  {{ Js::from($quantity_product) }};
+    var data_revenue = {!! json_encode($data_revenue, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) !!};
+    var shipping_status = {!! json_encode($shipping_status ?? [], JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) !!};
+    var quantity_product = {!! json_encode($quantity_product, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) !!};
 
+    function renderOrderStatusPie() {
+        var el = document.getElementById('chart_order_status');
+        if (!el) return;
+        if (typeof Highcharts === 'undefined') {
+            el.innerHTML = '<p class="text-danger small mb-0">Không tải được thư viện biểu đồ (Highcharts). Kiểm tra mạng hoặc chặn CDN.</p>';
+            return;
+        }
+        if (!shipping_status || !shipping_status.length) {
+            el.innerHTML = '<p class="text-muted text-center py-5 mb-0">Chưa có dữ liệu đơn hàng để hiển thị biểu đồ.</p>';
+            return;
+        }
+        try {
+            Highcharts.chart('chart_order_status', {
+                chart: {
+                    type: 'pie',
+                    height: 380,
+                    backgroundColor: 'transparent'
+                },
+                title: { text: 'Đơn hàng theo trạng thái giao hàng' },
+                subtitle: { text: 'Mỗi phần = một đơn hàng' },
+                tooltip: {
+                    pointFormat: '<b>{point.y}</b> đơn ({point.percentage:.1f}%)'
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            format: '<b>{point.name}</b>: {point.y}'
+                        },
+                        showInLegend: true
+                    }
+                },
+                credits: { enabled: false },
+                series: [{
+                    name: 'Số đơn',
+                    colorByPoint: true,
+                    data: shipping_status.map(function (row) {
+                        return { name: row[0], y: Number(row[1]) };
+                    })
+                }]
+            });
+        } catch (e) {
+            el.innerHTML = '<p class="text-danger small mb-0">Lỗi vẽ biểu đồ: ' + (e && e.message ? e.message : '') + '</p>';
+        }
+    }
+
+    if (window.jQuery) {
+        jQuery(function () {
+            setTimeout(renderOrderStatusPie, 50);
+        });
+    } else {
+        document.addEventListener('DOMContentLoaded', function () {
+            setTimeout(renderOrderStatusPie, 50);
+        });
+    }
+
+    if (typeof Highcharts !== 'undefined') {
     Highcharts.chart('container_1', 
     {
             chart: {
                 type: 'column'
             },
             title: {
-                text: 'Quantity Of Product (KG)'
+                text: 'Tồn kho theo sản phẩm'
             },
             subtitle: {
-                text: ''
+                text: 'Tổng số lượng còn (current_stock)'
             },
             xAxis: {
                 type: 'category',
             },
             yAxis: {
                 title: {
-                    text: 'Quantity (KG)'
-                }
+                    text: 'Số lượng còn'
+                },
+                allowDecimals: false,
+                min: 0
             },
             plotOptions: {
-                line: {
+                column: {
                     dataLabels: {
                         enabled: true
-                    },
-                    enableMouseTracking: false
+                    }
                 }
             },
             series: [{
-                name: 'Quantity (KG)',
+                name: 'Số lượng còn',
                 data: quantity_product
-            }]
-    });
-    
-    Highcharts.chart('container_4', 
-    {
-            chart: {
-                type: 'column'
-            },
-            title: {
-                text: 'Status Shipping'
-            },
-            subtitle: {
-                text: ''
-            },
-            xAxis: {
-                type: 'category',
-                // min: 0,
-                // max: 10,
-                // tickLength: 0,
-                // labels: {
-                //     formatter: function() {
-                //         return typeof this.value !== 'number' ? this.value : ''
-                //     }
-                // }
-            },
-            yAxis: {
-                title: {
-                    text: 'Shipping Status'
-                }
-            },
-            plotOptions: {
-                line: {
-                    dataLabels: {
-                        enabled: true
-                    },
-                    enableMouseTracking: false
-                }
-            },
-            series: [{
-                name: 'Shipping Status',
-                data: shipping_status
             }]
     });
 
@@ -243,35 +257,35 @@
             type: 'pie'
         },
         title: {
-            text: 'Total Revenue In Ecomerce (đ)'
+            text: 'Doanh thu theo hình thức thanh toán (tất cả đơn)'
         },
         subtitle: {
-            text: ''
+            text: 'Tổng grand_total theo payment_type'
         },
-        xAxis: {
-            type: 'category',
-            min: 0,
-            max: 10,
-            tickLength: 0,
-        },
-        yAxis: {
-            title: {
-                text: 'Total Revenue'
-            }
+        tooltip: {
+            pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y:,.0f} đ</b> ({point.percentage:.1f}%)'
         },
         plotOptions: {
-            line: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
                 dataLabels: {
-                    enabled: true
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.y:,.0f} đ'
                 },
-                enableMouseTracking: false
+                showInLegend: true
             }
         },
+        credits: { enabled: false },
         series: [{
-            name: 'Total Revenue',
-            data: data_revenue
+            name: 'Doanh thu',
+            colorByPoint: true,
+            data: data_revenue.map(function (row) {
+                return { name: row[0], y: row[1] };
+            })
         }]
     });
+    }
 </script>
 
 @endsection

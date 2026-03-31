@@ -9,7 +9,7 @@
                 </div>
                 <div class="col-md-auto text-md-right mb-2 mb-md-0">
                     <a href="{{ route('admin.products.create') }}" class="btn btn-primary">
-                        <i class="fa fa-plus"></i> {{ translate('Add New Product') }}
+                        <i class="fa fa-plus mr-1"></i>{{ translate('Add New Product') }}
                     </a>
                 </div>
                 <div class="col-md-3">
@@ -34,7 +34,7 @@
                             <th>{{translate('Total Stock')}}</th>
                             <th>{{translate('Published')}}</th>
                             <th>{{translate('Approved')}}</th>
-                            <th>{{translate('Action')}}</th>
+                            <th class="text-right">{{translate('Action')}}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -76,8 +76,8 @@
                                    
                                         @endif
                                     </td>
-                                    <td>
-                                        <a class="btn btn-soft-info btn-icon btn-circle btn-sm" href="{{route('admin.products.edit', ['id'=>$each_product_data->id])}}" title="{{ translate('Edit') }}">
+                                    <td class="text-right">
+                                        <a class="btn btn-soft-primary btn-icon btn-circle btn-sm" href="{{route('admin.products.edit', ['id'=>$each_product_data->id])}}" title="{{ translate('Edit') }}">
                                             <i class="fa fa-edit"></i>
                                         </a>
                                     </td>
@@ -89,6 +89,11 @@
                 <div class="aiz-pagination">
                     {{ $product_data->links() }}
                 </div>
+            </div>
+        @else
+            <div class="card-body p-3 text-center text-muted py-5">
+                <i class="fa fa-box-open fa-3x mb-3 d-block"></i>
+                Chưa có sản phẩm nào.
             </div>
         @endif
     </div>

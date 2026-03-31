@@ -186,7 +186,7 @@
                                             @if(home_price($product) != home_discounted_price($product))
                                                 <div style="display:flex">
                                                     <div class="price_product_top_selling">{{ home_discounted_base_price($product) }}</div>
-                                                    <del class="fs-14 opacity-60 ml-2 price_product_top_selling color-7">{{ home_price($product) }}</del>
+                                                    <del class="opacity-60 ml-2 price_product_top_selling color-7">{{ home_price($product) }}</del>
                                                 </div>
                                             @else
                                                 <div class="price_product_top_selling">

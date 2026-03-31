@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Address extends Model
 {
     use HasFactory;
-    protected $appends =['city_name','country_name','district_name'];
+    protected $appends =['city_name','country_name'];
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -43,7 +43,7 @@ class Address extends Model
 
     public function getDistrictNameAttribute()
     {
-        $data = $this->district->district_name;
+        $data = $this->district->district_name; 
         return $data;
     }
 }

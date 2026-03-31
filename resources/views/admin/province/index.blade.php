@@ -13,8 +13,8 @@
                 <div class="col">
                     <div class="mar-all mb-2" style=" text-align: end;">
                         <a href="{{route('province.create')}}">
-                            <button type="submit" name="button" value="publish"
-                                class="btn btn-primary">Create</button>
+                            <button type="button" class="btn btn-primary">
+                                <i class="fa fa-plus mr-1"></i>{{ translate('Create') }}</button>
                         </a>
                     </div>
                 </div>

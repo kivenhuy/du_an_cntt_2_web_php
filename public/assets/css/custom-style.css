@@ -12248,10 +12248,15 @@ a.disabled {
     border-radius: 10px;
     transition: color 0.5s;
     z-index: 0;
-    height: 100%;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
 }
 .top_selling_v2
 {
+    display: flex;
+    flex-direction: column;
     height: auto;
     width: 33.3%;
     /* max-width: 273px !important; */
@@ -12267,6 +12272,7 @@ a.disabled {
 } */
 .top_selling_img_v2
 {
+    flex-shrink: 0;
     width: 100%;
     max-width: 280px !important;
     max-height: 280px !important;
@@ -12377,7 +12383,7 @@ a.disabled {
 .price_product
 {
     font-family: 'Quicksand',sans-serif !important;
-    font-size: 42px !important;
+    font-size: 40px !important;
     font-weight: 700 !important;
     line-height: 78px !important;
     letter-spacing: -0.0004em;
@@ -12426,11 +12432,21 @@ a.disabled {
     padding: 17px;
     display: flex;
     flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
     max-width: 280px !important;
     width: 100%;
 }
+/* Giá (hoặc nhóm giá + giá gạch) luôn neo sát đáy thẻ, kể cả tên SP dài/ngắn */
+.content_top_selling > *:last-child
+{
+    margin-top: auto;
+    padding-top: 4px;
+}
 .top_selling
 {
+    display: flex;
+    flex-direction: column;
     height: auto;
     width: 25%;
     padding-right: 10px;
@@ -12453,7 +12469,10 @@ a.disabled {
 }
 .sub_top_selling
 {
-    height: 100%;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
     max-width: 282px !important;
     border: 1px solid #D1D1D1;
     border-radius: 10px;
@@ -12462,7 +12481,8 @@ a.disabled {
 }
 .top_selling_news_product
 {
-    max-height: 485px;
+    display: flex;
+    flex-direction: column;
     width: 25%;
     padding-right: 10px;
     padding-left:10px; 
@@ -12480,7 +12500,10 @@ a.disabled {
 }
 .sub_top_selling_news_product
 {
-    height: 100%;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
     /* max-width: 282px !important; */
     /* width: 25% !important; */
     border: 1px solid #D1D1D1;
@@ -12490,6 +12513,7 @@ a.disabled {
 }
 .top_selling_img
 {
+    flex-shrink: 0;
     width: 100%;
     max-width: 280px !important;
     max-height: 280px !important;
@@ -13108,6 +13132,10 @@ body
     {
         margin-bottom: 1rem;
     }
+    .price_product
+    {
+        font-size: 32px !important;
+    }
     .product-info
     {
         padding: 40px 16px;
@@ -13441,4 +13469,54 @@ body.site-storefront img {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
+}
+
+/* Trang chủ: Bán chạy / Sản phẩm mới — cuộn ngang trên mobile & tablet nhỏ (thay vì lưới 2 cột) */
+@media screen and (max-width: 991.98px) {
+    .home-product-row-scroll {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        justify-content: flex-start !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x proximity;
+        gap: 10px;
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+        padding-bottom: 10px;
+        margin-bottom: 4px;
+    }
+
+    .home-product-row-scroll .top_selling,
+    .home-product-row-scroll .top_selling_news_product {
+        flex: 0 0 auto !important;
+        width: 42vw !important;
+        min-width: 148px !important;
+        max-width: 200px !important;
+        margin-bottom: 0 !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        scroll-snap-align: start;
+    }
+
+    .home-product-row-scroll .sub_top_selling,
+    .home-product-row-scroll .sub_top_selling_news_product {
+        max-width: none !important;
+        width: 100%;
+    }
+
+    .home-product-row-scroll .content_top_selling {
+        max-width: none !important;
+    }
+}
+
+/* Desktop & tablet lớn: giữ flex-wrap như cũ */
+@media screen and (min-width: 992px) {
+    .home-product-row-scroll#top_selling_filter {
+        flex-wrap: wrap;
+    }
+
+    .home-product-row-scroll.new_product_section {
+        flex-wrap: wrap;
+    }
 }

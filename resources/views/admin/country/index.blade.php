@@ -13,8 +13,9 @@
                 <div class="col">
                     <div class="mar-all mb-2" style=" text-align: end;">
                         <a href="{{route('country.create')}}">
-                            <button type="submit" name="button" value="publish"
-                                class="btn btn-primary">Tạo quốc gia</button>
+                            <button type="button" class="btn btn-primary">
+                                <i class="fa fa-plus mr-1"></i>Tạo quốc gia
+                            </button>
                         </a>
                     </div>
                 </div>
