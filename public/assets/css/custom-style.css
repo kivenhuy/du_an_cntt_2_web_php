@@ -8643,8 +8643,8 @@ color: var(--white) !important;
 .btn-success,
 .btn-soft-success:hover,
 .btn-outline-success:hover {
-background-color: var(--success);
-border-color: var(--success);
+background-color: #1c90d9;
+border-color: #1c90d9;
 color: var(--white);
 }
 .btn-danger,
@@ -10189,6 +10189,11 @@ right: auto;
 transform: rotate(180deg);
 }
 
+.menu-bar
+{
+    height:70px;
+    background-color:#002f8b;
+}
 .hover-user-top-menu{
 display: none;
 }
@@ -11040,8 +11045,8 @@ width: 100%;
 height: 100%;
 }
 .hov-animate-outline:hover::before {
-border-top-color: var(--primary);
-border-right-color: var(--primary);
+border-top-color: #1c90d9;
+border-right-color: #1c90d9;
 transition:
 width 0.3s ease-out,
 height 0.3s ease-out 0.3s;
@@ -11051,8 +11056,8 @@ border-left-color: var(--primary);
 border-right-color: transparent;
 }
 .hov-animate-outline:hover::after {
-border-bottom-color: var(--primary);
-border-left-color: var(--primary);
+border-bottom-color: #1c90d9;
+border-left-color: #1c90d9;
 transition: 
 height 0.3s ease-out,
 width 0.3s ease-out 0.3s;
@@ -12170,7 +12175,7 @@ a.disabled {
     line-height: 40px;
     letter-spacing: -0.0004em;
     text-align: left;
-    color: #2E7F25;
+    color: #1c90d9;
 }
 @media (max-width: 1200px) {
     .parent_text_filter
@@ -12189,7 +12194,7 @@ a.disabled {
         line-height: 40px !important;
         letter-spacing: -0.0004em;
         text-align: left;
-        color: #2E7F25;
+        color: #1c90d9;
     }
     .home-slider {
         max-width: 100% !important;
@@ -12424,7 +12429,7 @@ a.disabled {
     line-height: 32px;
     letter-spacing: -0.0004em;
     text-align: left;
-    color: #2E7F25;
+    color: #1c90d9;
 
 }
 .content_top_selling
@@ -13610,4 +13615,20 @@ body.site-storefront img {
     justify-content: center;
     min-width: 2rem;
     min-height: 2rem;
+}
+.logo-img
+{
+    height: 90px;
+    width: 200px;
+}
+@media screen and (max-width: 768px) {
+    .logo-img
+    {
+        height: 60px;
+        width: 150px;
+    }
+    .logo-container
+    {
+        margin:0px auto;
+    }
 }

@@ -29,13 +29,13 @@
 
                     </button>
                     <!-- Header Logo -->
-                    <div class="col-auto pl-0 pr-3 d-flex align-items-center">
+                    <div class="col-auto pl-0 pr-3 d-flex align-items-center logo-container">
                         <a href="{{route('homepage')}}">
-                            <img src="{{ static_asset('assets/img/DTQSbmTVlRIyc56RV4e98YWpf1fa9dfsKYb2IojK.jpg') }}" alt="" class="mw-100 h-30px h-md-65px" style="height: 90px;width: 90px;">
+                            <img src="{{ static_asset('assets/img/logo.jpg') }}" alt="" class="mw-100 h-30px h-md-65px logo-img">
                         </a>
                     </div>
                     <!-- Search Icon for small device -->
-                    <div class="d-lg-none ml-auto mr-0">
+                    <div class="d-lg-none  mr-0">
                         <a class="p-2 d-block text-reset" href="javascript:void(0);" data-toggle="class-toggle"
                             data-target=".front-header-search">
                             <i class="fa-solid fa-magnifying-glass fa-flip-horizontal fa-2x" aria-hidden="true"></i>
@@ -358,7 +358,7 @@
             </div>
         </div>
         {{-- @if(Auth::check()) --}}
-        <div class="d-none d-lg-block position-relative bg-primary h-50px" style="height:70px;background-color:#2E7F25 !important">
+        <div class="d-none d-lg-block position-relative  h-50px menu-bar" >
             <div class="container h-100">
                 <div class="d-flex h-100">
                    
