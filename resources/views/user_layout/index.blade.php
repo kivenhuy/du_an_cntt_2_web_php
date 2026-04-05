@@ -89,18 +89,7 @@
                                             {{ renderStarRating($data_selling_product->rating) }}
                                         </span>
                             </div>
-                            <div class="name_store_top_selling" style="margin-bottom: 12px;">
-                                @php
-                                    $__shopSlug = $data_selling_product->user?->shop?->slug;
-                                    $__soldByName = $data_selling_product->user?->shop?->name ?? $data_selling_product->user?->name ?? translate('Official Store');
-                                @endphp
-                                {{ translate('Sold By') }}
-                                @if ($__shopSlug)
-                                    <a href="{{ route('shop.visit', $__shopSlug) }}" style="font-weight:700">{{ $__soldByName }}</a>
-                                @else
-                                    <span style="font-weight:700">{{ $__soldByName }}</span>
-                                @endif
-                            </div>
+                            
                             <div class="price_product_top_selling">
                                 {{number_format($data_selling_product->unit_price, 0, ".", ",")." VNĐ"  }}
                             </div>
@@ -164,18 +153,7 @@
                                             {{ renderStarRating($new_product->rating) }}
                                         </span>
                                     </div>
-                                    <div class="name_store_top_selling" style="margin-bottom: 12px;">
-                                        @php
-                                            $__shopSlug = $new_product->user?->shop?->slug;
-                                            $__soldByName = $new_product->user?->shop?->name ?? $new_product->user?->name ?? translate('Official Store');
-                                        @endphp
-                                        {{ translate('Sold By') }}
-                                        @if ($__shopSlug)
-                                            <a href="{{ route('shop.visit', $__shopSlug) }}" style="font-weight:700">{{ $__soldByName }}</a>
-                                        @else
-                                            <span style="font-weight:700">{{ $__soldByName }}</span>
-                                        @endif
-                                    </div>
+                                    
                                     
                                     <div class="price_product_top_selling">
                                         {{number_format($new_product->unit_price, 0, ".", ",")." VNĐ"  }}

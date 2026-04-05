@@ -438,9 +438,7 @@
                         <li class="mb-3"><a href="{{ route('brands.index') }}" class="text-reset fs-15 fw-600 d-block">{{ translate('All Brands') }}</a></li>
                         <li class="mb-3"><a href="{{ route('comming-soon') }}" class="text-reset fs-15 d-block">{{ translate('News') }}</a></li>
                         <li class="mb-3"><a href="{{ route('comming-soon') }}" class="text-reset fs-15 d-block">{{ translate('About Us') }}</a></li>
-                        <li class="mb-3"><a href="{{ route('comming-soon') }}" class="text-reset fs-15 d-block">{{ translate('Discount') }}</a></li>
                         <li class="mb-3"><a href="{{ route('comming-soon') }}" class="text-reset fs-15 d-block">{{ translate('Support') }}</a></li>
-                        <li class="mb-3"><a href="{{ route('comming-soon') }}" class="text-reset fs-15 d-block">{{ translate('Resources') }}</a></li>
                         @if(Auth::check())
                             <li class="mb-3"><a href="{{ route('user.logout') }}" class="text-reset fs-15 d-block">{{ translate('Logout') }}</a></li>
                         @else

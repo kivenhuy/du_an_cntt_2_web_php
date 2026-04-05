@@ -41,8 +41,7 @@
                             @else
                                 <li class="breadcrumb-item opacity-50 hov-opacity-100">
 
-                                    <a href=""
-                                        class="text-reset">{{ $categories_data->name }}
+                                    <a href="{{ route('products.category', $detailedProduct->category->slug) }}" class="text-reset">{{ $detailedProduct->category->name }}
                                     </a>
                                     {{-- <a class="text-reset" href="{{ route('search') }}">{{ translate('All Categories')}}</a> --}}
                                 </li>

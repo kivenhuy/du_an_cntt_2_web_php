@@ -739,15 +739,6 @@
         text-align: center;
 
     }
-    .text_brand
-    {
-        font-family: 'Quicksand',sans-serif !important;
-        font-size: 18px !important;
-        font-weight: 400 !important;
-        line-height: 26px;
-        letter-spacing: 0em;
-        text-align: left;
-    }
     .text_who_sell
     {
         font-family: 'Quicksand',sans-serif !important;
