@@ -192,24 +192,12 @@
      <div class="d-flex flex-wrap align-items-center mb-3">
          <span class="text-secondary fs-14 fw-400 mr-4 w-70px text_brand">{{ translate('Brand') }}</span><br>
          <a href="{{ route('brands.show', $detailedProduct->brand->slug) }}"
-             class="text-reset hov-text-primary fs-14 fw-700 text_brand" style="color: #2E7F25 !important">{{ $detailedProduct->brand->name }}</a>
+             class=" hov-text-primary fs-14 fw-700 text_brand">{{ $detailedProduct->brand->name }}</a>
      </div>
  @endif
 
     <!-- Seller Info -->
-    <div class="d-flex flex-wrap align-items-center" style="margin-bottom: 30px !important">
-        <div class="d-flex align-items-center mr-4">
-            <span class="text-secondary fs-14 fw-400 mr-4 w-70px text_who_sell">{{ translate('Sold by') }}</span>
-            @if ($detailedProduct->user && $detailedProduct->user->shop && $detailedProduct->user->shop->slug)
-                <input type="hidden" id="id_shop" value="{{ $detailedProduct->user->shop->id }}">
-                <a href="{{ route('shop.visit', $detailedProduct->user->shop->slug) }}"
-                    class="text-reset hov-text-primary fs-14 fw-700 text_who_sell" style="color: #2E7F25 !important">{{ $detailedProduct->user->shop->name }}</a>
-            @else
-                <input type="hidden" id="id_shop" value="">
-                <span class="text-reset fs-14 fw-700 text_who_sell" style="color: #2E7F25 !important">{{ $detailedProduct->user?->name ?? translate('Official Store') }}</span>
-            @endif
-        </div>
-    </div>
+    
 
     {{-- <div class="small_content">
         <span class="sub_content">

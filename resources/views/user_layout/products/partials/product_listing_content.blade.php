@@ -72,17 +72,7 @@
                             {{ renderStarRating($product->rating) }}
                         </span>
                     </div>
-                    <div class="name_store_top_selling" style="margin-bottom: 12px;">
-                        @php
-                            $__shopSlug = $product->user?->shop?->slug;
-                            $__soldByName = $product->user?->shop?->name ?? $product->user?->name ?? translate('Official Store');
-                        @endphp
-                        @if ($__shopSlug)
-                            <a href="{{ route('shop.visit', $__shopSlug) }}">{{ $__soldByName }}</a>
-                        @else
-                            <span>{{ $__soldByName }}</span>
-                        @endif
-                    </div>
+                    
                     @if (home_price($product) != home_discounted_price($product))
                         <div style="display:flex">
                             <div class="price_product_top_selling">
