@@ -51,18 +51,18 @@
                             $product_url = route('auction-product', $product->slug);
                         }
                     @endphp
-                    <a href="{{ $product_url }}" class="d-block h-100">
                         <img class="lazyload mx-auto img-fit has-transition img_product_top_selling" width="180px" height="180px" src="{{ static_asset('assets/img/placeholder.jpg') }}"
                             data-src="{{ uploaded_asset($product->thumbnail_img) }}" alt="{{ $product->name }}"
-                            title="{{ $product->name }}"
-                            onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
-                    </a>
+                        title="{{ $product->name }}"
+                        onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
                 </div>
 
                 <div class="content_top_selling ">
-                    <div class="name_product_top_selling">
-                        {{$product->name}}
-                    </div>
+                    <a href="{{ $product_url }}" class="d-block">
+                        <div class="name_product_top_selling">
+                            {{$product->name}}
+                        </div>
+                    </a>
                     <div class="name_product_top_selling" style="margin-bottom: 6px">
                         @php
                             $total = 0;
