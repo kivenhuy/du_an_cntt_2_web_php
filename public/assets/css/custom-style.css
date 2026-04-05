@@ -929,7 +929,7 @@ border-color: var(--primary) !important;
 
 .text-primary,
 .hov-text-primary:hover {
-color: var(--primary) !important;
+color: #1c90d9 !important;
 }
 .text-soft-lable
 {
@@ -10928,14 +10928,14 @@ cursor: pointer;
 transition: all 0.5s;
 }
 .nav-user-info:hover .nav-user-img{
-border-color: var(--primary) !important;
+border-color: #1c90d9 !important;
 box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.16);
 }
 .nav-user-info .nav-user-img > svg *{
 transition: all 0.5s;
 }
 .nav-user-info:hover .nav-user-img > svg *{
-fill: var(--primary);
+fill: #1c90d9;
 }
 
 /* ---- particles ---- */
@@ -13605,9 +13605,9 @@ body.site-storefront img {
 }
 
 .product-filter-chip-input:checked + .product-filter-chip-face {
-    background: #2e7f25;
+    background: #1c90d9;
     color: #fff;
-    border-color: #2e7f25;
+    border-color: #1c90d9;
 }
 
 .product-filter-chip-locked {
