@@ -70,12 +70,7 @@
                                 </p>
                             </li>
                             
-                            <li class="mb-2">
-                                <p class="fs-13 text-soft-light mb-0">
-                                    <a class="text_footer" target="_blank" rel="noopener noreferrer" herf="" title="Chính sách bảo hành">Chính sách bảo hành</a>
-                                </p>
-                            </li>
-                                
+                            
                         </ul>
                     </div>
                 </div>

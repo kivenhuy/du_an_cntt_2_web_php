@@ -336,7 +336,7 @@
     @if ($detailedProduct->auction_product)
     @else
         <!-- Add to cart & Buy now Buttons -->
-        <div class="mt-3">
+        <!-- <div class="mt-3">
             @if ($detailedProduct->digital == 0)
                 @if ($detailedProduct->external_link != null)
                     <a type="button" class="btn btn-primary buy-now fw-600 add-to-cart px-4 rounded-0"
@@ -385,7 +385,7 @@
                 </button>
             
             @endif
-        </div>
+        </div> -->
 
         
     @endif

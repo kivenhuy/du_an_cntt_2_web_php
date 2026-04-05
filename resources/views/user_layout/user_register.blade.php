@@ -26,7 +26,7 @@
                                             
                                                 <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist" style="margin-bottom: 2%">
                                                     <li class="nav-item mb-2" style="">
-                                                        <a class="nav-link {{ (old('user_type') == null || old('user_type') == 'customer') ? 'active' : '' }}" id="custom-content-below-home-tab" data-toggle="pill" href="#information" role="tab" aria-controls="custom-content-below-home" aria-selected="true"><span class="text_head_register">Khách hàng</span></a>
+                                                        <a class="nav-link {{ (old('user_type') == null || old('user_type') == 'customer') ? 'active' : '' }}" id="custom-content-below-home-tab" data-toggle="pill" href="#information" role="tab" aria-controls="custom-content-below-home" aria-selected="true"><span class="text_head_register text-soft-lable">Khách hàng</span></a>
                                                     </li>
                 
                                                     
@@ -105,14 +105,14 @@
                                                             <div class="mb-3">
                                                                 <label class="aiz-checkbox d-block">
                                                                     <input type="checkbox" name="checkbox_example_1" required>
-                                                                        <span class="">Bằng cách đăng ký, bạn đồng ý với <a href="{{ route('terms') }}" class="fw-500">điều khoản và điều kiện</a></span>
+                                                                        <span class="">Bằng cách đăng ký, bạn đồng ý với <a href="{{ route('terms') }}" class="fw-500 text-soft-lable">điều khoản và điều kiện</a></span>
                                                                     <span class="aiz-square-check"></span>
                                                                 </label>
                                                             </div>
 
                                                             <!-- Submit Button -->
                                                             <div class="mb-4 mt-4">
-                                                                <button type="btn" id="btnSubmit" class="btn btn-primary btn-block fw-600 rounded-4">Tạo tài khoản</button>
+                                                                <button type="btn" id="btnSubmit" class="btn btn-register btn-block fw-600 rounded-4">Tạo tài khoản</button>
                                                             </div>
                                                         </form>
                                                     </div>
@@ -125,7 +125,7 @@
                                         <!-- Log In -->
                                         <div class="text-center">
                                             <p class="fs-12 text-gray mb-0">Đã có tài khoản?</p>
-                                            <a href="{{ route('user.login') }}" class="fs-14 fw-700 animate-underline-primary">Đăng nhập</a>
+                                            <a href="{{ route('user.login') }}" class="fs-14 fw-700 animate-underline-primary text-soft-lable">Đăng nhập</a>
                                         </div>
                                     </div>
                                 </div>
@@ -163,8 +163,7 @@
     }
 
     #custom-content-below-tab .nav-link.active {
-        border: 1px solid green;
-        color: green;
+        border: 1px solid #1c90d9;
     }
     @media screen and (max-width: 440px) {
         #custom-content-below-tab .nav-link {

@@ -12,7 +12,7 @@
                                 <div class="col-lg-6 col-md-7 p-4 p-lg-5">
                                     <!-- Titles -->
                                     <div class="text-center">
-                                        <h1 class="fs-20 fs-md-24 fw-700 text-primary">Chào Mừng Quay Lại</h1>
+                                        <h1 class="fs-20 fs-md-24 fw-700 text-primary text-soft-lable">Chào Mừng Quay Lại</h1>
                                         <h5 class="fs-14 fw-400 text-dark">Đăng nhập vào tài khoản của bạn</h5>
                                     </div>
                                     <!-- Login form -->
@@ -77,7 +77,7 @@
 
                                                 <!-- Submit Button -->
                                                 <div class="mb-4 mt-4">
-                                                    <button type="submit" class="btn btn-primary btn-block fw-700 fs-14 rounded-4">Đăng nhập</button>
+                                                    <button type="submit" class="btn-login btn-block fw-700 fs-14 rounded-4">Đăng nhập</button>
                                                 </div>
                                             </form>
 
@@ -89,7 +89,7 @@
                                         <!-- Register Now -->
                                         <div class="text-center">
                                             <p class="fs-12 text-gray mb-0">Không có tài khoản?</p>
-                                            <a href="{{ route('user.registration') }}" class="fs-14 fw-700 animate-underline-primary">Đăng ký ngay</a>
+                                            <a href="{{ route('user.registration') }}" class="fs-14 fw-700 animate-underline-primary text-soft-lable">Đăng ký ngay</a>
                                         </div>
                                        
                                     </div>
