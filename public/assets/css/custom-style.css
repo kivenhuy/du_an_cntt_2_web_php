@@ -7423,6 +7423,7 @@ border-radius: 0.3rem;
 border-color: #1c90d9;
 box-shadow: none;
 }
+
 .form-control::-webkit-input-placeholder {
 color: #898b92;
 }
