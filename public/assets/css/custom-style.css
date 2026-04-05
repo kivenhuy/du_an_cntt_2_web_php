@@ -931,6 +931,10 @@ border-color: var(--primary) !important;
 .hov-text-primary:hover {
 color: var(--primary) !important;
 }
+.text-soft-lable
+{
+    color:#1c90d9 !important;
+}
 .text-soft-primary,
 .hov-text-soft-primary:hover {
 color: var(--soft-primary) !important;
@@ -7416,7 +7420,7 @@ line-height: 1.5;
 border-radius: 0.3rem;
 }
 .form-control:focus {
-border-color: var(--primary);
+border-color: #1c90d9;
 box-shadow: none;
 }
 .form-control::-webkit-input-placeholder {
@@ -10189,10 +10193,17 @@ right: auto;
 transform: rotate(180deg);
 }
 
-.menu-bar
+.menu-bar,.btn-login,.btn-register
 {
     height:70px;
     background-color:#002f8b;
+}
+.btn-login,.btn-register
+{
+    height: 45px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
 }
 .hover-user-top-menu{
 display: none;

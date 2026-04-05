@@ -398,12 +398,7 @@
                                         Hỗ trợ
                                     </a>
                                 </li>
-                                <li class="list-inline-item mr-0 animate-underline-white">
-                                    <a href="{{route('comming-soon')}}"
-                                        class="fs-13 px-3 py-3 d-inline-block fw-700 text-white header_menu_links hov-bg-black-10">
-                                        Tài nguyên
-                                    </a>
-                                </li>
+                                
                                
                             </ul>
                         </div>
