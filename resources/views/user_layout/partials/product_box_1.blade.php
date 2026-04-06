@@ -15,7 +15,7 @@
     }
 @endphp
 <div class="top_selling_v2">
-    <div class="sub_top_selling_v2 position-relative has-transition border-right border-top border-bottom  hov-animate-outline" >
+    <div class="sub_top_selling_v2 storefront-product-card position-relative has-transition border-right border-top border-bottom  hov-animate-outline" >
     @if ($product->auction_product == 0)
         <!-- wishlisht & compare icons -->
             <div class="show_hide_icon_hover">
@@ -73,37 +73,29 @@
                     $product_url = route('auction-product', $product->slug);
                 }
             @endphp
-            {{-- <img class="img_product_top_selling" src={{ static_asset($product->img_url) }} alt=""> --}}
-            
-                <img class="lazyload mx-auto img-fit has-transition img_product_top_selling" width="180px" height="180px" src="{{ static_asset('assets/img/placeholder.jpg') }}"
+            <a href="{{ $product_url }}" class="d-block storefront-product-card-img-link" title="{{ $product->name }}">
+                <img class="lazyload mx-auto img-fit has-transition img_product_top_selling storefront-product-thumb" width="180" height="180" src="{{ static_asset('assets/img/placeholder.jpg') }}"
                     data-src="{{ uploaded_asset($product->thumbnail_img) }}" alt="{{ $product->name}}"
                     title="{{ $product->name}}"
                     onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
-            
+            </a>
         </div>
 
         <div class="content_top_selling ">
             <a href="{{ $product_url }}" class="d-block">
-                <div class="name_product_top_selling">
+                <div class="name_product_top_selling storefront-product-title">
                     {{$product->name}}
                 </div>
             </a>
-            <div class="name_product_top_selling" style="margin-bottom: 6px">
-                {{-- <span class="fa fa-star checked" style="color: orange"></span>
-                <span class="fa fa-star checked" style="color: orange"></span>
-                <span class="fa fa-star checked" style="color: orange"></span>
-                <span class="fa fa-star"></span>
-                <span class="fa fa-star"></span> --}}
-                @php
-                    $total = 0;
-                    $total += $product->reviews->count();
-                @endphp
+            @if(($product->rating ?? 0) > 0)
+            <div class="name_product_top_selling mb-1 storefront-rating-row">
                 <span class="rating rating-mr-1">
                     {{ renderStarRating($product->rating) }}
                 </span>
             </div>
+            @endif
             
-            <div class="price_product_top_selling">
+            <div class="price_product_top_selling storefront-product-price">
                 {{home_discounted_base_price($product)}}
             </div>
         </div>

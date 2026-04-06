@@ -99,14 +99,24 @@
                             </a>
                         </div>
                     </div>
-                    <!-- Cart -->
-                    <div class="d-none d-xl-block align-self-stretch ml-5 mr-0 has-transition bg-black-10"
-                        data-hover="dropdown" style="
-                        background-color: white !important;">
+                    <!-- Cart (đăng nhập: dropdown; khách: link tới đăng nhập — route giỏ hàng yêu cầu auth) -->
+                    <div class="d-none d-lg-block align-self-stretch ml-4 ml-xl-5 mr-0 has-transition bg-black-10 storefront-nav-cart"
+                        data-hover="dropdown" style="background-color: white !important;">
                         @auth
                             <div class="nav-cart-box dropdown h-100" id="cart_items" style="width: max-content;">
                                 @include('user_layout.partials.cart')
                             </div>
+                        @else
+                            <a href="{{ route('login.form') }}"
+                                class="d-flex align-items-center text-dark px-3 h-100 storefront-header-cart-guest"
+                                title="{{ translate('Đăng nhập để xem giỏ hàng') }}">
+                                <span class="mr-2">
+                                    <i class="fa fa-shopping-cart fa-lg text-primary" aria-hidden="true"></i>
+                                </span>
+                                <span class="d-flex flex-column text-left lh-1">
+                                    <span class="fs-12 font-weight-bold text-dark">{{ translate('Cart') }}</span>
+                                </span>
+                            </a>
                         @endauth
                     </div>
                     <!-- Compare -->
@@ -297,9 +307,9 @@
                                     </svg>
                                 </span>
                                 <a href="{{ route('user.login') }}"
-                                    class="text-reset opacity-60 hov-opacity-100 hov-text-primary fs-12 d-inline-block border-right border-soft-light border-width-2 pr-2 ml-3">{{ translate('Login') }}</a>
+                                    class="text-reset storefront-header-auth-link fs-12 font-weight-bold d-inline-block border-right border-soft-light border-width-2 pr-2 ml-3">{{ translate('Login') }}</a>
                                 <a href="{{ route('user.registration_form') }}"
-                                    class="text-reset opacity-60 hov-opacity-100 hov-text-primary fs-12 d-inline-block py-2 pl-2">{{ translate('Register') }}</a>
+                                    class="text-reset storefront-header-auth-link fs-12 font-weight-bold d-inline-block py-2 pl-2">{{ translate('Register') }}</a>
                             </span>
                         @endauth
                     </div>
