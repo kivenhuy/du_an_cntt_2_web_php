@@ -15875,3 +15875,24 @@ body.site-storefront img {
     border-color: #2E7F25;
     box-shadow: 0 0 0 0.15rem rgba(46, 127, 37, 0.25);
 }
+
+/* Giỏ hàng header: badge số món trên mobile / tablet (< xl) */
+.site-storefront .storefront-mobile-cart-badge {
+    top: -6px;
+    right: -12px;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1.2;
+    min-width: 1.25rem;
+    padding: 0.2rem 0.35rem;
+    z-index: 2;
+}
+
+.site-storefront .storefront-nav-cart-trigger {
+    min-height: 44px;
+}
+
+.site-storefront .storefront-header-cart-guest .storefront-mobile-cart-badge {
+    top: -8px;
+    right: -14px;
+}

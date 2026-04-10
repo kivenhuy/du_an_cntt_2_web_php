@@ -138,8 +138,10 @@
 				</button>
 			</div>
 			<div class="modal-body c-scrollbar-light position-relative" id="info-modal-content">
-				<div class="c-preloader text-center absolute-center">
-                    <i class="las la-spinner la-spin la-3x opacity-70"></i>
+				<div class="c-preloader text-center absolute-center d-flex justify-content-center align-items-center">
+                    <div class="spinner-border" role="status" style="width: 3rem; height: 3rem; color: #2E7F25;">
+                        <span class="sr-only">{{ translate('Loading') }}</span>
+                    </div>
                 </div>
 			</div>
 		</div>
@@ -154,7 +156,7 @@
 @section('script')
 	<script type="text/javascript">
 		function detailsInfo(e){
-            $('#info-modal-content').html('<div class="c-preloader text-center absolute-center"><i class="las la-spinner la-spin la-3x opacity-70"></i></div>');
+            $('#info-modal-content').html('<div class="c-preloader text-center absolute-center d-flex justify-content-center align-items-center"><div class="spinner-border" role="status" style="width:3rem;height:3rem;color:#2E7F25"><span class="sr-only">Loading</span></div></div>');
 			var id = $(e).data('id')
 			$('#info-modal').modal('show');
 			$.post('{{ route('seller.my_uploads.info') }}', {_token: AIZ.data.csrf, id:id}, function(data){

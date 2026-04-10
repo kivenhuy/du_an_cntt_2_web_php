@@ -324,7 +324,7 @@
     @if ($detailedProduct->auction_product)
     @else
         <!-- Add to cart & Buy now Buttons -->
-        <!-- <div class="mt-3">
+        <div class="mt-3">
             @if ($detailedProduct->digital == 0)
                 @if ($detailedProduct->external_link != null)
                     <a type="button" class="btn btn-primary buy-now fw-600 add-to-cart px-4 rounded-0"
@@ -373,7 +373,7 @@
                 </button>
             
             @endif
-        </div> -->
+        </div>
 
         
     @endif
@@ -381,9 +381,7 @@
     <div class="modal fade" id="Rfq_request">
         <div class="modal-dialog modal-dialog-centered modal-dialog-zoom product-modal" id="modal-size" role="document" style="max-width: 800px;width: 100%">
             <div class="modal-content position-relative">
-                {{-- <div class="c-preloader text-center p-3">
-                    <i class="las la-spinner la-spin la-3x"></i>
-                </div> --}}
+                {{-- Loader mẫu: dùng spinner-border (font Line Awesome không có trong public/assets/fonts) --}}
                 <button type="button" class="close absolute-top-right btn-icon close z-1 btn-circle bg-gray mr-2 mt-2 d-flex justify-content-center align-items-center" data-dismiss="modal" aria-label="Close" style="background: #ededf2; width: calc(2rem + 2px); height: calc(2rem + 2px);">
                     <span aria-hidden="true" class="fs-24 fw-700" style="margin-left: 2px;">&times;</span>
                 </button>

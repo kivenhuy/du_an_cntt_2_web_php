@@ -1661,8 +1661,11 @@
     <div class="modal fade" id="addToCart">
         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-zoom product-modal" id="modal-size" role="document">
             <div class="modal-content position-relative">
-                <div class="c-preloader text-center p-3">
-                    <i class="las la-spinner la-spin la-3x"></i>
+                {{-- Không dùng d-flex trên preloader: jQuery .hide() không thắng display:flex!important của BS --}}
+                <div id="addToCart-preloader" class="c-preloader text-center py-4">
+                    <div class="spinner-border d-block mx-auto" role="status" style="width: 3rem; height: 3rem; color: #2E7F25;">
+                        <span class="sr-only">Đang tải...</span>
+                    </div>
                 </div>
                 <button type="button" class="close absolute-top-right btn-icon close z-1 btn-circle bg-gray mr-2 mt-2 d-flex justify-content-center align-items-center" data-dismiss="modal" aria-label="Close" style="background: #ededf2; width: calc(2rem + 2px); height: calc(2rem + 2px);">
                     <span aria-hidden="true" class="fs-24 fw-700" style="margin-left: 2px;">&times;</span>
@@ -1770,15 +1773,17 @@
                 $('#modal-size').addClass('modal-lg');
             }
             $('#addToCart-modal-body').html(null);
+            $('#addToCart-preloader').removeClass('d-none');
             $('#addToCart').modal();
-            $('.c-preloader').show();
             $.post('{{ route('cart.showCartModal') }}', {_token: AIZ.data.csrf, id:id}, function(data){
-                $('.c-preloader').hide();
+                $('#addToCart-preloader').addClass('d-none');
                 $('#addToCart-modal-body').html(data);
                 AIZ.plugins.slickCarousel();
                 AIZ.plugins.zoom();
                 AIZ.extra.plusMinus();
                 getVariantPrice();
+            }).fail(function(){
+                $('#addToCart-preloader').addClass('d-none');
             });
         }
 
@@ -1797,26 +1802,29 @@
 
             if(checkAddToCartValidity()) {
                 $('#addToCart').modal();
-                $('.c-preloader').show();
+                $('#addToCart-preloader').removeClass('d-none');
                 $.ajax({
                     type:"POST",
                     url: '{{ route('cart.addToCart') }}',
                     data: $('#option-choice-form').serializeArray(),
                     success: function(data){
                        if (parseInt(data.status) !== 1) {
-                           $('.c-preloader').hide();
+                           $('#addToCart-preloader').addClass('d-none');
                            if (data.message) {
                                AIZ.plugins.notify('warning', data.message);
                            }
                            return;
                        }
                        $('#addToCart-modal-body').html(null);
-                       $('.c-preloader').hide();
+                       $('#addToCart-preloader').addClass('d-none');
                        $('#modal-size').removeClass('modal-lg');
                        $('#addToCart-modal-body').html(data.modal_view);
                        AIZ.extra.plusMinus();
                        AIZ.plugins.slickCarousel();
                        updateNavCart(data.nav_cart_view,data.cart_count);
+                    },
+                    error: function(){
+                        $('#addToCart-preloader').addClass('d-none');
                     }
                 });
             }
@@ -1838,24 +1846,28 @@
             
             if(checkAddToCartValidity()) {
                 $('#addToCart-modal-body').html(null);
+                $('#addToCart-preloader').removeClass('d-none');
                 $('#addToCart').modal();
-                $('.c-preloader').show();
                 $.ajax({
                     type:"POST",
                     url: '{{ route('cart.addToCart') }}',
                     data: $('#option-choice-form').serializeArray(),
                     success: function(data){
                         if(data.status == 1){
+                            $('#addToCart-preloader').addClass('d-none');
                             $('#addToCart-modal-body').html(data.modal_view);
                             updateNavCart(data.nav_cart_view,data.cart_count);
                             window.location.replace("{{ route('cart') }}");
                         }
                         else{
                             $('#addToCart-modal-body').html(null);
-                            $('.c-preloader').hide();
+                            $('#addToCart-preloader').addClass('d-none');
                             $('#modal-size').removeClass('modal-lg');
                             $('#addToCart-modal-body').html(data.modal_view);
                         }
+                    },
+                    error: function(){
+                        $('#addToCart-preloader').addClass('d-none');
                     }
                });
             }
@@ -1892,6 +1904,10 @@
                 $('#Rfq_request').modal('show');
             }
         }
+
+        $('#addToCart').on('hidden.bs.modal', function () {
+            $('#addToCart-preloader').addClass('d-none');
+        });
     </script>
 
     {{-- Giảm tải ảnh kiểu Save as / kéo thả. Không thể chặn tuyệt đối (URL, DevTools, cache, screenshot...). --}}

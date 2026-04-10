@@ -99,22 +99,33 @@
                             </a>
                         </div>
                     </div>
-                    <!-- Cart (đăng nhập: dropdown; khách: link tới đăng nhập — route giỏ hàng yêu cầu auth) -->
-                    <div class="d-none d-lg-block align-self-stretch ml-4 ml-xl-5 mr-0 has-transition bg-black-10 storefront-nav-cart"
+                    <!-- Cart: luôn hiện (mobile có badge số món trong partial cart); đăng nhập = dropdown, khách = gợi ý đăng nhập -->
+                    <div class="align-self-stretch ml-2 ml-md-3 ml-xl-5 mr-0 flex-shrink-0 has-transition bg-black-10 storefront-nav-cart"
                         data-hover="dropdown" style="background-color: white !important;">
                         @auth
                             <div class="nav-cart-box dropdown h-100" id="cart_items" style="width: max-content;">
                                 @include('user_layout.partials.cart')
                             </div>
                         @else
+                            @php
+                                $guestCartCount = 0;
+                                $tid = session('temp_user_id');
+                                if ($tid) {
+                                    $guestCartCount = \App\Models\Cart::where('temp_user_id', $tid)->count();
+                                }
+                            @endphp
                             <a href="{{ route('login.form') }}"
-                                class="d-flex align-items-center text-dark px-3 h-100 storefront-header-cart-guest"
+                                class="d-flex align-items-center text-dark px-2 px-lg-3 h-100 storefront-header-cart-guest position-relative"
                                 title="{{ translate('Đăng nhập để xem giỏ hàng') }}">
-                                <span class="mr-2">
+                                <span class="mr-1 mr-md-2 position-relative d-inline-flex align-items-center">
                                     <i class="fa fa-shopping-cart fa-lg text-primary" aria-hidden="true"></i>
+                                    @if($guestCartCount > 0)
+                                        <span class="badge badge-primary badge-pill position-absolute storefront-mobile-cart-badge">{{ $guestCartCount }}</span>
+                                    @endif
                                 </span>
-                                <span class="d-flex flex-column text-left lh-1">
+                                <span class="d-none d-md-flex flex-column text-left lh-1">
                                     <span class="fs-12 font-weight-bold text-dark">{{ translate('Cart') }}</span>
+                                    <span class="fs-11 text-muted storefront-cart-guest-hint">{{ translate('Login') }}</span>
                                 </span>
                             </a>
                         @endauth
@@ -449,11 +460,22 @@
                         <li class="mb-3"><a href="{{ route('comming-soon') }}" class="text-reset fs-15 d-block">{{ translate('News') }}</a></li>
                         <li class="mb-3"><a href="{{ route('comming-soon') }}" class="text-reset fs-15 d-block">{{ translate('About Us') }}</a></li>
                         <li class="mb-3"><a href="{{ route('comming-soon') }}" class="text-reset fs-15 d-block">{{ translate('Support') }}</a></li>
-                        @if(Auth::check())
+                        @auth
+                            @php
+                                $menuCartN = \App\Models\Cart::where('user_id', Auth::id())->count();
+                            @endphp
+                            <li class="mb-3">
+                                <a href="{{ route('cart') }}" class="text-reset fs-15 fw-600 d-flex align-items-center justify-content-between">
+                                    <span>Giỏ hàng</span>
+                                    @if($menuCartN > 0)
+                                        <span class="badge badge-primary badge-pill">{{ $menuCartN }}</span>
+                                    @endif
+                                </a>
+                            </li>
                             <li class="mb-3"><a href="{{ route('user.logout') }}" class="text-reset fs-15 d-block">{{ translate('Logout') }}</a></li>
                         @else
                             <li class="mb-3"><a href="{{ route('user.login') }}" class="text-reset fs-15 d-block">{{ translate('Login') }}</a></li>
-                        @endif
+                        @endauth
                     </ul>
                 </nav>
             </div>
