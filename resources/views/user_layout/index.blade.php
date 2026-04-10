@@ -13,30 +13,42 @@
             <div class="home-slider wow animate__animated animate__fadeInUp" data-wow-delay=".2s">
                     <div class="aiz-carousel dots-inside-bottom mobile-img-auto-height" data-autoplay="true">
                             @forelse($home_slides ?? [] as $slide)
-                            <div class="carousel-box">
-                                <a href="{{ $slide->link ?: '#' }}">
-                                    <img class="d-block mw-100 img-fit overflow-hidden h-sm-auto h-md-320px h-lg-460px overflow-hidden b-radius-10 "
+                            @php $slideHref = $slide->link ? trim($slide->link) : ''; $slideHref = ($slideHref === '' || $slideHref === '#') ? route('products.all') : $slideHref; @endphp
+                            <div class="carousel-box position-relative storefront-home-slide">
+                                <a href="{{ $slideHref }}" class="d-block position-relative storefront-banner-img-link">
+                                    <img class="d-block w-100 h-100 storefront-banner-img img-fit overflow-hidden h-sm-auto h-md-320px h-lg-460px b-radius-10"
                                         alt="{{ config('app.name') }}"
                                         src="{{ uploaded_asset($slide->photo) }}"
-                                        style="height: auto;"
+                                        style="object-fit: cover;"
                                         onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
+                                    <div class="storefront-banner-gradient"></div>
+                                    
                                 </a>
                             </div>
                             @empty
-                            <div class="carousel-box">
-                                <a href="#">
-                                    <img class="d-block mw-100 img-fit overflow-hidden h-sm-auto h-md-320px h-lg-460px overflow-hidden b-radius-10 "
+                            @php $fallbackProductsUrl = route('products.all'); @endphp
+                            <div class="carousel-box position-relative storefront-home-slide">
+                                <a href="{{ $fallbackProductsUrl }}" class="d-block position-relative storefront-banner-img-link">
+                                    <img class="d-block w-100 h-100 storefront-banner-img img-fit overflow-hidden h-sm-auto h-md-320px h-lg-460px b-radius-10"
                                         alt="{{ config('app.name') }}"
                                         src="{{ static_asset('assets/img/ivSNgQP3jxEHTHTOQXNAaGWlHOO3a1PQIw3w9EPJ.jpg')}}"
-                                        style="height: auto;">
+                                        style="object-fit: cover;">
+                                    <div class="storefront-banner-gradient"></div>
+                                    <div class="storefront-banner-cta">
+                                        <span class="btn btn-success btn-sm font-weight-bold rounded-pill px-3">Mua sắm ngay</span>
+                                    </div>
                                 </a>
                             </div>
-                            <div class="carousel-box">
-                                <a href="#">
-                                    <img class="d-block mw-100 img-fit overflow-hidden h-sm-auto h-md-320px h-lg-460px overflow-hidden b-radius-10 "
+                            <div class="carousel-box position-relative storefront-home-slide">
+                                <a href="{{ $fallbackProductsUrl }}" class="d-block position-relative storefront-banner-img-link">
+                                    <img class="d-block w-100 h-100 storefront-banner-img img-fit overflow-hidden h-sm-auto h-md-320px h-lg-460px b-radius-10"
                                         alt="{{ config('app.name') }}"
                                         src="{{ static_asset('assets/img/mrAmhwgz6ra35VyilLmTTvbYPZygvz5DpHz3rkWO.jpg')}}"
-                                        style="height: auto;">
+                                        style="object-fit: cover;">
+                                    <div class="storefront-banner-gradient"></div>
+                                    <div class="storefront-banner-cta">
+                                        <span class="btn btn-success btn-sm font-weight-bold rounded-pill px-3">Mua sắm ngay</span>
+                                    </div>
                                 </a>
                             </div>
                             @endforelse
@@ -60,37 +72,38 @@
                 </div>
             </div>
             <!-- Product Section -->
-            <div class="px-sm-3 wow animate__animated animate__fadeInUp home-product-row-scroll" data-wow-delay=".6s" id="top_selling_filter" style="display: flex;justify-content: flex-start;padding-left: unset !important;padding-right: unset !important;">
+            <div class="px-sm-3 wow animate__animated animate__fadeInUp home-product-row-scroll" data-wow-delay=".6s" id="top_selling_filter" >
                 @foreach($best_selling_products as $data_selling_product)
                 <div class="top_selling">
-                    <div class="sub_top_selling position-relative has-transition border-right border-top border-bottom  hov-animate-outline" >
+                    <div class="sub_top_selling storefront-product-card position-relative has-transition border-right border-top border-bottom  hov-animate-outline" >
                             <!-- wishlisht & compare icons -->
                                 
                                 
                         <div class="top_selling_img">
-                            
-                                <img class="lazyload mx-auto img-fit has-transition img_product_top_selling" width="180px" height="180px" src="{{ static_asset('assets/img/placeholder.jpg') }}"
+                            <a href="{{ route('product', $data_selling_product->slug) }}" class="d-block storefront-product-card-img-link" title="{{ $data_selling_product->name }}">
+                                <img class="lazyload mx-auto img-fit has-transition img_product_top_selling storefront-product-thumb" width="180" height="180" src="{{ static_asset('assets/img/placeholder.jpg') }}"
                                         data-src="{{ uploaded_asset($data_selling_product->thumbnail_img) }}" alt="{{ $data_selling_product->name}}"
                                         title="{{ $data_selling_product->name }}"
                                         onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
-                            
+                            </a>
                         </div>
                         
                         <div class="content_top_selling ">
                             <a href="{{ route('products.category', $data_selling_product->category->slug) }}" class="mb-1">{{ $data_selling_product->category->name }}</a>
                             <a href="{{ route('product', $data_selling_product->slug) }}" class="d-block h-100">
-                                <div class="name_product_top_selling">
+                                <div class="name_product_top_selling storefront-product-title">
                                     {{$data_selling_product->name}}
                                 </div>
                             </a>
-                            <div class="name_product_top_selling" style="margin-bottom: 6px">
-                                
+                            @if(($data_selling_product->rating ?? 0) > 0)
+                            <div class="name_product_top_selling mb-1 storefront-rating-row">
                                         <span class="rating rating-mr-1">
                                             {{ renderStarRating($data_selling_product->rating) }}
                                         </span>
                             </div>
+                            @endif
                             
-                            <div class="price_product_top_selling">
+                            <div class="price_product_top_selling storefront-product-price">
                                 {{number_format($data_selling_product->unit_price, 0, ".", ",")." VNĐ"  }}
                             </div>
                         </div>
@@ -124,7 +137,7 @@
                 <div class="px-sm-3 new_product_section home-product-row-scroll wow animate__animated animate__fadeInUp" data-wow-delay=".2s" id="new_product_filter">
                     @foreach($new_products as $new_product)
                         <div class="top_selling_news_product">
-                            <div class="sub_top_selling_news_product position-relative has-transition border-right border-top border-bottom border-left hov-animate-outline" >
+                            <div class="sub_top_selling_news_product storefront-product-card position-relative has-transition border-right border-top border-bottom border-left hov-animate-outline" >
                                     <!-- wishlisht & compare icons -->
                                 <div class="show_hide_icon_hover">
                                     
@@ -133,29 +146,31 @@
                                
                                
                                 <div class="top_selling_img">
-                                    
-                                        <img class="lazyload mx-auto img-fit has-transition img_product_top_selling" width="180px" height="180px" src="{{ static_asset('assets/img/placeholder.jpg') }}"
-                                            data-src="{{ uploaded_asset($new_product->thumbnail_img) }}" alt=""
-                                            title=""
+                                    <a href="{{ route('product', $new_product->slug) }}" class="d-block storefront-product-card-img-link" title="{{ $new_product->name }}">
+                                        <img class="lazyload mx-auto img-fit has-transition img_product_top_selling storefront-product-thumb" width="180" height="180" src="{{ static_asset('assets/img/placeholder.jpg') }}"
+                                            data-src="{{ uploaded_asset($new_product->thumbnail_img) }}" alt="{{ $new_product->name }}"
+                                            title="{{ $new_product->name }}"
                                             onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
-                                  
+                                    </a>
                                 </div>
                                 
                                 <div class="content_top_selling ">
                                     <a href="{{ route('products.category', $new_product->category->slug) }}" class="mb-1">{{ $new_product->category->name }}</a>
                                     <a href="{{ route('product', $new_product->slug) }}" class="d-block h-100">
-                                        <div class="name_product_top_selling"> 
+                                        <div class="name_product_top_selling storefront-product-title"> 
                                             {{$new_product->name}}
                                         </div>
                                     </a>
-                                    <div class="name_product_top_selling" style="margin-bottom: 6px">
+                                    @if(($new_product->rating ?? 0) > 0)
+                                    <div class="name_product_top_selling mb-1 storefront-rating-row">
                                         <span class="rating rating-mr-1">
                                             {{ renderStarRating($new_product->rating) }}
                                         </span>
                                     </div>
+                                    @endif
                                     
                                     
-                                    <div class="price_product_top_selling">
+                                    <div class="price_product_top_selling storefront-product-price">
                                         {{number_format($new_product->unit_price, 0, ".", ",")." VNĐ"  }}
                                     </div>
                                 </div>

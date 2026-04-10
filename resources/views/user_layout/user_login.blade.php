@@ -12,7 +12,7 @@
                                 <div class="col-lg-6 col-md-7 p-4 p-lg-5">
                                     <!-- Titles -->
                                     <div class="text-center">
-                                        <h1 class="fs-20 fs-md-24 fw-700 text-primary text-soft-lable">Chào Mừng Quay Lại</h1>
+                                        <h1 class="fs-20 fs-md-24 fw-700">Chào Mừng Quay Lại</h1>
                                         <h5 class="fs-14 fw-400 text-dark">Đăng nhập vào tài khoản của bạn</h5>
                                     </div>
                                     <!-- Login form -->

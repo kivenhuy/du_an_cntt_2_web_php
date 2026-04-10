@@ -2697,7 +2697,7 @@ textarea.form-control.is-invalid {
 }
 
 .btn:hover {
-    color: #212529;
+    /* color: #212529; */
     text-decoration: none
 }
 
@@ -2805,8 +2805,8 @@ fieldset:disabled a.btn {
 
 .btn-success {
     color: #fff;
-    background-color: #28a745;
-    border-color: #28a745
+    background-color: #1c90d9;
+    border-color: #1c90d9
 }
 
 .btn-success:hover {

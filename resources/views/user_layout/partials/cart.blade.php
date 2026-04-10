@@ -18,8 +18,8 @@
     }
 @endphp
 <!-- Cart button with cart count -->
-<a href="javascript:void(0)" class="d-flex align-items-center text-dark px-3 h-100" data-toggle="dropdown" data-display="static" title="{{translate('Cart')}}">
-    <span class="mr-2">
+<a href="javascript:void(0)" class="d-flex align-items-center text-dark px-2 px-sm-3 h-100 storefront-nav-cart-trigger position-relative" data-toggle="dropdown" data-display="static" title="{{translate('Cart')}}">
+    <span class="mr-2 position-relative d-inline-flex align-items-center storefront-nav-cart-icon">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="20.562" viewBox="0 0 24 20.562">
             {{-- <g id="_5e67fc94b53aaec8ca181b806dd815ee" data-name="5e67fc94b53aaec8ca181b806dd815ee" transform="translate(-33.276 -101)">
               <path id="Path_32659" data-name="Path 32659" d="M34.034,102.519H38.2l-.732-.557c.122.37.243.739.365,1.112q.441,1.333.879,2.666.528,1.6,1.058,3.211.46,1.394.917,2.788c.149.451.291.9.446,1.352l.008.02a.76.76,0,0,0,1.466-.4c-.122-.37-.243-.739-.365-1.112q-.441-1.333-.879-2.666-.528-1.607-1.058-3.213-.46-1.394-.917-2.788c-.149-.451-.289-.9-.446-1.352l-.008-.02a.783.783,0,0,0-.732-.557H34.037a.76.76,0,0,0,0,1.519Z" fill="#fff"/>
@@ -40,6 +40,10 @@
                 <path id="Path_32663" data-name="Path 32663" d="M267.044,237.988q-.52,1.341-1.038,2.682-.828,2.138-1.654,4.274l-.38.983.489-.372H254.1c-.476,0-.957-.02-1.436,0h-.02l.489.372q-.444-1.348-.886-2.694-.7-2.131-1.4-4.264c-.109-.327-.215-.653-.324-.983l-.489.641h16.791c.228,0,.456.005.681,0h.03a.506.506,0,0,0,0-1.013H250.744c-.228,0-.456-.005-.681,0h-.03a.511.511,0,0,0-.489.641q.444,1.348.886,2.694.7,2.131,1.4,4.264c.109.327.215.653.324.983a.523.523,0,0,0,.489.372h10.359c.476,0,.957.018,1.436,0h.02a.526.526,0,0,0,.489-.372q.52-1.341,1.038-2.682.828-2.138,1.654-4.274l.38-.983a.508.508,0,0,0-.355-.623A.52.52,0,0,0,267.044,237.988Z" transform="translate(-210.769 -133.152)" fill="#919199"/>
               </g>
         </svg>
+        {{-- Dưới xl: chỉ icon + badge số món (desktop xl+ mới hiện tổng + chữ) --}}
+        <span class="badge badge-primary badge-pill position-absolute storefront-mobile-cart-badge d-xl-none @if(!isset($cart) || count($cart) < 1) d-none @endif">
+            <span class="cart-count">{{(isset($cart) && count($cart) > 0) ? count($cart) : 0 }}</span>
+        </span>
     </span>
     <span class="d-none d-xl-block ml-2 fs-14 fw-700 ">{{ single_price($total) }}</span>
     <span class="nav-box-text d-none d-xl-block ml-2  fs-12">

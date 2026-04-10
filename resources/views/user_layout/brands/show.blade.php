@@ -156,36 +156,39 @@
                         <div class="px-sm-3 new_product_section_v2">
                             @foreach($products as $key => $product)
                                 <div class="top_selling_v2">
-                                    <div class="sub_top_selling_v2 position-relative has-transition border-right border-top border-bottom @if($key==0) border-left @endif hov-animate-outline">
+                                    <div class="sub_top_selling_v2 storefront-product-card position-relative has-transition border-right border-top border-bottom @if($key==0) border-left @endif hov-animate-outline">
                                         @if(home_price($product) != home_discounted_price($product))
                                             <div class="tag_discount"><span>-{{ discount_in_percentage($product) }}%</span></div>
                                         @endif
                                         <div class="top_selling_img_v2">
-                                            <img class="lazyload mx-auto img-fit has-transition img_product_top_selling"
-                                                 width="180" height="180"
-                                                 src="{{ static_asset('assets/img/placeholder.jpg') }}"
-                                                 data-src="{{ uploaded_asset($product->thumbnail_img) }}"
-                                                 alt="{{ $product->name }}"
-                                                 onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
+                                            <a href="{{ route('product', $product->slug) }}" class="d-block storefront-product-card-img-link" title="{{ $product->name }}">
+                                                <img class="lazyload mx-auto img-fit has-transition img_product_top_selling storefront-product-thumb"
+                                                     width="180" height="180"
+                                                     src="{{ static_asset('assets/img/placeholder.jpg') }}"
+                                                     data-src="{{ uploaded_asset($product->thumbnail_img) }}"
+                                                     alt="{{ $product->name }}"
+                                                     onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
+                                            </a>
                                         </div>
                                         <div class="content_top_selling">
-                                            <div class="name_product_top_selling">
-                                                <a href="{{ route('product', $product->slug) }}"
-                                                   class="text-dark hov-text-primary" style="text-decoration:none">
+                                            <a href="{{ route('product', $product->slug) }}" class="d-block text-dark hov-text-primary" style="text-decoration:none">
+                                                <div class="name_product_top_selling storefront-product-title">
                                                     {{ $product->name }}
-                                                </a>
-                                            </div>
-                                            <div class="name_product_top_selling" style="margin-bottom:6px">
+                                                </div>
+                                            </a>
+                                            @if(($product->rating ?? 0) > 0)
+                                            <div class="name_product_top_selling mb-1 storefront-rating-row">
                                                 <span class="rating rating-mr-1">{{ renderStarRating($product->rating) }}</span>
                                             </div>
+                                            @endif
                                            
                                             @if(home_price($product) != home_discounted_price($product))
-                                                <div style="display:flex">
-                                                    <div class="price_product_top_selling">{{ home_discounted_base_price($product) }}</div>
+                                                <div class="d-flex align-items-baseline flex-wrap">
+                                                    <div class="price_product_top_selling storefront-product-price">{{ home_discounted_base_price($product) }}</div>
                                                     <del class="opacity-60 ml-2 price_product_top_selling color-7">{{ home_price($product) }}</del>
                                                 </div>
                                             @else
-                                                <div class="price_product_top_selling">
+                                                <div class="price_product_top_selling storefront-product-price">
                                                     {{ number_format($product->unit_price, 0, '.', ',') }} VNĐ
                                                 </div>
                                             @endif
