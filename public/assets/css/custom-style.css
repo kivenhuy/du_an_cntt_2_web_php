@@ -13765,7 +13765,7 @@ margin-bottom: 10px;
     line-height: 20px;
     letter-spacing: -0.0004em;
     text-align: left;
-    color: #2E7F25 !important;
+    color: #1c90d9 !important;
 }
 
 .icon_header {
@@ -14014,7 +14014,9 @@ a.disabled {
     line-height: 32px;
     letter-spacing: -0.0004em;
     text-align: right;
-    color: #2E7F25;
+    color: #c45c26;
+    font-weight: 700;
+    font-size: 24px;
 }
 
 .coupon_code {
@@ -14160,7 +14162,7 @@ a.disabled {
     font-weight: 700;
     line-height: 35px;
     letter-spacing: -0.0004em;
-    text-align: left;
+    /* text-align: left; */
 }
 
 .total_product {
@@ -14169,8 +14171,10 @@ a.disabled {
     font-weight: 700 !important;
     line-height: 32px;
     letter-spacing: -0.0004em;
-    text-align: left;
-    color: #2E7F25 !important;
+    /* text-align: left; */
+    color: #c45c26 !important;
+    font-weight: 700;
+    font-size: 16px;
 }
 
 .text_cart_details {
@@ -14263,10 +14267,6 @@ a.disabled {
         justify-content: space-around !important;
     }
 
-    .px-4 {
-        padding-left: unset !important;
-    }
-
     .top_selling_homepage {
         font-family: 'Quicksand', sans-serif !important;
         font-size: 20px !important;
@@ -14314,7 +14314,7 @@ a.disabled {
     line-height: 20px;
     letter-spacing: -0.0004em;
     text-align: left;
-    width: 115px;
+    width: 200px;
     word-wrap: break-word;
     height: auto;
 }
@@ -15895,4 +15895,59 @@ body.site-storefront img {
 .site-storefront .storefront-header-cart-guest .storefront-mobile-cart-badge {
     top: -8px;
     right: -14px;
+}
+
+/* Cart page layout */
+.site-storefront .storefront-cart-page-heading .storefront-cart-page-title {
+    font-family: 'Quicksand', sans-serif !important;
+    font-weight: 700;
+    color: #1c90d9;
+    font-size: 1.65rem;
+    line-height: 1.25;
+}
+
+@media (min-width: 768px) {
+    .site-storefront .storefront-cart-page-heading .storefront-cart-page-title {
+        font-size: 2.5rem;
+        line-height: 1.2;
+    }
+}
+
+.site-storefront .storefront-cart-page-subtitle {
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+.site-storefront .minw-0 {
+    min-width: 0;
+}
+
+.site-storefront .storefront-cart-qty-controls .storefront-cart-qty-input {
+    width: 3rem;
+    min-width: 2.5rem;
+    max-width: 4rem;
+    padding-left: 0.25rem !important;
+    padding-right: 0.25rem !important;
+}
+
+@media (max-width: 991px) {
+    .site-storefront li.storefront-cart-line-item {
+        padding-top: 0.75rem !important;
+        padding-bottom: 0.75rem !important;
+    }
+
+    .site-storefront .storefront-cart-line-item .unit_product {
+        font-size: 1rem;
+        line-height: 1.35;
+    }
+
+    .site-storefront .storefront-cart-shipping-heading .shipping_info {
+        font-size: 1.15rem;
+        line-height: 1.35;
+    }
+}
+
+.site-storefront .storefront-cart-address-block {
+    min-height: 0 !important;
+    height: auto !important;
 }
