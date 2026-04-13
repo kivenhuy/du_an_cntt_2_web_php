@@ -176,86 +176,35 @@
 </div>
 
 @section('modal')
-<div class="modal fade" id="new-address-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">{{ translate('New Address') }}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form class="form-default" role="form" action="{{ route('addresses.store') }}" method="POST">
-                @csrf
-                <div class="modal-body">
-                    <div class="p-3">
-                        <div class="row">
-                            <div class="col-md-2">
-                                <label>{{ translate('Address')}}</label>
-                            </div>
-                            <div class="col-md-10">
-                                <textarea class="form-control mb-3" placeholder="{{ translate('Your Address')}}" rows="2" name="address" required></textarea>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-2">
-                                <label>{{ translate('Country')}}</label>
-                            </div>
-                            <div class="col-md-10">
-                                <div class="mb-3">
-                                    <select class="form-control aiz-selectpicker" data-live-search="true" data-placeholder="{{ translate('Select your country') }}" name="country_id" required>
-                                        <option value="">{{ translate('Select your country') }}</option>
-                                        @foreach (App\Models\Country::where('status', 1)->get() as $key => $country)
-                                            <option value="{{ $country->id }}">{{ $country->country_name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="row">
-                            <div class="col-md-2">
-                                <label>{{ translate('City')}}</label>
-                            </div>
-                            <div class="col-md-10">
-                                <select class="form-control mb-3 aiz-selectpicker" data-live-search="true" name="city_id" required>
+@include('user_layout.partials.address_modal')
+@endsection
 
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-2">
-                                <label>{{ translate('District')}}</label>
-                            </div>
-                            <div class="col-md-10">
-                                <select class="form-control mb-3 aiz-selectpicker" data-live-search="true" name="district_id" required>
-
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-2">
-                                <label>{{ translate('Phone')}}</label>
-                            </div>
-                            <div class="col-md-10">
-                                <input type="text" class="form-control mb-3" placeholder="{{ translate('+880')}}" name="phone" value="" required>
-                            </div>
-                        </div>
-                        <div class="form-group text-right">
-                            <button type="submit" class="btn btn-sm btn-primary">{{translate('Save')}}</button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+@section('script')
+<script type="text/javascript">
+    $('#country_2').on('change', function() {
+        var country = $(this).val();
+        if (country != "") {
+            $.ajax({
+                url: "{{ route('city.filter_by_country') }}",
+                method: 'post',
+                data: { id: country },
+                headers: { 'X-CSRF-Token': '{{ csrf_token() }}' },
+                success: function(result) {
+                    $('#city_2').html('<option value="" selected hidden>{{ translate("Select City") }}</option>');
+                    result.forEach(function(element) {
+                        $('#city_2').append('<option value="' + element.id + '">' + element.city_name + '</option>');
+                    });
+                    $('#city_2').selectpicker('refresh');
+                }
+            });
+        }
+    });
+</script>
 @endsection
 
 <script type="text/javascript">
-    AIZ.extra.plusMinus();
+    if (typeof AIZ !== 'undefined' && AIZ.extra) { AIZ.extra.plusMinus(); }
+    else { (function(){ if (typeof AIZ !== 'undefined' && AIZ.extra) AIZ.extra.plusMinus(); }); }
     function handleClick(myRadio) {
         var address_id = myRadio.value;
         // var id_radio = myRadio.id;
