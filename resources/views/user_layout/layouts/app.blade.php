@@ -261,16 +261,7 @@
         border-color: #ededf2 !important;
         margin-bottom: 2rem;
     }
-    .header_checkout
-    {
-        font-family: 'Quicksand' ,sans-serif !important;
-        font-size: 40px;
-        font-weight: 700;
-        line-height: 48px;
-        letter-spacing: -0.0004em;
-        text-align: left;
-        color: #2E7F25;
-    }
+    
     .shipping_info
     {
         font-family: 'Quicksand' ,sans-serif !important;
@@ -518,10 +509,6 @@
         .parent_text_filter
         {
             justify-content: space-around !important;
-        }
-        .px-4
-        {
-            padding-left: unset !important;   
         }
         /* .top_selling_homepage
         {

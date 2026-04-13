@@ -122,7 +122,7 @@
                             </div>
                         @endforeach
                     @endempty
-                    <button type="button" class="btn add_new_address mt-2" onclick="add_new_address()" style="border:2px solid #2E7F25; border-radius:25px; padding:8px 20px; font-weight:600; color:#2E7F25;">
+                    <button type="button" class="btn add_new_address mt-2" onclick="add_new_address()">
                         <i class="fa fa-plus" aria-hidden="true"></i> {{ translate('Add New Address') }}
                     </button>
                 </div>
@@ -302,7 +302,7 @@
                             }
                             else
                             {
-                                AIZ.plugins.notify('danger', 'Please Select Address To Checkout');
+                                AIZ.plugins.notify('danger', 'Vui Lòng Chọn Địa Chỉ Giao Hàng');
                             }
                             
                         }
@@ -352,7 +352,7 @@
                             }
                             else
                             {
-                                AIZ.plugins.notify('danger', 'Please Select Address To Checkout');
+                                AIZ.plugins.notify('danger', 'Vui Lòng Chọn Địa Chỉ Giao Hàng');
                             }
                         }
                     }, 
