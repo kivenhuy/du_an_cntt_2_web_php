@@ -115,10 +115,10 @@
                                 }
                             @endphp
                             <a href="{{ route('login.form') }}"
-                                class="d-flex align-items-center text-dark px-2 px-lg-3 h-100 storefront-header-cart-guest position-relative"
+                                class="d-flex align-items-center text-dark px-2 px-lg-3 h-100 storefront-header-cart-guest storefront-nav-cart-trigger position-relative"
                                 title="{{ translate('Đăng nhập để xem giỏ hàng') }}">
-                                <span class="mr-1 mr-md-2 position-relative d-inline-flex align-items-center">
-                                    <i class="fa fa-shopping-cart fa-lg text-primary" aria-hidden="true"></i>
+                                <span class="mr-1 mr-md-2 position-relative d-inline-flex align-items-center storefront-nav-cart-icon">
+                                    @include('user_layout.partials.cart_header_icon_svg')
                                     @if($guestCartCount > 0)
                                         <span class="badge badge-primary badge-pill position-absolute storefront-mobile-cart-badge">{{ $guestCartCount }}</span>
                                     @endif

@@ -100,16 +100,7 @@
         color: #797979;
         margin-bottom: 42px;
     }
-    .num_of_product
-    {
-        font-family: 'Quicksand' ,sans-serif !important;
-        font-size: 16px!important;
-        font-weight: 700!important;
-        line-height: 20px;
-        letter-spacing: -0.0004em;
-        text-align: left;
-        color: #2E7F25 !important;
-    }
+    
     .icon_header
     {
         width: 26px;
@@ -132,20 +123,7 @@
         line-height: 26px;
         letter-spacing: 0em;
     }
-    .return_to_shop
-    {
-        width: 250px;
-        height: 50px;
-        border-radius: 4px;
-        color: #2E7F25;
-        border: 1px solid #2E7F25;
-        font-family: 'Quicksand' ,sans-serif !important;
-        font-size: 16px !important;
-        font-weight: 700 !important;
-        line-height: 20px;
-        letter-spacing: -0.0004em;
-        text-align: center;
-    }
+    
     .row_box_img_brand
     {
         display: flex !important;
@@ -330,16 +308,7 @@
         width: 220px;
         height: 50px;
     }
-    .final_price
-    {
-        font-family: 'Quicksand' ,sans-serif !important;
-        font-size: 24px !important;
-        font-weight: 700 !important;
-        line-height: 32px;
-        letter-spacing: -0.0004em;
-        text-align: right;
-        color: #2E7F25;
-    }
+    
     .coupon_code {
         background: #FFFFFF;
         border: 0;
@@ -468,35 +437,9 @@
         text-align: left !important;;
 
     }
-    .unit_product
-    {
-        font-family: 'Quicksand',sans-serif !important;
-        font-size: 20px;
-        font-weight: 700;
-        line-height: 35px;
-        letter-spacing: -0.0004em;
-        text-align: left;
-    }
-    .total_product
-    {
-        font-family: 'Quicksand',sans-serif !important;
-        font-size: 20px !important;
-        font-weight: 700 !important;
-        line-height: 32px;
-        letter-spacing: -0.0004em;
-        text-align: left;
-        color: #2E7F25 !important;
-    }
-    .text_cart_details
-    {
-        font-family: 'Quicksand',sans-serif !important;
-        font-size: 16px !important;
-        font-weight: 700 !important;
-        line-height: 20px;
-        letter-spacing: -0.0004em;
-        text-align: left;
-        color:#333333 !important;
-    }
+   
+    
+    
     .text_filter
     {
         font-family: 'Quicksand',sans-serif !important;
@@ -620,18 +563,7 @@
         letter-spacing: -0.0004em;
         color: #797979 !important;
     }
-    .text_name_product
-    {
-        font-family: 'Quicksand',sans-serif !important;
-        font-size: 16px !important;
-        font-weight: 700 !important;
-        line-height: 20px;
-        letter-spacing: -0.0004em;
-        text-align: left;
-        width: 115px;
-        word-wrap: break-word;
-        height: auto;
-    }
+    
     .new_product_section_v2
     {
         display: flex;

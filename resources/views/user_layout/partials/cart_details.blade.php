@@ -1,40 +1,19 @@
 <div class="container" style="max-width:1200px !important;width:100%">
     
     @if( $carts && count($carts) > 0 )
-    <div style="margin-bottom: 20px;">
-        <span style="
-            font-family: 'Quicksand',sans-serif !important;
-            font-size: 40px;
-            font-weight: 700;
-            line-height: 48px;
-            letter-spacing: -0.0004em;
-            text-align: left;
-            color:#2E7F25;
-            ">Your Cart
-        </span>
-    </div>
-    <div style="margin-bottom: 2rem">
-        <span style="font-family: 'Roboto',sans-serif !important;
-        font-size: 16px;
-        font-weight: 400;
-        line-height: 20px;
-        letter-spacing: -0.0004em;
-        text-align: left;
-        color:#797979;">Your have <span class="num_of_product">{{count($carts)}}</span> product in your cart</span>
-    </div>
+    @include('user_layout.partials.cart_page_heading')
         <div class="row" id="cart-summary-2">
             <div class="col-xxl-8 col-xl-10 mx-auto">
                 <div class=" bg-white p-3 p-lg-4 text-left">
                     <div class="mb-4">
                         <!-- Headers -->
-                        <div class="row gutters-5 d-none d-lg-flex border-bottom mb-3 text-secondary fs-12 header_table" >
-                            <div class="col col-md-1 fw-600 text_cart_details"><input onchange = "Check_all(this)" type="checkbox"></div>
-                            <div class="col-md-4 fw-600 text_cart_details" style="position: relative;left:32px">{{ translate('Product')}}</div>
-                            <div class="col col-md-1 fw-600 text_cart_details">{{ translate('Qty')}}</div>
-                            <div class="col fw-600 text_cart_details" style="display: flex;justify-content: center;">{{ translate('Unit')}}</div>
-                            {{--<div class="col fw-600">{{ translate('Tax')}}</div> --}}
-                            <div class="col fw-600 text_cart_details" >{{ translate('Total')}}</div>
-                            <div class="col-auto fw-600 text_cart_details" style=" position: relative; right: 24px; ">{{ translate('Remove')}}</div>
+                        <div class="row gutters-5 d-none d-lg-flex align-items-center border-bottom mb-3 text-secondary fs-12 header_table storefront-cart-desktop-header">
+                            <div class="col-lg-1 fw-600 text_cart_details"><input onchange="Check_all(this)" type="checkbox"></div>
+                            <div class="col-lg-4 fw-600 text_cart_details">{{ translate('Product')}}</div>
+                            <div class="col-lg-2 fw-600 text_cart_details text-center">{{ translate('Qty')}}</div>
+                            <div class="col-lg-2 fw-600 text_cart_details text-center">{{ translate('Unit')}}</div>
+                            <div class="col-lg-2 fw-600 text_cart_details text-right">{{ translate('Total')}}</div>
+                            <div class="col-lg-1 fw-600 text_cart_details text-center">{{ translate('Remove')}}</div>
                         </div>
                         <!-- Cart Items -->
                         <ul class="list-group list-group-flush">
@@ -56,51 +35,52 @@
                                         $product_name_with_choice = $product->name.' - '.$cartItem['variation'];
                                     }
                                 @endphp
-                                <li class="list-group-item px-0">
-                                    <div class="row gutters-5 align-items-center">
-                                        {{-- checkbxõ --}}
-                                        <div class="col-md-1 ">
-                                            {{-- @if($cartItem->is_checked ==1)
-                                            <input onchange = "showHidePan(this)" class="check_box_child" type="checkbox" value="{{$cartItem->id}}" checked>
-                                            @else --}}
-                                            <input onchange = "showHidePan(this)" class="check_box_child" type="checkbox" value="{{$cartItem->id}}">
-                                            {{-- @endif --}}
-                                           
+                                <li class="list-group-item px-0 py-3 storefront-cart-line-item">
+                                    <div class="row gutters-5 align-items-lg-center">
+                                        <div class="col-auto col-lg-1 text-center mb-2 mb-lg-0" style="display:flex">
+                                            <input onchange="showHidePan(this)" class="check_box_child" type="checkbox" value="{{ $cartItem['id'] }}">
                                         </div>
-                                        <!-- Product Image & name -->
-                                        <div class="col-md-4 d-flex align-items-center mb-2 mb-md-0">
-                                            <span class="mr-2 ml-0">
-                                                <img src="{{ uploaded_asset($product->thumbnail_img) }}"
-                                                    class="img-fit size-70px"
-                                                    alt="{{ $product->name  }}"
-                                                    onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
-                                            </span>
-                                            <span class="fs-14 text_name_product">{{ $product_name_with_choice }}</span>
+                                        <div class="col col-lg-4 mb-2 mb-lg-0 minw-0">
+                                            <div class="d-flex align-items-start">
+                                                <a href="{{ route('product', $product->slug) }}" class="mr-2 flex-shrink-0">
+                                                    <img src="{{ uploaded_asset($product->thumbnail_img) }}"
+                                                        class="img-fit size-70px rounded border border-light"
+                                                        alt="{{ $product->name }}"
+                                                        onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
+                                                </a>
+                                                <div class="flex-grow-1 minw-0 pr-1">
+                                                    <div class="d-flex justify-content-between align-items-start">
+                                                        <span class="fs-14 text_name_product d-block pr-2">{{ $product_name_with_choice }}</span>
+                                                        <a href="javascript:void(0)" onclick="removeFromCartView(event, {{ $cartItem['id'] }})" class="btn btn-icon btn-sm btn-soft-primary bg-soft-warning hov-bg-primary btn-circle flex-shrink-0 d-lg-none" title="{{ translate('Xóa') }}">
+                                                            <i class="fa fa-trash fs-16"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <!-- Quantity -->
-                                        <div class="col-md-2 col order-1 order-md-0">
+                                        <div class="col-12 col-lg-2 mt-1 mt-lg-0 text-lg-center">
                                             @if ($cartItem['digital'] != 1 && $product->auction_product == 0)
-                                                <div class="d-flex flex-column align-items-start aiz-plus-minus mr-2 ml-0">
+                                                <div class="d-flex flex-row align-items-center justify-content-lg-center aiz-plus-minus storefront-cart-qty-controls">
                                                     @if($cartItem['is_rfp'] == 0)
                                                     <button
-                                                        class="btn col-auto btn-icon btn-sm btn-circle btn-light"
-                                                        type="button" data-type="plus"
-                                                        data-field="quantity[{{ $cartItem['id'] }}]">
-                                                        <i class="fa fa-plus"></i>
-                                                    </button>
-                                                    @endif
-                                                    <input type="number" name="quantity[{{ $cartItem['id'] }}]"
-                                                        class="col border-0 text-left px-0 flex-grow-1 fs-14 input-number quantity_product"
-                                                        placeholder="1" value="{{ $cartItem['quantity'] }}"
-                                                        min="{{ $product->min_qty }}"
-                                                        max="{{ $product_stock->qty }}"
-                                                        onchange="updateQuantity({{ $cartItem['id'] }}, this)" style="padding-left:0.75rem !important;">
-                                                    @if($cartItem['is_rfp'] == 0)
-                                                    <button
-                                                        class="btn col-auto btn-icon btn-sm btn-circle btn-light"
+                                                        class="btn btn-icon btn-sm btn-circle btn-light flex-shrink-0"
                                                         type="button" data-type="minus"
                                                         data-field="quantity[{{ $cartItem['id'] }}]">
                                                         <i class="fa fa-minus"></i>
+                                                    </button>
+                                                    @endif
+                                                    <input type="number" name="quantity[{{ $cartItem['id'] }}]"
+                                                        class="border-0 text-center fs-14 input-number quantity_product storefront-cart-qty-input mx-2"
+                                                        placeholder="1" value="{{ $cartItem['quantity'] }}"
+                                                        min="{{ $product->min_qty }}"
+                                                        max="{{ $product_stock->qty }}"
+                                                        onchange="updateQuantity({{ $cartItem['id'] }}, this)">
+                                                    @if($cartItem['is_rfp'] == 0)
+                                                    <button
+                                                        class="btn btn-icon btn-sm btn-circle btn-light flex-shrink-0"
+                                                        type="button" data-type="plus"
+                                                        data-field="quantity[{{ $cartItem['id'] }}]">
+                                                        <i class="fa fa-plus"></i>
                                                     </button>
                                                     @endif
                                                 </div>
@@ -108,24 +88,16 @@
                                                 <span class="fw-700 fs-14">1</span>
                                             @endif
                                         </div>
-                                        <!-- Price -->
-                                        <div class="col-md col-4 order-2 order-md-0 my-3 my-md-0" style="max-width:80px !important">
-                                            <span class="unit_product">{{$product->unit}}</span>
+                                        <div class="col-6 col-lg-2 mt-2 mt-lg-0 text-lg-center">
+                                            <span class="opacity-60 fs-14 d-lg-none d-block mb-1">{{ translate('Đơn vị') }}</span>
+                                            <span class="unit_product d-block">{{ $product->unit }}</span>
                                         </div>
-                                         {{--
-                                        <!-- Tax -->
-                                        <div class="col-md col-4 order-3 order-md-0 my-3 my-md-0">
-                                            <span class="opacity-60 fs-12 d-block d-md-none">{{ translate('Tax')}}</span>
-                                            <span class="fw-700 fs-14">{{ cart_product_tax($cartItem, $product) }}</span>
-                                        </div> --}}
-                                        <!-- Total -->
-                                        <div class="col-md col-5 order-4 order-md-0 my-3 my-md-0">
-                                            <span class="opacity-60 fs-12 d-block d-md-none">{{ translate('Total')}}</span>
-                                            <span class="fw-700 fs-16 text-primary total_product">{{ single_price(cart_product_price($cartItem, $product, false) * $cartItem['quantity']) }}</span>
+                                        <div class="col-6 col-lg-2 mt-2 mt-lg-0 text-right">
+                                            <span class="opacity-60 fs-14 d-lg-none d-block mb-1">{{ translate('Total') }}</span>
+                                            <span class="fw-700  text-primary total_product  d-block d-lg-inline">{{ single_price(cart_product_price($cartItem, $product, false) * $cartItem['quantity']) }}</span>
                                         </div>
-                                        <!-- Remove From Cart -->
-                                        <div class="col-md-auto col-6 order-5 order-md-0 text-right">
-                                            <a href="javascript:void(0)" onclick="removeFromCartView(event, {{ $cartItem['id'] }})" class="btn btn-icon btn-sm btn-soft-primary bg-soft-warning hov-bg-primary btn-circle">
+                                        <div class="col-lg-1 text-center mt-2 mt-lg-0 d-none d-lg-block">
+                                            <a href="javascript:void(0)" onclick="removeFromCartView(event, {{ $cartItem['id'] }})" class="btn btn-icon btn-sm btn-soft-primary bg-soft-warning hov-bg-primary btn-circle" title="{{ translate('Xóa') }}">
                                                 <i class="fa fa-trash fs-16"></i>
                                             </a>
                                         </div>
@@ -135,10 +107,11 @@
                         </ul>
                     </div>
                 </div>
-                <div style="margin-top:40px;margin-bottom:16px;">
-                    <i style="font-size: 24px;margin-right: 8px;" class="fa fa-map-marker" aria-hidden="true"><span class="shipping_info">Shipping Info</span></i>
+                <div class="mt-4 mb-3 d-flex align-items-center storefront-cart-shipping-heading">
+                    <i class="fa fa-map-marker text-primary mr-2" style="font-size: 1.35rem;" aria-hidden="true"></i>
+                    <span class="shipping_info mb-0">{{ translate('Thông tin giao hàng') }}</span>
                 </div>
-                <div style="height: 111px !important">
+                <div class="storefront-cart-address-block mb-3">
                     @empty($address)
                    
                     @else
@@ -149,30 +122,30 @@
                             </div>
                         @endforeach
                     @endempty
-                    <button class="btn add_new_address" onclick="add_new_address()" style="margin-top:10px; border:2px solid #2E7F25; border-radius:25px; padding:8px 20px; font-weight:600; color:#2E7F25;">
-                        <i class="fa fa-plus" aria-hidden="true"></i> Add New Address
+                    <button type="button" class="btn add_new_address mt-2" onclick="add_new_address()" style="border:2px solid #2E7F25; border-radius:25px; padding:8px 20px; font-weight:600; color:#2E7F25;">
+                        <i class="fa fa-plus" aria-hidden="true"></i> {{ translate('Add New Address') }}
                     </button>
                 </div>
             </div>
             <div class="col-xxl-3 col-xl-10 mx-auto">
                 <div class="border bg-white p-3 p-lg-4 text-left">
                     <div class="mb-4">
-                        <div class="px-0 py-2 mb-4  d-flex justify-content-between">
-                            <span class="opacity-60 fs-14 price_product_cart_details">Subtotal</span>
+                        <div class="px-0 py-2 mb-3 d-flex justify-content-between align-items-baseline">
+                            <span class="opacity-60 fs-14 price_product_cart_details">{{ translate('Tạm tính') }}</span>
                             <span class="fw-700 fs-16" id="total_price">{{ single_price($total) }}</span>
                         </div>
-                        <div class="px-0 py-2 mb-4  d-flex justify-content-between">
-                            <span class="opacity-60 fs-14 price_product_cart_details">Shpping</span>
-                            <span class="fw-700 fs-16">đ 0</span>
+                        <div class="px-0 py-2 mb-3 d-flex justify-content-between align-items-baseline">
+                            <span class="opacity-60 fs-14 price_product_cart_details">{{ translate('Phí vận chuyển') }}</span>
+                            <span class="fw-700 fs-16" id="cart_shipping_fee_display">{{ single_price(0) }}</span>
                         </div>
-                        <div class="px-0 py-2 mb-4 border-top d-flex justify-content-between" style="align-items:center">
-                            <span class="opacity-60 fs-14 price_product_cart_details">Total</span>
+                        <div class="px-0 py-2 mb-4 border-top d-flex justify-content-between align-items-center">
+                            <span class="opacity-60 fs-14 price_product_cart_details">{{ translate('Order Total') }}</span>
                             <span class="fw-700 fs-16 final_price" id="total_price_2">{{ single_price($total) }}</span>
                         </div>
                     </div>
                     <div class="col-md-12 text-center" style="background-color: #2E7F25">
                         <a id="myLink" href="{{ route('checkout.final_checkout') }}" style="border:none;background-color: #2E7F25 !important" class="btn btn-primary fs-14 fw-700 rounded-0 px-4 disabled " >
-                            Proceed To Checkout
+                            {{ translate('Tiến hành thanh toán') }}
                         </a>
                     </div>
                 </div>
