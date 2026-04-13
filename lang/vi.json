@@ -2,6 +2,7 @@
     "Search in menu": "Tìm trong menu",
     "Dashboard": "Bảng điều khiển",
     "Category": "Danh mục",
+    "Cart Items": "Giỏ hàng",
     "Homepage": "Trang chủ",
     "Carousel slides": "Ảnh carousel",
     "Add New Product": "Thêm sản phẩm",
@@ -84,6 +85,8 @@
     "Resources": "Tài nguyên",
     "Product": "Sản phẩm",
     "Qty": "SL",
+    "View cart":"Xem",
+    "Subtotal": "Tạm tính",
     "Unit": "Đơn vị",
     "Total": "Tổng",
     "Free shipping": "Miễn phí vận chuyển",
@@ -100,7 +103,7 @@
     "City": "Thành phố",
     "District": "Quận/Huyện",
     "Phone": "Điện thoại",
-    "Proceed To Checkout": "Tiến hành thanh toán",
+    "Proceed To Checkout": "Thanh toán",
     "Shipping Info": "Thông tin giao hàng",
     "Add New Address": "Thêm địa chỉ mới",
     "Postal code": "Mã bưu điện",
@@ -112,4 +115,3 @@
     "There have been no reviews for this product yet.": "Chưa có đánh giá cho sản phẩm này.",
     "Cart": "Giỏ hàng"
 }
-

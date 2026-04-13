@@ -92,7 +92,6 @@ class CheckoutController extends Controller
             ->with('carrier_ranges')
             ->orderBy('id')
             ->get();
-        // dd(gettype($carts_short_shelf_life));
         return view('user_layout.checkout.payment_select', compact('discount','carts_normal','carts_short_shelf_life','seller_products_normal','seller_products_short','carrier_list'));
     }
 
