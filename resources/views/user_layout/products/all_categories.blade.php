@@ -4,12 +4,6 @@
 <section class="mb-5 pt-4">
     <div class="container" style="max-width:1200px">
 
-        {{-- Page heading --}}
-        <div class="img_category mb-3">
-            <div class="text_category">
-                <span>{{ translate('Tất cả danh mục') }}</span>
-            </div>
-        </div>
 
         {{-- Category grid --}}
         <div class="row">

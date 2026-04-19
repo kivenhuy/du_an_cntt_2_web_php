@@ -3,14 +3,6 @@
 @section('content')
 <section class="mb-5 pt-4">
     <div class="container" style="max-width:1200px">
-
-        {{-- Page heading --}}
-        <div class="img_category mb-3">
-            <div class="text_category">
-                <span>Thương hiệu</span>
-            </div>
-        </div>
-
         {{-- Alphabet nav --}}
         <div class="bg-white rounded shadow-sm p-3 mb-4">
             <div class="d-flex flex-wrap gap-2" style="gap:6px">

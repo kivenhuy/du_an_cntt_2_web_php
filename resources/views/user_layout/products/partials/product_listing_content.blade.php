@@ -1,31 +1,51 @@
 {{-- Khối lọc nhanh + lưới sản phẩm + phân trang (dùng chung category & all products) --}}
-<div class="card_for_filter">
-    <div class="data_card_for_filter" style="display: flex;">
-        <div class="total_filter">
-            <span class="total_filter-summary">{{ translate('Products found intro') }} <span class="number_of_products">{{ $total_product }}</span> {{ translate('Products found outro') }}</span>
-        </div>
-        <div class="sowing_for_filter"  style="display:flex">
-            <i class="fa fa-th" aria-hidden="true" style="font-size: 16px;"></i>
-            <span class="text_for_filter">{{ translate('Showing') }}</span>
-            <select class="text_for_filter_select">
-                <option>50</option>
-                <option>100</option>
-                <option>200</option>
-            </select>
-        </div>
-        <div class="sort_for_filter" style="display:flex">
-            <i class="fa-solid fa-arrow-up-short-wide" style="font-size: 16px;"></i>
-            <span class="text_for_filter">{{ translate('Sort') }}</span>
-            <select name="sort_by" class="text_for_filter_select" style="width: 100px !important" onchange="filter()">
-                <option value="">{{ translate('Sort by')}}</option>
-                <option value="newest" @isset($sort_by) @if ($sort_by == 'newest') selected @endif @endisset>{{ translate('Newest')}}</option>
-                <option value="oldest" @isset($sort_by) @if ($sort_by == 'oldest') selected @endif @endisset>{{ translate('Oldest')}}</option>
-                <option value="price-asc" @isset($sort_by) @if ($sort_by == 'price-asc') selected @endif @endisset>{{ translate('Price low to high')}}</option>
-                <option value="price-desc" @isset($sort_by) @if ($sort_by == 'price-desc') selected @endif @endisset>{{ translate('Price high to low')}}</option>
-            </select>
+@php
+    $currentSort = $sort_by ?? '';
+    $sortOptions = [
+        'newest'     => translate('Mới nhất'),
+        'price-asc'  => translate('Giá ↑'),
+        'price-desc' => translate('Giá ↓'),
+        'oldest'     => translate('Cũ nhất'),
+    ];
+@endphp
+<div class="listing-topbar">
+    <div class="listing-topbar-count">
+        {{ translate('Tìm thấy') }}
+        <strong class="listing-count-number">{{ $total_product }}</strong>
+        {{ translate('sản phẩm') }}
+    </div>
+    <div class="listing-topbar-sort" aria-label="{{ translate('Sort') }}">
+        {{-- Hidden field submitted with the form when a chip is clicked --}}
+        <input type="hidden" name="sort_by" value="{{ $currentSort }}" class="listing-sort-input">
+        <div class="listing-sort-chips" role="tablist">
+            @foreach($sortOptions as $value => $label)
+                @php $isActive = $currentSort === $value || ($currentSort === '' && $value === 'newest'); @endphp
+                <button type="button"
+                    class="listing-sort-chip {{ $isActive ? 'is-active' : '' }}"
+                    data-sort="{{ $value }}"
+                    aria-pressed="{{ $isActive ? 'true' : 'false' }}">
+                    {{ $label }}
+                </button>
+            @endforeach
         </div>
     </div>
 </div>
+
+<script>
+    (function () {
+        var chips = document.querySelectorAll('.listing-sort-chips .listing-sort-chip');
+        if (!chips.length) return;
+        chips.forEach(function (chip) {
+            chip.addEventListener('click', function () {
+                var sort = chip.getAttribute('data-sort');
+                var wrap = chip.closest('.listing-topbar-sort');
+                var input = wrap ? wrap.querySelector('.listing-sort-input') : null;
+                if (input) input.value = sort;
+                if (typeof filter === 'function') filter();
+            });
+        });
+    })();
+</script>
 
 <div class="container" style="max-width:1200px;width: 100%" >
     <div class="d-flex mb-2 mb-md-3 align-items-baseline justify-content-between">
