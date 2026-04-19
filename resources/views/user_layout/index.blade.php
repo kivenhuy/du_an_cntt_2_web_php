@@ -4,10 +4,10 @@
 
 <div class="home-banner-area mb-3" >
     <div class="container wow animate__animated animate__fadeIn"  style=" max-width: 1200px !important;margin-top: 15px;height: auto;">
-        <div class="d-flex flex-wrap position-relative" style="justify-content: space-between;">
-            <div class="position-static d-none d-xl-block wow animate__animated animate__fadeInUp" data-wow-delay=".1s">
+        <div class="d-flex flex-wrap position-relative">
+            <!-- <div class="position-static d-none d-xl-block wow animate__animated animate__fadeInUp" data-wow-delay=".1s">
                 @include('user_layout.partials.category_menu')
-            </div>
+            </div> -->
 
             <!-- Sliders -->
             <div class="home-slider wow animate__animated animate__fadeInUp" data-wow-delay=".2s">
@@ -104,7 +104,11 @@
                             @endif
                             
                             <div class="price_product_top_selling storefront-product-price">
-                                {{number_format($data_selling_product->unit_price, 0, ".", ",")." VNĐ"  }}
+                                @auth
+                                    {{ number_format($data_selling_product->unit_price, 0, ".", ",") . " VNĐ" }}
+                                @else
+                                    {{ guest_price_placeholder() }}
+                                @endauth
                             </div>
                         </div>
                     </div>
@@ -171,7 +175,11 @@
                                     
                                     
                                     <div class="price_product_top_selling storefront-product-price">
-                                        {{number_format($new_product->unit_price, 0, ".", ",")." VNĐ"  }}
+                                        @auth
+                                            {{ number_format($new_product->unit_price, 0, ".", ",") . " VNĐ" }}
+                                        @else
+                                            {{ guest_price_placeholder() }}
+                                        @endauth
                                     </div>
                                 </div>
                             </div>

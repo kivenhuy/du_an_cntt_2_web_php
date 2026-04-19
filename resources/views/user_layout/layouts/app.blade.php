@@ -206,9 +206,6 @@
         text-align: left;
         color: #589951;
     }
-    .home-slider {
-        max-width: calc(100% - 270px) !important;
-    }
     .manual_payment_description
     {
         /* font-family: Roboto;

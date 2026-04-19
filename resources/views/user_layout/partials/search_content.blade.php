@@ -28,7 +28,11 @@
                                     {{  $product->name  }}
                                 </div>
                                 <div class="price_product_top_selling">
-                                    {{number_format($product->unit_price, 0, ".", ",")." VNĐ"  }}
+                                    @auth
+                                        {{ number_format($product->unit_price, 0, ".", ",") . " VNĐ" }}
+                                    @else
+                                        {{ guest_price_placeholder() }}
+                                    @endauth
                                 </div>
                                 {{-- <div class="">
                                     @if(home_base_price($product) != home_discounted_base_price($product))

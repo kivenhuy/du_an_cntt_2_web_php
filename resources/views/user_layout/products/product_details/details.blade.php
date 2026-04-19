@@ -102,7 +102,13 @@
                         <tr>
                             <td>{{ $wholesalePrice->min_qty }}</td>
                             <td>{{ $wholesalePrice->max_qty }}</td>
-                            <td>{{ single_price($wholesalePrice->price) }}</td>
+                            <td>
+                                @auth
+                                    {{ single_price($wholesalePrice->price) }}
+                                @else
+                                    {{ guest_price_placeholder() }}
+                                @endauth
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -120,14 +126,16 @@
                             <strong class="fs-16 fw-700 text-primary price_product">
                                 {{ home_discounted_price($detailedProduct) }}
                             </strong>
-                            <!-- Home Price -->
-                            <del class="fs-14 opacity-60 ml-2 price_product_before_discount color-7">
-                                {{ home_price($detailedProduct) }}
-                            </del>
-                            <!-- Unit -->
-                            @if ($detailedProduct->unit != null)
-                                <span class=" ml-1 price_product">/{{ $detailedProduct->getTranslation('unit') }}</span>
-                            @endif
+                            @auth
+                                <!-- Home Price -->
+                                <del class="fs-14 opacity-60 ml-2 price_product_before_discount color-7">
+                                    {{ home_price($detailedProduct) }}
+                                </del>
+                                <!-- Unit -->
+                                @if ($detailedProduct->unit != null)
+                                    <span class=" ml-1 price_product">/{{ $detailedProduct->getTranslation('unit') }}</span>
+                                @endif
+                            @endauth
                             <!-- Discount percentage -->
                             
                             <!-- Club Point -->
@@ -172,13 +180,15 @@
                             <strong class="fs-16 fw-700 text-primary price_product">
                                 {{ home_discounted_price($detailedProduct) }}
                             </strong>
-                            @if ($detailedProduct->weight != null)
-                                <span class="opacity-70 price_product" style="color: unset !important">/{{ $detailedProduct->weight}}</span>
-                            @endif
-                            <!-- Unit -->
-                            @if ($detailedProduct->unit != null)
-                                <span class="opacity-70 price_product" style="color: unset !important">{{ $detailedProduct->unit}}</span>
-                            @endif
+                            @auth
+                                @if ($detailedProduct->weight != null)
+                                    <span class="opacity-70 price_product" style="color: unset !important">/{{ $detailedProduct->weight}}</span>
+                                @endif
+                                <!-- Unit -->
+                                @if ($detailedProduct->unit != null)
+                                    <span class="opacity-70 price_product" style="color: unset !important">{{ $detailedProduct->unit}}</span>
+                                @endif
+                            @endauth
                             <!-- Club Point -->
                             
                         </div>
@@ -197,16 +207,6 @@
  @endif
 
     <!-- Seller Info -->
-    
-
-    {{-- <div class="small_content">
-        <span class="sub_content">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquam rem officia, corrupti reiciendis minima nisi modi, quasi, odio minus dolore impedit fuga eum eligendi? Officia doloremque facere quia. Voluptatum, accusantium!
-        </span>
-        <span class="sub_content">    
-            Uninhibited carnally hired played in whimpered dear gorilla koala depending and much yikes off far quetzal goodness and from for grimaced goodness.
-        </span>
-    </div> --}}
     @if ($detailedProduct->auction_product != 1)
         <form id="option-choice-form">
             @csrf
@@ -310,7 +310,11 @@
                         </div>
                         <div class="col col-sm-10">
                             <strong class="fs-16 fw-700 text-primary">
-                                {{ format_price(convert_price($detailedProduct->additional_cost)) }}
+                                @auth
+                                    {{ format_price(convert_price($detailedProduct->additional_cost)) }}
+                                @else
+                                    {{ guest_price_placeholder() }}
+                                @endauth
                             </strong>
                             <i class="fa-solid fa-circle-info ml-2 fs-14 fw-700" data-toggle="tooltip" data-placement="top" title="{{ translate('Additional Cost')}}"></i>
                         </div>

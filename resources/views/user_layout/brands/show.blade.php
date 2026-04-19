@@ -189,7 +189,11 @@
                                                 </div>
                                             @else
                                                 <div class="price_product_top_selling storefront-product-price">
-                                                    {{ number_format($product->unit_price, 0, '.', ',') }} VNĐ
+                                                    @auth
+                                                        {{ number_format($product->unit_price, 0, '.', ',') }} VNĐ
+                                                    @else
+                                                        {{ guest_price_placeholder() }}
+                                                    @endauth
                                                 </div>
                                             @endif
                                         </div>

@@ -273,10 +273,19 @@ class HomeController extends Controller
     public function listingByCategory(Request $request, $category_slug)
     {
         $category = Category::where('slug', $category_slug)->first();
-        if ($category != null) { 
+        if ($category != null) {
             return $this->index_category($request, $category->id);
         }
         abort(404);
+    }
+
+    public function listingAllCategories()
+    {
+        $categories = Category::withCount(['products' => function ($q) {
+            $q->where('published', 1)->where('approved', 1);
+        }])->orderBy('name')->get();
+
+        return view('user_layout.products.all_categories', compact('categories'));
     }
 
 
