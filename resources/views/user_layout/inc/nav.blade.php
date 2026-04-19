@@ -393,6 +393,30 @@
                                         {{ translate('Home') }}
                                     </a>
                                 </li>
+                                <li class="list-inline-item mr-0 animate-underline-white dropdown nav-category-dropdown">
+                                    <a href="#" id="navCategoryDropdown" role="button"
+                                        data-toggle="dropdown" data-display="static"
+                                        aria-haspopup="true" aria-expanded="false"
+                                        class="fs-13 px-3 py-3 d-inline-block fw-700 text-white header_menu_links hov-bg-black-10">
+                                        {{ translate('Category') }}
+                                        <i class="fa fa-angle-down ml-1 fs-10 nav-category-caret"></i>
+                                    </a>
+                                    <div class="dropdown-menu nav-category-menu p-0 border-0" aria-labelledby="navCategoryDropdown">
+                                        <div class="nav-category-list">
+                                            @foreach(\App\Models\Category::orderBy('name')->get() as $navCategory)
+                                                <a href="{{ route('products.category', $navCategory->slug) }}"
+                                                    class="nav-category-item d-block text-dark px-3">
+                                                    <span class="nav-category-name">{{ $navCategory->name }}</span>
+                                                </a>
+                                            @endforeach
+                                        </div>
+                                        <a href="{{ route('products.categories') }}"
+                                            class="nav-category-viewall d-flex align-items-center justify-content-center">
+                                            <span>{{ translate('Xem tất cả danh mục') }}</span>
+                                            <i class="fa fa-arrow-right ml-2"></i>
+                                        </a>
+                                    </div>
+                                </li>
                                 <li class="list-inline-item mr-0 animate-underline-white">
                                     <a href="{{route('products.all')}}"
                                         class="fs-13 px-3 py-3 d-inline-block fw-700 text-white header_menu_links hov-bg-black-10">

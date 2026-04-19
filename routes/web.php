@@ -37,6 +37,7 @@ Route::controller(HomeController::class)->group(function () {
     Route::get('/product/{slug}', 'product')->name('product');
     Route::get('/comming-soon', 'comming_soon')->name('comming-soon');
     Route::get('/shop/{slug}', 'shop')->name('shop.visit');
+    Route::get('/category', 'listingAllCategories')->name('products.categories');
     Route::get('/category/{category_slug}', 'listingByCategory')->name('products.category');
 });
 

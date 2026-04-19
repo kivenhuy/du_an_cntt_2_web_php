@@ -175,9 +175,24 @@ if (!function_exists('isCustomer')) {
 }
 
 //Shows Price on page based on low to high
+if (!function_exists('guest_price_placeholder')) {
+    /**
+     * Text shown in place of a product price when the viewer is not logged in.
+     * Why: business rule — prices are hidden from guests to encourage signup.
+     */
+    function guest_price_placeholder()
+    {
+        return translate('Đăng nhập để xem giá');
+    }
+}
+
 if (!function_exists('home_price')) {
     function home_price($product, $formatted = true)
     {
+        if ($formatted && !Auth::check()) {
+            return guest_price_placeholder();
+        }
+
         $lowest_price = $product->unit_price;
         $highest_price = $product->unit_price;
 
@@ -208,6 +223,10 @@ if (!function_exists('home_price')) {
 if (!function_exists('home_discounted_price')) {
     function home_discounted_price($product, $formatted = true)
     {
+        if ($formatted && !Auth::check()) {
+            return guest_price_placeholder();
+        }
+
         $lowest_price = $product->unit_price;
         $highest_price = $product->unit_price;
 
@@ -436,6 +455,10 @@ function getShippingCost($carts, $index, $carrier = '')
 if (!function_exists('home_discounted_base_price')) {
     function home_discounted_base_price($product, $formatted = true)
     {
+        if ($formatted && !Auth::check()) {
+            return guest_price_placeholder();
+        }
+
         $price = $product->unit_price;
         $tax = 0;
 
