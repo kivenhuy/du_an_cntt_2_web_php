@@ -63,13 +63,11 @@
     <section class="mb-2 mb-md-3 mt-2 mt-md-3">
         <div class="container wow animate__animated animate__fadeIn" style="max-width: 1200px !important; width:100%;">
             <!-- Top Section -->
-            <div class="d-flex mb-2 mb-md-3 align-items-baseline parent_text_filter wow animate__animated animate__fadeInUp" data-wow-delay=".5s">
-                <!-- Title -->
-                <div class="title_for_section">
-                    <h3 class="fs-16 fs-md-20 fw-700 mb-2 mb-sm-0">
-                        <span class="top_selling_homepage">{{ translate('Top Selling') }}</span>
-                    </h3>
-                </div>
+            <div class="home-section-title-wrap wow animate__animated animate__fadeInUp" data-wow-delay=".5s">
+                <h3 class="home-section-title home-section-title--bestselling">
+                    <span class="home-section-badge">🔥 {{ translate('HOT') }}</span>
+                    <span>{{ translate('Top Selling') }}</span>
+                </h3>
             </div>
             <!-- Product Section -->
             <div class="px-sm-3 wow animate__animated animate__fadeInUp home-product-row-scroll" data-wow-delay=".6s" id="top_selling_filter" >
@@ -128,14 +126,11 @@
         <section class="mb-2 mb-md-3 mt-2 mt-md-3">
             <div class="container wow animate__animated animate__fadeIn" style="max-width:1200px;width: 100%">
                 <!-- Top Section -->
-                <div class="d-flex mb-2 mb-md-3 align-items-baseline parent_text_filter wow animate__animated animate__fadeInUp" data-wow-delay=".1s">
-                    <!-- Title -->
-                    <div class="title_for_section">
-                        <h3 class="fs-16 fs-md-20 fw-700 mb-2 mb-sm-0">
-                            <span class="top_selling_homepage">{{ translate('New Products') }}</span>
-                        </h3>
-                    </div>
-
+                <div class="home-section-title-wrap wow animate__animated animate__fadeInUp" data-wow-delay=".1s">
+                    <h3 class="home-section-title home-section-title--newest">
+                        <span class="home-section-badge">✨ {{ translate('NEW') }}</span>
+                        <span>{{ translate('New Products') }}</span>
+                    </h3>
                 </div>
                 <!-- Products Section -->
                 <div class="px-sm-3 new_product_section home-product-row-scroll wow animate__animated animate__fadeInUp" data-wow-delay=".2s" id="new_product_filter">

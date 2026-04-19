@@ -15816,39 +15816,79 @@ body.site-storefront img {
     padding-right: unset !important;
 }
 
-/* Trang chủ: Bán chạy / Sản phẩm mới — cuộn ngang trên mobile & tablet nhỏ (thay vì lưới 2 cột) */
+/* Trang chủ mobile — hai layout khác nhau:
+   - Bán chạy (#top_selling_filter): 1 hàng, 2 card/viewport, scroll ngang (tối đa 6).
+   - Sản phẩm mới (#new_product_filter): lưới 2 hàng × 2 cột/page, scroll ngang
+     giữa các "trang" (tối đa 12 = 3 trang). */
 @media screen and (max-width: 991.98px) {
-    .home-product-row-scroll {
-        display: flex !important;
-        flex-wrap: nowrap !important;
-        justify-content: flex-start !important;
-        overflow-x: auto !important;
-        -webkit-overflow-scrolling: touch;
-        scroll-snap-type: x proximity;
-        gap: 10px;
-        padding: 10px 12px 4px 12px;
-    }
 
-    .home-product-row-scroll .top_selling,
-    .home-product-row-scroll .top_selling_news_product {
-        flex: 0 0 auto !important;
-        width: 42vw !important;
-        min-width: 148px !important;
-        max-width: 200px !important;
-        margin-bottom: 0 !important;
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-        scroll-snap-align: start;
-    }
-
+    /* ---- Shared card styling on mobile (both sections) ---- */
     .home-product-row-scroll .sub_top_selling,
     .home-product-row-scroll .sub_top_selling_news_product {
         max-width: none !important;
         width: 100%;
     }
-
     .home-product-row-scroll .content_top_selling {
         max-width: none !important;
+        padding: 12px !important;
+    }
+    /* Ẩn link danh mục trên card để card gọn hơn */
+    .home-product-row-scroll .content_top_selling > a:first-child {
+        display: none !important;
+    }
+    /* Tên sản phẩm tối đa 2 dòng */
+    .home-product-row-scroll .name_product_top_selling {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        min-height: 40px;
+        line-height: 20px;
+    }
+
+    /* ---- Bán chạy — 1 hàng, 2 card visible, scroll ngang ---- */
+    .home-product-row-scroll#top_selling_filter {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        justify-content: flex-start !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x mandatory;
+        gap: 12px;
+        padding: 8px 12px 12px 12px;
+    }
+    .home-product-row-scroll#top_selling_filter .top_selling {
+        flex: 0 0 calc((100% - 12px) / 2) !important;
+        width: calc((100% - 12px) / 2) !important;
+        min-width: 0 !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        scroll-snap-align: start;
+    }
+
+    /* ---- Sản phẩm mới — grid 2 hàng × 2 cột per page, scroll ngang giữa các trang ---- */
+    .home-product-row-scroll#new_product_filter {
+        display: grid !important;
+        grid-template-rows: repeat(2, auto);
+        grid-auto-flow: column;
+        grid-auto-columns: calc((100% - 12px) / 2);
+        gap: 12px;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x mandatory;
+        padding: 8px 12px 12px 12px;
+    }
+    .home-product-row-scroll#new_product_filter .top_selling_news_product {
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        /* Snap mỗi 2 card: card ở cột chẵn (0-indexed cột 0, 2, 4...) là điểm snap */
+    }
+    .home-product-row-scroll#new_product_filter .top_selling_news_product:nth-child(4n+1) {
+        scroll-snap-align: start;
     }
 }
 
@@ -16301,4 +16341,345 @@ body.site-storefront img {
 }
 .nav-category-dropdown .nav-category-viewall:hover i {
     transform: translateX(3px);
+}
+
+/* ===== Mobile sidebar Category collapse (simple) ===== */
+.mobile-category-collapse .mobile-category-toggle {
+    text-decoration: none;
+}
+.mobile-category-collapse .mobile-category-caret {
+    transition: transform .2s ease;
+    font-size: 12px;
+    opacity: .6;
+}
+.mobile-category-collapse .mobile-category-toggle[aria-expanded="true"] .mobile-category-caret {
+    transform: rotate(180deg);
+}
+
+.mobile-category-collapse .mobile-category-panel {
+    padding-left: 12px;
+    margin-top: 6px;
+}
+
+.mobile-category-collapse .mobile-category-list {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.mobile-category-collapse .mobile-category-item {
+    font-size: 14px;
+    line-height: 32px;
+    color: #555;
+    text-decoration: none;
+}
+.mobile-category-collapse .mobile-category-item:active,
+.mobile-category-collapse .mobile-category-item:hover {
+    color: #0a58ca;
+    text-decoration: none;
+}
+
+.mobile-category-collapse .mobile-category-viewall {
+    margin-top: 6px;
+    padding: 4px 0;
+    color: #0a58ca !important;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    justify-content: flex-start !important;
+}
+.mobile-category-collapse .mobile-category-viewall:active,
+.mobile-category-collapse .mobile-category-viewall:hover {
+    text-decoration: underline;
+    color: #0a58ca !important;
+}
+
+/* ===== Guest "Xem giá" inline button ===== */
+.guest-price-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #1a73e8 !important;
+    background: rgba(26, 115, 232, 0.08);
+    border: 1px solid rgba(26, 115, 232, 0.25);
+    border-radius: 6px;
+    text-decoration: none !important;
+    line-height: 1.3;
+    letter-spacing: .1px;
+    transition: background .15s ease, border-color .15s ease, transform .15s ease;
+}
+.guest-price-link::after {
+    content: "→";
+    font-weight: 700;
+    transition: transform .15s ease;
+}
+.guest-price-link:hover,
+.guest-price-link:focus,
+.guest-price-link:active {
+    background: rgba(26, 115, 232, 0.14);
+    border-color: rgba(26, 115, 232, 0.45);
+    color: #0a58ca !important;
+    text-decoration: none !important;
+}
+.guest-price-link:hover::after {
+    transform: translateX(2px);
+}
+/* When used inside strike-through (<del>) or bold price wrappers, cancel their styling */
+del .guest-price-link,
+strong .guest-price-link {
+    text-decoration: none !important;
+    font-weight: 600 !important;
+}
+
+/* ===== Home section titles — visual hierarchy ===== */
+.home-section-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 18px;
+    font-weight: 800;
+    color: #1a1f36;
+    margin: 0;
+    letter-spacing: -0.2px;
+}
+.home-section-title .home-section-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 10px;
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: 999px;
+    line-height: 1.4;
+}
+.home-section-title.home-section-title--bestselling .home-section-badge {
+    background: linear-gradient(135deg, #ff6a3d, #ff3d6a);
+    color: #fff;
+    box-shadow: 0 3px 8px rgba(255, 61, 106, 0.25);
+}
+.home-section-title.home-section-title--newest .home-section-badge {
+    background: linear-gradient(135deg, #1a73e8, #0a58ca);
+    color: #fff;
+    box-shadow: 0 3px 8px rgba(26, 115, 232, 0.25);
+}
+.home-section-title::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.08), transparent);
+    margin-left: 4px;
+}
+@media (min-width: 768px) {
+    .home-section-title {
+        font-size: 22px;
+    }
+}
+/* Breathing room between section title and card row */
+.home-section-title-wrap {
+    margin-bottom: 14px;
+}
+
+/* ===== Site footer ===== */
+.site-footer {
+    background: #fff;
+    border-top: 1px solid #eef0f4;
+    padding: 24px 0 32px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Mobile quick-action CTA bar */
+.footer-quick-actions {
+    gap: 8px;
+    padding: 12px;
+    margin-bottom: 8px;
+    background: linear-gradient(180deg, #f7faff, #fff);
+    border-bottom: 1px solid #eef0f4;
+}
+.footer-quick-action {
+    flex: 1 1 0;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 10px 6px;
+    border-radius: 10px;
+    background: #fff;
+    border: 1px solid #e6eaf2;
+    color: #1a73e8;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background .15s ease, border-color .15s ease, transform .15s ease;
+}
+.footer-quick-action i {
+    font-size: 18px;
+    line-height: 1;
+}
+.footer-quick-action:hover,
+.footer-quick-action:active,
+.footer-quick-action:focus {
+    background: #eef4ff;
+    border-color: #c9d8f5;
+    color: #0a58ca;
+    text-decoration: none;
+    transform: translateY(-1px);
+}
+.footer-quick-action--zalo {
+    color: #0068ff;
+}
+
+/* Footer columns */
+.footer-col {
+    padding: 12px 15px;
+}
+.footer-col--brand {
+    padding-top: 16px;
+}
+
+.footer-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1a1f36;
+    margin: 0;
+    letter-spacing: .1px;
+    font-family: 'Quicksand', sans-serif;
+    text-transform: uppercase;
+}
+
+.footer-text {
+    font-size: 13px;
+    line-height: 1.6;
+    color: #666;
+    font-family: 'Quicksand', sans-serif;
+}
+
+/* Section toggle (collapse header) */
+.footer-section-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px 0;
+    color: #1a1f36 !important;
+    text-decoration: none !important;
+    cursor: pointer;
+    user-select: none;
+}
+.footer-section-toggle:hover,
+.footer-section-toggle:focus {
+    color: #0a58ca !important;
+    text-decoration: none !important;
+}
+.footer-section-caret {
+    font-size: 12px;
+    opacity: .55;
+    transition: transform .2s ease;
+}
+.footer-section-toggle[aria-expanded="true"] .footer-section-caret {
+    transform: rotate(180deg);
+    opacity: 1;
+}
+
+/* Section body */
+.footer-section-body {
+    padding-top: 6px;
+}
+
+.footer-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.footer-list > li {
+    margin-bottom: 10px;
+    line-height: 1.55;
+}
+.footer-list > li:last-child {
+    margin-bottom: 0;
+}
+
+.footer-link {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13px;
+    color: #666;
+    text-decoration: none;
+    font-family: 'Quicksand', sans-serif;
+    line-height: 1.55;
+    transition: color .15s ease;
+}
+.footer-link:hover,
+.footer-link:focus {
+    color: #0a58ca;
+    text-decoration: none;
+}
+.footer-link--static {
+    cursor: default;
+}
+.footer-link--static:hover {
+    color: #666;
+}
+.footer-list-icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    color: #9aa1b2;
+    font-size: 14px;
+    line-height: 1.5;
+    text-align: center;
+    margin-top: 1px;
+    transition: color .15s ease;
+}
+.footer-link:hover .footer-list-icon {
+    color: #0a58ca;
+}
+
+/* Desktop (lg+): always show bodies, disable collapse toggle UI */
+@media (min-width: 992px) {
+    .site-footer {
+        padding: 32px 0 24px;
+    }
+    .footer-section-toggle {
+        pointer-events: none;
+        padding: 0 0 12px;
+    }
+    .footer-section-caret {
+        display: none;
+    }
+    .footer-section-body.collapse:not(.show) {
+        display: block !important;
+    }
+    .footer-section-body {
+        padding-top: 0;
+    }
+}
+
+/* Mobile (<lg): accordion — sections collapsed by default, divider between */
+@media (max-width: 991.98px) {
+    .footer-col {
+        padding: 0 16px;
+        border-bottom: 1px solid #eef0f4;
+    }
+    .footer-col:last-child {
+        border-bottom: none;
+    }
+    .footer-col--brand {
+        padding: 16px;
+        text-align: left;
+        border-bottom: 1px solid #eef0f4;
+    }
+    .footer-col--brand .footer-title {
+        margin-bottom: 6px;
+    }
+    .footer-section-toggle {
+        padding: 14px 0;
+    }
+    .footer-section-body {
+        padding-bottom: 12px;
+    }
 }
