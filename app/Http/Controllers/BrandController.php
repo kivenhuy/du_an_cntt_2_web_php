@@ -9,22 +9,15 @@ use Illuminate\Http\Request;
 class BrandController extends Controller
 {
     /**
-     * Trang danh sách tất cả thương hiệu, nhóm theo chữ cái đầu tên (A-Z, 0-9).
+     * Trang danh sách tất cả thương hiệu — lưới đơn giản, kèm số sản phẩm.
      */
     public function index()
     {
-        $brands = Brand::orderBy('name')->get();
+        $brands = Brand::withCount(['products' => function ($q) {
+            $q->where('published', 1)->where('approved', 1);
+        }])->orderBy('name')->get();
 
-        // Group by first character (0-9 → key "#", letters → key uppercase letter)
-        $grouped = $brands->groupBy(function ($brand) {
-            $first = mb_strtoupper(mb_substr($brand->name, 0, 1));
-            return ctype_alpha($first) ? $first : '0-9';
-        })->sortKeys();
-
-        // Build alphabet nav: 0-9 + A..Z
-        $alphabet = collect(array_merge(['0-9'], range('A', 'Z')));
-
-        return view('user_layout.brands.index', compact('grouped', 'alphabet'));
+        return view('user_layout.brands.index', compact('brands'));
     }
 
     /**
