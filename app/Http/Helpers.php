@@ -177,12 +177,18 @@ if (!function_exists('isCustomer')) {
 //Shows Price on page based on low to high
 if (!function_exists('guest_price_placeholder')) {
     /**
-     * Text shown in place of a product price when the viewer is not logged in.
+     * Shown in place of a product price when the viewer is not logged in.
      * Why: business rule — prices are hidden from guests to encourage signup.
+     * Renders as a subtle inline "Xem giá" button linking to the login form.
+     * Returns HtmlString so Blade {{ ... }} won't escape the markup.
      */
     function guest_price_placeholder()
     {
-        return translate('Đăng nhập để xem giá');
+        $href = \Illuminate\Support\Facades\Route::has('login.form') ? route('login.form') : '/login';
+        $label = e(translate('Xem giá'));
+        return new \Illuminate\Support\HtmlString(
+            '<a href="' . $href . '" class="guest-price-link">' . $label . '</a>'
+        );
     }
 }
 

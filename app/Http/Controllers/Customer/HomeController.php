@@ -23,9 +23,9 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $best_selling_products = Products::where('approved',1)->get()->take(4);
+        $best_selling_products = Products::where('approved',1)->get()->take(6);
         $fresh_today_products = Products::where('approved',1)->where('short_shelf_life',1)->get()->sortByDesc('created_at')->take(3);
-        $new_products = Products::where('approved',1)->latest()->limit(8)->get();
+        $new_products = Products::where('approved',1)->latest()->limit(12)->get();
         // dd($now->startOfWeek()->addWeek(2));
 
         // dd(Session::get('start_time_range_fruits'));

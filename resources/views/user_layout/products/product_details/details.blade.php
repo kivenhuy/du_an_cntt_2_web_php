@@ -117,9 +117,7 @@
             <!-- Without Wholesale -->
             @if (home_price($detailedProduct) != home_discounted_price($detailedProduct))
                 <div class="row no-gutters mb-3">
-                    {{-- <div class="col-sm-2">
-                        <div class="text-secondary fs-14 fw-400">{{ translate('Price') }}</div>
-                    </div> --}}
+                    
                     <div class="col-sm-12">
                         <div class="d-flex align-items-center">
                             <!-- Discount Price -->
@@ -177,9 +175,9 @@
                     <div class="col-sm-12">
                         <div class="d-flex align-items-center">
                             <!-- Discount Price -->
-                            <strong class="fs-16 fw-700 text-primary price_product">
+                            <!-- <strong class="fs-16 fw-700 text-primary price_product">
                                 {{ home_discounted_price($detailedProduct) }}
-                            </strong>
+                            </strong> -->
                             @auth
                                 @if ($detailedProduct->weight != null)
                                     <span class="opacity-70 price_product" style="color: unset !important">/{{ $detailedProduct->weight}}</span>

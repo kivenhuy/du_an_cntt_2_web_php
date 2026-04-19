@@ -477,8 +477,31 @@
                     </button>
                 </div>
                 <nav class="px-3 py-3 c-scrollbar-light" style="max-height: calc(100vh - 64px); overflow-y: auto;">
-                    <ul class="list-unstyled mb-0">
+                    <ul class="list-unstyled mb-0 mobile-menu-list">
                         <li class="mb-3"><a href="{{ route('homepage') }}" class="text-reset fs-15 fw-600 d-block">{{ translate('Home') }}</a></li>
+                        <li class="mb-3 mobile-category-collapse">
+                            <a href="#mobileCategoryCollapse" data-toggle="collapse"
+                                role="button" aria-expanded="false" aria-controls="mobileCategoryCollapse"
+                                class="text-reset fs-15 fw-600 d-flex align-items-center justify-content-between mobile-category-toggle collapsed">
+                                <span>{{ translate('Category') }}</span>
+                                <i class="fa fa-angle-down mobile-category-caret"></i>
+                            </a>
+                            <div class="collapse mobile-category-panel" id="mobileCategoryCollapse">
+                                <div class="mobile-category-list">
+                                    @foreach(\App\Models\Category::orderBy('name')->get() as $mobileCat)
+                                        <a href="{{ route('products.category', $mobileCat->slug) }}"
+                                            class="mobile-category-item d-block">
+                                            {{ $mobileCat->name }}
+                                        </a>
+                                    @endforeach
+                                </div>
+                                <a href="{{ route('products.categories') }}"
+                                    class="mobile-category-viewall d-flex align-items-center justify-content-center">
+                                    <span>{{ translate('Xem tất cả danh mục') }}</span>
+                                    <i class="fa fa-arrow-right ml-2"></i>
+                                </a>
+                            </div>
+                        </li>
                         <li class="mb-3"><a href="{{ route('products.all') }}" class="text-reset fs-15 fw-600 d-block">{{ translate('All Products') }}</a></li>
                         <li class="mb-3"><a href="{{ route('brands.index') }}" class="text-reset fs-15 fw-600 d-block">{{ translate('All Brands') }}</a></li>
                         <li class="mb-3"><a href="{{ route('comming-soon') }}" class="text-reset fs-15 d-block">{{ translate('News') }}</a></li>
