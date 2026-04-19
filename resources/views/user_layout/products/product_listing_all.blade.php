@@ -6,16 +6,20 @@
     <section class="mb-4 pt-4">
         <div class="container sm-px-0 pt-2" style="max-width:1200px !important;width:100%">
             <form id="search-form" action="{{ route('products.all') }}" method="GET">
-                <div class="img_category">
-                    <div class="text_category">
-                        <span>{{ translate('All Products') }}</span>
-                    </div>
-                </div>
+                
 
+                @php
+                    $listingActiveFilterCount = count($selected_brands ?? [])
+                        + count($selected_categories ?? []);
+                    if (!empty($min_price) || !empty($max_price)) $listingActiveFilterCount++;
+                @endphp
                 <div class="d-xl-none px-2 mb-3">
-                    <button type="button" class="btn btn-outline-secondary btn-block rounded-pill py-2 product-filter-open-drawer" data-toggle="class-toggle" data-target=".aiz-filter-sidebar" data-same=".filter-sidebar-thumb">
+                    <button type="button" class="btn listing-filter-btn product-filter-open-drawer" data-toggle="class-toggle" data-target=".aiz-filter-sidebar" data-same=".filter-sidebar-thumb">
                         <i class="fa-solid fa-sliders align-middle" aria-hidden="true"></i>
-                        <span class="align-middle ml-1">{{ translate('Filter products') }}</span>
+                        <span class="align-middle ml-2">{{ translate('Lọc sản phẩm') }}</span>
+                        @if($listingActiveFilterCount > 0)
+                            <span class="listing-filter-badge">{{ $listingActiveFilterCount }}</span>
+                        @endif
                     </button>
                 </div>
 
