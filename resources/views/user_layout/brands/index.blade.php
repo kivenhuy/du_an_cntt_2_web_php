@@ -3,52 +3,38 @@
 @section('content')
 <section class="mb-5 pt-4">
     <div class="container" style="max-width:1200px">
-        {{-- Alphabet nav --}}
-        <div class="bg-white rounded shadow-sm p-3 mb-4">
-            <div class="d-flex flex-wrap gap-2" style="gap:6px">
-                @foreach($alphabet as $letter)
-                    @php $hasData = $grouped->has($letter); @endphp
-                    <a href="{{ $hasData ? '#brand-group-'.$letter : '#' }}"
-                       class="btn btn-sm {{ $hasData ? 'btn-primary' : 'btn-outline-secondary' }} px-3"
-                       style="min-width:40px;font-weight:600;{{ !$hasData ? 'opacity:.4;cursor:default;pointer-events:none' : '' }}">
-                        {{ $letter }}
-                    </a>
-                @endforeach
-            </div>
-        </div>
 
-        {{-- Brand groups --}}
-        @forelse($grouped as $letter => $brandsInGroup)
-            <div id="brand-group-{{ $letter }}" class="mb-5">
-                <h4 class="fw-700 border-bottom pb-2 mb-3" style="color:#333">{{ $letter }}</h4>
-                <div class="row">
-                    @foreach($brandsInGroup as $brand)
-                        <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
-                            <a href="{{ route('brands.show', $brand->slug) }}"
-                               class="d-block text-center text-dark brand-card-link">
-                                <div class="brand-card-logo mx-auto mb-2">
-                                    @if($brand->logo)
-                                        <img src="{{ uploaded_asset($brand->logo) }}"
-                                             alt="{{ $brand->name }}"
-                                             class="img-fluid brand-logo-img">
-                                    @else
-                                        <div class="brand-logo-placeholder d-flex align-items-center justify-content-center">
-                                            <span class="brand-initials">{{ mb_strtoupper(mb_substr($brand->name, 0, 2)) }}</span>
-                                        </div>
-                                    @endif
+
+        {{-- Brand grid --}}
+        <div class="row">
+            @forelse($brands as $brand)
+                <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
+                    <a href="{{ route('brands.show', $brand->slug) }}"
+                       class="d-block text-center text-dark brand-card-link">
+                        <div class="brand-card-logo mx-auto mb-2">
+                            @if($brand->logo)
+                                <img src="{{ static_asset('assets/img/placeholder.jpg') }}"
+                                     data-src="{{ uploaded_asset($brand->logo) }}"
+                                     alt="{{ $brand->name }}"
+                                     class="img-fluid lazyload brand-logo-img"
+                                     onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
+                            @else
+                                <div class="brand-logo-placeholder d-flex align-items-center justify-content-center">
+                                    <span class="brand-initials">{{ mb_strtoupper(mb_substr($brand->name, 0, 2)) }}</span>
                                 </div>
-                                <div class="brand-card-name">{{ $brand->name }}</div>
-                            </a>
+                            @endif
                         </div>
-                    @endforeach
+                        <div class="brand-card-name">{{ $brand->name }}</div>
+                        <div class="brand-card-count text-muted">{{ $brand->products_count }} {{ translate('sản phẩm') }}</div>
+                    </a>
                 </div>
-            </div>
-        @empty
-            <div class="text-center py-5 text-muted">
-                <i class="fa fa-tag fa-3x mb-3 d-block"></i>
-                <p>Chưa có thương hiệu nào.</p>
-            </div>
-        @endforelse
+            @empty
+                <div class="col-12 text-center py-5 text-muted">
+                    <i class="fa fa-tag fa-3x mb-3 d-block"></i>
+                    <p>{{ translate('Chưa có thương hiệu nào.') }}</p>
+                </div>
+            @endforelse
+        </div>
 
     </div>
 </section>
@@ -89,13 +75,17 @@
     color: #5a7bd5;
 }
 .brand-card-name {
-    font-size: .875rem;
+    font-size: .9rem;
     font-weight: 600;
     margin-top: 6px;
     color: #333;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+.brand-card-count {
+    font-size: .75rem;
+    margin-top: 2px;
 }
 </style>
 @endsection
