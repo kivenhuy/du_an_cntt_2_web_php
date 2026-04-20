@@ -20483,8 +20483,8 @@ select.selectpicker {
     font-style: normal;
     font-weight: 400;
     font-display: swap;
-    src: url(font/summernote.eot);
-    src: url(font/summernote.eot?#iefix) format("embedded-opentype"), url(font/summernote.woff2) format("woff2"), url(font/summernote.woff) format("woff"), url(font/summernote.ttf) format("truetype")
+    src: url(../../plugins/summernote/font/summernote.eot);
+    src: url(../../plugins/summernote/font/summernote.eot?#iefix) format("embedded-opentype"), url(../../plugins/summernote/font/summernote.woff2) format("woff2"), url(../../plugins/summernote/font/summernote.woff) format("woff"), url(../../plugins/summernote/font/summernote.ttf) format("truetype")
 }
 
 [class*=" note-icon"]:before,

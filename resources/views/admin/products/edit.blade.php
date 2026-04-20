@@ -223,7 +223,21 @@
                 <label class="col-lg-3 col-from-label">Mô tả</label>
                 <div class="col-lg-9">
                     <textarea class="aiz-text-editor"
-                        name="description">{{$product->description}}</textarea>
+                        name="description">{{ $product->description }}</textarea>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-lg-3 col-from-label">Thành phần</label>
+                <div class="col-lg-9">
+                    <textarea class="aiz-text-editor"
+                        name="ingredients">{{ $product->ingredients }}</textarea>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-lg-3 col-from-label">Hướng dẫn sử dụng</label>
+                <div class="col-lg-9">
+                    <textarea class="aiz-text-editor"
+                        name="usage_instructions">{{ $product->usage_instructions }}</textarea>
                 </div>
             </div>
         </div>

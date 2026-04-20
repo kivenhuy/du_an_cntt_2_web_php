@@ -294,6 +294,18 @@
                                 <textarea class="aiz-text-editor" name="description"></textarea>
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-from-label">Thành phần</label>
+                            <div class="col-md-8">
+                                <textarea class="aiz-text-editor" name="ingredients"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-from-label">Hướng dẫn sử dụng</label>
+                            <div class="col-md-8">
+                                <textarea class="aiz-text-editor" name="usage_instructions"></textarea>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
