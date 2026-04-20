@@ -15,8 +15,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 	<!-- CSS Files -->
-	<link rel="stylesheet" href="{{ static_asset('assets/css/vendors.css') }}">
+	<link rel="stylesheet" href="{{ static_asset('assets/css/vendors.css?v=') }}{{ now()->timestamp }}">
 	<link rel="stylesheet" href="{{ static_asset('assets/css/custom-style.css?v=') }}{{ now()->timestamp }}">
+	{{-- Load Summernote CSS directly: its own @font-face has the correct relative path
+	     to /plugins/summernote/font/*, overriding the broken URL bundled in vendors.css --}}
+	<link rel="stylesheet" href="{{ static_asset('plugins/summernote/summernote.min.css?v=') }}{{ now()->timestamp }}">
+
 
 
 	{{-- Toast --}}
