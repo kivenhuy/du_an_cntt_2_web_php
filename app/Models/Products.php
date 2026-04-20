@@ -19,6 +19,8 @@ class Products extends Model
         'thumbnail_img',
         'tags',
         'description',
+        'ingredients',
+        'usage_instructions',
         'unit_price',
         'purchase_price',
         'variant_product',
