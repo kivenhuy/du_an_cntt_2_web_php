@@ -88,10 +88,10 @@
                                 <div class=""> {!! $detailedProduct->description !!}</div>  
                         </div>
                         <div class="tab-pane fade" id="product_documents" role="tabpanel" aria-labelledby="Documents-tab">
-                            {!! $detailedProduct->documents !!}
+                            {!! $detailedProduct->ingredients !!}
                         </div>
                         <div class="tab-pane fade" id="product_traceabilitys" role="tabpanel" aria-labelledby="Traceabilitys-tab">
-                            {!! $detailedProduct->traceabilitys !!}
+                            {!! $detailedProduct->usage_instructions !!}
                         </div>
                         <div class="tab-pane fade" id="product_riviews" role="tabpanel" aria-labelledby="Reviews-tab">
                             @include('user_layout.products.product_details.reviews')
