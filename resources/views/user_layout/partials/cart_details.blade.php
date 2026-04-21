@@ -11,8 +11,8 @@
                             <div class="col-lg-1 fw-600 text_cart_details"><input onchange="Check_all(this)" type="checkbox"></div>
                             <div class="col-lg-4 fw-600 text_cart_details">{{ translate('Product')}}</div>
                             <div class="col-lg-2 fw-600 text_cart_details text-center">{{ translate('Qty')}}</div>
-                            <div class="col-lg-2 fw-600 text_cart_details text-center">{{ translate('Unit')}}</div>
-                            <div class="col-lg-2 fw-600 text_cart_details text-right">{{ translate('Total')}}</div>
+                            <div class="col-lg-1 fw-600 text_cart_details text-center">{{ translate('Unit')}}</div>
+                            <div class="col-lg-3 fw-600 text_cart_details text-right">{{ translate('Total')}}</div>
                             <div class="col-lg-1 fw-600 text_cart_details text-center">{{ translate('Remove')}}</div>
                         </div>
                         <!-- Cart Items -->
@@ -25,10 +25,9 @@
                                 @php
                                     $product = \App\Models\Products::find($cartItem['product_id']);
                                     $product_stock = $product->product_stock->where('variant',preg_replace('/\s+/', '',$cartItem['variation']))->first();
-                                    // $product_stock = $product->stocks()->get();
-                                    // dd($product_stock);
-                                    // $total = $total + ($cartItem['price']  + $cartItem['tax']) * $cartItem['quantity'];
-                                    $total = $total + cart_product_price($cartItem, $product, false) * $cartItem['quantity'];
+                                    if ($cartItem['is_checked']) {
+                                        $total = $total + cart_product_price($cartItem, $product, false) * $cartItem['quantity'];
+                                    }
                                     $final_total = $total+15000;
                                     $product_name_with_choice = $product->name;
                                     if ($cartItem['variation'] != null) {
@@ -38,7 +37,7 @@
                                 <li class="list-group-item px-0 py-3 storefront-cart-line-item">
                                     <div class="row gutters-5 align-items-lg-center">
                                         <div class="col-auto col-lg-1 text-center mb-2 mb-lg-0" style="display:flex">
-                                            <input onchange="showHidePan(this)" class="check_box_child" type="checkbox" value="{{ $cartItem['id'] }}">
+                                            <input onchange="showHidePan(this)" class="check_box_child" type="checkbox" value="{{ $cartItem['id'] }}" {{ $cartItem['is_checked'] ? 'checked' : '' }}>
                                         </div>
                                         <div class="col col-lg-4 mb-2 mb-lg-0 minw-0">
                                             <div class="d-flex align-items-start">
@@ -88,11 +87,11 @@
                                                 <span class="fw-700 fs-14">1</span>
                                             @endif
                                         </div>
-                                        <div class="col-6 col-lg-2 mt-2 mt-lg-0 text-lg-center">
+                                        <div class="col-6 col-lg-1 mt-2 mt-lg-0 text-lg-center">
                                             <span class="opacity-60 fs-14 d-lg-none d-block mb-1">{{ translate('Đơn vị') }}</span>
                                             <span class="unit_product d-block">{{ $product->unit }}</span>
                                         </div>
-                                        <div class="col-6 col-lg-2 mt-2 mt-lg-0 text-right">
+                                        <div class="col-6 col-lg-3 mt-2 mt-lg-0 text-right">
                                             <span class="opacity-60 fs-14 d-lg-none d-block mb-1">{{ translate('Total') }}</span>
                                             <span class="fw-700  text-primary total_product  d-block d-lg-inline">{{ single_price(cart_product_price($cartItem, $product, false) * $cartItem['quantity']) }}</span>
                                         </div>

@@ -121,7 +121,7 @@ class CartController extends Controller
         $data['variation'] = $str;
 
         $product_stock = $product->product_stock;
-        $price = $product_stock->price;
+        $price = $product->unit_price;
         $quantity = $product_stock->qty;
         if($quantity < $request['quantity']) {
             return array(
@@ -178,6 +178,7 @@ class CartController extends Controller
                     $cartItem['quantity'] += $request['quantity'];
                     $cartItem['price'] = $price;
                     $cartItem->save();
+                    $data['quantity'] = $cartItem['quantity'];
                 }
             }
             if (!$foundInCart) {
@@ -274,7 +275,7 @@ class CartController extends Controller
             $product = Products::find($cartItem['product_id']);
             $product_stock = $product->product_stock->where('variant', $cartItem['variation'])->first();
             $quantity = $product_stock->qty;
-            $price = $product_stock->price;
+            $price = $product->unit_price;
 			
 			//discount calculation
             $discount_applicable = false;

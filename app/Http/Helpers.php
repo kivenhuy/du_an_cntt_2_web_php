@@ -343,12 +343,7 @@ if (!function_exists('cart_product_price')) {
         if ($cart_product['variation'] != null) {
             $str = $cart_product['variation'];
         }
-        $price = 0;
-       
-        $product_stock = $product->product_stock;
-        if ($product_stock) {
-            $price = $product_stock->price;
-        }
+        $price = $product->unit_price;
         //discount calculation
         $discount_applicable = false;
         if($cart_product['is_rfp'] != 0)

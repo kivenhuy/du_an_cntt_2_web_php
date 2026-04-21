@@ -1351,20 +1351,7 @@
         }
 
     @media screen and (max-width: 440px) {
-        .nav-tabs .nav-item
-        {
-            margin-bottom: 1rem;
-        }
-        .product-info
-        {
-            padding: 40px 16px;
-        }
-        .setting_for_button
-        {
-            max-height: 100px;
-            height: 100px;
-            align-content: space-between;
-        }
+        /* nav-tabs and setting_for_button styles moved to custom-style.css */
         .top_selling_v2 {
             width: 50%;
         }
@@ -1679,7 +1666,7 @@
             }, function(data){
                 updateNavCart(data.nav_cart_view,data.cart_count);
                 $('#cart-summary').html(data.cart_view);
-                AIZ.plugins.notify('success', "{{ translate('Item has been removed from cart') }}");
+                AIZ.plugins.notify('success', "{{ translate('Đã xóa sản phẩm khỏi giỏ hàng') }}");
                 $('#cart_items_sidenav').html(parseInt($('#cart_items_sidenav').html())-1);
             });
         }
@@ -1712,7 +1699,7 @@
             @endif
 
             @if(Auth::check() && Auth::user()->user_type != 'customer')
-                AIZ.plugins.notify('warning', "{{ translate('Please login as a customer to continue.') }}");
+                AIZ.plugins.notify('warning', "{{ translate('Vui lòng đăng nhập bằng tài khoản khách hàng') }}");
                 return false;
             @endif
 
@@ -1745,7 +1732,7 @@
                 });
             }
             else{
-                AIZ.plugins.notify('warning', "{{ translate('Please choose all the options') }}");
+                AIZ.plugins.notify('warning', "{{ translate('Vui lòng chọn tất cả các tùy chọn') }}");
             }
         }
 
@@ -1756,7 +1743,7 @@
             @endif
 
             @if(Auth::check() && Auth::user()->user_type != 'customer')
-                AIZ.plugins.notify('warning', "{{ translate('Please login as a customer to continue.') }}");
+                AIZ.plugins.notify('warning', "{{ translate('Vui lòng đăng nhập bằng tài khoản khách hàng') }}");
                 return false;
             @endif
             
@@ -1788,7 +1775,7 @@
                });
             }
             else{
-                AIZ.plugins.notify('warning', "{{ translate('Please choose all the options') }}");
+                AIZ.plugins.notify('warning', "{{ translate('Vui lòng chọn tất cả các tùy chọn') }}");
             }
         }
 

@@ -83,61 +83,47 @@
                                                             @endphp
                                                             @if($product->user_id ==  $key_user)
                                                                 <li class="list-group-item px-0 checkout-cart-line">
-                                                    <div class="row gutters-5 checkout-cart-line__row align-items-lg-center">
-                                                        
+                                                    <div class="checkout-item">
                                                         <!-- Product Image & name -->
-                                                        <div class="col-md-5 col-12 d-flex align-items-center checkout-col-product mb-3 mb-lg-0">
-                                                            <span class="mr-3 ml-0 flex-shrink-0">
+                                                        <div class="checkout-item__product">
+                                                            <span class="checkout-item__thumb">
                                                                 <img src="{{ uploaded_asset($product->thumbnail_img) }}"
-                                                                    class="img-fit checkout-cart-thumb"
-                                                                    style="width:80px;height:80px;object-fit:cover;"
-                                                                    alt="{{ $product->name  }}"
+                                                                    class="img-fit"
+                                                                    alt="{{ $product->name }}"
                                                                     onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
                                                             </span>
-                                                            <div class="d-flex flex-column">
-                                                                <span class="fs-14 fw-600 checkout-cart-product-name" style="line-height:1.4;color:#222;">{{ $product_name_with_choice }}</span>
+                                                            <div class="checkout-item__info">
+                                                                <span class="checkout-item__name">{{ $product_name_with_choice }}</span>
                                                                 @if($product->unit)
-                                                                    <span class="fs-12 mt-1" style="color:#888;">Dung tích: {{$product->weight}}{{ $product->unit }}</span>
+                                                                    <span class="checkout-item__unit">Dung tích: {{$product->weight}}{{ $product->unit }}</span>
                                                                 @endif
                                                             </div>
                                                         </div>
-                                                        <!-- Quantity -->
-                                                        <div class="col-md-3 col-6 order-1 order-lg-0 checkout-col-qty">
-                                                            <span class="checkout-cart-mob-label d-lg-none">{{ translate('Qty') }}</span>
-                                                            @if ($cartItem['digital'] != 1 && $product->auction_product == 0)
-                                                                <div class="d-flex flex-column align-items-start align-items-lg-center aiz-plus-minus mr-2 ml-0 w-100">
-                                                                   
-                                                                    <input type="number" name="quantity[{{ $cartItem['id'] }}]"
-                                                                        class="col border-0 text-left text-lg-center px-0 flex-grow-1 fs-14 input-number quantity_product checkout-qty-input"
-                                                                        placeholder="1" value="{{ $cartItem['quantity'] }}"
-                                                                        min="{{ $product->min_qty }}"
-                                                                        max="{{ $product_stock->qty }}"
-                                                                        onchange="updateQuantity({{ $cartItem['id'] }}, this)" style="padding-left:0.75rem !important;">
-                                                                    
+                                                        <!-- Qty + Total row -->
+                                                        <div class="checkout-item__bottom">
+                                                            <div class="checkout-item__qty ">
+                                                                @if ($cartItem['digital'] != 1 && $product->auction_product == 0)
+                                                                    <span class="fw-600 fs-14" style="color:#555;">Số lượng: {{ $cartItem['quantity'] }}</span>
+                                                                @endif
+                                                            </div>
+                                                            @if(Auth::user()->user_type === "enterprise")
+                                                                <div class="checkout-item__date">
+                                                                    @if(count($cartItem->shipping_date)>0)
+                                                                        @foreach ($cartItem->shipping_date as $date)
+                                                                            <span class="fw-700 fs-14">{{$date}}</span>
+                                                                        @endforeach
+                                                                    @endif
                                                                 </div>
                                                             @endif
-                                                        </div>
-                                                        
-                                                        @if(Auth::user()->user_type === "enterprise")
-                                                            <div class="col-md-2 col-12 order-5 order-lg-0 checkout-col-date my-2 my-lg-0">
-                                                                @if(count($cartItem->shipping_date)>0)
-                                                                    @foreach ($cartItem->shipping_date as $date)
-                                                                        <span class="fw-700 fs-14">{{$date}}</span>
-                                                                    @endforeach
+                                                            <div class="checkout-item__total">
+                                                                @if(Auth::user()->user_type === "enterprise")
+                                                                    <span class="checkout-item__price">{{ single_price(cart_product_price($cartItem, $product, false) * $cartItem['quantity']) }}</span>
+                                                                    <small style="color: red;font-weight: 900">This Price Is Total Price For All Order Date</small>
+                                                                @else   
+                                                                    <span class="checkout-item__price">{{ single_price(cart_product_price($cartItem, $product, false) * $cartItem['quantity']) }}</span>
                                                                 @endif
                                                             </div>
-                                                        @endif
-                                                        <!-- Total -->
-                                                        <div class="col-md-4 col-12 order-4 order-lg-0 checkout-col-total my-3 my-lg-0">
-                                                            <span class="opacity-60 fs-12 d-block d-lg-none">{{ translate('Total')}}</span>
-                                                            @if(Auth::user()->user_type === "enterprise")
-                                                                <span class="fw-700 fs-16 text-primary total_product">{{ single_price(cart_product_price($cartItem, $product, false) * $cartItem['quantity']) }}</span><br>
-                                                                <small style="color: red;font-weight: 900">This Price Is Total Price For All Order Date</small>
-                                                            @else   
-                                                                <span class="fw-700 fs-16 text-primary total_product">{{ single_price(cart_product_price($cartItem, $product, false) * $cartItem['quantity']) }}</span>
-                                                            @endif
                                                         </div>
-                                                        
                                                     </div>
                                                 </li>
                                                             @endif
@@ -195,7 +181,7 @@
                                                         <div class="col-md-5 fw-600 text_cart_details pl-lg-3">{{ translate('Product - ')}} {{ optional(\App\Models\Shop::where('user_id', $key_user)->first())->name ?? optional(\App\Models\User::find($key_user))->name ?? translate('Official Store') }}</div>
                                                         <div class="col-md-3 fw-600 text_cart_details text-lg-center">{{ translate('Qty')}}</div>
                                                         @if(Auth::user()->user_type === 'enterprise')
-                                                        <div class="col-md-2 fw-600 text_cart_details text-lg-center">{{ translate('Order Date')}}</div>
+                                                        <div class="col-md-2 fw-600 text_cart_details text-lg-right">{{ translate('Order Date')}}</div>
                                                         @endif
                                                         <div class="col-md-4 fw-600 text_cart_details text-lg-right pr-lg-3">{{ translate('Total')}}</div>
                                                     </div>
@@ -541,7 +527,7 @@
                 if($('.offline_payment_option').is(":checked"))
                 {
                     if ($('#trx_id').val() == '') {
-                        AIZ.plugins.notify('danger', '{{ translate('You need to put Transaction id') }}');
+                        AIZ.plugins.notify('danger', '{{ translate('Vui lòng nhập mã giao dịch') }}');
                         $(el).prop('disabled', false);
                     }
                     else 
@@ -553,7 +539,7 @@
                         }
                         else
                         {
-                            AIZ.plugins.notify('danger', '{{ translate('You need to upload bank receipt') }}');
+                            AIZ.plugins.notify('danger', '{{ translate('Vui lòng tải lên biên lai ngân hàng') }}');
                             $(el).prop('disabled', false);
                         }
                     }
@@ -564,7 +550,7 @@
                 }
                 
             } else {
-                AIZ.plugins.notify('danger', '{{ translate('You need to agree with our policies') }}');
+                AIZ.plugins.notify('danger', '{{ translate('Bạn cần đồng ý với các chính sách của chúng tôi') }}');
                 $(el).prop('disabled', false);
             }
         }

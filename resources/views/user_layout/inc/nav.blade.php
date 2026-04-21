@@ -100,6 +100,7 @@
                         </div>
                     </div>
                     <!-- Cart: luôn hiện (mobile có badge số món trong partial cart); đăng nhập = dropdown, khách = gợi ý đăng nhập -->
+                    @if(!Request::is('checkout/final'))
                     <div class="align-self-stretch ml-2 ml-md-3 ml-xl-5 mr-0 flex-shrink-0 has-transition bg-black-10 storefront-nav-cart"
                         data-hover="dropdown" style="background-color: white !important;">
                         @auth
@@ -130,6 +131,7 @@
                             </a>
                         @endauth
                     </div>
+                    @endif
                     <!-- Compare -->
                     <div class="d-none d-lg-block ml-3 mr-0">
                         <div class="icon_header" id="compare">
