@@ -15,7 +15,7 @@
     <div class="row align-items-center mb-3" style="height: 50px">
         <!-- Review -->
         @if ($detailedProduct->auction_product != 1)
-            <div class="col-6">
+            <div class="col-9">
                 @php
                     $total = 0;
                     // $total += $detailedProduct->reviews->count();
@@ -121,8 +121,11 @@
                     <div class="col-sm-12">
                         <div class="d-flex align-items-center">
                             <!-- Discount Price -->
-                            <strong class="fs-16 fw-700 text-primary price_product">
-                                {{ home_discounted_price($detailedProduct) }}
+                            <strong class="fs-16 fw-700 price_product">
+                                @auth
+                                    {{ home_discounted_price($detailedProduct) }}
+                                
+                                @endauth
                             </strong>
                             @auth
                                 <!-- Home Price -->
@@ -131,7 +134,7 @@
                                 </del>
                                 <!-- Unit -->
                                 @if ($detailedProduct->unit != null)
-                                    <span class=" ml-1 price_product">/{{ $detailedProduct->getTranslation('unit') }}</span>
+                                    <span class="price_product_unit">/{{ $detailedProduct->getTranslation('unit') }}</span>
                                 @endif
                             @endauth
                             <!-- Discount percentage -->
@@ -174,17 +177,19 @@
                     </div> --}}
                     <div class="col-sm-12">
                         <div class="d-flex align-items-center">
-                            <!-- Discount Price -->
-                            <!-- <strong class="fs-16 fw-700 text-primary price_product">
-                                {{ home_discounted_price($detailedProduct) }}
-                            </strong> -->
+                            <!-- Price -->
+                            <strong class="fs-16 fw-700  price_product">
+                                @auth
+                                    {{ home_discounted_price($detailedProduct) }}
+                                @endauth
+                            </strong>
                             @auth
                                 @if ($detailedProduct->weight != null)
-                                    <span class="opacity-70 price_product" style="color: unset !important">/{{ $detailedProduct->weight}}</span>
+                                    <span class="price_product_unit">/{{ $detailedProduct->weight}}</span>
                                 @endif
                                 <!-- Unit -->
                                 @if ($detailedProduct->unit != null)
-                                    <span class="opacity-70 price_product" style="color: unset !important">{{ $detailedProduct->unit}}</span>
+                                    <span class="price_product_unit">{{ $detailedProduct->unit}}</span>
                                 @endif
                             @endauth
                             <!-- Club Point -->
@@ -339,28 +344,28 @@
                             <input type="hidden" value="{{$detailedProduct->id}}" name="id_product" id="id_product">
                             <div class="setting_for_button" style="">
                                 @if (Auth::check())
-                                    <div class="pl-3 pr-0" style="max-width:250px !important">
+                                    <div class="pl-3 pr-2">
                                         <button type="button" 
-                                            class="btn btn-warning buy-now fw-600 add_to_cart min-w-150px rounded-4"
+                                            class="btn-cta-add-to-cart"
                                             onclick="addToCart()">
-                                            <i class="fa fa-shopping-bag" style="font-size: 16px"></i>
-                                            <span class="d-md-inline-block text_button_detail_page font-size-mobile"> {{ translate('Add to cart') }}</span>
+                                            <i class="fa fa-shopping-bag"></i>
+                                            <span>{{ translate('Add to cart') }}</span>
                                         </button>
                                     </div>
                                     
-                                    <div class="pl-3 pr-0" style="max-width:180px !important">
-                                        <button type="button" class="btn btn-primary buy-now fw-600 add-to-cart min-w-140px rounded-4"
+                                    <div class="pl-2 pr-0">
+                                        <button type="button" class="btn-cta-buy-now"
                                             onclick="buyNow()">
-                                            <i class="fa fa-shopping-cart" style="font-size: 16px"></i> 
-                                            <span class="d-md-inline-block text_button_detail_page font-size-mobile"> {{ translate('Buy Now') }}</span>
+                                            <i class="fa fa-shopping-cart"></i>
+                                            <span>{{ translate('Buy Now') }}</span>
                                         </button>
                                     </div>
                                 @else
-                                    <div class="pl-3 pr-0" style="max-width:260px !important">
-                                        <button type="button" class="btn btn-success buy-now fw-600 min-w-150px rounded-4"
+                                    <div class="pl-3 pr-0">
+                                        <button type="button" class="btn-cta-login"
                                             onclick="showLoginModal()">
                                             <i class="fa fa-user"></i>
-                                            <span class="d-md-inline-block text_button_detail_page font-size-mobile"> Đăng nhập</span>
+                                            <span>Đăng nhập</span>
                                         </button>
                                     </div>
                                 @endif
@@ -379,6 +384,22 @@
 
         
     @endif
+
+    <!-- Trust Signals -->
+    <div class="trust-signals">
+        <div class="trust-signal-item">
+            <i class="fa fa-check-circle"></i>
+            <span>Hàng chính hãng 100%</span>
+        </div>
+        <div class="trust-signal-item">
+            <i class="fa fa-truck"></i>
+            <span>Giao hàng toàn quốc</span>
+        </div>
+        <div class="trust-signal-item">
+            <i class="fa fa-shield"></i>
+            <span>Thanh toán an toàn</span>
+        </div>
+    </div>
 
     <div class="modal fade" id="Rfq_request">
         <div class="modal-dialog modal-dialog-centered modal-dialog-zoom product-modal" id="modal-size" role="document" style="max-width: 800px;width: 100%">

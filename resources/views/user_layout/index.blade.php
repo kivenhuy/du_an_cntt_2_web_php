@@ -87,7 +87,7 @@
                         </div>
                         
                         <div class="content_top_selling ">
-                            <a href="{{ route('products.category', $data_selling_product->category->slug) }}" class="mb-1">{{ $data_selling_product->category->name }}</a>
+                            <a href="{{ route('products.category', $data_selling_product->category->slug) }}" class="storefront-card-category">{{ $data_selling_product->category->name }}</a>
                             <a href="{{ route('product', $data_selling_product->slug) }}" class="d-block h-100">
                                 <div class="name_product_top_selling storefront-product-title">
                                     {{$data_selling_product->name}}
@@ -154,7 +154,7 @@
                                 </div>
                                 
                                 <div class="content_top_selling ">
-                                    <a href="{{ route('products.category', $new_product->category->slug) }}" class="mb-1">{{ $new_product->category->name }}</a>
+                                    <a href="{{ route('products.category', $new_product->category->slug) }}" class="storefront-card-category">{{ $new_product->category->name }}</a>
                                     <a href="{{ route('product', $new_product->slug) }}" class="d-block h-100">
                                         <div class="name_product_top_selling storefront-product-title"> 
                                             {{$new_product->name}}

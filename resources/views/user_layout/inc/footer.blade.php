@@ -31,9 +31,6 @@
             {{-- Company --}}
             <div class="col-lg-3 col-md-6 col-sm-12 footer-col footer-col--brand">
                 <h4 class="footer-title">{{ translate('CÔNG TY TNHH THẠCH KHIẾT MINH') }}</h4>
-                <p class="footer-text mb-0">
-                    {{ translate('Nhà phân phối thực phẩm chức năng & mỹ phẩm chính hãng.') }}
-                </p>
             </div>
 
             {{-- Contact --}}
@@ -109,6 +106,20 @@
                 </div>
             </div>
 
+        </div>
+
+        {{-- Social & Copyright --}}
+        <div class="row mt-3">
+            <div class="col-12">
+                <div class="d-flex align-items-center justify-content-between flex-wrap" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px;">
+                    <div class="d-flex align-items-center gap-3 mb-2">
+                        
+                    </div>
+                    <p style="color:#666; font-size:12px; margin:0;">
+                        © {{ date('Y') }} {{ translate('CÔNG TY TNHH THẠCH KHIẾT MINH') }}. All rights reserved.
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
 </section>

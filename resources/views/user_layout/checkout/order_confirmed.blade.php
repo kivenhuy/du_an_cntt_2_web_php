@@ -28,41 +28,43 @@
                         <h5 class="fw-600 mb-3 fs-16 text-soft-dark pb-2 border-bottom">{{ translate('Order Summary')}}</h5>
                         <div class="row">
                             <div class="col-md-6">
-                                <table class="table fs-14 text-soft-dark">
+                                <table class="table fs-14 text-soft-dark" style="table-layout:fixed;">
+                                    <colgroup><col style="width:40%"><col style="width:60%"></colgroup>
                                     <tr>
-                                        <td class="w-50 fw-600 border-top-0 pl-0 py-2">{{ translate('Order date')}}:</td>
+                                        <td class="fw-600 border-top-0 pl-0 py-2">{{ translate('Order date')}}:</td>
                                         <td class="border-top-0 py-2">{{ date('d-m-Y H:i A', $first_order->date) }}</td>
                                     </tr>
                                     <tr>
-                                        <td class="w-50 fw-600 border-top-0 pl-0 py-2">{{ translate('Name')}}:</td>
+                                        <td class="fw-600 border-top-0 pl-0 py-2">{{ translate('Name')}}:</td>
                                         <td class="border-top-0 py-2">{{ json_decode($first_order->shipping_address)->name }}</td>
                                     </tr>
                                     <tr>
-                                        <td class="w-50 fw-600 border-top-0 pl-0 py-2">{{ translate('Email')}}:</td>
-                                        <td class="border-top-0 py-2">{{ json_decode($first_order->shipping_address)->email }}</td>
+                                        <td class="fw-600 border-top-0 pl-0 py-2">{{ translate('Email')}}:</td>
+                                        <td class="border-top-0 py-2" style="word-break:break-all;">{{ json_decode($first_order->shipping_address)->email }}</td>
                                     </tr>
                                     <tr>
-                                        <td class="w-50 fw-600 border-top-0 pl-0 py-2">{{ translate('Shipping address')}}:</td>
+                                        <td class="fw-600 border-top-0 pl-0 py-2">{{ translate('Shipping address')}}:</td>
                                         <td class="border-top-0 py-2">{{ json_decode($first_order->shipping_address)->address }}, {{ json_decode($first_order->shipping_address)->city }}, {{ json_decode($first_order->shipping_address)->country }}</td>
                                     </tr>
                                 </table>
                             </div>
                             <div class="col-md-6">
-                                <table class="table">
+                                <table class="table fs-14" style="table-layout:fixed;">
+                                    <colgroup><col style="width:40%"><col style="width:60%"></colgroup>
                                     <tr>
-                                        <td class="w-50 fw-600 border-top-0 py-2">{{ translate('Order status')}}:</td>
-                                        <td class="border-top-0 pr-0 py-2">Success</td>
+                                        <td class="fw-600 border-top-0 py-2 ms_mb">{{ translate('Order status')}}:</td>
+                                        <td class="border-top-0 pr-0 py-2">{{ translate('Success') }}</td>
                                     </tr>
                                     <tr>
-                                        <td class="w-50 fw-600 border-top-0 py-2">{{ translate('Total order amount')}}:</td>
+                                        <td class="fw-600 border-top-0 py-2 ms_mb">{{ translate('Total order amount')}}:</td>
                                         <td class="border-top-0 pr-0 py-2">{{ single_price($combined_order->grand_total) }}</td>
                                     </tr>
                                     <tr>
-                                        <td class="w-50 fw-600 border-top-0 py-2">{{ translate('Shipping')}}:</td>
+                                        <td class="fw-600 border-top-0 py-2 ms_mb">{{ translate('Shipping')}}:</td>
                                         <td class="border-top-0 pr-0 py-2">{{ translate('Flat shipping rate')}}</td>
                                     </tr>
                                     <tr>
-                                        <td class="w-50 fw-600 border-top-0 py-2">{{ translate('Payment method')}}:</td>
+                                        <td class="fw-600 border-top-0 py-2 ms_mb">{{ translate('Payment method')}}:</td>
                                         <td class="border-top-0 pr-0 py-2">{{ translate(ucfirst(str_replace('_', ' ', $first_order->payment_type))) }}</td>
                                     </tr>
                                 </table>
@@ -83,7 +85,7 @@
                                     <h5 class="fw-600 text-soft-dark mb-3 fs-16 pb-2">{{ translate('Order Details')}}</h5>
                                     <!-- Product Details -->
                                     <div>
-                                        <table class="table table-responsive-md text-soft-dark fs-14">
+                                        <table class="table table-responsive text-soft-dark fs-14" style="min-width:auto;">
                                             <thead>
                                                 <tr>
                                                     <th class="opacity-60 border-top-0 pl-0">#</th>
@@ -116,7 +118,7 @@
                                                         </td>
                                                         <td class="border-top-0 border-bottom">
                                                             
-                                                                {{ $order->shipping_type}}
+                                                                {{ translate(ucfirst(str_replace('_', ' ', $order->shipping_type))) }}
                                                             
                                                         </td>
                                                         <td class="border-top-0 border-bottom pr-0 text-right">{{ single_price($orderDetail->price) }}</td>
