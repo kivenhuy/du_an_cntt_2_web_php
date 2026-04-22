@@ -20,24 +20,24 @@
             <div class="row">
 
                 <div class="col-lg-6">
-                    <table class="table-borderless table">
+                    <table class="table-borderless table order-summary-table">
                         <tr>
-                            <td class="w-50 fw-600">{{ translate('Order Code') }}:</td>
-                            <td>{{ $order->code }}</td>
+                            <td class="fw-600 order-summary-label">{{ translate('Order Code') }}:</td>
+                            <td class="order-summary-value">{{ $order->code }}</td>
                         </tr>
                         <tr>
-                            <td class="w-50 fw-600">{{ translate('Customer') }}:</td>
-                            <td>{{ json_decode($order->shipping_address)->name }}</td>
+                            <td class="fw-600 order-summary-label">{{ translate('Customer') }}:</td>
+                            <td class="order-summary-value">{{ json_decode($order->shipping_address)->name }}</td>
                         </tr>
                         <tr>
-                            <td class="w-50 fw-600">{{ translate('Email') }}:</td>
+                            <td class="fw-600 order-summary-label">{{ translate('Email') }}:</td>
                             @if ($order->customer_id != null)
-                                <td>{{ $order->user->email }}</td>
+                                <td class="order-summary-value">{{ $order->user->email }}</td>
                             @endif
                         </tr>
                         <tr>
-                            <td class="w-50 fw-600">{{ translate('Shipping address') }}:</td>
-                            <td>{{ json_decode($order->shipping_address)->address }},
+                            <td class="fw-600 order-summary-label">{{ translate('Shipping address') }}:</td>
+                            <td class="order-summary-value">{{ json_decode($order->shipping_address)->address }},
                                 {{ json_decode($order->shipping_address)->city }},
                                 @if(isset(json_decode($order->shipping_address)->state)) {{ json_decode($order->shipping_address)->state }} - @endif
                                 {{ json_decode($order->shipping_address)->postal_code }},
@@ -47,33 +47,33 @@
                     </table>
                 </div>
                 <div class="col-lg-6">
-                    <table class="table-borderless table">
+                    <table class="table-borderless table order-summary-table">
                         <tr>
-                            <td class="w-50 fw-600">{{ translate('Order date') }}:</td>
-                            <td>{{ date('d-m-Y H:i A', $order->date) }}</td>
+                            <td class="fw-600 order-summary-label">{{ translate('Order date') }}:</td>
+                            <td class="order-summary-value">{{ date('d-m-Y H:i A', $order->date) }}</td>
                         </tr>
                         <tr>
-                            <td class="w-50 fw-600">{{ translate('Order status') }}:</td>
-                            <td>Success</td>
+                            <td class="fw-600 order-summary-label">{{ translate('Order status') }}:</td>
+                            <td class="order-summary-value">Success</td>
                         </tr>
                         <tr>
-                            <td class="w-50 fw-600">{{ translate('Total order amount') }}:</td>
-                            <td>{{ single_price($order->orderDetails->sum('price') + $order->orderDetails->sum('tax')) }}
+                            <td class="fw-600 order-summary-label">{{ translate('Total order amount') }}:</td>
+                            <td class="order-summary-value">{{ single_price($order->orderDetails->sum('price') + $order->orderDetails->sum('tax')) }}
                             </td>
                         </tr>
                         <tr>
-                            <td class="w-50 fw-600">{{ translate('Shipping method') }}:</td>
-                            <td> {{ $order->shipping_type }}</td>
+                            <td class="fw-600 order-summary-label">{{ translate('Shipping method') }}:</td>
+                            <td class="order-summary-value"> {{ $order->shipping_type }}</td>
                         </tr>
                         <tr>
-                            <td class="w-50 fw-600">{{ translate('Payment method') }}:</td>
-                            <td>{{ translate(ucfirst(str_replace('_', ' ', $order->payment_type))) }}</td>
+                            <td class="fw-600 order-summary-label">{{ translate('Payment method') }}:</td>
+                            <td class="order-summary-value">{{ translate(ucfirst(str_replace('_', ' ', $order->payment_type))) }}</td>
                         </tr>
                        
                         @if ($order->tracking_code)
                             <tr>
-                                <td class="w-50 fw-600">{{ translate('Tracking code') }}:</td>
-                                <td>{{ $order->tracking_code }}</td>
+                                <td class="fw-600 order-summary-label">{{ translate('Tracking code') }}:</td>
+                                <td class="order-summary-value">{{ $order->tracking_code }}</td>
                             </tr>
                         @endif
                     </table>
@@ -318,6 +318,47 @@
         .shipping_modal
         {
             padding-right: 70px !important;
+        }
+
+        .order-summary-table {
+            table-layout: fixed;
+            width: 100%;
+        }
+        .order-summary-label {
+            width: 45%;
+            white-space: nowrap;
+        }
+        .order-summary-value {
+            width: 55%;
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
+
+        @media screen and (max-width: 576px) {
+            .order-summary-table {
+                table-layout: auto;
+            }
+            .order-summary-label {
+                width: auto;
+                white-space: normal;
+                padding-right: 8px !important;
+                font-size: 13px;
+            }
+            .order-summary-value {
+                width: auto;
+                word-break: break-word;
+                overflow-wrap: break-word;
+                font-size: 13px;
+            }
+            .card-body.table-responsive {
+                padding: 0.5rem;
+            }
+            .card-body.table-responsive .aiz-table {
+                font-size: 13px;
+            }
+            .shipping_modal {
+                padding-right: 15px !important;
+            }
         }
     </style>
 @endsection

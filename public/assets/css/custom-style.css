@@ -11892,6 +11892,8 @@ ul.apps a:hover i {
     -ms-flex-positive: 1;
     flex-grow: 1;
     padding-left: 30px;
+    min-width: 0;
+    overflow-x: hidden;
 }
 
 [dir="rtl"] .aiz-user-panel {
@@ -12104,7 +12106,7 @@ ul.apps a:hover i {
 .btn-login,
 .btn-register {
     height: 70px;
-    background-color: #1a1a2e;
+    background-color: #002f8b;
 }
 
 .btn-login,
@@ -17412,7 +17414,7 @@ strong .guest-price-link {
     }
 }
 .site-footer {
-    background: #1a1a2e;
+    background: #002f8b;
     color: #ddd;
     padding: 48px 0 32px;
     margin-top: 40px;
