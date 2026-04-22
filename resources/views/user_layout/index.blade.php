@@ -16,10 +16,10 @@
                             @php $slideHref = $slide->link ? trim($slide->link) : ''; $slideHref = ($slideHref === '' || $slideHref === '#') ? route('products.all') : $slideHref; @endphp
                             <div class="carousel-box position-relative storefront-home-slide">
                                 <a href="{{ $slideHref }}" class="d-block position-relative storefront-banner-img-link">
-                                    <img class="d-block w-100 h-100 storefront-banner-img img-fit overflow-hidden h-sm-auto h-md-320px h-lg-460px b-radius-10"
+                                    <img class="d-block w-100 storefront-banner-img overflow-hidden b-radius-10"
                                         alt="{{ config('app.name') }}"
                                         src="{{ uploaded_asset($slide->photo) }}"
-                                        style="object-fit: cover;"
+                                        style="height: auto; object-fit: contain;"
                                         onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
                                     <div class="storefront-banner-gradient"></div>
                                     
@@ -29,10 +29,10 @@
                             @php $fallbackProductsUrl = route('products.all'); @endphp
                             <div class="carousel-box position-relative storefront-home-slide">
                                 <a href="{{ $fallbackProductsUrl }}" class="d-block position-relative storefront-banner-img-link">
-                                    <img class="d-block w-100 h-100 storefront-banner-img img-fit overflow-hidden h-sm-auto h-md-320px h-lg-460px b-radius-10"
+                                    <img class="d-block w-100 storefront-banner-img overflow-hidden b-radius-10"
                                         alt="{{ config('app.name') }}"
                                         src="{{ static_asset('assets/img/ivSNgQP3jxEHTHTOQXNAaGWlHOO3a1PQIw3w9EPJ.jpg')}}"
-                                        style="object-fit: cover;">
+                                        style="height: auto; object-fit: contain;">
                                     <div class="storefront-banner-gradient"></div>
                                     <div class="storefront-banner-cta">
                                         <span class="btn btn-success btn-sm font-weight-bold rounded-pill px-3">Mua sắm ngay</span>
