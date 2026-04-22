@@ -101,7 +101,7 @@
             </ul>
         
             <!-- logout -->
-            <a href="{{ route('user.logout') }}" class="btn btn-primary btn-block fs-14 fw-700 mb-5 mb-md-0" style="border-radius: 25px;">{{ translate('Sign Out') }}</a>
+            <a href="{{ route('user.logout') }}" class="btn btn-block fs-14 fw-700 mb-5 mb-md-0" style="border-radius: 25px;background: rgb(26, 26, 46);color:white">{{ translate('Sign Out') }}</a>
         </div>
 
     </div>

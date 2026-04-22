@@ -955,13 +955,14 @@ $.fn.toggleAttr = function(attr, attr1, attr2) {
                 delay: 2500,
                 mouse_over: "pause",
                 placement: {
-                    from: "bottom",
+                    from: "top",
                     align: "right",
                 },
                 animate: {
-                    enter: "animated fadeInUp",
-                    exit: "animated fadeOutDown",
+                    enter: "animated fadeInDown",
+                    exit: "animated fadeOutUp",
                 },
+                z_index: 10500,
                 type: type,
                 template: '<div data-notify="container" class="aiz-notify alert alert-{0}" role="alert">' +
                     '<button type="button" aria-hidden="true" data-notify="dismiss" class="close"><i class="fa fa-times"></i></button>' +

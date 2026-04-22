@@ -520,6 +520,11 @@
                                 $menuCartN = \App\Models\Cart::where('user_id', Auth::id())->count();
                             @endphp
                             <li class="mb-3">
+                                <a href="{{ Auth::user()->user_type === 'admin' ? route('admin.dashboard') : route('user.dashboard') }}" class="text-reset fs-15 fw-600 d-block">
+                                    Thống kê
+                                </a>
+                            </li>
+                            <li class="mb-3">
                                 <a href="{{ route('cart') }}" class="text-reset fs-15 fw-600 d-flex align-items-center justify-content-between">
                                     <span>Giỏ hàng</span>
                                     @if($menuCartN > 0)

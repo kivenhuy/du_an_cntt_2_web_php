@@ -13,7 +13,7 @@
                 <div class="row h-100  row-cols-1">
                     <!-- Expenditure summary -->
                     <div class="col">
-                        <div class="p-4 bg-primary  h-100 " style="margin-bottom: 2rem;">
+                        <div class="p-4  h-100 " style="margin-bottom: 2rem;background: rgb(26, 26, 46);">
                             <div class="d-flex align-items-center pb-4 ">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
                                     <g id="Group_25000" data-name="Group 25000" transform="translate(-926 -614)">
@@ -24,12 +24,12 @@
                                     </g>
                                 </svg>
                                 <div class="ml-3 d-flex flex-column justify-content-between">
-                                    <span class="fs-14 fw-400 text-white mb-1">Total Amount</span>
+                                    <span class="fs-14 fw-400 text-white mb-1">{{ translate('Total Amount') }}</span>
                                     <span class="fs-20 fw-700 text-white">{{single_price($order_amount)}}</span>
                                 </div>
                             </div>
                             <a href="{{route('purchase_history.index')}}" class="fs-12 text-white">
-                                Order History
+                                {{ translate('Order History') }}
                                 <i class="fa fa-angle-right fs-14"></i>
                             </a>
                         </div>
@@ -81,7 +81,7 @@
                     </svg>
                     <div class="ml-3 d-flex flex-column justify-content-between">
                         <span class="fs-20 fw-700 mb-1">{{ count($cart) > 0 ? sprintf("%02d", count($cart)) : 0 }}</span>
-                        <span class="fs-14 fw-400 text-secondary">Total Order</span>
+                        <span class="fs-14 fw-400 text-secondary">{{ translate('Total Order') }}</span>
                     </div>
                 </div>
 

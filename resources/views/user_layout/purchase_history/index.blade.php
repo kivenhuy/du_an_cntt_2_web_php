@@ -6,7 +6,7 @@
         <form id="sort_orders" action="" method="GET">
             <div class="card-header row gutters-5">
                 <div class="col text-center text-md-left">
-                    <h5 class="mb-md-0 h6">{{ translate('Orders') }}</h5>
+                    <h5 class="mb-md-0 h6">{{ translate('Lịch sử đơn hàng') }}</h5>
                 </div>
                 <div class="col-md-3 ml-auto">
                     <select class="form-control aiz-selectpicker"
