@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="home-banner-area mb-3" >
-    <div class="container wow animate__animated animate__fadeIn"  style=" max-width: 1200px !important;margin-top: 15px;height: auto;">
+    <div class="container wow animate__animated animate__fadeIn"  style=" max-width: 1280px !important;margin-top: 15px;height: auto;">
         <div class="d-flex flex-wrap position-relative">
             <!-- <div class="position-static d-none d-xl-block wow animate__animated animate__fadeInUp" data-wow-delay=".1s">
                 @include('user_layout.partials.category_menu')
