@@ -1465,10 +1465,6 @@
         {
             justify-content:unset !important;
         }
-        .home-slider
-        {
-            padding: 0 16px;
-        }
         .top_selling:nth-child(2n+1)
         {
             padding-right:10px; 
@@ -1512,12 +1508,6 @@
         .sub_footer
         {
             display: none;
-        }
-        .home-slider .slick-slide img
-        {
-            width: 100%;
-            height: auto !important;
-            object-fit: contain;
         }
         .home-banner-area
         {
