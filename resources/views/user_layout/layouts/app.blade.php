@@ -1122,7 +1122,9 @@
     }
     .home-slider .slick-slide img
     {
-        height: 480px !important;
+        width: 100%;
+        height: auto !important;
+        object-fit: contain;
     }
     .home-banner-area
     {
@@ -1513,7 +1515,9 @@
         }
         .home-slider .slick-slide img
         {
-            height: 200px !important;
+            width: 100%;
+            height: auto !important;
+            object-fit: contain;
         }
         .home-banner-area
         {
