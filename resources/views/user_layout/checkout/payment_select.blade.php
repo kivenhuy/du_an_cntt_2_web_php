@@ -48,10 +48,10 @@
                                             <div class="checkout-product-card bg-white p-3 p-lg-4 text-left rounded">
                                                 <div class="mb-4">
                                                     <!-- Headers -->
-                                                    <div class="row gutters-5 d-none d-lg-flex border-bottom mb-3 text-secondary fs-12 header_table checkout-cart-header" >
-                                                        <div class="col-md-5 fw-600 text_cart_details pl-lg-3">Sản phẩm</div>
-                                                        <div class="col-md-3 fw-600 text_cart_details text-lg-center">Số lượng</div>
-                                                        <div class="col-md-4 fw-600 text_cart_details text-lg-right pr-lg-3">Tổng tiền</div>
+                                                    <div class="checkout-v2__header d-none d-lg-flex">
+                                                        <div class="checkout-v2__header-product">Sản phẩm</div>
+                                                        <div class="checkout-v2__header-qty">Số lượng</div>
+                                                        <div class="checkout-v2__header-total">Tổng tiền</div>
                                                     </div>
                                                     <!-- Cart Items -->
                                                     <ul class="list-group list-group-flush">
@@ -83,46 +83,35 @@
                                                             @endphp
                                                             @if($product->user_id ==  $key_user)
                                                                 <li class="list-group-item px-0 checkout-cart-line">
-                                                    <div class="checkout-item">
+                                                    <div class="checkout-v2__item">
                                                         <!-- Product Image & name -->
-                                                        <div class="checkout-item__product">
-                                                            <span class="checkout-item__thumb">
+                                                        <div class="checkout-v2__item-product">
+                                                            <span class="checkout-v2__item-thumb">
                                                                 <img src="{{ uploaded_asset($product->thumbnail_img) }}"
-                                                                    class="img-fit"
                                                                     alt="{{ $product->name }}"
                                                                     onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
                                                             </span>
-                                                            <div class="checkout-item__info">
-                                                                <span class="checkout-item__name">{{ $product_name_with_choice }}</span>
+                                                            <div class="checkout-v2__item-info">
+                                                                <span class="checkout-v2__item-name">{{ $product_name_with_choice }}</span>
                                                                 @if($product->unit)
-                                                                    <span class="checkout-item__unit">Dung tích: {{$product->weight}}{{ $product->unit }}</span>
+                                                                    <span class="checkout-v2__item-unit">{{ $product->weight }} {{ $product->unit }}</span>
                                                                 @endif
                                                             </div>
                                                         </div>
-                                                        <!-- Qty + Total row -->
-                                                        <div class="checkout-item__bottom">
-                                                            <div class="checkout-item__qty ">
-                                                                @if ($cartItem['digital'] != 1 && $product->auction_product == 0)
-                                                                    <span class="fw-600 fs-14" style="color:#555;">Số lượng: {{ $cartItem['quantity'] }}</span>
-                                                                @endif
-                                                            </div>
-                                                            @if(Auth::user()->user_type === "enterprise")
-                                                                <div class="checkout-item__date">
-                                                                    @if(count($cartItem->shipping_date)>0)
-                                                                        @foreach ($cartItem->shipping_date as $date)
-                                                                            <span class="fw-700 fs-14">{{$date}}</span>
-                                                                        @endforeach
-                                                                    @endif
-                                                                </div>
+                                                        <!-- Quantity -->
+                                                        <div class="checkout-v2__item-qty">
+                                                            @if ($cartItem['digital'] != 1 && $product->auction_product == 0)
+                                                                <span class="checkout-v2__mob-label d-lg-none">{{ translate('Quantity') }}: </span><span>{{ $cartItem['quantity'] }}</span>
                                                             @endif
-                                                            <div class="checkout-item__total">
-                                                                @if(Auth::user()->user_type === "enterprise")
-                                                                    <span class="checkout-item__price">{{ single_price(cart_product_price($cartItem, $product, false) * $cartItem['quantity']) }}</span>
-                                                                    <small style="color: red;font-weight: 900">This Price Is Total Price For All Order Date</small>
-                                                                @else   
-                                                                    <span class="checkout-item__price">{{ single_price(cart_product_price($cartItem, $product, false) * $cartItem['quantity']) }}</span>
-                                                                @endif
-                                                            </div>
+                                                        </div>
+                                                        <!-- Total -->
+                                                        <div class="checkout-v2__item-total">
+                                                            @if(Auth::user()->user_type === "enterprise")
+                                                                <span>{{ single_price(cart_product_price($cartItem, $product, false) * $cartItem['quantity']) }}</span>
+                                                                <small style="color: red;font-weight: 900">This Price Is Total Price For All Order Date</small>
+                                                            @else   
+                                                                <span>{{ single_price(cart_product_price($cartItem, $product, false) * $cartItem['quantity']) }}</span>
+                                                            @endif
                                                         </div>
                                                     </div>
                                                 </li>
@@ -317,7 +306,7 @@
                                     
 
                                     <div class="card-header p-4 border-bottom-0 payment_select" style="">
-                                        <span style="font-size:22px;color:#2E7F25;"><i class="fas fa-wallet"></i></span>
+                                        <span style="font-size:22px;color:#002f8b;"><i class="fas fa-wallet"></i></span>
                                         <span class="select_payment_option" style="
                                             font-family: 'Quicksand',sans-serif !important;
                                             font-size: 22px !important;

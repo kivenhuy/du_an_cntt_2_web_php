@@ -250,8 +250,11 @@ class CartController extends Controller
         else
         {
             $cart_data = Cart::find($request->cart_id);
-            $cart_data->update(['is_checked'=>$request->active,'address_id'=>$data_address]);
-            $all_cart = Cart::where('is_checked',1)->get();
+            $cart_data->is_checked = $request->active;
+            $cart_data->address_id = $data_address;
+            $cart_data->save();
+
+            $all_cart = Cart::where('user_id', Auth::user()->id)->where('is_checked', 1)->get();
             if(count($all_cart)>0)
             {
                 foreach($all_cart as $data_cart)

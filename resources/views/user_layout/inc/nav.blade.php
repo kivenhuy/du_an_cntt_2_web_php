@@ -532,6 +532,16 @@
                                     @endif
                                 </a>
                             </li>
+                            <li class="mb-3">
+                                <a href="{{ route('purchase_history.index') }}" class="text-reset fs-15 fw-600 d-block">
+                                    {{ translate('Purchase History') }}
+                                </a>
+                            </li>
+                            <li class="mb-3">
+                                <a href="{{ route('profile') }}" class="text-reset fs-15 fw-600 d-block">
+                                    {{ translate('Manage Profile') }}
+                                </a>
+                            </li>
                             <li class="mb-3"><a href="{{ route('user.logout') }}" class="text-reset fs-15 d-block">{{ translate('Logout') }}</a></li>
                         @else
                             <li class="mb-3"><a href="{{ route('user.login') }}" class="text-reset fs-15 d-block">{{ translate('Login') }}</a></li>

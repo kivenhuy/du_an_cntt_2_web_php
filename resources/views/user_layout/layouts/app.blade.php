@@ -204,7 +204,7 @@
         line-height: 18px;
         letter-spacing: 0em;
         text-align: left;
-        color: #589951;
+        color: #002f8b;
     }
     .manual_payment_description
     {

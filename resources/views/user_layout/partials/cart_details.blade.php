@@ -2,162 +2,143 @@
     
     @if( $carts && count($carts) > 0 )
     @include('user_layout.partials.cart_page_heading')
-        <div class="row" id="cart-summary-2">
-            <div class="col-xxl-8 col-xl-10 mx-auto">
-                <div class=" bg-white p-3 p-lg-4 text-left">
-                    <div class="mb-4">
-                        <!-- Headers -->
-                        <div class="row gutters-5 d-none d-lg-flex align-items-center border-bottom mb-3 text-secondary fs-12 header_table storefront-cart-desktop-header">
-                            <div class="col-lg-1 fw-600 text_cart_details"><input onchange="Check_all(this)" type="checkbox"></div>
-                            <div class="col-lg-4 fw-600 text_cart_details">{{ translate('Product')}}</div>
-                            <div class="col-lg-2 fw-600 text_cart_details text-center">{{ translate('Qty')}}</div>
-                            <div class="col-lg-1 fw-600 text_cart_details text-center">{{ translate('Unit')}}</div>
-                            <div class="col-lg-3 fw-600 text_cart_details text-right">{{ translate('Total')}}</div>
-                            <div class="col-lg-1 fw-600 text_cart_details text-center">{{ translate('Remove')}}</div>
-                        </div>
-                        <!-- Cart Items -->
-                        <ul class="list-group list-group-flush">
-                            @php
-                                $total = 0;
+        <div class="cart-v2" id="cart-summary-2">
+            <!-- LEFT COLUMN: Products + Shipping -->
+            <div class="cart-v2__left">
+                <!-- Cart Table -->
+                <div class="cart-v2__card">
+                    <!-- Continue shopping -->
+                    <a href="{{ route('homepage') }}" class="cart-v2__continue" style="margin-bottom: 8px;">
+                        <i class="fa fa-arrow-left"></i>
+                        {{ translate('Tiếp tục mua hàng') }}
+                    </a>
 
-                            @endphp
-                            @foreach ($carts as $key => $cartItem)
-                                @php
-                                    $product = \App\Models\Products::find($cartItem['product_id']);
-                                    $product_stock = $product->product_stock->where('variant',preg_replace('/\s+/', '',$cartItem['variation']))->first();
-                                    if ($cartItem['is_checked']) {
-                                        $total = $total + cart_product_price($cartItem, $product, false) * $cartItem['quantity'];
-                                    }
-                                    $final_total = $total+15000;
-                                    $product_name_with_choice = $product->name;
-                                    if ($cartItem['variation'] != null) {
-                                        $product_name_with_choice = $product->name.' - '.$cartItem['variation'];
-                                    }
-                                @endphp
-                                <li class="list-group-item px-0 py-3 storefront-cart-line-item">
-                                    <div class="row gutters-5 align-items-lg-center">
-                                        <div class="col-auto col-lg-1 text-center mb-2 mb-lg-0" style="display:flex">
-                                            <input onchange="showHidePan(this)" class="check_box_child" type="checkbox" value="{{ $cartItem['id'] }}" {{ $cartItem['is_checked'] ? 'checked' : '' }}>
-                                        </div>
-                                        <div class="col col-lg-4 mb-2 mb-lg-0 minw-0">
-                                            <div class="d-flex align-items-start">
-                                                <a href="{{ route('product', $product->slug) }}" class="mr-2 flex-shrink-0">
-                                                    <img src="{{ uploaded_asset($product->thumbnail_img) }}"
-                                                        class="img-fit size-70px rounded border border-light"
-                                                        alt="{{ $product->name }}"
-                                                        onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
-                                                </a>
-                                                <div class="flex-grow-1 minw-0 pr-1">
-                                                    <div class="d-flex justify-content-between align-items-start">
-                                                        <span class="fs-14 text_name_product d-block pr-2">{{ $product_name_with_choice }}</span>
-                                                        <a href="javascript:void(0)" onclick="removeFromCartView(event, {{ $cartItem['id'] }})" class="btn btn-icon btn-sm btn-soft-primary bg-soft-warning hov-bg-primary btn-circle flex-shrink-0 d-lg-none" title="{{ translate('Xóa') }}">
-                                                            <i class="fa fa-trash fs-16"></i>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-lg-2 mt-1 mt-lg-0 text-lg-center">
-                                            @if ($cartItem['digital'] != 1 && $product->auction_product == 0)
-                                                <div class="d-flex flex-row align-items-center justify-content-lg-center aiz-plus-minus storefront-cart-qty-controls">
-                                                    @if($cartItem['is_rfp'] == 0)
-                                                    <button
-                                                        class="btn btn-icon btn-sm btn-circle btn-light flex-shrink-0"
-                                                        type="button" data-type="minus"
-                                                        data-field="quantity[{{ $cartItem['id'] }}]">
-                                                        <i class="fa fa-minus"></i>
-                                                    </button>
-                                                    @endif
-                                                    <input type="number" name="quantity[{{ $cartItem['id'] }}]"
-                                                        class="border-0 text-center fs-14 input-number quantity_product storefront-cart-qty-input mx-2"
-                                                        placeholder="1" value="{{ $cartItem['quantity'] }}"
-                                                        min="{{ $product->min_qty }}"
-                                                        max="{{ $product_stock->qty }}"
-                                                        onchange="updateQuantity({{ $cartItem['id'] }}, this)">
-                                                    @if($cartItem['is_rfp'] == 0)
-                                                    <button
-                                                        class="btn btn-icon btn-sm btn-circle btn-light flex-shrink-0"
-                                                        type="button" data-type="plus"
-                                                        data-field="quantity[{{ $cartItem['id'] }}]">
-                                                        <i class="fa fa-plus"></i>
-                                                    </button>
-                                                    @endif
-                                                </div>
-                                            @elseif($product->auction_product == 1)
-                                                <span class="fw-700 fs-14">1</span>
-                                            @endif
-                                        </div>
-                                        <div class="col-6 col-lg-1 mt-2 mt-lg-0 text-lg-center">
-                                            <span class="opacity-60 fs-14 d-lg-none d-block mb-1">{{ translate('Đơn vị') }}</span>
-                                            <span class="unit_product d-block">{{ $product->unit }}</span>
-                                        </div>
-                                        <div class="col-6 col-lg-3 mt-2 mt-lg-0 text-right">
-                                            <span class="opacity-60 fs-14 d-lg-none d-block mb-1">{{ translate('Total') }}</span>
-                                            <span class="fw-700  text-primary total_product  d-block d-lg-inline">{{ single_price(cart_product_price($cartItem, $product, false) * $cartItem['quantity']) }}</span>
-                                        </div>
-                                        <div class="col-lg-1 text-center mt-2 mt-lg-0 d-none d-lg-block">
-                                            <a href="javascript:void(0)" onclick="removeFromCartView(event, {{ $cartItem['id'] }})" class="btn btn-icon btn-sm btn-soft-primary bg-soft-warning hov-bg-primary btn-circle" title="{{ translate('Xóa') }}">
-                                                <i class="fa fa-trash fs-16"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </li>
-                            @endforeach
-                        </ul>
+                    <!-- Desktop Header -->
+                    <div class="cart-v2__header d-none d-lg-flex">
+                        <div class="cart-v2__header-check"><input onchange="Check_all(this)" type="checkbox"></div>
+                        <div class="cart-v2__header-product">{{ translate('Product')}}</div>
+                        <div class="cart-v2__header-qty">{{ translate('Qty')}}</div>
+                        <div class="cart-v2__header-total">{{ translate('Total')}}</div>
+                        <div class="cart-v2__header-remove"></div>
                     </div>
+
+                    <!-- Cart Items -->
+                    @php $total = 0; @endphp
+                    @foreach ($carts as $key => $cartItem)
+                        @php
+                            $product = \App\Models\Products::find($cartItem['product_id']);
+                            $product_stock = $product->product_stock->where('variant',preg_replace('/\s+/', '',$cartItem['variation']))->first();
+                            if ($cartItem['is_checked']) {
+                                $total = $total + cart_product_price($cartItem, $product, false) * $cartItem['quantity'];
+                            }
+                            $final_total = $total+15000;
+                            $product_name_with_choice = $product->name;
+                            if ($cartItem['variation'] != null) {
+                                $product_name_with_choice = $product->name.' - '.$cartItem['variation'];
+                            }
+                        @endphp
+                        <div class="cart-v2__item">
+                            <!-- Checkbox -->
+                            <div class="cart-v2__item-check">
+                                <input onchange="showHidePan(this)" class="check_box_child" type="checkbox" value="{{ $cartItem['id'] }}" {{ $cartItem['is_checked'] ? 'checked' : '' }}>
+                            </div>
+                            <!-- Product -->
+                            <div class="cart-v2__item-product">
+                                <a href="{{ route('product', $product->slug) }}">
+                                    <img src="{{ uploaded_asset($product->thumbnail_img) }}"
+                                        class="cart-v2__item-img"
+                                        alt="{{ $product->name }}"
+                                        onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
+                                </a>
+                                <div class="cart-v2__item-info">
+                                    <div class="cart-v2__item-name">{{ $product_name_with_choice }}</div>
+                                    <div class="cart-v2__item-unit-price">{{ $product->weight }} {{ $product->unit }}</div>
+                                </div>
+                            </div>
+                            <!-- Quantity -->
+                            <div class="cart-v2__item-qty">
+                                @if ($cartItem['digital'] != 1 && $product->auction_product == 0)
+                                    <div class="d-flex align-items-center gap-1 aiz-plus-minus">
+                                        @if($cartItem['is_rfp'] == 0)
+                                        <button class="cart-v2__qty-btn" type="button" data-type="minus" data-field="quantity[{{ $cartItem['id'] }}]">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                        @endif
+                                        <input type="number" name="quantity[{{ $cartItem['id'] }}]"
+                                            class="cart-v2__qty-input input-number"
+                                            placeholder="1" value="{{ $cartItem['quantity'] }}"
+                                            min="{{ $product->min_qty }}"
+                                            max="{{ $product_stock->qty }}"
+                                            data-cart-id="{{ $cartItem['id'] }}">
+                                        @if($cartItem['is_rfp'] == 0)
+                                        <button class="cart-v2__qty-btn" type="button" data-type="plus" data-field="quantity[{{ $cartItem['id'] }}]">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                        @endif
+                                    </div>
+                                @elseif($product->auction_product == 1)
+                                    <span class="fw-700 fs-14">1</span>
+                                @endif
+                            </div>
+
+                            <!-- Total -->
+                            <div class="cart-v2__item-total">{{ single_price(cart_product_price($cartItem, $product, false) * $cartItem['quantity']) }}</div>
+                            <!-- Remove -->
+                            <div class="cart-v2__item-remove">
+                                <button class="cart-v2__delete-btn" onclick="removeFromCartView(event, {{ $cartItem['id'] }})" title="{{ translate('Xóa') }}">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
-                <div class="mt-4 mb-3 d-flex align-items-center storefront-cart-shipping-heading">
-                    <i class="fa fa-map-marker text-primary mr-2" style="font-size: 1.35rem;" aria-hidden="true"></i>
-                    <span class="shipping_info mb-0">{{ translate('Thông tin giao hàng') }}</span>
-                </div>
-                <div class="storefront-cart-address-block mb-3">
+
+                <!-- Shipping Info -->
+                <div class="cart-v2__card">
+                    <div class="cart-v2__section-title">
+                        <i class="fa fa-map-marker"></i>
+                        {{ translate('Thông tin giao hàng') }}
+                    </div>
                     @empty($address)
-                   
                     @else
                         @foreach($address as $data_address)
-                            <div style="margin-bottom: 1rem;display: flex;align-items: center">
-                                <input onclick="handleClick(this);" class="radio_button_checkout" type="radio" id="{{$data_address->id}}" name="address_info" value="{{$data_address->id}}" />
-                                <span for="address_info" class="delivery_type">{{$data_address->full_adress}}</span>
-                            </div>
+                            <label class="cart-v2__address-card" for="addr_{{$data_address->id}}">
+                                <input onclick="handleClick(this);" class="radio_button_checkout" type="radio" id="addr_{{$data_address->id}}" name="address_info" value="{{$data_address->id}}" />
+                                <div class="cart-v2__address-info">
+                                    <div class="cart-v2__address-detail">{{$data_address->full_adress}}</div>
+                                </div>
+                            </label>
                         @endforeach
                     @endempty
-                    <button type="button" class="btn add_new_address mt-2" onclick="add_new_address()">
-                        <i class="fa fa-plus" aria-hidden="true"></i> {{ translate('Add New Address') }}
+                    <button type="button" class="cart-v2__add-address" onclick="add_new_address()">
+                        <i class="fa fa-plus"></i>
+                        {{ translate('Thêm địa chỉ mới') }}
                     </button>
                 </div>
             </div>
-            <div class="col-xxl-3 col-xl-10 mx-auto">
-                <div class="border bg-white p-3 p-lg-4 text-left">
-                    <div class="mb-4">
-                        <div class="px-0 py-2 mb-3 d-flex justify-content-between align-items-baseline">
-                            <span class="opacity-60 fs-14 price_product_cart_details">{{ translate('Tạm tính') }}</span>
-                            <span class="fw-700 fs-16" id="total_price">{{ single_price($total) }}</span>
-                        </div>
-                        <div class="px-0 py-2 mb-3 d-flex justify-content-between align-items-baseline">
-                            <span class="opacity-60 fs-14 price_product_cart_details">{{ translate('Phí vận chuyển') }}</span>
-                            <span class="fw-700 fs-16" id="cart_shipping_fee_display">{{ single_price(0) }}</span>
-                        </div>
-                        <div class="px-0 py-2 mb-4 border-top d-flex justify-content-between align-items-center">
-                            <span class="opacity-60 fs-14 price_product_cart_details">{{ translate('Order Total') }}</span>
-                            <span class="fw-700 fs-16 final_price" id="total_price_2">{{ single_price($total) }}</span>
-                        </div>
+
+            <!-- RIGHT COLUMN: Order Summary (sticky) -->
+            <div class="cart-v2__right">
+                <div class="cart-v2__card cart-v2__card--summary">
+                    <div class="cart-v2__summary-title">{{ translate('Đơn hàng của bạn') }}</div>
+                    <div class="cart-v2__summary-row">
+                        <span class="cart-v2__summary-label">{{ translate('Tạm tính') }}</span>
+                        <span class="cart-v2__summary-value" id="total_price">{{ single_price($total) }}</span>
                     </div>
-                    <div class="col-md-12 text-center" style="background-color: #2E7F25">
-                        <a id="myLink" href="{{ route('checkout.final_checkout') }}" style="border:none;background-color: #2E7F25 !important" class="btn btn-primary fs-14 fw-700 rounded-0 px-4 disabled " >
-                            {{ translate('Tiến hành thanh toán') }}
-                        </a>
+                    <div class="cart-v2__summary-row">
+                        <span class="cart-v2__summary-label">{{ translate('Phí vận chuyển') }}</span>
+                        <span class="cart-v2__summary-value" id="cart_shipping_fee_display">{{ single_price(0) }}</span>
                     </div>
+                    <div class="cart-v2__summary-total">
+                        <span class="cart-v2__summary-total-label">{{ translate('Tổng cộng') }}</span>
+                        <span class="cart-v2__summary-total-value" id="total_price_2">{{ single_price($total) }}</span>
+                    </div>
+                    <a id="myLink" href="{{ route('checkout.final_checkout') }}" class="cart-v2__checkout-btn disabled">
+                        {{ translate('Thanh toán ngay') }}
+                    </a>
+                    <div class="cart-v2__checkout-hint">{{ translate('Vui lòng chọn sản phẩm và địa chỉ giao hàng') }}</div>
                 </div>
             </div>
-        </div>
-
-        <div class="col-md-6 text-center text-md-left order-1 order-md-0">
-            <a href="{{ route('homepage') }}" class="btn btn-link fs-14 fw-700 px-0">
-                <button class="btn return_to_shop">
-                    <i class="fa fa-arrow-left fs-16"></i>
-                    {{ translate('Return to Homepage')}}
-                </button>
-            </a>
         </div>
     @else
         <div class="row">
@@ -201,15 +182,44 @@
 </script>
 @endsection
 
+@push('append-scripts')
 <script type="text/javascript">
     if (typeof AIZ !== 'undefined' && AIZ.extra) { AIZ.extra.plusMinus(); }
     else { (function(){ if (typeof AIZ !== 'undefined' && AIZ.extra) AIZ.extra.plusMinus(); }); }
-    function handleClick(myRadio) {
-        var address_id = myRadio.value;
-        // var id_radio = myRadio.id;
-        // var final_price = $('#final_price').val();
-        
+
+    // Hook into quantity change AFTER plusMinus initializes
+    // plusMinus uses .off('change').on('change') which overrides onchange attribute
+    // We use a delegated event on document (survives .off on element) with debounce
+    var _cartQtyTimer = null;
+    $(document).off('change.cartQty').on('change.cartQty', '.cart-v2__qty-input', function() {
+        var el = this;
+        var cartId = $(el).data('cart-id');
+        if (!cartId) return;
+        clearTimeout(_cartQtyTimer);
+        _cartQtyTimer = setTimeout(function() {
+            updateQuantity(cartId, el);
+        }, 300);
+    });
+
+    // Update checkout button state and hint text
+    function updateCheckoutState() {
+        var hasCheckedProducts = $('input[class=check_box_child]:checked').length > 0;
+        var hasSelectedAddress = $('input[class=radio_button_checkout]:checked').length > 0;
+
+        if (hasCheckedProducts && hasSelectedAddress) {
+            $('#myLink').removeClass('disabled');
+            $('.cart-v2__checkout-hint').html('');
+        } else {
+            $('#myLink').addClass('disabled');
+            var hints = [];
+            if (!hasCheckedProducts) hints.push('chọn sản phẩm');
+            if (!hasSelectedAddress) hints.push('chọn địa chỉ giao hàng');
+            $('.cart-v2__checkout-hint').html('Vui lòng ' + hints.join(' và '));
+        }
     }
+
+    // Init on page load
+    updateCheckoutState();
 
     function add_new_address(){
         $('#new-address-modal').modal('show');
@@ -239,21 +249,7 @@
                     success: function(data){
                         $('#total_price').html(data.total);
                         $('#total_price_2').html(data.total);
-                        if(data.disabled == 0)
-                        {
-                            $('#myLink').addClass('disabled')
-                        }
-                        else
-                        {
-                            if ($('input[class=radio_button_checkout]:checked').length > 0) {
-                                $('#myLink').removeClass('disabled')
-                            }
-                            else
-                            {
-                                AIZ.plugins.notify('danger', 'Vui Lòng Chọn Địa Chỉ Giao Hàng');
-                            }
-                            
-                        }
+                        updateCheckoutState();
                     }, 
                     error: function(){
                         
@@ -268,12 +264,12 @@
         var active = 0;
         if(cart_checked)
         {
-            $(".check_box_child").attr("checked", "true");
+            $(".check_box_child").prop("checked", true);
             active = 1;
         }
         else
         {
-            $(".check_box_child").removeAttr('checked');
+            $(".check_box_child").prop("checked", false);
         }
         $.ajax
                 ({
@@ -289,20 +285,7 @@
                     success: function(data){
                         $('#total_price').html(data.total);
                         $('#total_price_2').html(data.total);
-                        if(data.disabled == 0)
-                        {
-                            $('#myLink').addClass('disabled')
-                        }
-                        else
-                        {
-                            if ($('input[class=radio_button_checkout]:checked').length > 0) {
-                                $('#myLink').removeClass('disabled')
-                            }
-                            else
-                            {
-                                AIZ.plugins.notify('danger', 'Vui Lòng Chọn Địa Chỉ Giao Hàng');
-                            }
-                        }
+                        updateCheckoutState();
                     }, 
                     error: function(){
                         
@@ -312,8 +295,6 @@
 
     function handleClick(myRadio) {
         var address_id = myRadio.value;
-        // var id_radio = myRadio.id;
-        // var final_price = $('#final_price').val();
         $.ajax
             ({
                 url: "{{route('checkout.update_shipping_fee')}}",
@@ -325,9 +306,7 @@
                     'X-CSRF-Token': '{{ csrf_token() }}',
                 },
                 success: function(data){
-                    if ($('input[class=check_box_child]:checked').length > 0) {
-                            $('#myLink').removeClass('disabled')
-                        }
+                    updateCheckoutState();
                 }, 
                 error: function(){
                     
@@ -338,3 +317,5 @@
 
     
 </script>
+@endpush
+
