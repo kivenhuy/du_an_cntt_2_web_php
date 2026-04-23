@@ -85,7 +85,7 @@
     "Resources": "Tài nguyên",
     "Product": "Sản phẩm",
     "Qty": "SL",
-    "View cart":"Xem",
+    "View cart": "Xem",
     "Subtotal": "Tạm tính",
     "Unit": "Đơn vị",
     "Total": "Tổng",
@@ -175,5 +175,17 @@
     "Payment Status": "Trạng thái thanh toán",
     "Delivery Status": "Trạng thái giao hàng",
     "Refund History": "Lịch sử hoàn tiền",
-    "Purchase History": "Lịch sử đặt hàng"
+    "Purchase History": "Lịch sử đặt hàng",
+    "Popular Suggestions": "Gợi ý tìm kiếm",
+    "Keywords": "Từ khóa",
+    "Products": "SẢN PHẨM",
+    "Manage Profile": "Quản lý tài khoản",
+    "Basic Info": "Thông tin cơ bản",
+    "Your Name": "Họ và tên",
+    "Your Phone": "Số điện thoại",
+    "Photo": "Ảnh đại diện",
+    "Your Password": "Mật khẩu",
+    "Confirm Password": "Xác nhận mật khẩu",
+    "Sign Out": "Đăng xuất",
+    "Update Profile": "Cập nhật"
 }
