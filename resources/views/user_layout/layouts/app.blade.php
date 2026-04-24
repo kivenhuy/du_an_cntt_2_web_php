@@ -488,10 +488,6 @@
     {
         display: none;
     }
-    .slick-slider .slick-list, .slick-slider .slick-track
-    {
-        border-radius: 10px;
-    }
     /* .top_selling_homepage
     {
         font-family: 'Quicksand',sans-serif !important;
@@ -1119,12 +1115,6 @@
     .mt-90
     {
         margin-top: 90px;
-    }
-    .home-slider .slick-slide img
-    {
-        width: 100%;
-        height: auto !important;
-        object-fit: contain;
     }
     .home-banner-area
     {

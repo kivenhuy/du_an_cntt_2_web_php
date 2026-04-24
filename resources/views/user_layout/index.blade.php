@@ -2,61 +2,94 @@
 
 @section('content')
 
-<div class="home-banner-area mb-3" >
-    <div class="container wow animate__animated animate__fadeIn"  style=" max-width: 1280px !important;margin-top: 15px;height: auto;">
-        <div class="d-flex flex-wrap position-relative">
-            <!-- <div class="position-static d-none d-xl-block wow animate__animated animate__fadeInUp" data-wow-delay=".1s">
-                @include('user_layout.partials.category_menu')
-            </div> -->
-
-            <!-- Sliders -->
-            <div class="home-slider wow animate__animated animate__fadeInUp" data-wow-delay=".2s">
-                    <div class="aiz-carousel dots-inside-bottom mobile-img-auto-height" data-autoplay="true">
-                            @forelse($home_slides ?? [] as $slide)
-                            @php $slideHref = $slide->link ? trim($slide->link) : ''; $slideHref = ($slideHref === '' || $slideHref === '#') ? route('products.all') : $slideHref; @endphp
-                            <div class="carousel-box position-relative storefront-home-slide">
-                                <a href="{{ $slideHref }}" class="d-block position-relative storefront-banner-img-link">
-                                    <img class="d-block w-100 storefront-banner-img overflow-hidden b-radius-10"
-                                        alt="{{ config('app.name') }}"
-                                        src="{{ uploaded_asset($slide->photo) }}"
-                                        style="height: auto; object-fit: contain;"
-                                        onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
-                                    <div class="storefront-banner-gradient"></div>
-                                    
-                                </a>
-                            </div>
-                            @empty
-                            @php $fallbackProductsUrl = route('products.all'); @endphp
-                            <div class="carousel-box position-relative storefront-home-slide">
-                                <a href="{{ $fallbackProductsUrl }}" class="d-block position-relative storefront-banner-img-link">
-                                    <img class="d-block w-100 storefront-banner-img overflow-hidden b-radius-10"
-                                        alt="{{ config('app.name') }}"
-                                        src="{{ static_asset('assets/img/ivSNgQP3jxEHTHTOQXNAaGWlHOO3a1PQIw3w9EPJ.jpg')}}"
-                                        style="height: auto; object-fit: contain;">
-                                    <div class="storefront-banner-gradient"></div>
-                                    <div class="storefront-banner-cta">
-                                        <span class="btn btn-success btn-sm font-weight-bold rounded-pill px-3">Mua sắm ngay</span>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="carousel-box position-relative storefront-home-slide">
-                                <a href="{{ $fallbackProductsUrl }}" class="d-block position-relative storefront-banner-img-link">
-                                    <img class="d-block w-100 h-100 storefront-banner-img img-fit overflow-hidden h-sm-auto h-md-320px h-lg-460px b-radius-10"
-                                        alt="{{ config('app.name') }}"
-                                        src="{{ static_asset('assets/img/mrAmhwgz6ra35VyilLmTTvbYPZygvz5DpHz3rkWO.jpg')}}"
-                                        style="object-fit: cover;">
-                                    <div class="storefront-banner-gradient"></div>
-                                    <div class="storefront-banner-cta">
-                                        <span class="btn btn-success btn-sm font-weight-bold rounded-pill px-3">Mua sắm ngay</span>
-                                    </div>
-                                </a>
-                            </div>
-                            @endforelse
-                    </div>
-            </div>
-        </div>
+{{-- ===== Full-width Hero Slider ===== --}}
+<div class="hero-slider" id="heroSlider">
+    <div class="hero-slider__track">
+        @forelse($home_slides ?? [] as $slide)
+            @php
+                $slideHref = $slide->link ? trim($slide->link) : '';
+                $slideHref = ($slideHref === '' || $slideHref === '#') ? route('products.all') : $slideHref;
+            @endphp
+            <a href="{{ $slideHref }}" class="hero-slider__slide">
+                <img src="{{ uploaded_asset($slide->photo) }}"
+                     alt="{{ config('app.name') }}"
+                     onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
+            </a>
+        @empty
+            @php $fallbackProductsUrl = route('products.all'); @endphp
+            <a href="{{ $fallbackProductsUrl }}" class="hero-slider__slide">
+                <img src="{{ static_asset('assets/img/ivSNgQP3jxEHTHTOQXNAaGWlHOO3a1PQIw3w9EPJ.jpg') }}"
+                     alt="{{ config('app.name') }}">
+            </a>
+            <a href="{{ $fallbackProductsUrl }}" class="hero-slider__slide">
+                <img src="{{ static_asset('assets/img/mrAmhwgz6ra35VyilLmTTvbYPZygvz5DpHz3rkWO.jpg') }}"
+                     alt="{{ config('app.name') }}">
+            </a>
+        @endforelse
     </div>
+    {{-- Dots navigation --}}
+    <div class="hero-slider__dots" id="heroSliderDots"></div>
 </div>
+
+<style>
+
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var slider = document.getElementById('heroSlider');
+    if (!slider) return;
+    var track = slider.querySelector('.hero-slider__track');
+    var slides = slider.querySelectorAll('.hero-slider__slide');
+    var dotsWrap = document.getElementById('heroSliderDots');
+    var total = slides.length;
+    if (total === 0) return;
+
+    var current = 0;
+    var interval = null;
+
+    // Build dots
+    for (var i = 0; i < total; i++) {
+        var dot = document.createElement('button');
+        dot.className = 'hero-slider__dot' + (i === 0 ? ' hero-slider__dot--active' : '');
+        dot.setAttribute('aria-label', 'Slide ' + (i + 1));
+        dot.dataset.index = i;
+        dot.addEventListener('click', function () {
+            goTo(parseInt(this.dataset.index));
+            resetAutoplay();
+        });
+        dotsWrap.appendChild(dot);
+    }
+
+    function goTo(index) {
+        current = index;
+        track.style.transform = 'translateX(-' + (current * 100) + '%)';
+        var dots = dotsWrap.querySelectorAll('.hero-slider__dot');
+        for (var j = 0; j < dots.length; j++) {
+            dots[j].classList.toggle('hero-slider__dot--active', j === current);
+        }
+    }
+
+    function next() {
+        goTo((current + 1) % total);
+    }
+
+    function startAutoplay() {
+        interval = setInterval(next, 2000);
+    }
+
+    function resetAutoplay() {
+        clearInterval(interval);
+        startAutoplay();
+    }
+
+    startAutoplay();
+
+    // Pause on hover
+    slider.addEventListener('mouseenter', function () { clearInterval(interval); });
+    slider.addEventListener('mouseleave', function () { startAutoplay(); });
+});
+</script>
 
 {{-- Best Seliing --}}
 <div id="section_best_selling" style="margin-bottom: 0px">
