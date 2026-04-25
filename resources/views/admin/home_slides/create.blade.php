@@ -29,7 +29,21 @@
                         <input type="hidden" name="photo" class="selected-files" required>
                     </div>
                     <div class="file-preview box sm"></div>
-                    <small class="text-muted">{{ translate('Wide banner recommended (e.g. 1200×460).') }}</small>
+                    <small class="text-muted">{{ translate('Wide banner recommended (e.g. 1200×460). Shown on desktop/web.') }}</small>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label">{{ translate('Image (Mobile)') }}</label>
+                <div class="col-md-8">
+                    <div class="input-group" data-toggle="aizuploader" data-type="image" data-multiple="false">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text bg-soft-secondary font-weight-medium">{{ translate('Browse') }}</div>
+                        </div>
+                        <div class="form-control file-amount">{{ translate('Choose File') }}</div>
+                        <input type="hidden" name="photo_mb" class="selected-files">
+                    </div>
+                    <div class="file-preview box sm"></div>
+                    <small class="text-muted">{{ translate('Ảnh hiển thị trên mobile. Nếu bỏ trống sẽ dùng ảnh desktop.') }}</small>
                 </div>
             </div>
             <div class="form-group row">

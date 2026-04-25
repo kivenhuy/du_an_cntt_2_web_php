@@ -11,9 +11,14 @@
                 $slideHref = ($slideHref === '' || $slideHref === '#') ? route('products.all') : $slideHref;
             @endphp
             <a href="{{ $slideHref }}" class="hero-slider__slide">
-                <img src="{{ uploaded_asset($slide->photo) }}"
-                     alt="{{ config('app.name') }}"
-                     onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
+                <picture>
+                    @if($slide->photo_mb)
+                        <source media="(max-width: 768px)" srcset="{{ uploaded_asset($slide->photo_mb) }}">
+                    @endif
+                    <img src="{{ uploaded_asset($slide->photo) }}"
+                         alt="{{ config('app.name') }}"
+                         onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
+                </picture>
             </a>
         @empty
             @php $fallbackProductsUrl = route('products.all'); @endphp

@@ -24,6 +24,7 @@ class HomeSlideController extends Controller
     {
         $request->validate([
             'photo' => 'required|string',
+            'photo_mb' => 'nullable|string',
             'link' => 'nullable|string|max:500',
             'sort_order' => 'nullable|integer|min:0',
         ]);
@@ -35,8 +36,11 @@ class HomeSlideController extends Controller
             return back()->withInput();
         }
 
+        $photoMbId = $this->firstUploadId($request->photo_mb);
+
         HomeSlide::create([
             'photo' => (int) $photoId,
+            'photo_mb' => $photoMbId ? (int) $photoMbId : null,
             'link' => $request->link ?: null,
             'sort_order' => (int) ($request->sort_order ?? 0),
             'is_active' => $request->boolean('is_active'),

@@ -27,6 +27,7 @@
                     <tr>
                         <th>#</th>
                         <th>{{ translate('Image') }}</th>
+                        <th>{{ translate('Image (Mobile)') }}</th>
                         <th>{{ translate('Link') }}</th>
                         <th>{{ translate('Sort') }}</th>
                         <th>{{ translate('Active') }}</th>
@@ -40,6 +41,14 @@
                             <td>
                                 <img src="{{ uploaded_asset($slide->photo) }}" alt="" style="max-height: 72px; max-width: 160px; object-fit: cover;"
                                     onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
+                            </td>
+                            <td>
+                                @if($slide->photo_mb)
+                                    <img src="{{ uploaded_asset($slide->photo_mb) }}" alt="" style="max-height: 72px; max-width: 100px; object-fit: cover;"
+                                        onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';">
+                                @else
+                                    <span class="text-muted">—</span>
+                                @endif
                             </td>
                             <td style="max-width: 220px; word-break: break-all;">{{ $slide->link ?: '—' }}</td>
                             <td>{{ $slide->sort_order }}</td>
