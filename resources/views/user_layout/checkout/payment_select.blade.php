@@ -453,9 +453,9 @@
                                             <span class="checkout-terms-checkmark"></span>
                                             <span class="checkout-terms-text">
                                                 Tôi đồng ý với
-                                                <a href="" class="checkout-terms-link">điều khoản sử dụng</a>,
-                                                <a href="" class="checkout-terms-link">chính sách đổi trả</a> &
-                                                <a href="" class="checkout-terms-link">chính sách bảo mật</a>
+                                                <a href="{{ route('policy') }}" target="_blank" class="checkout-terms-link">điều khoản sử dụng</a>,
+                                                <a href="{{ route('policy') }}" target="_blank" class="checkout-terms-link">chính sách đổi trả</a> &
+                                                <a href="{{ route('policy') }}" target="_blank" class="checkout-terms-link">chính sách bảo mật</a>
                                             </span>
                                         </label>
                                     </div>

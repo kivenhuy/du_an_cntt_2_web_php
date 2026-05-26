@@ -81,10 +81,10 @@
                 </a>
                 <div class="collapse footer-section-body" id="footerPolicy">
                     <ul class="footer-list">
-                        <li><a href="#" class="footer-link">{{ translate('Chính sách thanh toán') }}</a></li>
-                        <li><a href="#" class="footer-link">{{ translate('Chính sách xử lý khiếu nại') }}</a></li>
-                        <li><a href="#" class="footer-link">{{ translate('Chính sách vận chuyển') }}</a></li>
-                        <li><a href="#" class="footer-link">{{ translate('Chính sách đổi trả hoàn tiền') }}</a></li>
+                        <li><a href="{{ route('policy') }}" class="footer-link">{{ translate('Chính sách thanh toán') }}</a></li>
+                        <li><a href="{{ route('policy') }}" class="footer-link">{{ translate('Chính sách xử lý khiếu nại') }}</a></li>
+                        <li><a href="{{ route('policy') }}" class="footer-link">{{ translate('Chính sách vận chuyển') }}</a></li>
+                        <li><a href="{{ route('policy') }}" class="footer-link">{{ translate('Chính sách đổi trả hoàn tiền') }}</a></li>
                     </ul>
                 </div>
             </div>

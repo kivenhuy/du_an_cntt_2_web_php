@@ -50,6 +50,7 @@ Route::post("/login", [LoginController::class, 'login'])->name('user.login');
 Route::get("/user_registration", [LoginController::class, 'showRegisterForm'])->name('user.registration_form');
 Route::post("/user_registration", [LoginController::class, 'storeRegisterForm'])->name('user.registration');
 Route::post("/enterprise_registration", [LoginController::class, 'storeEnterpriseForm'])->name('enterprise.registration');
+Route::view('/policy', 'user_layout.policy')->name('policy');
 Route::resource('shops', ShopController::class);
 
 
@@ -63,7 +64,6 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/dashboard', 'dashboard')->name('user.dashboard');
         Route::post('/user/update-profile', 'userProfileUpdate')->name('user.profile.update');
         Route::get('/profile', 'profile')->name('profile');
-        Route::get('/terms', 'terms')->name('terms');
     });
 
     
