@@ -35,6 +35,12 @@
                             @endif
                         </tr>
                         <tr>
+                            <td class="w-50 fw-600">Số Điện Thoại:</td>
+                            @if ($order->customer_id != null)
+                                <td>{{ json_decode($order->shipping_address)->phone }}</td>
+                            @endif
+                        </tr>
+                        <tr>
                             <td class="w-50 fw-600">Địa chỉ giao hàng:</td>
                             <td>{{ json_decode($order->shipping_address)->address }},
                                 {{ json_decode($order->shipping_address)->city }},
