@@ -380,39 +380,6 @@
             align-items:center;
             height: auto;
         }
-        .rfq_code
-        {
-            font-family: 'Quicksand',sans-serif !important;
-            font-size: 24px;
-            font-weight: 700;
-            line-height: 32px;
-            letter-spacing: -0.0004em;
-            text-align: left;
-            color: #333333;
-        }
-        .rfq_product_name
-        {
-            font-family: 'Quicksand',sans-serif !important;
-            font-size: 16px;
-            font-weight: 700;
-            line-height: 20px;
-            letter-spacing: -0.0004em;
-            text-align: left;
-            color: #333333;
-            display: block;
-            max-width: 200px;
-            word-wrap: break-word;
-        }
-        .rfq_attribute_name
-        {
-            font-family: 'Roboto', sans-serif !important;
-            font-size: 12px !important;
-            font-weight: 400 !important;
-            line-height: 20px;
-            letter-spacing: -0.0004em;
-            text-align: left;
-            color: #797979;
-        }
         .btn-primary
         {
             background-color: #0cc618 !important;

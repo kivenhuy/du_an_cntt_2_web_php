@@ -18633,3 +18633,69 @@ html {
         height: 72px;
     }
 }
+
+/* ===== Policy page ===== */
+.policy-wrapper {
+    max-width: 920px;
+    margin: 40px auto 80px;
+    padding: 32px 40px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+.policy-wrapper h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1b1b28;
+    margin-bottom: 12px;
+    text-align: center;
+}
+.policy-wrapper h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1b1b28;
+    margin-top: 32px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #f0f0f0;
+}
+.policy-wrapper h3 {
+    font-size: 17px;
+    font-weight: 600;
+    color: #2c2c40;
+    margin-top: 20px;
+    margin-bottom: 8px;
+}
+.policy-wrapper p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: #444;
+    margin-bottom: 12px;
+    text-align: justify;
+}
+.policy-wrapper ul {
+    padding-left: 24px;
+    margin-bottom: 16px;
+}
+.policy-wrapper ul li {
+    font-size: 15px;
+    line-height: 1.7;
+    color: #444;
+    margin-bottom: 6px;
+}
+.policy-updated {
+    text-align: center;
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 24px;
+    font-style: italic;
+}
+@media (max-width: 768px) {
+    .policy-wrapper {
+        margin: 16px;
+        padding: 20px;
+    }
+    .policy-wrapper h1 { font-size: 22px; }
+    .policy-wrapper h2 { font-size: 17px; }
+    .policy-wrapper h3 { font-size: 15px; }
+}
